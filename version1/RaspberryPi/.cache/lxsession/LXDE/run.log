@@ -1,0 +1,140 @@
+** Message: environement.vala:58: Exporting primary_variable
+** Message: environement.vala:59: desktop_environnement XDG_CURRENT_DESKTOP
+** Message: environement.vala:149: confir_dirs is null, export : /etc/xdg
+** Message: environement.vala:183: Exporting XDG_CONFIG_DIRS
+** Message: environement.vala:217: custom_data :/usr/local/share:/usr/share:/usr/share/gdm:/var/lib/menu-xdg:
+** Message: environement.vala:218: data_dirs :/usr/local/share/:/usr/share/:/usr/share/gdm/:/var/lib/menu-xdg/
+** Message: environement.vala:219: data_dirs not null, export : /usr/local/share:/usr/share:/usr/share/gdm:/var/lib/menu-xdg:/usr/local/share/:/usr/share/:/usr/share/gdm/:/var/lib/menu-xdg/
+** Message: environement.vala:224: Exporting XDG_DATA_DIRS
+** Message: utils.vala:68: User config used : /home/daylight/.config/lxsession/LXDE/desktop.conf
+** Message: utils.vala:89: Final file used : /home/daylight/.config/lxsession/LXDE/desktop.conf
+** Message: settings.vala:527: Key file does not have key 'iGtk/ColorScheme'
+** Message: settings.vala:527: Key file does not have key 'windows_manager/extras'
+** Message: settings.vala:527: Key file does not have key 'panel/command'
+** Message: settings.vala:527: Key file does not have key 'dock/command'
+** Message: settings.vala:527: Key file does not have key 'file_manager/command'
+** Message: settings.vala:527: Key file does not have key 'desktop_manager/command'
+** Message: settings.vala:527: Key file does not have key 'launcher_manager/autostart'
+** Message: settings.vala:527: Key file does not have key 'composite_manager/command'
+** Message: settings.vala:527: Key file does not have key 'im1/command'
+** Message: settings.vala:527: Key file does not have key 'im2/command'
+** Message: settings.vala:527: Key file does not have key 'widget1/command'
+** Message: settings.vala:527: Key file does not have key 'notification/command'
+** Message: settings.vala:527: Key file does not have key 'keybindings/command'
+** Message: settings.vala:527: Key file does not have key 'screensaver/command'
+** Message: settings.vala:527: Key file does not have key 'power_manager/command'
+** Message: settings.vala:527: Key file does not have key 'audio_manager/command'
+** Message: settings.vala:527: Key file does not have key 'workspace_manager/command'
+** Message: settings.vala:527: Key file does not have key 'screenshot_manager/command'
+** Message: settings.vala:527: Key file does not have key 'message_manager/command'
+** Message: settings.vala:527: Key file does not have key 'upgrade_manager/command'
+** Message: settings.vala:527: Key file does not have key 'upstart_user_session'
+** Message: settings.vala:527: Key file does not have key 'proxy_manager/http'
+** Message: settings.vala:527: Key file does not have key 'a11y/command'
+** Message: settings.vala:527: Key file does not have key 'xrandr/command'
+** Message: settings.vala:527: Key file does not have key 'network_gui/command'
+** Message: settings.vala:527: Key file does not have key 'webbrowser/command'
+** Message: settings.vala:527: Key file does not have key 'email/command'
+** Message: settings.vala:527: Key file does not have key 'pdf_reader/command'
+** Message: settings.vala:527: Key file does not have key 'video_player/command'
+** Message: settings.vala:527: Key file does not have key 'audio_player/command'
+** Message: settings.vala:527: Key file does not have key 'images_display/command'
+** Message: settings.vala:527: Key file does not have key 'text_editor/command'
+** Message: settings.vala:527: Key file does not have key 'archive/command'
+** Message: settings.vala:527: Key file does not have key 'charmap/command'
+** Message: settings.vala:527: Key file does not have key 'calculator/command'
+** Message: settings.vala:527: Key file does not have key 'spreadsheet/command'
+** Message: settings.vala:527: Key file does not have key 'bittorent/command'
+** Message: settings.vala:527: Key file does not have key 'document/command'
+** Message: settings.vala:527: Key file does not have key 'webcam/command'
+** Message: settings.vala:527: Key file does not have key 'burn/command'
+** Message: settings.vala:527: Key file does not have key 'notes/command'
+** Message: settings.vala:527: Key file does not have key 'disk_utility/command'
+** Message: settings.vala:527: Key file does not have key 'tasks/command'
+** Message: settings.vala:527: Key file does not have group 'Keymap'
+** Message: settings.vala:527: Key file does not have key 'laptop_mode'
+** Message: settings.vala:527: Key file does not have key 'gnome'
+** Message: settings.vala:527: Key file does not have group 'Updates'
+** Message: settings.vala:527: Key file does not have key 'type'
+** Message: settings.vala:449: Monitoring: /home/daylight/.config/lxsession/LXDE/desktop.conf
+** Message: settings.vala:453: Desktop file is already in config home, do nothing
+** Message: environement.vala:79: Exporting variable
+** Message: environement.vala:80: desktop_environnement XDG_CURRENT_DESKTOP
+** Message: environement.vala:176: custom_config :
+** Message: environement.vala:177: config_dirs :/etc/xdg
+** Message: environement.vala:178: confir_dirs not null, export : /etc/xdg
+** Message: environement.vala:183: Exporting XDG_CONFIG_DIRS
+** Message: environement.vala:217: custom_data :
+** Message: environement.vala:218: data_dirs :/usr/local/share:/usr/share:/usr/share/gdm:/var/lib/menu-xdg:/usr/local/share/:/usr/share/:/usr/share/gdm/:/var/lib/menu-xdg/
+** Message: environement.vala:219: data_dirs not null, export : /usr/local/share:/usr/share:/usr/share/gdm:/var/lib/menu-xdg:/usr/local/share/:/usr/share/:/usr/share/gdm/:/var/lib/menu-xdg/
+** Message: environement.vala:224: Exporting XDG_DATA_DIRS
+** Message: utils.vala:79: Config system location : /etc/xdg/lxsession/LXDE
+** Message: utils.vala:85: System system path location : /etc/xdg/lxsession/LXDE/conffiles.conf
+** Message: utils.vala:89: Final file used : /etc/xdg/lxsession/LXDE/conffiles.conf
+xprop:  no such property "_NET_NUMBER_OF_DESKTOPS"
+xprop:  no such property "_NET_DESKTOP_NAMES"
+** Message: options.vala:164: Activate xsettings_manager build-in
+** Message: utils.vala:68: User config used : /home/daylight/.config/lxsession/LXDE/desktop.conf
+** Message: utils.vala:89: Final file used : /home/daylight/.config/lxsession/LXDE/desktop.conf
+** Message: app.vala:717: polkit separate
+** Message: app.vala:717: polkit separate
+** Message: app.vala:76: Launching lxpolkit 
+** Message: utils.vala:68: User config used : /home/daylight/.config/lxsession/LXDE/autostart
+** Message: utils.vala:89: Final file used : /home/daylight/.config/lxsession/LXDE/autostart
+** Message: autostart.vala:42: Autostart path : /home/daylight/.config/lxsession/LXDE/autostart
+** Message: app.vala:76: Launching lxpanel 
+** Message: app.vala:76: Launching pcmanfm 
+** Message: app.vala:76: Launching xscreensaver 
+** Message: options.vala:107: Create build-in Clipboard
+** Message: main.vala:429: Check keymap_mode (null)
+** Message: app.vala:76: Launching /usr/bin/ssh-agent 
+SSH_AUTH_SOCK=/tmp/ssh-MqA35dXGt4Yj/agent.1234; export SSH_AUTH_SOCK;
+SSH_AGENT_PID=1236; export SSH_AGENT_PID;
+echo Agent pid 1236;
+** Message: app.vala:130: /usr/bin/ssh-agent exit with this type of exit: 0
+
+(zeitgeist-datahub:1240): GLib-GObject-WARNING **: invalid (NULL) pointer instance
+
+(zeitgeist-datahub:1240): GLib-GObject-CRITICAL **: g_signal_connect_data: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+Openbox-Message: Unable to find a valid menu file "/usr/share/lxde/openbox/menu.xml"
+
+** (zeitgeist-datahub:1240): WARNING **: recent-manager-provider.vala:132: Desktop file for "file:///home/daylight/Pictures/Images%20Finales/landscape.png" was not found, exec: lxpanel, mime_type: image/png
+
+** (zeitgeist-datahub:1240): WARNING **: recent-manager-provider.vala:132: Desktop file for "file:///home/daylight/Pictures/Images%20Finales/DayLightLogoSunSet.png" was not found, exec: lxpanel, mime_type: image/png
+** Message: x-terminal-emulator has very limited support, consider choose another terminal
+** Message: x-terminal-emulator has very limited support, consider choose another terminal
+** Message: va: Name org.bluez owned on DBus
+** Message: va: Stopping PulseAudio
+
+(lxpanel:1229): Wnck-WARNING **: Unhandled action type _OB_WM_ACTION_UNDECORATE
+
+(lxpanel:1229): Wnck-WARNING **: Unhandled action type _OB_WM_ACTION_UNDECORATE
+-terminal-emulator/1362-0-Daylight_TIME42210
+gksu-run: 7529093af006b7c6dd0440d4821434e5
+
+ConfigBase::load: Unable to open /home/daylight/.config/terminator/config ([Errno 2] No such file or directory: '/home/daylight/.config/terminator/config')
+
+(lxpanel:1229): Wnck-WARNING **: Unhandled action type _OB_WM_ACTION_UNDECORATE
+
+(lxpanel:1229): Wnck-WARNING **: Unhandled action type _OB_WM_ACTION_UNDECORATE
+
+(lxpanel:1229): Wnck-WARNING **: Unhandled action type _OB_WM_ACTION_UNDECORATE
+
+(lxpanel:1229): Wnck-WARNING **: Unhandled action type _OB_WM_ACTION_UNDECORATE
+ConfigBase::load: Unable to open /home/daylight/.config/terminator/config ([Errno 2] No such file or directory: '/home/daylight/.config/terminator/config')
+
+** (x-terminal-emulator:1506): WARNING **: Binding '<Shift><Control><Alt>a' failed!
+Unable to bind hide_window key, another instance/window has it.
+
+(lxpanel:1229): Wnck-WARNING **: Unhandled action type _OB_WM_ACTION_UNDECORATE
+
+(lxpanel:1229): Wnck-WARNING **: Unhandled action type _OB_WM_ACTION_UNDECORATE
+gksu-run: gksu/|usr|bin|x-terminal-emulator/1549-0-Daylight_TIME429324
+gksu-run: 7529093af006b7c6dd0440d4821434e5
+
+ConfigBase::load: Unable to open /home/daylight/.config/terminator/config ([Errno 2] No such file or directory: '/home/daylight/.config/terminator/config')
+
+** (x-terminal-emulator:1565): WARNING **: Binding '<Shift><Control><Alt>a' failed!
+Unable to bind hide_window key, another instance/window has it.
+
+(lxpanel:1229): Wnck-WARNING **: Unhandled action type _OB_WM_ACTION_UNDECORATE

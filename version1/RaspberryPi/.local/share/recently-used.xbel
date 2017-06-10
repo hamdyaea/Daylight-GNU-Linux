@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbel version="1.0"
+      xmlns:bookmark="http://www.freedesktop.org/standards/desktop-bookmarks"
+      xmlns:mime="http://www.freedesktop.org/standards/shared-mime-info"
+>
+  <bookmark href="file:///home/pi/Pictures/Images%20Finales/forest.jpg" added="2017-05-08T18:31:40Z" modified="2017-05-08T18:31:40Z" visited="2017-05-08T18:31:40Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="image/jpeg"/>
+        <bookmark:applications>
+          <bookmark:application name="pcmanfm" exec="&apos;pcmanfm %u&apos;" modified="2017-05-08T18:31:40Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/pi/Pictures/Images%20Finales/mountains.jpg" added="2017-05-08T18:31:56Z" modified="2017-05-08T18:34:09Z" visited="2017-05-08T18:31:57Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="image/jpeg"/>
+        <bookmark:applications>
+          <bookmark:application name="pcmanfm" exec="&apos;pcmanfm %u&apos;" modified="2017-05-08T18:34:09Z" count="2"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/pi/Pictures/Images%20Finales/landscape.png" added="2017-05-08T18:32:33Z" modified="2017-05-08T18:32:33Z" visited="2017-05-08T18:32:33Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="image/png"/>
+        <bookmark:applications>
+          <bookmark:application name="lxpanel" exec="&apos;lxpanel %u&apos;" modified="2017-05-08T18:32:33Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/daylight/Pictures/Images%20Finales/forest.jpg" added="2017-05-08T19:54:38Z" modified="2017-05-08T19:54:38Z" visited="2017-05-08T19:54:38Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="image/jpeg"/>
+        <bookmark:applications>
+          <bookmark:application name="pcmanfm" exec="&apos;pcmanfm %u&apos;" modified="2017-05-08T19:54:38Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/daylight/Pictures/Images%20Finales/mountains.jpg" added="2017-05-08T19:54:55Z" modified="2017-05-08T19:54:55Z" visited="2017-05-08T19:54:55Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="image/jpeg"/>
+        <bookmark:applications>
+          <bookmark:application name="pcmanfm" exec="&apos;pcmanfm %u&apos;" modified="2017-05-08T19:54:55Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/daylight/Pictures/Images%20Finales/DayLightLogoSunSet.png" added="2017-05-08T19:55:15Z" modified="2017-05-08T19:55:15Z" visited="2017-05-08T19:55:15Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="image/png"/>
+        <bookmark:applications>
+          <bookmark:application name="lxpanel" exec="&apos;lxpanel %u&apos;" modified="2017-05-08T19:55:15Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/daylight/Pictures/Images%20Finales/landscape.png" added="2017-05-08T19:55:27Z" modified="2017-05-08T19:55:27Z" visited="2017-05-08T19:55:28.178194Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="image/png"/>
+        <bookmark:applications>
+          <bookmark:application name="lxpanel" exec="&apos;lxpanel %u&apos;" modified="2017-05-08T19:55:27Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+</xbel>

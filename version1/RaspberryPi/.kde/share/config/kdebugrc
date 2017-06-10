@@ -1,0 +1,11 @@
+[KSharedDataCache]
+InfoOutput=4
+
+[kbuildsycoca4]
+InfoOutput=2
+
+[kdecore (KConfigSkeleton)]
+InfoOutput=2
+
+[krdc]
+InfoOutput=4
