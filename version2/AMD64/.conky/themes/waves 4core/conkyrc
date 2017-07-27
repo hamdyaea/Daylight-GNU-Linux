@@ -1,0 +1,103 @@
+# Conky settings #
+background no
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+#imlib_cache_size 0
+
+temperature_unit celsium
+
+# Window specifications #
+
+own_window yes
+own_window_title Conky
+own_window_type override
+own_window_transparent yes
+own_window_colour 66B2FF
+own_window_argb_visual no
+own_window_argb_value 20
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 400 450
+maximum_width 400
+
+
+alignment tl
+gap_x 100
+gap_y 70
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Text settings #
+use_xft yes
+xftfont caviar dreams:size=10
+xftalpha 0.5
+
+uppercase no
+
+temperature_unit celsius
+
+
+default_color FFFFFF
+
+# Lua Load  #
+lua_load ~/.conky/avi9526_conky.lua
+lua_draw_hook_pre Widgets
+
+TEXT
+${voffset 8}${color 111111}${font Ubuntu:size=16}${time %A}${font}${voffset -8}${alignr 50}${color FFFFFF}${font caviar dreams:size=38}${time %e}${font}
+${color FFFFFF}${voffset -30}${color FFFFFF}${font caviar dreams:size=18}${time %b}${font}${voffset -3} ${color FFFFFF}${font caviar dreams:size=20}${time %Y}${font}${color 111111}${hr}
+
+${font}${goto 45}${voffset 265}${color 111111}CPU0 ${color FFFFFF}${cpu cpu0}%
+${goto 45}${color 111111}CPU1 ${color FFFFFF}${cpu cpu1}%
+${goto 45}${color 111111}CPU2 ${color FFFFFF}${cpu cpu2}%
+${goto 45}${color 111111}CPU3 ${color FFFFFF}${cpu cpu3}%
+
+${voffset -244}${goto 185}${color 111111}RAM ${color FFFFFF}${memperc}%
+${voffset 26}${goto 187}${color 111111}Swap ${color FFFFFF}${swapperc}%
+
+${goto 160}${voffset 72}${color 111111}Disk /  ${color FFFFFF}${fs_used /}
+${goto 160}${voffset 110}${color 111111}Disk /home  ${color FFFFFF}${fs_used /home}
+
+${goto 310}${voffset -190}${color 111111}Net
+${goto 310}${color 111111}↑ ${color FFFFFF}${upspeed eth0}
+${goto 310}${color 111111}↓ ${color FFFFFF}${downspeed eth0}
+${voffset 120}${color 111111}${hr}
+
+${voffset 150}
+
+${color 111111}${hr}
+${color 111111}${font ubuntu:size=12}Uptime:	${color FFFFFF}${uptime_short}
+${color 111111}${font ubuntu:size=12}Processes:	${color FFFFFF}${processes}
+${color 111111}${font ubuntu:size=12}Active processes	${color FFFFFF}${running_processes}
+${color 111111}${font ubuntu:size=12}Top processes by CPU usage:${color FFFFFF}$font
+	${top name 1}${alignr}${top cpu 1}%
+	${top name 2}${alignr}${top cpu 2}%
+	${top name 3}${alignr}${top cpu 3}%
+	${top name 4}${alignr}${top cpu 4}%
+	${top name 5}${alignr}${top cpu 5}%
+${color 111111}${font ubuntu:size=12}Top processes by Memory usage:${color FFFFFF}$font
+	${top_mem name 1}${alignr}${top_mem mem 1}%
+	${top_mem name 2}${alignr}${top_mem mem 2}%
+	${top_mem name 3}${alignr}${top_mem mem 3}%
+	${top_mem name 4}${alignr}${top_mem mem 4}%
+	${top_mem name 5}${alignr}${top_mem mem 5}%
+${color 111111}${hr}
+${color 111111}${font ubuntu:size=12}PC:${alignr}${color FFFFFF}${nodename}
+${color 111111}${font ubuntu:size=12}Release:${alignr}${color FFFFFF}${pre_exec cat /etc/issue.net}  $machine
+${color 111111}${font ubuntu:size=12}Kernel:${alignr}${color FFFFFF}${kernel}

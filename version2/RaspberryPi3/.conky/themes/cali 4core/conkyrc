@@ -1,0 +1,157 @@
+#===================================================================================
+#  conky_grey_cai.lua
+#  author  : CAI
+#  version : 20130512
+#  license : Distributed under the terms of GNU GPL version 2 or later
+#							http://cai79.deviantart.com/
+#  
+#
+#  original conky_grey.lua
+#							http://www.NoobsLab.com
+#  author  : SLK
+#  version : v2011011601
+#  license : Distributed under the terms of GNU GPL version 2 or later
+#
+#===================================================================================
+
+background yes
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+temperature_unit celsius
+pad_percents 2
+
+double_buffer yes
+no_buffers yes
+text_buffer_size 2048
+
+gap_x 0
+gap_y 30
+minimum_size 160 1200
+maximum_width 160
+own_window yes
+own_window_type conky
+own_window_argb_visual yes
+# for dark backgrounds:
+own_window_argb_value 100
+# for light backgrounds:
+#own_window_argb_value 180
+own_window_transparent no
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+border_inner_margin 0
+border_outer_margin 0
+alignment tr
+
+draw_shades no
+draw_outline no
+# if You don't like left vertical white line, set draw_borders to "no"
+draw_borders yes
+draw_graph_borders no
+
+override_utf8_locale yes
+use_xft yes
+xftfont caviar dreams:size=8
+xftalpha 0.5
+uppercase no
+
+default_color FFFFFF
+color1 DDDDDD
+color2 AAAAAA
+color3 888888
+color4 666666
+
+lua_load ~/.conky/conky_grey_cai.lua
+lua_draw_hook_post main
+
+default_bar_size 90 20
+
+TEXT
+# Date on original clock
+# if original conky_grey clock is enabled, You can enable showing date on it by unreming following block
+# ${voffset 35}
+# ${goto 75}${color4}${font ubuntu:size=22}${time %e}${color1}${offset -55}${font ubuntu:size=10}${time %A}
+# ${goto 55}${color2}${voffset -2}${font ubuntu:size=9}${time %b}${voffset -2} ${color3}${font ubuntu:size=12}${time %Y}${font}
+
+# CALENDAR
+# Unrem following line if original clock is enabled and date block is uncommented
+# ${voffset 44}
+# Otherwise unrem following line
+${voffset 130}
+# You can adjust refresh interval by changing XXX interval (in seconds) in "{execpi XXX ..." 
+${goto 5}${color2}${font Mono:size=9}${execpi 600 DJS=`date +%_d`; cal | sed 's/^/ /' | sed s/" $DJS"/" "'${color1}${font Mono:size=9,weight:bold}'"$DJS"'${font Mono:size=9,weight:normal}${color2}'""/}
+${font}
+
+# Unrem following string if calendar enabled
+${voffset -30}
+# Unrem following string if calendar disabled
+##${voffset -8}
+# You can adjust refresh interval by changing XXX interval (in seconds) in "{execi XXX ..." 
+${goto 5}${execi 3600 bash $HOME/.conky/conky_wunderground2/wunderground-script}${color 8e8e8e}${execi 3600  sed -n '1p' $HOME/.conky/conky_wunderground2/messages.wun} forecast
+${goto 5}${font conkyweather:size=25}${color}${execi 3600  sed -n '1p' $HOME/.conky/conky_wunderground2/weather_icons}${font}${voffset -20}${alignc -10}${voffset -3}${font conkyweather:size=25}E${font}${voffset -20}${alignr}${execi 3600 sed -n '3p' $HOME/.conky/conky_wunderground2/messages.wun}${font}
+${alignr}${execi 3600 sed -n '7p' $HOME/.conky/conky_wunderground2/messages.wun}
+# Extended weather
+##${voffset 2}
+# You can adjust refresh interval by changing XXX interval (in seconds) in "{execi XXX ..." 
+##${goto 5}${execi 3600 bash $HOME/.conky/conky_wunderground2/wunderground-script}${color 8e8e8e}${execi 3600  sed -n '9p' $HOME/.conky/conky_wunderground2/messages.wun} forecast
+##${goto 5}${font conkyweather:size=25}${color}${execi 3600  sed -n '5p' $HOME/.conky/conky_wunderground2/weather_icons}${font}${voffset -20}${alignc -10}${voffset -3}${font conkyweather:size=25}E${font}${voffset -20}${alignr}${execi 3600 sed -n '11p' $HOME/.conky/conky_wunderground2/messages.wun}${font}
+##${alignr}${execi 3600 sed -n '15p' $HOME/.conky/conky_wunderground2/messages.wun}
+# Extended weather
+##${voffset 2}
+# You can adjust refresh interval by changing XXX interval (in seconds) in "{execi XXX ..." 
+##${goto 5}${execi 3600 bash $HOME/.conky/conky_wunderground2/wunderground-script}${color 8e8e8e}${execi 3600  sed -n '17p' $HOME/.conky/conky_wunderground2/messages.wun} forecast
+##${goto 5}${font conkyweather:size=25}${color}${execi 3600  sed -n '9p' $HOME/.conky/conky_wunderground2/weather_icons}${font}${voffset -20}${alignc -10}${voffset -3}${font conkyweather:size=25}E${font}${voffset -20}${alignr}${execi 3600 sed -n '19p' $HOME/.conky/conky_wunderground2/messages.wun}${font}
+##${alignr}${execi 3600 sed -n '23p' $HOME/.conky/conky_wunderground2/messages.wun}
+
+
+${voffset -20}
+${goto 69}${font Ubuntu:size=6,weight:bold}${color1}CPU1 ${cpu cpu1}%
+${voffset -2}${goto 75}${font Ubuntu:size=6,weight:bold}${color1}CPU2 ${cpu cpu2}%
+${voffset -2}${goto 79}${font Ubuntu:size=6,weight:bold}${color1}CPU3 ${cpu cpu3}%
+${voffset -2}${goto 81}${font Ubuntu:size=6,weight:bold}${color1}CPU4 ${cpu cpu4}%
+${voffset -23}${goto 119}${font Ubuntu:size=8,weight:bold}${color3}${cpu cpu0}%
+${voffset 5}
+${goto 50}${font Ubuntu:size=7,weight:bold}${color}CPU ${freq_g 1}GHz (${hwmon temp 1}°C)
+${goto 50}${font Ubuntu:size=7,weight:normal}${color1}${top name 1}${alignr -10}${top cpu 1}%
+${goto 50}${font Ubuntu:size=7,weight:normal}${color2}${top name 2}${alignr -10}${top cpu 2}%
+${goto 50}${font Ubuntu:size=7,weight:normal}${color3}${top name 3}${alignr -10}${top cpu 3}%
+${goto 50}${voffset -14}${cpugraph 20,100 666666 666666}
+
+${voffset 24}
+${goto 50}${font Ubuntu:size=7,weight:bold}${color}MEM
+${goto 50}${font Ubuntu:size=7,weight:normal}${color1}${top_mem name 1}${alignr -10}${top_mem mem 1}%
+${goto 50}${font Ubuntu:size=7,weight:normal}${color2}${top_mem name 2}${alignr -10}${top_mem mem 2}%
+${goto 50}${font Ubuntu:size=7,weight:normal}${color3}${top_mem name 3}${alignr -10}${top_mem mem 3}%
+
+${voffset 14}
+${goto 50}${font Ubuntu:size=7,weight:bold}${color}DISKS
+${voffset -14}
+${font Ubuntu:size=7,weight:normal}${color1}${alignr 5}${fs_free /home}
+${font Ubuntu:size=7,weight:normal}${color1}${alignr 5}${fs_free /}
+${goto 50}${font Ubuntu:size=7,weight:normal}${color}HDD used: ${fs_used /} /
+${goto 50}${diskiograph 30,100 666666 666666}${voffset -30}
+
+${voffset 5}
+${goto 5}${font Ubuntu:size=10,weight:bold}${color3}NET${alignr}${color2}${font Ubuntu:size=7,weight:bold}${color1}
+${alignr 5}${if_up eth0}Up: ${upspeed eth0} (Total:${totalup eth0}) 
+${alignr 5}Down: ${downspeed eth0} (Total:${totaldown eth0})
+${alignr 5}IP: ${addr eth0} 
+${alignr 5}${endif}${if_up wlan0}Up: ${upspeed wlan0} (Total:${totalup wlan0})
+${alignr 5}Down: ${downspeed wlan0} (Total:${totaldown wlan0})
+${alignr 5}IP: ${addr wlan0}${endif}
+
+# Dropbox block
+${if_up wlan0}${voffset -15}${else}${voffset 5}${endif}
+${goto 75}${font Ubuntu:size=10,weight:bold}${color3}DROPBOX
+${goto 75}${color2}${font Ubuntu:size=7,weight:bold}${color1}Size: 4.88 GiB
+${goto 75}Used: 
+${alignr 5}${lua dropbox_vol 5} GiB (${lua dropbox_perc 4.88 5}%)
+
+# If dropbox block is disabled, unrem following line
+#${if_up wlan0}${voffset 10}${else}${voffset 30}${endif}
+${voffset -20}
+${goto 50}${font Ubuntu:size=7,weight:bold}${color}BAT
+${goto 50}${font Ubuntu:size=7,weight:normal}${color1}${battery}
+
+${alignc}Uptime:${uptime}
+

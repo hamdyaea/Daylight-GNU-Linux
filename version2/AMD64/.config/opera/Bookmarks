@@ -1,0 +1,287 @@
+{
+   "checksum": "a3a754185778106d9e68d927920afcb3",
+   "roots": {
+      "bookmark_bar": {
+         "children": [  ],
+         "date_added": "13145311600436941",
+         "date_modified": "0",
+         "id": "1",
+         "name": "Barre de favoris",
+         "type": "folder"
+      },
+      "custom_root": {
+         "speedDial": {
+            "children": [ {
+               "children": [ {
+                  "date_added": "13145311601620844",
+                  "id": "21",
+                  "meta_info": {
+                     "custom_keywords": "[]",
+                     "guid": "AB51E2BF-EBAE-4157-B119-6C478CE725DC",
+                     "imageData": "http://redir.opera.com/speeddials/partner/facebook",
+                     "imageDataType": "2",
+                     "imageID": "5243A22ED78411B65CDA129005121CF941D086A621B144FBC0F990740924A7C8",
+                     "imageType": "2",
+                     "partner_id": "facebook",
+                     "partner_image_download_url": "http://redir.opera.com/speeddials/partner/facebook",
+                     "partner_url": "http://redir.opera.com/speeddials/partner/facebook",
+                     "redirect": "1"
+                  },
+                  "name": "Facebook",
+                  "type": "url",
+                  "url": "http://www.facebook.com/"
+               }, {
+                  "date_added": "13145311601621015",
+                  "id": "22",
+                  "meta_info": {
+                     "custom_keywords": "[\"hotels\",\"hostel\",\"holidays\",\"reise\",\"lodging\",\"accommodation\",\"hotel\",\"special offers\",\"packages\",\"specials\",\"weekend breaks\",\"city breaks\",\"deals\",\"budget\",\"cheap\",\"discount\",\"savings\"]",
+                     "guid": "E5ACC8B2-F152-422C-B6DC-6A2625719216",
+                     "imageData": "http://redir.opera.com/speeddials/partner/booking_com_ch",
+                     "imageDataType": "2",
+                     "imageID": "1C6E16D104AEC48B14F29257CD0B71EA3BCE56115F8F2FAD4B56758FDB623988",
+                     "imageType": "2",
+                     "partner_id": "booking_com_ch",
+                     "partner_image_download_url": "http://redir.opera.com/speeddials/partner/booking_com_ch",
+                     "partner_url": "http://redir.opera.com/speeddials/partner/booking_com_ch",
+                     "redirect": "1"
+                  },
+                  "name": "Booking.com",
+                  "type": "url",
+                  "url": "http://www.booking.com/"
+               }, {
+                  "date_added": "13145311601621112",
+                  "id": "23",
+                  "meta_info": {
+                     "custom_keywords": "[\"Bücher\",\"Elektronik\",\"Filme\",\"Games\",\"Sportartikel\",\"Schuhe\",\"Spielzeug\",\"Drogerie\",\"Musik\",\"MP3\"]",
+                     "guid": "D9881C49-E009-4D91-BEA2-BE3810706109",
+                     "imageData": "http://redir.opera.com/speeddials/partner/amazon_ch",
+                     "imageDataType": "2",
+                     "imageID": "34766F2D8F7BECB8271F8C134765B173DA8407A5F46CBFF3F2F4398F1B5A6ABA",
+                     "imageType": "2",
+                     "partner_id": "amazon_ch",
+                     "partner_image_download_url": "http://redir.opera.com/speeddials/partner/amazon_ch",
+                     "partner_url": "http://redir.opera.com/speeddials/partner/amazon_ch",
+                     "redirect": "1"
+                  },
+                  "name": "Amazon",
+                  "type": "url",
+                  "url": "http://www.amazon.ch/"
+               }, {
+                  "date_added": "13145311601621197",
+                  "id": "24",
+                  "meta_info": {
+                     "custom_keywords": "[]",
+                     "guid": "0286F297-E60B-4483-B563-E2F8E10B29F9",
+                     "imageData": "http://redir.opera.com/speeddials/partner/yahoo_ch",
+                     "imageDataType": "2",
+                     "imageID": "0E81F2EC9440D97E19A2F09F479E4E72174B44748E6210BB9DC8573D6FF4A041",
+                     "imageType": "2",
+                     "partner_id": "yahoo_ch",
+                     "partner_image_download_url": "http://redir.opera.com/speeddials/partner/yahoo_ch",
+                     "partner_url": "http://redir.opera.com/speeddials/partner/yahoo_ch",
+                     "redirect": "1"
+                  },
+                  "name": "Yahoo!",
+                  "type": "url",
+                  "url": "http://ch.yahoo.com/"
+               }, {
+                  "date_added": "13145311601621292",
+                  "id": "25",
+                  "meta_info": {
+                     "custom_keywords": "[\"eBay\",\"Elektronik\",\"Autos\",\"Kleidung\",\"Sportartikel\",\"Digitalkameras\",\"Handy\",\"Antiquitäten\",\"Eintrittskarten\",\"Schmuck\",\"Auktion\",\"Online-Shopping\",\"Online-Auktion\",\"bieten\",\"kaufen\",\"ersteigern\"]",
+                     "guid": "CC9546D6-6893-4BD6-9E02-04D27A41D595",
+                     "imageData": "http://redir.opera.com/speeddials/partner/ebay_ch",
+                     "imageDataType": "2",
+                     "imageID": "1F1E2F3D706796225F0DDA1D337BE6397D367263E5B297C932C0FB1EA95F1382",
+                     "imageType": "2",
+                     "partner_id": "ebay_ch",
+                     "partner_image_download_url": "http://redir.opera.com/speeddials/partner/ebay_ch",
+                     "partner_url": "http://redir.opera.com/speeddials/partner/ebay_ch",
+                     "redirect": "1"
+                  },
+                  "name": "eBay",
+                  "type": "url",
+                  "url": "http://www.ebay.ch/"
+               }, {
+                  "date_added": "13145311601621382",
+                  "id": "26",
+                  "meta_info": {
+                     "custom_keywords": "[\"video\",\"sharing\",\"camera phone\",\"video phone\",\"free\",\"upload\"]",
+                     "guid": "CAFEC238-B329-458A-B84D-74F9F6CCF4E8",
+                     "imageData": "http://redir.opera.com/speeddials/partner/youtube",
+                     "imageDataType": "2",
+                     "imageID": "45D0AA34B9346B9C1CD482F465D18E25EF796A0CE412B7CA7C86B0C2ACC9CBEE",
+                     "imageType": "2",
+                     "partner_id": "youtube",
+                     "partner_image_download_url": "http://redir.opera.com/speeddials/partner/youtube",
+                     "partner_url": "http://redir.opera.com/speeddials/partner/youtube",
+                     "redirect": "1"
+                  },
+                  "name": "YouTube",
+                  "type": "url",
+                  "url": "http://www.youtube.com/"
+               }, {
+                  "date_added": "13145311601621469",
+                  "id": "27",
+                  "meta_info": {
+                     "custom_keywords": "[]",
+                     "guid": "E4DCD6FE-3318-4E25-A8A9-F6385DA29EDE",
+                     "imageData": "http://redir.opera.com/speeddials/partner/aliexpress_com_ch",
+                     "imageDataType": "2",
+                     "imageID": "F885B4060044588AC297096E89EBFD7478D864B8DF37764E601EDCDCD0CF9F23",
+                     "imageType": "2",
+                     "partner_id": "aliexpress_com_ch",
+                     "partner_image_download_url": "http://redir.opera.com/speeddials/partner/aliexpress_com_ch",
+                     "partner_url": "http://redir.opera.com/speeddials/partner/aliexpress_com_ch",
+                     "redirect": "1"
+                  },
+                  "name": "AliExpress",
+                  "type": "url",
+                  "url": "http://aliexpress.com/"
+               }, {
+                  "children": [ {
+                     "date_added": "13145311601621581",
+                     "id": "29",
+                     "meta_info": {
+                        "custom_keywords": "[\"Opera\",\"Opera Software\"]",
+                        "guid": "B7A1C9E1-5D98-49FA-B3EE-2F3AB3ACFD17",
+                        "imageData": "http://redir.opera.com/speeddials/partner/product_ch",
+                        "imageDataType": "2",
+                        "imageID": "399E9C81D7778AD2E47FD312A489293BC25D782C40E9BAFFA064599358DB4F69",
+                        "imageType": "2",
+                        "partner_id": "product_ch",
+                        "partner_image_download_url": "http://redir.opera.com/speeddials/partner/product_ch",
+                        "partner_url": "http://redir.opera.com/speeddials/partner/product_ch",
+                        "redirect": "1"
+                     },
+                     "name": "Lass uns verbinden",
+                     "type": "url",
+                     "url": "http://www.opera.com/de/follow"
+                  }, {
+                     "date_added": "13145311601621674",
+                     "id": "30",
+                     "meta_info": {
+                        "custom_keywords": "[]",
+                        "guid": "96638CD3-140F-4E16-989A-4261F694AFF4",
+                        "imageData": "http://redir.opera.com/speeddials/partner/linkedin_ch",
+                        "imageDataType": "2",
+                        "imageID": "57BC61D5F0A797FD89E9723313E203FFC2A32EBA5CFE48CEFDB3C6EB0D7A4629",
+                        "imageType": "2",
+                        "partner_id": "linkedin_ch",
+                        "partner_image_download_url": "http://redir.opera.com/speeddials/partner/linkedin_ch",
+                        "partner_url": "http://redir.opera.com/speeddials/partner/linkedin_ch",
+                        "redirect": "1"
+                     },
+                     "name": "LinkedIn",
+                     "type": "url",
+                     "url": "http://www.linkedin.ch/"
+                  }, {
+                     "date_added": "13145311601621771",
+                     "id": "31",
+                     "meta_info": {
+                        "custom_keywords": "[]",
+                        "guid": "615A692A-CD7B-40D9-915B-1BE04C2631E0",
+                        "imageData": "http://redir.opera.com/speeddials/partner/twitter_ch",
+                        "imageDataType": "2",
+                        "imageID": "EECC566C3CCD2ACDC6F3F12FE1FD9C7D268DA3F0D8899C1E60CE1A27EFEC7F6C",
+                        "imageType": "2",
+                        "partner_id": "twitter_ch",
+                        "partner_image_download_url": "http://redir.opera.com/speeddials/partner/twitter_ch",
+                        "partner_url": "http://redir.opera.com/speeddials/partner/twitter_ch",
+                        "redirect": "1"
+                     },
+                     "name": "Twitter",
+                     "type": "url",
+                     "url": "http://www.twitter.com/"
+                  }, {
+                     "date_added": "13145311601621865",
+                     "id": "32",
+                     "meta_info": {
+                        "custom_keywords": "[]",
+                        "guid": "B1A48400-24F8-4E43-96E0-99B9DCAE8558",
+                        "imageData": "http://redir.opera.com/speeddials/partner/wikipedia_org_ch",
+                        "imageDataType": "2",
+                        "imageID": "49B1200B64B853A45BA0FCD595A8A9001A4A3B3AF113C17B347015B3FFC166D6",
+                        "imageType": "2",
+                        "partner_id": "wikipedia_org_ch",
+                        "partner_image_download_url": "http://redir.opera.com/speeddials/partner/wikipedia_org_ch",
+                        "partner_url": "http://redir.opera.com/speeddials/partner/wikipedia_org_ch",
+                        "redirect": "1"
+                     },
+                     "name": "Wikipedia",
+                     "type": "url",
+                     "url": "http://de.wikipedia.org/"
+                  } ],
+                  "date_added": "13145311601621550",
+                  "date_modified": "13145311601621865",
+                  "id": "28",
+                  "meta_info": {
+                     "custom_keywords": "[]",
+                     "guid": "CCE8DA9D-16D2-4746-86A2-FC8E7062408D",
+                     "partner_id": "",
+                     "partner_image_download_url": "",
+                     "partner_url": "",
+                     "redirect": "0"
+                  },
+                  "name": "",
+                  "type": "folder"
+               } ],
+               "date_added": "13145311600557292",
+               "date_modified": "13145311601621469",
+               "id": "8",
+               "meta_info": {
+                  "speed_dial_root_folder_guid": "e0878073-3535-4b5d-aad2-d84437615998"
+               },
+               "name": "DaylightLinuxV2",
+               "type": "folder"
+            } ],
+            "date_added": "13145311600552021",
+            "date_modified": "0",
+            "id": "6",
+            "name": "Speed Dials",
+            "type": "folder"
+         },
+         "trash": {
+            "children": [  ],
+            "date_added": "13145311600552022",
+            "date_modified": "0",
+            "id": "7",
+            "name": "Trash",
+            "type": "folder"
+         },
+         "unsorted": {
+            "children": [  ],
+            "date_added": "13145311600552020",
+            "date_modified": "0",
+            "id": "4",
+            "name": "Unsorted bookmarks",
+            "type": "folder"
+         },
+         "userRoot": {
+            "children": [  ],
+            "date_added": "13145311600552021",
+            "date_modified": "0",
+            "id": "5",
+            "name": "All bookmarks",
+            "type": "folder"
+         }
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13145311600436957",
+         "date_modified": "0",
+         "id": "2",
+         "name": "Imported bookmarks",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13145311600436960",
+         "date_modified": "0",
+         "id": "3",
+         "name": "Favoris sur mobile",
+         "type": "folder"
+      }
+   },
+   "version": 1
+}

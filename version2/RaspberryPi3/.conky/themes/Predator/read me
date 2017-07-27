@@ -1,0 +1,16 @@
+1.- Open a Terminal (Applications-Accesories-Terminal) and type:
+
+sudo apt-get install conky-all lm-sensors hddtemp
+
+
+2. Press CTRL H  and see the hidden files
+
+3.  Go to .Conky/sentinel/font/ and install all truetype fonts.
+
+4. put all the .conkyrc files & .start-conky file into home.
+
+5.- Now, just copy .Conky folder to home folder
+
+6. Go to System-Preferences-Start_Applications. Add. In dialog Box (Command) just write: /home/use your user name/.start-conky. Or better yet find the .start-conky and double click and check the box to start-up.
+
+Reboot. Now, Conky Sentinel is running!

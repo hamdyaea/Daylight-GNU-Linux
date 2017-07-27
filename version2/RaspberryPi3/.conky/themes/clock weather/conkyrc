@@ -1,0 +1,61 @@
+#===================================================================================
+#  cai_simplicity.lua
+#  author  : CAI
+#  version : 20130526
+#  license : Distributed under the terms of GNU GPL version 2 or later
+#							http://cai79.deviantart.com/
+#===================================================================================
+
+background yes
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+temperature_unit celsius
+pad_percents 2
+
+double_buffer yes
+no_buffers yes
+text_buffer_size 2048
+
+gap_x 510
+gap_y 270
+minimum_size 260 260
+maximum_width 260
+own_window yes
+own_window_type conky
+own_window_argb_visual yes
+# for dark backgrounds:
+#own_window_argb_value 100
+# for light backgrounds:
+own_window_argb_value 180
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+border_inner_margin 0
+border_outer_margin 0
+alignment tr
+
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+override_utf8_locale yes
+use_xft yes
+xftfont caviar dreams:size=8
+xftalpha 0.5
+uppercase no
+
+default_color 000000
+color1 666666
+color2 888888
+color3 AAAAAA
+color4 DDDDDD
+color5 FFFFFF
+
+default_bar_size 90 20
+
+lua_load ~/.conky/clock.lua
+lua_draw_hook_post main
+
+TEXT

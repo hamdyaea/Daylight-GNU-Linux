@@ -1,0 +1,11 @@
+#!/bin/sh
+sleep 20
+conky -d -c ~/.conkyrc &
+conky -d -c ~/.conkyrc1 &
+conky -d -c ~/.conkyrc2 &
+conky -d -c ~/.conkyrc3 &
+conky -d -c ~/.conkyrc4 &
+conky -d -c ~/.conkyrc5 &
+conky -d -c ~/.conkyrc6 &
+conky -d -c ~/.conkyrc7 &
+exit

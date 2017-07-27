@@ -1,0 +1,75 @@
+# — Conky settings — #
+background no
+update_interval 1
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+imlib_cache_size 0
+
+temperature_unit celsius
+
+# — Window specifications — #
+
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 880
+maximum_width 
+
+alignment tr
+gap_x 525
+gap_y 280
+
+# — Graphics settings — #
+draw_shades yes
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# — Text settings — #
+use_xft yes
+xftfont pftempestafivecondensed:size=6
+xftalpha 0.5
+
+uppercase no
+default_shade_color 000000
+default_color 81D7FF
+color1 FFFFFF
+
+# — Lua Load — #
+
+	lua_load ~/.conky/clock1_rings.lua
+	lua_draw_hook_pre clock_rings
+	#lua_load ~/conky/text.lua
+	#lua_draw_hook_post draw_text
+
+	
+TEXT
+${image ~/.conky/orb-1.png -p 0,-2} 
+
+${image ~/.conky/orb.png -p 150,-2}
+${color}${goto 202}${voffset 12}${font digitalk-mono:size=26}${cpu cpu0}${font pftempestafivecondensed:size=6}${color1}
+${color1}${goto 197}cpu ${color}[${color1} % ${color}]${color1}
+${image ~/.conky/orb.png -p 300,-2}
+${color}${goto 353}${voffset -50}${font digitalk-mono:size=26}${memperc}${font pftempestafivecondensed:size=6}${color1}
+${color1}${goto 345}mem ${color}[${color1} % ${color}]${color1}
+${image ~/.conky/orb.png -p 450,-2}
+${color}${goto 502}${voffset -50}${font digitalk-mono:size=26}${swapperc}${font pftempestafivecondensed:size=6}${color1}
+${color1}${goto 491}swap ${color}[${color1} % ${color}]${color1}
+${image ~/.conky/orb.png -p 600,-2}
+${color}${goto 653}${voffset -50}${font digitalk-mono:size=26}${fs_used_perc /home}${font pftempestafivecondensed:size=6}${color1}
+${color1}${goto 641}home ${color}[${color1} % ${color}]${color1}
+${image ~/.conky/orb.png -p 750,-2}
+${color}${goto 802}${voffset -50}${font digitalk-mono:size=26}${fs_used_perc /}${font pftempestafivecondensed:size=6}${color1}
+${color1}${goto 793}root ${color}[${color1} % ${color}]${color1}
+
+

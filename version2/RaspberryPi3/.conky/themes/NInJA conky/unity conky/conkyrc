@@ -1,0 +1,66 @@
+# — Conky settings — #
+background yes
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 1024
+imlib_cache_size 0
+
+# — Window specifications — #
+
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 200 747
+maximum_width 200
+
+alignment tr
+gap_x 2
+gap_y 55
+
+# — Graphics settings — #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# — Text settings — #
+use_xft yes
+xftfont DIST Inking:size=26
+xftalpha 0.2
+
+uppercase no
+
+default_color 58E0D3
+color1 99F2E9
+
+# — Lua Load — #
+lua_load ~/.conky/ninja_rings.lua
+lua_draw_hook_pre clock_rings
+
+TEXT
+${voffset}${goto 25}${font DIST Inking:size=95}${time %I}${font}
+${voffset -35}${goto 65}${time %M}
+${voffset 200}${goto 25}${font DIST Inking:size=36}${if_match ${battery_percent} <= 15}${color1}Bat${color}${else}Bat${endif}${font}
+${voffset -15}${goto 65}${battery_percent}%
+${voffset 20}${goto 25}${font DIST Inking:size=36}${if_match ${cpu} >= 90}${color1}Cpu${color}${else}Cpu${endif}${font}
+${voffset -15}${goto 65}${cpu}%
+${voffset 20}${goto 25}${font DIST Inking:size=36}${if_match ${memperc} >= 85}${color1}Ram${color}${else}Ram${endif}${font}
+${voffset -15}${goto 65}${memperc}%
+${voffset 50}${goto 29}${color AFAEA6}${diskiograph 20,70}${color}
+${voffset -40}${goto 25}${font DIST Inking:size=36}I/O${font}
+${voffset -15}${goto 65}${diskio}
+
+

@@ -1,0 +1,34 @@
+[[Este documento describe la instalacion de Conky Infinnity:]]
+
+1) En la terminal de Ubuntu coloca:
+	sudo apt-get install conky
+   con esto tendras el software primordial instalado para poder continuar.
+
+2) Descomprime el contenido de la carpeta Conky 12.10 en la carpeta personal.
+
+3) Agrega conky a las aplicaciones al inicio:
+	*En el dash busca "Aplicaciones al inicio"
+	*Da clic en boton "Añadir"
+	*En nombre coloca "Conky"
+	*En orden coloca "conky" (sin comillas y todo en minuscula)
+	*En comentario puedes agregar lo que tú quieras, como por ejemplo:
+		"Monitor grafico del sistema sobre el escritorio"
+
+4) Cierra sesion y logueate de nuevo y tendras listo conky en tu sistema!!!
+
+[[Here is the instrucctions for the instalation of Conky Infinnity]]
+
+1) Open the terminal and put:
+	sudo apt-get install conky
+   This order install conky, the essential software for continue.
+
+2)Unzip the files and folders fron Conky 12.10 in /home/user (user is your personal folder)
+
+3)Add conky to autorun:
+	*Open the Dash and share Startup applications
+	*Clic "Add"
+	*Name: Conky
+	*Order/Comand: "conky" (with out quotes)
+	*The comment maybe: "System monitor"
+
+4)Log out and log in. Conky is ready!!!

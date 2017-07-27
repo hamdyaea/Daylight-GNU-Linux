@@ -1,0 +1,26 @@
+<settings>
+    <setting id="no_slide_animations" type="bool">false</setting>
+    <setting id="touchmode" type="bool">false</setting>
+    <setting id="show_weatherinfo" type="bool">false</setting>
+    <setting id="hide_mediaflags" type="bool">false</setting>
+    <setting id="AutoScroll" type="bool">false</setting>
+    <setting id="HomeMenuNoPicturesButton" type="bool">false</setting>
+    <setting id="no_fanart" type="bool">false</setting>
+    <setting id="HomeMenuNoMovieButton" type="bool">false</setting>
+    <setting id="HomeMenuNoTVShowButton" type="bool">false</setting>
+    <setting id="HomeMenuNoMusicButton" type="bool">false</setting>
+    <setting id="HomeMenuNoMusicVideoButton" type="bool">false</setting>
+    <setting id="HomeMenuNoTVButton" type="bool">false</setting>
+    <setting id="HomeMenuNoRadioButton" type="bool">false</setting>
+    <setting id="HomeMenuNoProgramsButton" type="bool">false</setting>
+    <setting id="HomeMenuNoVideosButton" type="bool">false</setting>
+    <setting id="HomeMenuNoFavButton" type="bool">false</setting>
+    <setting id="HomeMenuNoWeatherButton" type="bool">false</setting>
+    <setting id="background_overlay" type="string"></setting>
+    <setting id="MovieGenreFanart.path" type="string"></setting>
+    <setting id="MovieGenreFanart.ext" type="string"></setting>
+    <setting id="WeatherFanart.path" type="string"></setting>
+    <setting id="WeatherFanart.ext" type="string"></setting>
+    <setting id="HomeFanart.path" type="string"></setting>
+    <setting id="HomeFanart.ext" type="string"></setting>
+</settings>

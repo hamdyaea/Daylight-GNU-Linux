@@ -1,0 +1,70 @@
+#-----------------------------#
+#  - .conkyrc & lua @juupu -  #
+#-----------------------------#
+
+#Global Setting
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+
+override_utf8_locale yes
+use_xft yes
+xftalpha 0.5
+xftfont Dinreg:size=9
+text_buffer_size 2048
+
+own_window_class Conky
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_pager,skip_taskbar
+own_window_argb_visual yes
+own_window_argb_value 50
+
+alignment tr
+gap_x 15
+gap_y 180
+minimum_size 220 350
+maximum_width 220
+
+draw_shades no
+default_color BDB5A1
+default_shade_color 1d1d1d
+color0 ffffff
+color1 99CCFF
+color2 D6713C
+
+lua_load ~/.conky/stev_bars.lua
+lua_draw_hook_pre bar_stats
+
+# Content goes below
+
+TEXT
+#daytime
+${font Dinreg:style=Bold:size=9}${color2}${alignr 92}${time %p}${color}${font}
+${voffset -35}${font Dinreg:size=70}${alignr}${time %I}${color}
+${voffset -62}${color2}${alignr 8}${time %M}${font}
+
+${font Dinreg:style=Bold:size=9}${color}${alignr 15}${time %^a}, ${time %^b} ${voffset -4}${font Dinreg:size=13}${color2}${time %d}${font}
+
+
+
+
+
+#	SPACE FOR LUA GRAPH
+
+
+
+
+
+${if_running audacious}
+${goto 40}${color0}${font Monospace:size=9}${color1}♫ ${font Dinreg:size=9}Now Playing :${font}
+${goto 40}${font Dinreg:size=9}${exec audtool --current-song-tuple-data artist}${font} ${alignr}${font}
+${goto 40}${font Dinreg:size=9}${exec audtool --current-song-tuple-data title}${font} ${alignr}${font}
+${goto 40}${color}${audacious_bar 5 25}
+${endif}${voffset -3}${color0}${font Dinreg:size=6}${alignr}©STEV

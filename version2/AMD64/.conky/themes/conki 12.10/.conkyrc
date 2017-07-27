@@ -1,0 +1,118 @@
+#########################################################################################
+#    Conky Theme : Infinity #
+#    Created by : Harshit Yadav
+#
+#    Version : 1.0 # 
+#    Conky Theme Remix: Infinity for Ubuntu 12.10
+#    Remixed by: José Sant (fb.com/PeperIonX)
+#    New features:
+#	*Translate to spanish
+#	*Information about network corrected
+#	*Adapted for screen 1366x768
+#	*Time with seconds
+#    Feel Free to distribute #
+#    For Installation Instrutions See Read Me
+#	Remember: If you modify this program, add your information in this lines!!
+#
+#	Español:
+#	Tema: Conky
+#	Creada por: Harshit Yadav
+#	Versión: 1.0
+#	Version modificada: Infinity para Ubuntu 12.10
+#	Modificada por:  José Sant (fb.com/PeperIonX)
+#		Nuevas caracteristicas:
+#		*Traduccion al español
+#		*Corregida la información de la red
+#		*Adpatada para pantallas 1366x768
+#		*Hora con segundos
+#	Sientete libre de distribiur este programa
+#	Para la instalación, ve a "Leeme" incluido en el paquete de descargas
+#	Recuerda: Si modificas este programa, agrega tu informacion en estas lineas!!
+########################################################################################
+
+
+# Configuraciones del tema #
+background yes
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+#imlib_cache_size 0
+
+temperature_unit fahrenheit
+
+# Especificaciones de la ventana #
+
+own_window yes
+own_window_type conky
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+border_inner_margin 0
+border_outer_margin 0
+
+## Esta resolucion esta predeterminada para monitores 1366x768 
+## Ajustala de acuerdo a tu monitor
+
+minimum_size 1366 768
+maximum_width 1366
+
+alignment tr
+gap_x 10
+gap_y 55
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Text settings #
+use_xft yes
+xftfont caviar dreams:size=8
+xftalpha 0.5
+
+uppercase no
+
+temperature_unit celsius
+
+
+default_color FFFFFF
+
+# Lua Load  #
+lua_load ~/.conky/.lua/scripts/haunted.lua
+lua_draw_hook_pre clock_rings
+
+## Adjust these fields according to the your screen size i have modded them for 1366X768
+
+TEXT
+#Fecha #
+${offset 450}${color EAEAEA}${font GE Inspira:pixelsize=130}${time %H:%M}${font}${offset 0}${color EAEAEA}${font GE Inspira:pixelsize=30}${time %S}${voffset -94}${voffset 10}${color FFA300}${font GE Inspira:pixelsize=42}${time %d} ${voffset -15}${color EAEAEA}${font GE Inspira:pixelsize=22}${time  %B} ${time %Y}${font}${voffset 124}${font GE Inspira:pixelsize=58}${offset -550}${time %A}${font}
+#Carga de sistema #
+${offset 470}${voffset -100}${font Ubuntu:pixelsize=10}${color FFA300}HD ${offset 9}$color${fs_free /} / ${fs_size /}${offset 30}${color FFA300}RAM ${offset 9}$color$mem / $memmax${offset 30}${color FFA300}CPU ${offset 9}$color${cpu cpu0}%
+${voffset 10}${offset 270}${color 2c2c2c}${hr 4}
+${image ~/.conky/rev-eng.png}
+# Información del sistema de archivos #
+${offset 130}${voffset 245}${font Santana:size=9:style=Bold}${color ffffff}root : ${font Santana:size=9}${fs_used /}/${fs_size /}
+${offset 130}${voffset 10}${font Santana:size=9:style=Bold}${color ffffff}home: ${font Santana:size=9}${fs_used /home}/${fs_size /home}$font
+${offset 120}${voffset 12}${color ffffff}${font Santana:size=9:style=Bold}swap: ${font Santana:size=8} ${swap} / ${swapfree}$font
+# Informacón del kernel #
+${offset 570}${voffset -110} ${color EAEAEA}Kernel Linux: ${kernel}
+${offset 570}${voffset 5}Trabajando desde hace: ${uptime}
+# Informacion del usuario #
+${offset 825}${voffset -80}${color ffffff}${font Santana:size=10:style=Bold}${exec whoami}@${nodename}
+${offset 825}${voffset 0}${color ffffff}${font Santana:size=8}${top name 5} ${top mem 5}
+# Configuracion de la red #
+${offset 710}${voffset 125}${color ffffff}${font Santana:size=8}Dirección IP: ${addr wlan0}
+${offset 710}${voffset 10}${color ffffff}${font Santana:size=8}Bajando: ${downspeed wlan0}/s
+${offset 710}${voffset 10}${color ffffff}${font Santana:size=8}${color #000000}${downspeedgraph wlan0 32,150 000000 ffffff} 
+${offset 710}${voffset 10}${color ffffff}${font Santana:size=8}Subiendo: ${upspeed wlan0}/s
+${offset 710}${voffset 10}${color #000000}${upspeedgraph wlan0 32,150 000000 ffffff}
+${offset 710}${voffset 10}${color ffffff}${font Santana:size=8}TCP Connections: ${tcp_portmon 1 65535 count}

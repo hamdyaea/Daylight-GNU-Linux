@@ -1,0 +1,71 @@
+#===================================================================================
+#  cai_simplicity
+#  author  : CAI
+#  version : 20130526
+#  license : Distributed under the terms of GNU GPL version 2 or later
+#							http://cai79.deviantart.com/
+#===================================================================================
+
+
+background no
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+temperature_unit celsius
+pad_percents 2
+
+double_buffer yes
+no_buffers yes
+text_buffer_size 2048
+
+gap_x 0
+gap_y 30
+minimum_size 300 1280
+maximum_width 300
+own_window yes
+own_window_type conky
+own_window_argb_visual yes
+# for dark backgrounds:
+own_window_argb_value 100
+# for light backgrounds:
+#own_window_argb_value 180
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+border_inner_margin 0
+border_outer_margin 0
+alignment tr
+
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+override_utf8_locale yes
+use_xft yes
+xftfont caviar dreams:size=8
+xftalpha 0.5
+uppercase no
+
+default_color FFFFFF
+color1 DDDDDD
+color2 666666
+color3 333333
+color4 000000
+
+default_bar_size 90 20
+
+TEXT
+# Date
+# For Aluminium 2 1280x800.jpg
+#${voffset 105}
+# For Aluminium 1280x800.jpg
+${voffset 40}
+${goto 35}${color2}${font ubuntu:size=42}${time %e}${color3}${voffset -30}${offset 30}${font ubuntu:size=10}${time %A}
+${goto 125}${color3}${voffset -2}${font ubuntu:size=25}${time %b}${voffset -2} ${color2}${font ubuntu:size=12}${time %Y}${font}
+
+# For Aluminium 2 1280x800.jpg
+#${voffset 425}
+# For Aluminium 1280x800.jpg
+${voffset 575}
+${alignr 50}${font ubuntu:size=8}${color2}powered by ${color3}${voffset -8}${font Arial Black:size=12}openSUSE

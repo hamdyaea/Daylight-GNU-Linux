@@ -1,0 +1,126 @@
+# Conky Config, Requires Additional Scripts.
+# Mashed by Nathan Salapat
+# rendertracer@gmail.com
+# Last updated 04-25-2012
+
+# Window Stuff
+own_window yes # Create own window instead of using desktop (required in nautilus)
+own_window_hints undecorated,below,skip_taskbar
+background no
+double_buffer yes # Use double buffering (reduces flicker, may not work for everyone)
+use_spacer none
+use_xft yes
+stippled_borders no # Stippled borders?
+own_window_colour brown # If the window isn't set to transparent this will be the color the background shows.
+own_window_transparent yes
+minimum_size 150 500 # Width and Height
+maximum_width 150
+draw_borders no # Do you want a border showing around the Conky windows area, handy for figuring out where the extents of your Conky are.
+
+# Text Stuff
+draw_outline no # amplifies text if yes
+uppercase no # set to yes if you want all text to be in uppercase
+draw_shades no # Do you want the text to have a shadow?
+# Text alignment, other possible values are commented
+#alignment top_left
+alignment top_right
+#alignment bottom_left
+#alignment bottom_right
+# XTF stuff.
+override_utf8_locale no
+xftfont Terminus:size=8
+xftalpha 0.8
+# Gap between borders of screen and text
+gap_x 10
+gap_y 10
+# Default font size, type, and weight.
+font Ubuntu:size=7,weight:normal
+
+# Defaults
+default_color white
+default_shade_color black
+default_outline_color white
+temperature_unit fahrenheit # Can be changed to celsius
+
+# Colors You can change these values, and through the conky the colors will be changed. Standard HEX values are. White: ffffff, Black: 000000, Red: ff0000, Green: 00ff00, Blue: 0000ff, Yellow: ffff00. You can find others with an image editor, or online.
+color1 18CAE6 # Titles, the main headings
+color2 18CAE6 # First listings in CPU, RAM, and Day of Week.
+color3 18CAE6 # Second listings in CPU, RAM, and Month.
+color4 18CAE6 # Third listings in CPU, RAM, and Year
+color5 18CAE6 # Color of the Graph outlines.
+color6 18CAE6 # Color of text for HDD usage, and running processes
+color7 18CAE6 # The orange from the graphs, not used for graphs, you have to edit the lua file to change that.
+
+# How often should Conky update, in seconds?
+update_interval 3
+
+# Load the scripts.
+lua_load ~/.conky/conky_orange.lua
+lua_draw_hook_post main
+
+# stuff after 'TEXT' will be formatted on screen
+
+TEXT
+#Clock
+${voffset 30}
+${goto 75}${color1}${font ubuntu:size=22}${time %e}
+${goto 65}${color2}${voffset -20}${font ubuntu:size=10}${time %A}
+${goto 60}${color2}${voffset -2}${font ubuntu:size=9}${time %b}${voffset -2} ${color3}${font ubuntu:size=12}${time %Y}${font}
+
+#CPU
+${voffset 72}
+${goto 55}${font Ubuntu:size=7,weight:bold}${color1}CPU ${alignr}${cpu cpu0} %
+${goto 55}${font}${color2}${top name 1}${alignr}${top cpu 1}%
+${goto 55}${font}${color3}${top name 2}${alignr}${top cpu 2}%
+${goto 55}${font}${color4}${top name 3}${alignr}${top cpu 3}%
+${goto 20}${color5}${cpugraph 25,135 color3}
+${goto 55}${voffset -5}${font}${color6}${threads} process 
+
+#RAM
+${voffset 10}
+${goto 50}${font Ubuntu:size=7,weight:bold}${color1}RAM ${alignr}${memperc} %
+${goto 50}${font}${color2}${top_mem name 1}${alignr}${top_mem mem 1}%
+${goto 50}${font}${color3}${top_mem name 2}${alignr}${top_mem mem 2}%
+${goto 50}${font}${color4}${top_mem name 3}${alignr}${top_mem mem 3}%
+
+#Disks
+${voffset 25}
+${goto 50}${font Ubuntu:size=7,weight:bold}${color1}HDD
+${goto 50}${font}${color6}Used: ${fs_used /}/Free: ${fs_free /}
+${voffset 5}${font Ubuntu:size=8,weight:bold}${color1}NETWORKING ${hr 2}
+#Networking
+${if_up wlan0} # if the wlan0 interface is up
+${font}${color2}Down ${downspeed wlan0} k/s ${alignr}Up ${upspeed wlan0} k/s
+${color5}${downspeedgraph wlan0 15,70 color3} ${alignr}${upspeedgraph wlan0 15,70 color3}
+${color2}${font}Total ${totaldown wlan0} ${alignr}Total ${totalup wlan0}
+${voffset -20}
+${else}
+${if_up eth0} # if the eth0 interface is up
+${voffset -25}
+${font}${color2}Down ${downspeed eth0} k/s ${alignr}Up ${upspeed eth0} k/s
+${color5}${downspeedgraph eth0 15,70 color3} ${alignr}${upspeedgraph eth0 15,70 color3}
+${color2}${font}Total ${totaldown eth0} ${alignr}Total ${totalup eth0}
+${voffset -30}
+${else}
+${endif}
+${endif}
+${hr 2}
+#System Info
+#Battery
+${font Ubuntu:size=9,weight:normal}${color1}Battery: ${battery}
+#Uptime
+${voffset 5}${goto 50}${font Ubuntu:size=9,weight:nomral}${color1}Uptime ${uptime_short}
+#Temperatures
+${goto 50}${font Ubuntu:size=9, weight:normal}${color1}Temperatures:
+#CPU
+${goto 75}${font}${color3}CPU ${acpitemp} F
+#GPU
+${goto 75}${font}${color3}GPU ${execi 10 nvidia-settings -q GPUCoreTemp | awk '{if (NR==2) {print ($4*9)/5+32}}'} F 
+#HDD
+${goto 75}${font}${color3}HDD ${hddtemp /dev/sda} F
+
+${font Ubuntu:size=8,weight:normal}${color6}${execp 60 ~/.conky/HowLong.sh}N.W.O: ${execi 60 ~/.conky/countdown.sh}
+${voffset -25}
+${font Ubuntu:size=9,weight:normal}
+${color1}Clementine ${hr 2}
+${color1}${execp conkyClementine --template=~/.conky/conkyClementine.template}

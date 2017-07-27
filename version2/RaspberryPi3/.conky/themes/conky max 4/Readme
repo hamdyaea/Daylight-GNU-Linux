@@ -1,0 +1,10 @@
+Description:
+Based on Conky by CAYMUS
+Modified by jerusalem
+
+To install copy hidden directory .conky in your home directory and run the command: 
+conky -c ~/.conky/conkyrc_8a
+
+To work correctly is required:
+1. lm-sensors and hddtemp
+

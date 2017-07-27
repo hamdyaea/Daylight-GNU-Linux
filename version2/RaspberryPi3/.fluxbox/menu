@@ -1,0 +1,91 @@
+# This is an automatically generated file.
+# Please see <file:/usr/share/doc/menu/README> for information.
+
+# to use your own menu, copy this to ~/.fluxbox/menu, then edit
+# ~/.fluxbox/init and change the session.menuFile path to ~/.fluxbox/menu
+
+[begin] (Daylight linux)
+
+# Automatically generated file. Do not edit (see /usr/share/doc/menu/html/index.html)
+
+#   [submenu] (Aide) {}
+#      [exec] (Info) { x-terminal-emulator -T "Info" -e info} <>
+#      [exec] (Xman) {xman} <>
+#   [end]
+#   [submenu] (Daylight) {}
+      [submenu] (Daylight Linux) {}
+      [submenu] (Multimedia) {}
+      [exec] (smplayer) {smplayer} <>
+      [end]
+      [submenu] (Pdf Reader) {}
+      [exec] (Daylight pdf) {okular} <>
+      [end]
+      [submenu] (Writer) {}
+         [exec] (Pluma) {pluma} <>
+      [end]
+      [submenu] (File Manager) {}
+         [exec] (Daylight File Manager) {nautilus} <>
+      [end]
+      [submenu] (Command Line Terminal) {}
+         [exec] (Daylight Terminal) { x-terminal-emulator -T "Bash" -e /bin/bash --login} <>
+  #       [exec] (Dash) { x-terminal-emulator -T "Dash" -e /bin/dash -i} <>
+  #       [exec] (Sh) { x-terminal-emulator -T "Sh" -e /bin/sh --login} <>
+      [end]
+      [submenu] (Internet) {}
+         [submenu] (Communication) {}
+           # [exec] (Telnet) { x-terminal-emulator -T "Telnet" -e /usr/bin/telnet.netkit} <>
+           # [exec] (Xbiff) {xbiff} <>
+  [exec] (Network Manager) {wicd-client -n} <>
+  [exec] (Putty) {putty} <>
+         [end]
+         [submenu] (Web Browser) {}
+   #         [exec] (Opera) {opera} <>
+   #         [exec] (w3m) { x-terminal-emulator -T "w3m" -e /usr/bin/w3m /usr/share/doc/w3m/MANUAL.html} <>
+   #         [exec] (firefox) { x-terminal-emulator -T "Firefox" -e /usr/bin/firefox} <> 
+    [exec] (Firefox) {firefox} <>
+   [end]
+      [end]
+      [submenu] (Systeme) {}
+         [submenu] (Packets manager) {}
+            [exec] (Aptitude Package Manager (text\)) { x-terminal-emulator -T "Aptitude Package Manager (text)" -e /usr/bin/aptitude-curses} <>
+      [end]
+[submenu] (Load average) {}
+[exec] (htop) {x-terminal-emulator -T "htop" -e  htop} <>
+[exec] (top) {x-terminal-emulator -T "top" -e top} <>
+   [end]
+#   [submenu] (Windows manager) {}
+#      [restart] (FluxBox)  {/usr/bin/startfluxbox} <>
+#   [end]
+#   [submenu] (Jeux) {}
+#      [submenu] (Jouets) {}
+#         [exec] (Oclock) {oclock} <>
+#         [exec] (Xclock (analog\)) {xclock -analog} <>
+#         [exec] (Xclock (digital\)) {xclock -digital -update 1} <>
+#         [exec] (Xeyes) {xeyes} <>
+#         [exec] (Xlogo) {xlogo} <>
+#      [end]
+#[end]
+[submenu] (volume) {}
+[exec] (volume mixer) {alsamixergui} <>
+[end]
+[submenu] (resolution) {}
+[exec] (Daylight Resolution) {arandr} <>
+[end]
+[submenu] (Virtual keyboard)
+[exec] (Daylight virtual keyboard) {florence} <>
+[end]
+#   [config] (Configuration)
+#   [submenu] (Styles) {}
+#      [stylesdir] (/usr/share/fluxbox/styles)
+#      [stylesdir] (~/.fluxbox/styles)
+#   [end]
+#   [workspaces] (Workspaces)
+#   [reconfig] (Reconfigure)
+#   [restart] (Restart)
+[end]
+   [exit] (Logout)
+ [submenu] (start and stop) {}
+   [exec] (reboot) {/usr/share/reboot.sh} <>
+   [exec] (shutdown) {/usr/share/halt.sh} <>
+     [end]
+

@@ -1,0 +1,44 @@
+##############################################
+#  Settings
+##############################################
+background yes
+use_xft yes
+xftfont Future:size=10
+xftalpha 0.8
+update_interval 1.0
+total_run_times 0
+own_window no
+own_window_transparent yes
+own_window_type normal
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 350 100
+maximum_width 100
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no  
+border_width 1
+default_color a8b8d8
+default_shade_color 000000
+default_outline_color gray
+alignment top_right
+gap_x 200
+gap_y 505
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale yes
+
+##############################################
+#  Output
+##############################################
+
+TEXT
+${goto 275}${voffset 10}${offset 0}${color}${color FF0000}${rss YOUR_FACEBOOK_RSS_LINK_HERE 5 feed_title}
+${goto 265}${color} → ${color FF0000}${rss YOUR_FACEBOOK_RSS_LINK_HERE 5 item_title 0}
+${goto 265}${color} → ${color FF0000}${rss YOUR_FACEBOOK_RSS_LINK_HERE 5 item_title 1}
+${goto 265}${color} → ${color FF0000}${rss YOUR_FACEBOOK_RSS_LINK_HERE 5 item_title 2}
+${goto 265}${color} → ${color FF0000}${rss YOUR_FACEBOOK_RSS_LINK_HERE 5 item_title 3}
+${goto 265}${color} → ${color FF0000}${rss YOUR_FACEBOOK_RSS_LINK_HERE 5 item_title 4}
+##${image ~/.Conky/sentinel/images/base.png -p -5,-7 -s 350x100}

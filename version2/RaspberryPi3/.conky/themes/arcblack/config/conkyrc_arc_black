@@ -1,0 +1,171 @@
+#==============================================================================
+#                                 conkyrc_arc
+#
+#  author  : SLK-modified by shamen456
+#  version : v2011-06-13
+#  license : Distributed under the terms of GNU GPL version 2 or later
+#
+#==============================================================================
+
+background yes
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+temperature_unit celsius
+
+double_buffer yes
+no_buffers yes
+text_buffer_size 2048
+top_name_width 15
+short_units yes
+
+
+gap_x 1
+gap_y 30
+
+minimum_size 75 815
+ 
+
+own_window yes
+
+#own_window_type panel
+own_window_transparent no
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+own_window_argb_visual yes
+own_window_argb_value 160
+border_inner_margin 2
+border_outer_margin 2
+alignment tr
+
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+
+override_utf8_locale yes
+use_xft yes
+xftfont caviar dreams:size=8
+xftalpha 0.5
+uppercase no
+
+default_color CDCDCD
+color1 FFE807 # #D2CBC1
+color2 167AAB #309FD4 #ED7F77 #
+color3 FFFFC0 #FF1647 #6B6860
+color4 C0C6FF #B1ADA7 #
+color5 7B7870
+color6 3F3C36
+color7 808080
+
+lua_load ~/.conky/arcblack/graphblack.lua
+lua_draw_hook_post main_graph
+lua_load ~/.conky/arcblack/black.lua
+lua_draw_hook_pre main
+
+TEXT
+#${image ./pix/bigpanel2.png  -s 130x395 -p +0,-10}
+${voffset 0}${goto 20}${font Ubuntu:size=7,weight:bold}${color}System ${hr 1}
+${goto 0}${font Ubuntu:size=7,weight:normal}${color}Kernel ${kernel}
+${font Ubuntu:size=8,weight:bold}${color7}${goto 87}${voffset 10}
+${voffset -3}${goto 87}${font Ubuntu:size=6,weight:bold}
+${voffset 26}${goto 85}#
+${color1}${goto 85}${font Ubuntu:size=10,weight:normal}#
+${if_match ${hwmon 0 temp 1}<60}${color7}${hwmon 0 temp 1} °C#
+${else}${color C00000}${hwmon 0 temp 1} °C${endif}
+${color1}${voffset -5}${goto 85}${font Ubuntu:size=10,weight:normal}#
+#
+#
+${if_match ${cpu cpu0}<75}${color7}${cpu cpu0} %${else}${color C00000}${cpu cpu0} %${endif}
+#
+#
+#${voffset 5}${goto 85}${color2}#${hr 7}#
+${font Ubuntu:size=7,weight:normal}${voffset -4}${goto 88}${color7}${font Ubuntu:size=6,weight:bold}CPU 1
+
+${voffset -9}${goto 88}${color7}${font Ubuntu:size=6,weight:bold}CPU 2
+${voffset 3}${goto 88}${color7}${font Ubuntu:size=6,weight:bold}
+
+${color4}${voffset 1}${goto 59}${font Ubuntu:size=6,weight:bold}${mem}/${memmax}
+${voffset -1}${goto 85}${font Ubuntu:size=6,weight:bold} 
+${voffset -6}${goto 10}${color}Top CPU
+${voffset -2}${font Ubuntu:size=7,weight:normal}${goto 10}#
+${if_match ${top cpu 1}<30}${color7}${top cpu 1}% ${goto 45}${top name 1}#
+${else}${color C00000}${top cpu 1}% ${goto 45}${top name 1}${endif}
+${voffset -2}${font Ubuntu:size=7,weight:normal}${goto 10}#
+${if_match ${top cpu 2}<30}${color7}${top cpu 2}% ${goto 45}${top name 2}#
+${else}${color C00000}${top cpu 2}% ${goto 45}${top name 2}${endif}
+${voffset -2}${font Ubuntu:size=7,weight:normal}${goto 10}#
+${if_match ${top cpu 3}<30}${color7}${top cpu 3}% ${goto 45}${top name 3}#
+${else}${color C00000}${top cpu 3}% ${goto 45}${top name 3}${endif}
+${voffset -2}${goto 10}${color}${font Ubuntu:size=6,weight:bold}Top RAM
+${voffset -2}${font Ubuntu:size=7,weight:normal}${goto 10}#
+${if_match ${top_mem mem 1}<30}${color7}${top_mem mem 1}% ${goto 45}${top_mem name 1}#
+${else}${color C00000}${top_mem mem 1}% ${goto 45}${top_mem name 1}${endif}
+${voffset -2}${font Ubuntu:size=7,weight:normal}${goto 10}#
+${if_match ${top_mem mem 2}<30}${color7}${top_mem mem 2}% ${goto 45}${top_mem name 2}#
+${else}${color C00000}${top_mem mem 2}% ${goto 45}${top_mem name 2}${endif}
+${voffset -2}${font Ubuntu:size=7,weight:normal}${goto 10}#
+${if_match ${top_mem mem 3}<30}${color7}${top_mem mem 3}% ${goto 45}${top_mem name 3}#
+${else}${color C00000}${top_mem mem 3}% ${goto 45}${top_mem name 3}${endif}
+### Network
+${goto 20}${voffset -1}${font Ubuntu:size=7,weight:bold}${color}Network ${hr 1}
+${font Ubuntu:size=7,weight:normal}
+#${alignr}SSID : ${wireless_essid wlan0}  
+${font Ubuntu:size=6,weight:bold}${goto 45}${voffset 3}${color7}#${hr 22}
+${color4}${voffset -15}${alignr}${wireless_bitrate wlan0}
+ 
+${color}${goto 78}${voffset 1}${font Ubuntu:size=6,weight:bold}U${alignr}${totalup wlan0}  
+${goto 84}${voffset 33}#${upspeedgraph wlan0 28,38 C0C6FF 167AAB}#
+${alignr}${voffset -8}${font Ubuntu:size=6,weight:bold}${upspeed wlan0}/s 
+${alignr}${voffset 10}${font Ubuntu:size=6,weight:bold}${downspeed wlan0}/s 
+${goto 84}${voffset 20}#${downspeedgraph wlan0 28,38 C0C6FF 167AAB}#
+
+${goto 78}${voffset -5}${color}${font Ubuntu:size=6,weight:bold}D${alignr}${totaldown wlan0}  
+${color4}${voffset 8}${font Ubuntu:size=6,weight:bold}${alignr}Signal   
+${color}${font Ubuntu:size=7,weight:normal}${voffset 10}${goto 10}SSID : ${wireless_essid wlan0}
+${color}${voffset 0}${font Ubuntu:size=6,weight:bold}${alignr}${addr wlan0} 
+${alignr}${texeci 3600 wget -O - http://ip.tupeux.com | tail}
+###HDD
+###sda
+${voffset 0}${goto 20}${font Ubuntu:size=7,weight:bold}${color}HDD ${hr 1}
+${goto 30}${font Ubuntu:size=7,weight:bold}sda${color}${font Ubuntu:size=7,weight:bold}${goto 85}${voffset 6}${color4}#${hr 10}#
+${voffset -4}${goto 85}${color7}${font Ubuntu:size=7,weight:bold}${font Ubuntu:size=8,weight:bold}${voffset -2}${if_match ${execi 10 hddtemp /dev/sda | cut -c34-35}>60}${color C00000}${execi 10 hddtemp /dev/sda | cut -c33-38}#
+${else}${color7}${execi 10 hddtemp /dev/sda | cut -c33-38}${endif}#
+
+
+${voffset -1}${goto 84}${diskiograph /dev/sda1 16,40 000000 000000 }
+${voffset -34}${goto 86}${color}${font Ubuntu:size=5,weight:bold}${diskio sda1}/s#
+${voffset 27}${color1}${goto 77}${font Ubuntu:size=7,weight:bold}#
+${if_match ${fs_free_perc /home}>25}${color7}${fs_free_perc /home}% Free#
+${else}${color C00000}${fs_free_perc /home}% Free${endif}#
+${font Ubuntu:size=5,weight:bold}
+${voffset 9}${goto 85}${color2}#${hr 20}#
+
+${goto 86}${voffset -17}${color7}${font Ubuntu:size=6,weight:bold}T  ${alignr}${fs_size /home}
+${goto 86}${voffset -3}${color7}${font Ubuntu:size=6,weight:bold}U  ${alignr}${fs_used /home}
+${voffset 5}${goto 85}${color2}#${hr 10}#
+
+${goto 86}${voffset -18}${color3}${font Ubuntu:size=6,weight:bold}F  ${alignr}${fs_free /home}
+#####
+#####sdb
+#####
+
+${goto 30}${font Ubuntu:size=7,weight:bold}${color}sdb${font Ubuntu:size=7,weight:bold}${goto 85}${voffset 9}${color4}#${hr 10}#
+${voffset -8}${goto 85}${color7}${font Ubuntu:size=7,weight:bold}${font Ubuntu:size=8,weight:bold}${voffset 4}${if_match ${execi 10 hddtemp /dev/sdb | cut -c34-35}>60}${color C00000}${execi 10 hddtemp /dev/sdb | cut -c33-38}#
+${else}${color7}${execi 10 hddtemp /dev/sdb | cut -c33-38}${endif}
+
+${voffset -1}${goto 84}${diskiograph /dev/sdb1 16,40 000000 808080}
+${voffset -34}${goto 86}${color}${font Ubuntu:size=5,weight:bold}${diskio sdb1}/s#${voffset 0}${goto 84}${diskiograph /dev/sdb1 18,38 B1ADA7 ED7F77}#${voffset -25}${goto 86}${color}${font Ubuntu:size=5,weight:bold}${diskio sdb1}/s
+${voffset 27}${color1}${goto 77}${font Ubuntu:size=7,weight:bold}#
+${if_match ${fs_free_perc /media/Data}>25}${color7}${fs_free_perc /media/Data}% Free#
+${else}${color C00000}${fs_free_perc /media/Data}% Free${endif}# Free
+${font Ubuntu:size=5,weight:bold}
+${voffset 9}${goto 85}${color2}#${hr 20}#
+
+${goto 86}${voffset -17}${color7}${font Ubuntu:size=6,weight:bold}T  ${alignr}${fs_size /media/Data}
+${goto 86}${voffset -3}${color7}${font Ubuntu:size=6,weight:bold}U  ${alignr}${fs_used /media/Data}
+${voffset 5}${goto 85}${color2}#${hr 10}#
+
+${goto 86}${voffset -18}${color3}${font Ubuntu:size=6,weight:bold}F  ${alignr}${fs_free /media/Data}#
+${voffset 4} #

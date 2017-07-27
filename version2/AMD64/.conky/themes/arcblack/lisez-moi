@@ -1,0 +1,6 @@
+decompresser l'archive dans /.conky/arcblack/
+adapter le chemin dans le fichier black.lua
+lancer avec start_arcblack
+attendez 20 secondes et le conky devrait apparaitre
+
+adaptez les emplacements dans les fichiers conky_arc_black, rings_black et graphblack pour l'adapter à votre environnement de travail...

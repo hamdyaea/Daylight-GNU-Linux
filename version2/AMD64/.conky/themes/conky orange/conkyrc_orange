@@ -1,0 +1,148 @@
+######################
+# - Conky settings - #
+######################
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+
+
+
+#############################
+# - Window specifications - #
+#############################
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,below,skip_taskbar,skip_pager,sticky
+#own_window_colour gray
+own_window_class Conky
+own_window_title Chronograph
+
+gap_x 10
+gap_y 10
+alignment tr
+
+minimum_size 280 300
+maximum_width 280
+
+################      Graphics settings       ######################
+use_xft yes
+xftfont Ubuntu:normal:size=8
+override_utf8_locale yes
+text_buffer_size 2048
+draw_shades no
+#default_bar_size 40 8
+default_outline_color black
+own_window_argb_visual yes
+
+default_color FFDEAD #NavajoWhite
+color0 8FBC8F #	DarkSeaGreen
+color1 C2CCFF # LightSlateGray
+color2 FF8C00 # DarkOrange
+color3 7FFF00 #	Chartreuse
+color4 FFA07A #	LightSalmon
+color5 c0c0c0 #	Silver
+color6 00BFFF # DeepSkyBlue
+color7 00FFFF #	Cyan
+color8 FFFF00 #	Yellow
+color9 B22222 #	FireBrick
+xftalpha 1
+###  LUA Settings  ###########################################################
+lua_load ~/.conky/.scripts_orange/main.lua
+lua_draw_hook_pre conky_widgets
+lua_load ~/.conky/.scripts_orange/bargraph.lua
+lua_draw_hook_post main_bars
+
+TEXT
+
+${voffset 150}
+${goto 32}${font :bold:pixelsize=11}${time %a, %d %b %Y}${font}
+##### MAIL ########
+${voffset -190}${goto 240}${color5}${font Martin Vogel's Symbols:size=26}k
+${voffset -25}${goto 230}${font :bold:size=8}GMX${font}
+${goto 230}${execpi 300 python ~/.scripts_orange/gmx.py}
+
+${goto 230}${font :bold:size=8}GMAIL${font}
+${goto 230}${execpi 300 python ~/.scripts_orange/gmail.py}
+
+${goto 230}${font :bold:size=8}rambler${font}
+${goto 230}${execpi 300 python ~/.scripts_orange/rambler.py}${font}${color}
+################      Weather       ######################
+${voffset 40}${color2}Weather by weather.noaa.gov ${hr}${color}
+${if_existing /proc/net/route eth0}
+${voffset -10}${goto 32}${font Ubuntu:size=16}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF temperature 30}°C ${font}${font Ubuntu:normal:size=8}${goto 90}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF cloud_cover 30}${goto 155}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF weather 30}${font}
+${goto 32}PRESSURE:${alignr}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF pressure 30}hPa
+${goto 32}HUMIDITY:${alignr}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF humidity 30} %
+${goto 32}WIND:${alignr}${font Ubuntu:normal:size=8}from the ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF wind_dir 30} ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF wind_dir_DEG 30} degrees at ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF wind_speed 30}KPH${font}
+${goto 32}${color2}${font Ubuntu:normal:size=8}${color}LAST UPDATE:${alignr}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF last_update 30} UTC
+${else}${if_existing /proc/net/route wlan0}
+${voffset -10}${goto 32}${font Ubuntu:size=16}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF temperature 30}°C ${font}${font Ubuntu:normal:size=8}${goto 90}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF cloud_cover 30}${goto 155}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF weather 30}${font}
+${goto 32}PRESSURE:${alignr}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF pressure 30}hPa
+${goto 32}HUMIDITY:${alignr}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF humidity 30} %
+${goto 32}WIND:${alignr}${font Ubuntu:normal:size=8}from the ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF wind_dir 30} ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF wind_dir_DEG 30} degrees at ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF wind_speed 30}KPH${font}
+${goto 32}${color2}${font Ubuntu:normal:size=8}${color}LAST UPDATE:${alignr}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF last_update 30} UTC
+${else}${font :bold:size=8}${color red}${alignc}${blink Network Unavailable!}${color}
+${goto 12}${font Ubuntu:normal:size=14}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF temperature 900}°C${font}${font Ubuntu:normal:size=8}${goto 90}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF cloud_cover 900}${goto 155}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF weather 900}
+${goto 12}PRESSURE:${goto 165}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF pressure 900}hPa
+${goto 12}WIND:${goto 50}from the ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF wind_dir 900} ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF wind_dir_DEG 900} degrees at ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF wind_speed 900}KPH
+${goto 12}HUMIDITY:${goto 165}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF humidity 900} % 
+${goto 12}LAST UPDATE:${goto 100}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF last_update 300}${voffset 5}${endif}${endif}
+${voffset 0}${color2}SYSTEM ${hr} ${color}
+${voffset 0}${font Poky :size=12}p${font  :size=8}${goto 32}${voffset -6}CPU${alignr} ${cpu}%
+#${offset 30}${font :size=8}CPU 1${alignr} ${cpu cpu1}%
+#${offset 30}${font :size=8}CPU 2${alignr} ${cpu cpu2}%
+${voffset 3}${goto 32}${font :size=8}MEM ${alignr} $memperc%
+${voffset 3}${goto 32}${font :size=8}SWAP ${alignr} $swapperc%
+${voffset 3}${goto 32}RELEASE:${alignr}${execi 2600 cat /etc/issue.net} $machine
+${voffset 0}${goto 32}KERNEL: ${alignr}$kernel 
+${voffset 0}${goto 32}HOST:${alignr}$nodename
+${voffset 0}${goto 32}UPTIME: ${alignr}$uptime
+${goto 32}CPU  temperature:${alignr}${hwmon temp 2} °C
+${goto 32}sda  temperature:${alignr}${exec hddtemp /dev/sda -n --unit=C} °C
+${goto 32}sdb  temperature:${alignr}${exec hddtemp /dev/sdb -n --unit=C} °C
+${voffset 0}${color2}HDD ${hr} ${color}
+${voffset 0}${font :size=8}root ${goto 50}${fs_used /} ${alignr} ${fs_used_perc /}%
+${voffset 7}${font :size=8}home ${goto 50}${fs_used /home} ${alignr} ${fs_used_perc /home}%
+${voffset 7}${font :size=8}Data ${goto 50}${fs_used /media/Data} ${alignr} ${fs_used_perc /media/Data}%
+${voffset 7}${font :size=8}VM ${goto 50}${fs_used /media/VM} ${alignr} ${fs_used_perc /media/VM}%
+${voffset 7}${font :size=8}Wuala ${goto 50}${fs_used /home/max/WualaDrive} ${alignr} ${fs_used_perc /home/max/WualaDrive}%
+${voffset 7}${font :size=8}FLASH ${goto 50}${fs_used /media/max/FLASH} ${alignr} ${fs_used_perc /media/max/FLASH}%
+#####  Network ########
+${voffset 10}${color2}NETWORK   active interface:  ${gw_iface} ${hr}${color}
+${if_existing /proc/net/route wlan0}
+${voffset -10}${font :size=8}$alignc WIRELESS
+${voffset}${font Martin Vogel's Symbols:size=20}m${font}${goto 32}${voffset -10}${font :size=8}Public IP: ${execi 300 wget -q -O - checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'}
+${goto 32}Router IP:   ${gw_ip}
+${goto 32}Local IP:   ${addr wlan0}
+${goto 32}ESSID: ${wireless_essid wlan0}
+${voffset -5}${font VariShapes:size=13}q${font}${goto 32}${voffset -5}${font :size=8}Up: ${upspeed wlan0}/s
+${goto 32}Sent: ${totalup wlan0}
+${voffset -30}${alignr}${upspeedgraph wlan0 20,110 FF8C00 B22222 -t -l}
+${voffset -5}${font VariShapes:size=13}Q${font}${goto 32}${voffset -5}${font :size=8}Down: ${downspeed wlan0}/s
+${goto 32}Received: ${totaldown wlan0}
+${voffset -30}${alignr}${downspeedgraph wlan0 20,110 B22222 FF8C00 -t -l}${font}
+${else}${if_existing /proc/net/route eth0}
+${voffset -10}$alignc CABLE
+${voffset}${font Martin Vogel's Symbols:size=20}m${font}${goto 32}${voffset -10}${font :size=8}Public IP: ${execi 300 wget -q -O - checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'}
+${goto 32}Router IP:   ${gw_ip}
+${goto 32}Local IP:   ${addr eth0}
+${voffset -5}${font VariShapes:size=13}q${font}${goto 32}${voffset -5}${font :size=8}Up: ${upspeed eth0}/s
+${goto 32}Sent: ${totalup eth0}
+${voffset -30}${alignr}${upspeedgraph eth0 20,110 FF8C00 B22222 -t -l}
+${voffset -5}${font VariShapes:size=13}Q${font}${goto 32}${voffset -5}${font :size=8}Down: ${downspeed eth0}/s
+${goto 32}Received: ${totaldown eth0}
+${voffset -30}${alignr}${downspeedgraph eth0 20,110 B22222 FF8C00 -t -l}${font}
+${else}${font :bold:size=8}${color red}${alignc}${blink Network Unavailable!}${color}${voffset 15}${endif}${endif}
+##### Radio Tray ########
+${voffset -10}${color2}Radio Tray ${hr} ${color2}
+${color2}Station:${color} ${execi 15 qdbus net.sourceforge.radiotray /net/sourceforge/radiotray net.sourceforge.radiotray.getCurrentRadio} 
+${color2}Artist & Song${color} 
+${execi 15 qdbus net.sourceforge.radiotray /net/sourceforge/radiotray getCurrentMetaData| fold -s -w35}
+${voffset 10}
+
+

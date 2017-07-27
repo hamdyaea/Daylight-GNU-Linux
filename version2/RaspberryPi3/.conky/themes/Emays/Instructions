@@ -1,0 +1,14 @@
+Created by Derek Mason
+
+1. Just press CTRL + H to view hidden files inside the Conkyrc folder
+
+2. Drag the conkyrc file into your home folder
+
+3. Install the fonts inside the folder either with Font Viewer or by dragging them into the .fonts folder inside your home location
+
+4. Run conky
+
+
+5. If conky doesn't show up on your desktop it's most likely because of the window mode the rc is set too. Just change it to either "Desktop,Normal, or Override" see which one works correctly for you.
+
+6. If you have any questions send me a note.

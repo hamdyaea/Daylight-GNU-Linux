@@ -1,0 +1,36 @@
+background yes
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+use_spacer none
+use_xft yes
+xftfont HandelGotD:size=8
+xftalpha 0.5
+update_interval 1.0
+draw_shades no
+draw_outline no # amplifies text if yes
+draw_borders no
+uppercase no # set to yes if you want all text to be in uppercase
+border_margin 3
+minimum_size 800
+
+default_color white
+own_window_colour brown
+own_window_transparent yes
+#alignment top_left
+#alignment top_right
+alignment top_left
+#alignment _right
+gap_x 225
+gap_y 100
+# Subtract file system buffers from used memory?
+no_buffers yes
+
+#This setup uses a graffitistyle font (Bring tha noize) to display -time -cpu% -free space% -free ram%. Behind each stat is a digbat font (the B.O.M.B. (Best Of Magurno Brushes)) with a kind of paint splatter effect.
+
+TEXT
+${color cc0000}${font the B.O.M.B. (Best Of Magurno Brushes):size=80}f${offset -30}${voffset -35}${color  546775}${font Bring tha noize:size=30}${time %l:%M}${goto 220}${voffset -14}${color cc0000}${font the B.O.M.B. (Best Of Magurno Brushes):size=60}Z${offset -20}${voffset -22}${color 546775}${font Bring tha noize:size=30}CPU ${CPU}${goto 380}%${goto 470}${color cc0000}${font the B.O.M.B. (Best Of Magurno Brushes):size=85}${voffset -15}J${color 546775}${font Bring tha noize:size=30}${voffset -42}${offset -17}HDD ${fs_free_perc}%${color cc0000}${font the B.O.M.B. (Best Of Magurno Brushes):size=70}${offset 90}${voffset -10}x${goto 850}${color 546775}${font Bring tha noize:size=30}${offset -42}${voffset -35}RAM ${memperc}%
+
+

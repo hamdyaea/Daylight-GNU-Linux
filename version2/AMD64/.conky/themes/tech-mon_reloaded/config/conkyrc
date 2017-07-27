@@ -1,0 +1,86 @@
+# — Conky settings — #
+
+background yes
+
+update_interval 1
+total_run_times 0
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+imlib_cache_size 0
+
+temperature_unit celsius
+
+# — Window specifications — #
+
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 248 750
+maximum_width 248
+
+alignment top_right
+
+gap_x 6
+gap_y 6
+
+
+# — Graphics settings — #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# — Text settings — #
+use_xft yes
+xftfont Future:size=8
+xftalpha 0.1
+
+default_color D4ECF4
+default_gauge_size 50 25
+
+uppercase no
+use_spacer right
+
+color0 white
+color1 orange
+color2 green
+
+# — Lua Load — #
+
+lua_load ~/.Conky/tech-mon_reloaded/scripts/rings.lua
+lua_draw_hook_pre main_rings
+
+TEXT
+${image ~/.Conky/tech-mon_reloaded/images/03.png -p 0,0 -s 248x750}
+${voffset 4} ${goto 22} ${font Future:size=11}${color red}SISTEMA OPERATIVO: GNU/${sysname}
+${voffset 0} ${goto 37} ${font Future:size=11}${color red}DISTRIBUCIÓN: ${pre_exec lsb_release -d | cut -f 2| tr "[:upper:]" "[:lower:]"}
+${voffset 0} ${goto 37} ${font Future:size=11}${color red}KERNEL: ${kernel}
+${voffset 0} ${goto 37} ${font Future:size=11}${color red}ESCRITORIO: GNOME 2.32.0
+${voffset 196} ${goto 14} ${font Future:size=10.4}${color red}MEMORIA RAM: ${memmax}
+${voffset 0} ${goto 14} ${font Future:size=10.4}${color red}USO EN PORCENTAJE: ${memperc}%
+${voffset 0} ${goto 14} ${font Future:size=10.4}${color red}USO EN MEGAS: ${mem}
+${voffset 0} ${goto 14} ${font Future:size=10.4}${color red}TOTALMENTE LIBRES: ${memfree}
+${voffset 65} ${goto 42} ${font Future:size=9}${color red}WIFI
+${voffset -13} ${goto 111} ${font Future:size=9}${color red}QUAL
+${voffset -13} ${goto 182} ${font Future:size=9}${color red}LINK
+${voffset 7} ${goto 14} ${font Future:size=11}${color red}UP: ${upspeedgraph wlan0 11,168}
+${voffset 7} ${goto 16} ${font Future:size=10.4}${color red}| SUBIDA: ${upspeed wlan0} | DESCARGA: ${downspeed wlan0}
+${voffset 7} ${goto 14} ${font Future:size=11}${color red}DL: ${downspeedgraph wlan0 11,168}
+${voffset 70} ${goto 50} ${font Future:size=11}${color red}/root
+${voffset -16} ${goto 155} ${font Future:size=11}${color red}/home
+${voffset 64} ${goto 13} ${font Future:size=11}${color red}${if_running audacious}${exec audtool --current-song}
+${voffset 0} ${goto 13} ${font Future:size=11}${color red}Bitrate: ${exec audtool --current-song-bitrate-kbps} kbps
+${voffset 0} ${goto 13} ${font Future:size=11}${color red}Duración total: ${exec audtool --current-song-length} min
+${voffset 0} ${goto 13} ${font Future:size=11}${color red}Progreso: ${exec audtool --current-song-output-length-seconds} segs
+${voffset 0} ${goto 13} ${font Future:size=11}${color red}Segundos totales: ${exec audtool --current-song-length-seconds} segs

@@ -1,0 +1,44 @@
+use_xft yes
+xftfont 123:size=50
+xftalpha 0.1
+update_interval 1
+total_run_times 0
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 250 5
+maximum_width 700
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_color white
+default_shade_color red
+default_outline_color red
+alignment top_left
+gap_x20
+gap_y 75
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 1
+override_utf8_locale yes
+use_spacer yes
+
+
+TEXT
+${voffset 10}${color 616161}${font TRON:pixelsize=80}${time %H:%M}${font}${voffset -84}${offset 10}${color 009ab3}${font BRINGTHANOIZE:pixelsize=42}${time %d} ${voffset -15}${color EAEAEA}${font BRINGTHANOIZE:pixelsize=22}${time  %B} ${time %Y}${font}${voffset 24}${font BRINGTHANOIZE:pixelsize=58}${offset -148}${time %A}${font}
+${voffset 1}${offset 12}${font BRINGTHANOIZE:pixelsize=10}${color 009ab3}HD ${offset 9}$color${fs_free /} / ${fs_size /}${offset 30}${color 009ab3}RAM ${offset 9}$color$mem / $memmax${offset 30}${color 009ab3}CPU ${offset 10}$color${cpu cpu0}%
+
+
+
+
+
+
+
+
+
+
+

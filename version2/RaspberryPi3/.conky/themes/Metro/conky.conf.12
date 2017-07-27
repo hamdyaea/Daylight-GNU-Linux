@@ -1,0 +1,107 @@
+# 
+# Name: Metro Style Conky
+#
+# Author: Kant-o (feedback via gnome-look).
+#
+# Description
+# This simple conky configuration shows the following information:
+# conky.conf.11 - Time and date information;
+# conky.conf.21 - Operative System and Battery information
+# conky.conf.12 - Processes information;
+# conky.conf.31 - Processor and RAM information;
+# conky.conf.32 - FileSystem information;
+# conky.conf.41 - Network information;
+# conky.conf.42 - GMAIL account information;
+#
+# Apart from the requirement for the Ubuntu font, this configuration is
+# really simple, using only a few conky objects and a script provided
+# with the configuration file. The aforementioned script (see mail.sh) is
+# used to get the number of unread mails from google via pipelining several
+# comands and using CURL.
+#
+# Installation (see below for terminal installation)
+# To install and use, the following 5 main steps are required:
+# 1. Install conky and the Ubuntu font (if using recent Ubuntu (based) 
+#    distributions, this step is most certainly not necessary.
+# 2. Create a directory named .conky in your home folder;
+# 3. Download the .zip file and unzip the contents to the newly 
+#    created folder;
+# 4. Edit the file mail.sh and place your gmail credentials (otherwise it #    will not fetch the number of mails in the gmail account).
+# 5. Run conky.sh (if it does not run, make sure it is executable, 
+#    otherwise type chmod +x ~.conky/conky.sh in the terminal before
+#    running the script).
+#
+# If you want conky to startup with gnome, copy the file named
+# conky.sh.desktop to ~.config/autostart/
+# If you do not want a given module to run (e.g. the GMAIL module),
+# edit the conky.sh file and comment or remove the line that loads the
+# respective configuration file (in the case of GMAIL, that would be
+# conky.conf.24 - line 2 - column 4).
+#
+# To install using the terminal, follow the next steps
+# 1. In Ubuntu (I have not tested the config in Ubuntu, only in Arch)
+#    sudo apt-get install conky-all
+#    In Arch Linux
+#    sudo yaourt -S conky-lua ttf-ubuntu-font-family 
+# 2. mkdir ~/.conky && cd ~/.conky
+# 3. wget http://www.deviantart.com/download/260230653/metro_style_conky_by_kant_o-d4axn99.zip
+# 4. unzip MetroStyleConky.zip
+# 5. chmod +x conky.sh
+# 6. chmod +x mail.sh
+# 7. ./conky.sh   
+# 8. (optional) run gnome-session-properties and add a new 
+#    startup program pointing to conky.sh to have the conky
+#    automatically comming up when you start the computer. 
+#
+
+alignment bottom_left
+background yes
+border_width 0
+cpu_avg_samples 1
+default_color ffffff
+draw_outline no
+draw_borders no
+draw_shades no
+use_xft yes
+xftfont Ubuntu:size=12
+
+# size of text area
+minimum_size 260 220
+maximum_width 240
+max_text_width 240
+
+no_buffers yes
+out_to_console no
+out_to_stderr no
+extra_newline no
+own_window yes
+own_window_transparent no
+own_window_class Conky
+own_window_type normal
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
+stippled_borders 0
+update_interval 1.0
+uppercase no
+use_spacer none
+show_graph_scale no
+show_graph_range no
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+own_window_colour 00b4df
+update_interval 5
+
+TEXT
+${font Ubuntu:size=18}${top name 1}$font
+using${top cpu 1}% CPU
+     ${top mem_res 1} of RAM
+${voffset 12}
+${font Ubuntu:size=8}$alignr CPU  ..  Memory$font
+${top name 2}${font Ubuntu:size=8:bold}$alignr ${top cpu 2}% .. ${top mem_res 2}
+$stippled_hr
+${top name 3}${font Ubuntu:size=8:bold}$alignr ${top cpu 3}% .. ${top mem_res 3}
+$stippled_hr
+${top name 4}${font Ubuntu:size=8:bold}$alignr ${top cpu 4}% .. ${top mem_res 4}
+$stippled_hr
+${top name 5}${font Ubuntu:size=8:bold}$alignr ${top cpu 5}% .. ${top mem_res 5}

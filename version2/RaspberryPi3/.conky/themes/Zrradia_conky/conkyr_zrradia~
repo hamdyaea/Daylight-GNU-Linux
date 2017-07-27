@@ -1,0 +1,112 @@
+# -- Conky settings -- #
+background no
+update_interval 1
+ 
+cpu_avg_samples 2
+net_avg_samples 2
+ 
+override_utf8_locale yes
+ 
+double_buffer yes
+no_buffers yes
+ 
+text_buffer_size 2048
+imlib_cache_size 0
+ 
+# -- Window specifications -- #
+own_window_class Conky
+own_window yes
+own_window_type normal
+#own_window_argb_visual yes
+#own_window_argb_value 50
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager 
+#own_window yes
+#own_window_type desktop
+#own_window_transparent yes
+#own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+ 
+border_inner_margin 0
+border_outer_margin 0
+ 
+minimum_size 500 900
+maximum_width 1000
+ 
+alignment top_right
+gap_x -35
+gap_y 100
+ 
+# -- Graphics settings -- #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+ 
+# -- Text settings -- #
+use_xft yes
+xftfont Ubuntu L:size=24
+xftalpha 0.8
+ 
+uppercase no
+ 
+default_color 000000
+color1 d32a32
+color2 0c2b52
+color3 a2e21b
+color4 f89b16
+color5 471544
+color6 c6e0d5
+color7 014457
+color8 0d410c
+color9 011079
+# -- Lua Load -- # #here  you change the directory where you put the script#
+##  Lua directiory
+lua_load ~/Zrradia_conky/zrradia.lua
+lua_draw_hook_pre ring_stats
+ 
+TEXT
+# |--CPU 
+${goto 100}${font Skia:pixelsize=17}${freq_g 1}${color} GHZ${font}
+${font Skia:pixelsize=17}${goto 0}${color1}CORE1: ${color}${font Skia:pixelsize=17}${cpu cpu1}% Temp: ${font Skia:pixelsize=17}${execi 30 sensors | grep 'Core 0' | awk '{print $3}' | sed 's/+//' | sed 's/\.0//g'}
+
+${goto 100}${font Skia:pixelsize=17}${freq_g 1}${color} GHZ${font}
+${font Skia:pixelsize=17}${goto 0}${color2}CORE2: ${color}${font Skia:pixelsize=17}${cpu cpu2}% Temp: ${font Skia:pixelsize=17}${execi 30 sensors | grep 'Core 1' | awk '{print $3}' | sed 's/+//' | sed 's/\.0//g'}
+#
+
+${goto 100}${font Skia:pixelsize=17}${freq_g 1}${color} GHZ${font}
+${font Skia:pixelsize=17}${goto 0}${color3}CORE3: ${color}${font Skia:pixelsize=17}${cpu cpu3}% Temp: ${font Skia:pixelsize=17}${execi 30 sensors | grep 'Core 2' | awk '{print $3}' | sed 's/+//' | sed 's/\.0//g'}
+#
+
+${goto 100}${font Skia:pixelsize=17}${freq_g 1}${color} GHZ${font}
+${font Skia:pixelsize=17}${goto 0}${color4}CORE4: ${color}${font Skia:pixelsize=17}${cpu cpu4}% Temp: ${font Skia:pixelsize=17}${execi 30 sensors | grep 'Core 3' | awk '{print $3}' | sed 's/+//' | sed 's/\.0//g'}
+###############
+##########
+############
+
+
+${goto 100}${font Skia:pixelsize=17}${color5}Root: ${color}${font Skia:pixelsize=17}${fs_used_perc /}%
+${goto 100}${font Skia:pixelsize=17}F:${fs_free /} U:${fs_used /}
+#################
+
+
+${goto 100}${font Skia:pixelsize=17}${color6}DATA: ${color}${font Skia:pixelsize=17}${fs_used_perc /media/DATA}%
+${goto 100}${font Skia:pixelsize=17}F:${fs_free /media/DATA} U:${fs_used /media/DATA}
+######################
+
+
+${goto 100}${font Skia:pixelsize=17}${color7}DATA2: ${color}${font Skia:pixelsize=17}${fs_used_perc /media/DATA2}%
+${goto 100}${font Skia:pixelsize=17}F:${fs_free /media/DATA2} U:${fs_used /media/DATA2}
+##############
+######################
+
+
+${goto 100}${font Skia:pixelsize=17}${color8}Win8: ${color}${font Skia:pixelsize=17}${fs_used_perc /media/Win8}%
+${goto 100}${font Skia:pixelsize=17}F:${fs_free /media/Win8} U:${fs_used /media/Win8}
+##############
+# |--MEM
+
+
+${goto 100}${color9}RAM: ${color}${font Skia:pixelsize=17}$memperc%
+${goto 100}F: ${font Skia:pixelsize=17}${memeasyfree}
+${goto 100}U: ${font Skia:pixelsize=17}${mem}
+

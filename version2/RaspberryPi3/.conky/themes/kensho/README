@@ -1,0 +1,16 @@
+"kenshō"  by zergpinscher, based on RingMeter by londonali1010
+
+License: CC-BY-SA
+
+Dependencies: 		Conky with lua
+Fonts: 				Not just groovy, Monkey. Kimberley, AA Typewriter, Music Elements 
+					(Isonorm3098 Monospaced and Webdings should be provided by your distribution)
+
+
+Further Info:
+Copy conkyrc and ~.lua to desired location, in conkyrc change lua_load /path/to/conkyrc.lua accordingly.
+Conkyrc.lua is structured in columns to draw each graph and commented on, labels are drawn by conky, not lua.
+
+
+Bonus: 			MPD panel to show basic audio info
+						( completely hidden by default when launched)

@@ -1,0 +1,105 @@
+alignment top_right
+#alignment top_left
+#alignment bottom_left
+#alignment bottom_right
+
+# Δημιουργία ατομικό, δικό του παράθυρο, αντί να χρησιμοποιεί την Επιφάνεια Εργασίας(desktop),(ειδικά για nautilus)
+own_window yes
+
+# Υπερισχύσει, (άλλες προτιμήσεις "below")
+own_window_type normal
+
+# Διαφανές Φόντο(ΨΕΥΤΟΑΌΡΑΤΟ).
+own_window_transparent yes
+
+# Συμπεριφορά του παραθύρου (undecorated, below, sticky, skip_taskbar, skip_pager).
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+# Χρήση διπλού "buffering" (μείωση flicker)
+#buffering:μνήμη που χρησιμοποιείται για την προσωρινή αποθήκευση της παραγωγής ή εισαγωγής δεδομένων.
+double_buffer yes
+
+# Χρήση(yes) Anti-Aliasing για τι γραμματοσειρές(ΝΑΙ για ελληνικές γραμματοσειρές).Δοκιμάστε απλά με "όχι".
+use_xft yes
+
+# Ανανέωση ενημέρωσης πληροφοριών στο "conky", σε δευτερόλεπτα (εδώ είναι κάθε 3 δευτερόλεπτα).
+update_interval 1.0
+
+# Ελάχιστο μέγεθος.
+minimum_size 150 800
+
+# Μέγιστο πλάτος του παραθύρου.
+maximum_width 200
+
+# Αποχρώσεις;
+draw_shades no
+
+# Κείμενο
+# Συμπληρώνει το κείμενο, και αν ναι.
+draw_outline no
+
+# Σύνορα στο περίγυρο του "conky' παράθυρο.
+draw_borders no
+
+# Γραμματοσειρά,μέγεθος.
+#font arial:size=10
+
+# Ορισμός σε ναι(yes), εάν θέλετε όλο το κείμενο να είναι στα κεφαλαία.
+uppercase no
+
+# Τυπογραφικά στοιχεία,(είναι η δημιουργία ενός προτύπου προσομοίωση
+#διαφόρων βαθμών στερεότητας ή σκίασης, χρησιμοποιώντας μικρές κουκκίδες)Σύνορα
+#(πάχος, απόσταση στις μικρές γραμμούλες γύρω γύρω.)
+stippled_borders 1
+
+# Περιθώρια συνόρων.
+border_margin 9
+
+# Πλάτος των συνόρων.
+border_width 10
+
+# Στάνταρτ Χρώμα των πληροφοριών.
+#default_color grey
+
+#Χρώμα του Παραθύρου (εξαρτάτε και από την εικόνα που έχουμε στην επιφάνεια εργασίας μας (Wallpaper)
+#own_window_colour black
+
+# Απόσταση (pixel, τελείες) σε Οριζόντια Χ,Κάθετα Υ,από την γωνία της οθόνης.
+gap_x 10
+gap_y 15
+lua_load ~/.conky/lua/clock.lua
+lua_draw_hook_pre clock_rings
+TEXT
+
+
+
+
+${voffset 30}${font  Swiss 921 BT:size=8}${color ffffff}
+                   ${time  %d}-${time  %m} -${color #ac2121}${time  %Y}
+${voffset 77}${font  Swiss 921 BT:size=10}${color ffffff} 
+            Cpu:  $cpu%  ${hwmon 0 temp 1}°C
+          ${color 0f0f0f}${cpugraph 10,100 0f0f0f 941d1d}${color ffffff} 
+            Mem :      $mem
+            Swap:       $swap
+${voffset 55}   
+           Home:     ${fs_used /home}
+           Free  :     ${fs_free /home}
+           Root  :     ${fs_used /}
+           Free  :     ${fs_free /}
+${voffset 55}
+           Cpu:         ${top cpu 1}%
+           ${top name 1}
+           Mem:       ${top_mem mem 1}%
+           ${top_mem name 1}
+${voffset 55}
+           Signal:      ${wireless_link_qual wlan0}% 
+           Up:       ${upspeed wlan0}/s 
+           Down:  ${downspeed wlan0}/s 
+          ${color 0f0f0f}${downspeedgraph wlan0 10,100  0f0f0f 941d1d}
+
+ 
+${image ~/.conky/cc/cc1.png  144x144 -p 0,30}
+${image ~/.conky/cc/cc2.png  144x144 -p 0,175}
+${image ~/.conky/cc/cc3.png  144x144 -p 0,320}
+${image ~/.conky/cc/cc4.png  144x144 -p 0,465}
+${image ~/.conky/cc/cc5.png  144x144 -p 0,610}

@@ -1,0 +1,68 @@
+# — Conky settings — #
+
+background yes
+
+update_interval 1
+total_run_times 0
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+imlib_cache_size 0
+
+temperature_unit celsius
+
+# — Window specifications — #
+
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 862 141
+maximum_width 862
+
+alignment top_right
+
+gap_x 230
+gap_y 603
+
+
+# — Graphics settings — #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# — Text settings — #
+use_xft yes
+xftfont Future:size=8
+xftalpha 0.1
+
+default_color D4ECF4
+default_gauge_size 50 25
+
+uppercase no
+use_spacer right
+
+color0 white
+color1 orange
+color2 green
+
+# — Lua Load — #
+
+##lua_load ~/.Conky/sentinel/scripts/bargraph.lua
+##lua_draw_hook_pre main_rings
+
+TEXT
+${image ~/.Conky/sentinel/images/01.png -p 0,0 -s 862x141}
+${voffset 5}${goto 229}${font Future:size=15}${color red}DOWNLOAD: ${downspeedgraph wlan0 15,355} ${downspeed wlan0}
+${voffset 44}${goto 31}${font Future:size=32}${color red}${time %H:%M}${font}
+${voffset -50}${goto 195}${font Future:size=52}${color red}${time %A %d %m %Y}${font}

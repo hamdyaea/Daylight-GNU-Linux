@@ -1,0 +1,302 @@
+Xsession: X session started for root at jeudi 27 juillet 2017, 21:59:34 (UTC+0200)
+dbus-update-activation-environment: setting DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/0/bus
+dbus-update-activation-environment: setting DISPLAY=:0
+dbus-update-activation-environment: setting XAUTHORITY=/root/.Xauthority
+localuser:root being added to access control list
+gpgconf: warning: can not open config file /root/.gnupg/gpg-agent.conf: Aucun fichier ou dossier de ce type
+dbus-update-activation-environment: setting QT_ACCESSIBILITY=1
+dbus-update-activation-environment: setting QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
+OpenGL version: 3.
+dbus-update-activation-environment: setting USER=root
+dbus-update-activation-environment: setting LANGUAGE=fr_CH:fr
+dbus-update-activation-environment: setting XDG_SESSION_TYPE=x11
+dbus-update-activation-environment: setting HOME=/root
+dbus-update-activation-environment: setting DESKTOP_SESSION=lightdm-xsession
+dbus-update-activation-environment: setting XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+dbus-update-activation-environment: setting QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
+dbus-update-activation-environment: setting DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/0/bus
+dbus-update-activation-environment: setting LOGNAME=root
+dbus-update-activation-environment: setting PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+dbus-update-activation-environment: setting GDM_LANG=fr_CH.utf8
+dbus-update-activation-environment: setting XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session0
+dbus-update-activation-environment: setting XDG_RUNTIME_DIR=/run/user/0
+dbus-update-activation-environment: setting DISPLAY=:0
+dbus-update-activation-environment: setting LANG=fr_CH.UTF-8
+dbus-update-activation-environment: setting XDG_SESSION_DESKTOP=lightdm-xsession
+dbus-update-activation-environment: setting XAUTHORITY=/root/.Xauthority
+dbus-update-activation-environment: setting XDG_GREETER_DATA_DIR=/var/lib/lightdm/data/root
+dbus-update-activation-environment: setting SHELL=/bin/bash
+dbus-update-activation-environment: setting GDMSESSION=lightdm-xsession
+dbus-update-activation-environment: setting QT_ACCESSIBILITY=1
+dbus-update-activation-environment: setting GPG_AGENT_INFO=/run/user/0/gnupg/S.gpg-agent:0:1
+dbus-update-activation-environment: setting PWD=/root
+xmodmap:  unable to open file '/root/.Xmodmap' for reading
+xmodmap:  1 error encountered, aborting.
+conky: Syntax error (/root/.conkyrc:3: unexpected symbol near '#') while reading config file. 
+conky: Assuming it's in old syntax and attempting conversion.
+conky: Invalid value 'no' for setting 'use_spacer'. Valid values are: 'none', 'left', 'right'.
+conky: desktop window (281) is root window
+conky: drawing to desktop window
+conky: drawing to double buffer
+conky: Unknown setting 'on_bottom'
+conky: Unknown setting 'border_margin'
+conky: Unknown setting 'mail_spool'
+conky: forked to background, pid is 923
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+ConfigBase::load: Unable to open /root/.config/terminator/config ([Errno 2] Aucun fichier ou dossier de ce type: '/root/.config/terminator/config')
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+
+conky: MPD error: problems getting a response from "localhost" on port 6600 : Connexion refusée
+

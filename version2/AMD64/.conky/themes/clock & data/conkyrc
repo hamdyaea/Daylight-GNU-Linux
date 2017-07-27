@@ -1,0 +1,87 @@
+#########################################################################################
+#    Conky Theme : Mist                                                                                                                                                                                          #
+#    Created by     : 6thSword                                                                                                                                                            #
+#    Version           : 0.1                                                                                                                                                                                                  # 
+#    Feel Free to distribute                                                                                                                                                                                         #
+#    For Installation Instructions See Read Me                                                                                                                                                       #
+########################################################################################
+
+
+# Conky settings #
+background yes
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+#imlib_cache_size 0
+
+temperature_unit fahrenheit
+
+# Window specifications #
+
+own_window yes
+own_window_type conky
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+border_inner_margin 0
+border_outer_margin 0
+
+## This Resolution is set according to the sreen resolution of 1366x768 
+## Adjust Accoring to yours
+
+minimum_size 800 560
+maximum_width 1280
+
+alignment tl
+gap_x 10
+gap_y 55
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Text settings #
+use_xft yes
+xftfont caviar dreams:size=8
+xftalpha 0.5
+
+uppercase no
+
+temperature_unit celsius
+
+
+default_color FFFFFF
+
+# Lua Load  #
+lua_load ~/.conky/.lua/scripts/haunted.lua
+lua_draw_hook_pre clock_rings
+
+## Adjust these fields according to the your screen size i have modded them for 1366X768
+
+TEXT
+#${offset 10}${voffset 10}${color EAEAEA}${font Ubuntu:pixelsize=16}${if_match ${time %l}<=9}${alignc 7}${time %l:%M%p}${else}${if_match ${time %l}>=10}${alignc -1}${time %l:%M%p}${endif}${endif}${font}
+
+${offset 10}${voffset 10}${color FFA300}${font GE Inspira:pixelsize=42}${time %d} ${voffset -30}${color EAEAEA}${font GE Inspira:pixelsize=22}${time  %B} ${time %Y}${font}${voffset 100}${font Ubuntu:pixelsize=68}${offset -800}${time %A}${font}
+${offset 240}${voffset -147}${font Ubuntu:pixelsize=10}${color FFA300}HD:${offset 9}$color${fs_free /} / ${fs_size /}${offset 30}${color FFA300}RAM:${offset 9}$color$mem / $memmax${offset 30}${color FFA300}CPU 1|2:${offset 9}$color${cpu cpu0}% | $color${cpu cpu1}%${offset 25}${font Ubuntu:pixelsize=10}${color FFA300}TOP PROCESS:${offset 9}$color${top name 5}${top mem 5}
+
+${offset 280}${voffset 25}${font Ubuntu:pixelsize=10}${color FFA300}ROOT:${offset 9}$color${fs_used /}/${fs_size /}${offset 30}${font Ubuntu:pixelsize=10}${color FFA300}HOME: $color${offset 9}${fs_free /home} (${fs_free_perc /home}%) free ${offset 30}${font Ubuntu:pixelsize=10}${color FFA300}SWAP:$color${offset 9}${swap} / ${swapfree}${offset 30}${font Ubuntu:pixelsize=10}${color FFA300}Uptime :$color${offset 9}${uptime}
+
+${offset 300}${voffset 25}${font Ubuntu:pixelsize=10}${color FFA300}KERNEL:${offset 9}$color Linux ${kernel} kernel${offset 25}${font Ubuntu:pixelsize=10}${color FFA300}HOSTNAME:${offset 9}$color${exec whoami}@${nodename}
+
+${offset 295}${voffset 25}${font Ubuntu:pixelsize=10}${color FFA300}WLAN AP:${offset 9}$color${wireless_essid wlan0}(${wireless_link_qual_perc wlan0}%)${offset 25}${font Ubuntu:pixelsize=10}${color FFA300}IP:$color${offset 9}${addr wlan0}
+
+${offset 280}${voffset 25}${font Ubuntu:pixelsize=10}${color FFA300}DOWNSPEED:${offset 9}$color${downspeed wlan0}${offset 8}${font Ubuntu:pixelsize=10}${color FFA300}UPSPEED:${offset 9}$color${upspeed wlan0}${offset 8}${font Ubuntu:pixelsize=10}${color FFA300}TOTAL UP:${offset 9}$color${totalup wlan0}${offset 8}${font Ubuntu:pixelsize=10}${color FFA300}TOTAL DOWN:${offset 9}$color${totaldown wlan0}
+
+${offset 235}${voffset 25}${font Ubuntu:pixelsize=10}${color FFA300}SPEED GRAPH:${offset 9}$color ${offset 5}UP:${offset 10}${color #000000}${upspeedgraph wlan0 15,150 000000 ffffff}$color${offset 30}DOWN:${offset 10}${color #000000}${downspeedgraph wlan0 15,150 000000 ffffff}
+
+

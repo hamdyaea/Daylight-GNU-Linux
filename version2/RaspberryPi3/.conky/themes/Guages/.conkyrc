@@ -1,0 +1,63 @@
+own_window yes
+own_window_transparent yes
+own_window_class conky
+own_window_argb_visual yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+background no
+
+use_xft yes
+xftfont DS Crystal:size=18
+
+xftalpha 0.8
+text_buffer_size 2048
+update_interval 0.5
+total_run_times 0
+
+max_specials 1024
+
+max_user_text 18384
+double_buffer yes
+minimum_size 150 280
+maximum_width 	250
+
+draw_graph_borders no
+draw_shades no
+draw_outline yes
+draw_borders no
+stippled_borders 0
+
+default_color white
+default_shade_color black
+default_outline_color blue
+own_window_colour white
+color1 white
+
+alignment bottom_right
+
+gap_x 10
+gap_y 10
+
+no_buffers yes
+
+uppercase no
+
+cpu_avg_samples 2
+
+net_avg_samples 2
+override_utf8_locale yes
+
+use_spacer none
+short_units yes 
+
+TEXT
+
+      ${hr 1}${font} 
+${alignr}${offset 20}${upspeedf eth0}${font DS Crystal:size=10} kb/c${voffset -8}${font PizzaDude Bullets:size=16}N${font}
+${voffset -7}${alignr}${upspeedgraph eth0 15,100 000000 000000}
+${alignr}${offset 20}${downspeedf eth0}${font DS Crystal:size=10} kb/c${voffset -8}${font PizzaDude Bullets:size=16}T${font}
+${voffset -7}${alignr}${downspeedgraph eth0 15,100 000000 000000}
+${alignr}${totalup eth0}${voffset -3}${font PizzaDude Bullets:size=14} N${font}
+${alignr}${totaldown eth0}${voffset -3}${font PizzaDude Bullets:size=14} T${font}
+      ${hr 1}
+
+

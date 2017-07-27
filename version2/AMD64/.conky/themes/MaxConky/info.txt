@@ -1,0 +1,9 @@
+
+Original theme is from the Australis MATE 1.6 linux distribution
+http://rackingman.wix.com/australis
+
+Modified by Umair
+http://www.noobslab.com/2013/06/max-conky-for-ubuntulinux.html
+
+Modified by Tony George
+http://teejeetech.blogspot.in

@@ -1,0 +1,785 @@
+<style type="text/css">
+#snippetContainer div.snippet img.icon {
+  margin: -0.75em 1em 0 0;
+  float: left;
+}
+
+ 
+   .snippet {
+       position: relative;
+   }
+
+   .snippet .icon {
+       position: absolute;
+       right: 400px;
+       top: 5px;
+       height: 50px;
+   }
+
+   .snippet p {
+       display: table-cell;
+       height: 40px;
+       padding-left: 80px;
+       vertical-align: middle;
+       width: 400px;
+   }
+ 
+
+ 
+</style>
+<script type="text/javascript">
+//<![CDATA[
+  // Generated on 2017-07-26 08:07:13.553456
+  // Included snippets:
+
+  //  - 6717
+
+  //  - 6898
+
+  var ABOUTHOME_SNIPPETS = JSON.parse('[{\u0022code\u0022: \u0022\u003Cdiv data\u002Dsnippet\u002Did\u003D\u005C\u00226717\u005C\u0022 data\u002Dweight\u003D\u005C\u002250\u005C\u0022 data\u002Dcampaign\u003D\u005C\u0022BrowserStack\u005C\u0022 class\u003D\u005C\u0022snippet\u002Dmetadata\u005C\u0022\u003E\u005Cn\u003Cstyle\u003E\u005Cndiv.switch#brandLogo {\u005Cn   background\u002Dsize: 192px auto\u003B\u005Cn}\u005Cn\u005Cn.switch#brandLogo {\u005Cn   height: 192px\u003B\u005Cn   width: 192px\u003B\u005Cn}\u005Cn\u005Cn#snippetContainer div.snippet {\u005Cn   margin: 10px 0\u003B\u005Cn}\u005Cn\u005Cn#snippetContainer div.snippet img.icon {\u005Cn    margin: 0 8px 0 0\u003B\u005Cn    float: none\u003B\u005Cn}\u005Cn\u005Cn.snippet p {\u005Cn    padding\u002Dleft: 0\u003B\u005Cn    \u005Cn      direction: ltr\u003B\u005Cn    \u005Cn    width: auto\u003B\u005Cn}\u005Cn\u005Cn.snippet .icon {\u005Cn    position: relative\u003B\u005Cn    right: 0\u003B\u005Cn    top: 0\u003B\u005Cn    display: inline\u002Dblock\u003B\u005Cn    height: auto\u003B\u005Cn    max\u002Dheight: 64px\u003B\u005Cn    vertical\u002Dalign: middle\u003B\u005Cn}\u005Cn\u005Cn\u005Cn  .block\u002Dsnippet\u002Doverlay {\u005Cn      border: 1px solid transparent\u003B\u005Cn      height: 100%\u003B\u005Cn      box\u002Dsizing: border\u002Dbox\u003B\u005Cn      margin: 0px \u002D20px\u003B\u005Cn      padding: 20px\u003B\u005Cn  }\u005Cn\u005Cn  .block\u002Dsnippet\u002Doverlay:hover,\u005Cn  .block\u002Dsnippet\u002Doverlay\u002Dclose {\u005Cn      border: 1px solid rgba(0, 0, 0, 0.1)\u003B\u005Cn      box\u002Dshadow: 0px 2px 2px \u002D1px rgba(0, 0, 0, 0.1)\u003B\u005Cn      border\u002Dradius: 3px\u003B\u005Cn   }\u005Cn\u005Cn\u005Cn\u005Cn\u005Cn .snippet .display\u002Ditem {\u005Cn     display: table\u002Dcell\u003B\u005Cn     vertical\u002Dalign: middle\u003B\u005Cn }\u005Cn .snippet .display\u002Dcontainer {\u005Cn     display: table\u003B\u005Cn }\u005Cn\u005Cn .button\u002Dlink {\u005Cn     white\u002Dspace: nowrap\u003B\u005Cn     margin: 5px\u003B\u005Cn     background: #D3D9DD\u003B\u005Cn     color: #000\u003B\u005Cn     font\u002Dsize: 16px\u003B\u005Cn     padding: 5px 13px\u003B\u005Cn     border\u002Dradius: 6px\u003B\u005Cn }\u005Cn\u005Cn .button\u002Dlink:hover {\u005Cn     background: #2B9EEF\u003B\u005Cn     color: #FFF\u003B\u005Cn }\u005Cn\u005Cn \u005Cn   .block\u002Dsnippet\u002Dbutton {\u005Cn       position: absolute\u003B\u005Cn       top: \u002D12px\u003B\u005Cn       \u005Cn         right: \u002D30px\u003B\u005Cn       \u005Cn       z\u002Dindex: 10\u003B\u005Cn       transform: scale(0)\u003B\u005Cn       transition: transform 200ms\u003B\u005Cn       transition\u002Ddelay: 0ms\u003B\u005Cn       height: 24px\u003B\u005Cn       width: 24px\u003B\u005Cn       background\u002Dimage: url(\u005C\u0022data:image/png\u003Bbase64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAeFBMVEUAAAAAAAAAAAABAQEAAAAAAAAAAAAAAAAAAAAAAADDw8OQkJAAAAAAAAAAAAAAAAD9/f38/Pz6+vr5+fnt7e3i4uLd3d3Z2dmgoKBdXV0mJibv7++amprNzc2amprv7+////9zc3OwsLD29vaPj4+xsbHCwsLBwcHrzmRyAAAAIHRSTlMABAg9HhEMNxkir38xLCkV/Pr39OHTzceOYUrliLuJ5ik+KlgAAAGhSURBVEjHnZbrdoIwDIAXWii3UuV+0wV0+v5vOEBH2ajg8v3y6PlO2pgm+TAAYD0B+HgDsBxbuXzCVbZj7VgAju16USjYhAgjz7WdrVjgKC5FHfh5kxwOSZP7QS0kVw68PJLNJQuKIy44FgGT3LbAHMKNWJviirRlkWsKNIQIqwyNZFU4BFobnihjfEFcCm92tMF83MBnfxwYjBNuchocWN6cCx938AVf5MBywxJ3KUPX0seKqnhfiavIhvlYLMM3yNjP0UDJFmcuN/zF7aI/t1I9lCFIqo1r1y+Nr+6qnXQI87iJDJZGNzra6JZOIG2Y0iWK+bt7N9JrY+Q+/1yIKWmOVy9qt3862lgGPdaeM2U4QDQ52tAEY55BhT4aHS1r/FDBeJUcTY7JwHy8jMVZgybHZGDD+KQkuHbMBiZP5YBrx2zggaCQDka5PiHJhL9yq2B6c8FslmVvKsud4u8Nxb/3xPr1E9t9yP3qIf+vXZylAkJTIrQ+QoMltHHCsCCMJMLgo49XPcTPpiF+1kOcsCrsLSSfeiGhrj305Yqwwn0Dwi/I5rQKpwMAAAAASUVORK5CYII\u003D\u005C\u0022)\u003B\u005Cn       background\u002Drepeat: no\u002Drepeat\u003B\u005Cn       background\u002Dsize: 24px 24px\u003B\u005Cn       background\u002Dcolor: transparent\u003B\u005Cn       border: 0\u003B\u005Cn       cursor: pointer\u003B\u005Cn   }\u005Cn\u005Cn   #snippet:hover \u003E .block\u002Dsnippet\u002Dbutton,\u005Cn   #brandLogo:hover \u003E .block\u002Dsnippet\u002Dbutton {\u005Cn       transform: scale(1)\u003B\u005Cn   }\u005Cn \u005Cn\u005Cn\u003C/style\u003E\u005Cn\u005Cn  \u003Cdiv class\u003D\u005C\u0022snippet\u005C\u0022 id\u003D\u005C\u0022snippet\u005C\u0022\u003E\u005Cn    \u005Cn      \u003Cdiv id\u003D\u005C\u0022block\u002Dsnippet\u002Doverlay\u005C\u0022 class\u003D\u005C\u0022block\u002Dsnippet\u002Doverlay\u005C\u0022\u003E\u005Cn    \u005Cn        \u003Cdiv class\u003D\u005C\u0022display\u002Dcontainer\u005C\u0022\u003E\u005Cn          \u005Cn            \u003Cdiv class\u003D\u005C\u0022display\u002Ditem\u005C\u0022\u003E\u005Cn              \u005Cn                \u003Ca href\u003D\u005C\u0022https://www.browserstack.com/test\u002Don\u002Dfirefox\u002Dbrowser\u005C\u0022\u003E\u005Cn              \u005Cn              \u003Cimg class\u003D\u005C\u0022icon\u005C\u0022 src\u003D\u005C\u0022data:image/png\u003Bbase64,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\u005C\u0022 /\u003E\u005Cn              \u005Cn                \u003C/a\u003E\u005Cn              \u005Cn            \u003C/div\u003E\u005Cn          \u005Cn\u005Cn          \u003Cp class\u003D\u005C\u0022display\u002Ditem\u005C\u0022\u003EHow does that menu look on mobile? Mozilla partnered with BrowserStack for a year of free testing. \u003Ca href\u003D\u005C\u0022https://www.browserstack.com/test\u002Don\u002Dfirefox\u002Dbrowser\u005C\u0022\u003ETry it now\u003C/a\u003E.\u003C/p\u003E\u005Cn\u005Cn          \u005Cn            \u005Cn          \u005Cn        \u003C/div\u003E\u005Cn    \u005Cn      \u003C/div\u003E\u005Cn    \u005Cn\u005Cn    \u005Cn      \u003Cbutton class\u003D\u005C\u0022block\u002Dsnippet\u002Dbutton\u005C\u0022 title\u003D\u005C\u0022Remove this\u005C\u0022\u003E\u005Cn      \u003C/button\u003E\u005Cn    \u005Cn  \u003C/div\u003E\u005Cn\u005Cn\u003Cscript type\u003D\u005C\u0022text/javascript\u005C\u0022\u003E\u005Cn //\u003C![CDATA[\u005Cn (function() {\u005Cn     var snippet \u003D document.getElementById(\u0027snippet\u0027)\u003B\u005Cn\u005Cn     snippet.addEventListener(\u0027show_snippet\u0027, function () {\u005Cn         var overlay \u003D document.getElementById(\u0027block\u002Dsnippet\u002Doverlay\u0027)\u003B\u005Cn         var xbuttons \u003D document.querySelectorAll(\u0027.block\u002Dsnippet\u002Dbutton\u0027)\u003B\u005Cn\u005Cn         \u005Cn\u005Cn         \u005Cn\u005Cn         \u005Cn           var mouseover \u003D function(event) {\u005Cn               overlay.classList.add(\u0027block\u002Dsnippet\u002Doverlay\u002Dclose\u0027)\u003B\u005Cn               \u005Cn           }\u003B\u005Cn\u005Cn           var mouseout \u003D function(event) {\u005Cn               overlay.classList.remove(\u0027block\u002Dsnippet\u002Doverlay\u002Dclose\u0027)\u003B\u005Cn               \u005Cn           }\u003B\u005Cn           for (var k \u003D 0, l \u003D xbuttons.length\u003B k \u003C l\u003B k++) {\u005Cn               var xbutton \u003D xbuttons[k]\u003B\u005Cn               xbutton.addEventListener(\u0027mouseover\u0027, mouseover, false)\u003B\u005Cn               xbutton.addEventListener(\u0027mouseout\u0027, mouseout, false)\u003B\u005Cn           }\u005Cn         \u005Cn     })\u003B\u005Cn })()\u003B\u005Cn //]]\u003E\u005Cn\u003C/script\u003E\u003C/div\u003E\u0022, \u0022exclude_from_search_engines\u0022: [], \u0022name\u0022: \u0022Moco_GLOBAL_DEVMKT_2017_BROWSERSTACK_DESKSIMP_MENU_EN_nightly\u0022, \u0022campaign\u0022: \u0022BrowserStack\u0022, \u0022countries\u0022: [], \u0022client_options\u0022: {\u0022has_testpilot\u0022: \u0022any\u0022, \u0022is_default_browser\u0022: \u0022any\u0022, \u0022screen_resolutions\u0022: \u00220\u002D1024\u003B1024\u002D1920\u003B1920\u002D50000\u0022, \u0022version_lower_bound\u0022: \u0022any\u0022, \u0022profileage_upper_bound\u0022: \u002D1, \u0022has_fxaccount\u0022: \u0022any\u0022, \u0022profileage_lower_bound\u0022: \u002D1, \u0022version_upper_bound\u0022: \u0022any\u0022}, \u0022id\u0022: 6717, \u0022weight\u0022: 50}, {\u0022code\u0022: \u0022\u003Cdiv data\u002Dsnippet\u002Did\u003D\u005C\u00226898\u005C\u0022 data\u002Dweight\u003D\u005C\u0022100\u005C\u0022 data\u002Dcampaign\u003D\u005C\u0022developer resources 1\u005C\u0022 class\u003D\u005C\u0022snippet\u002Dmetadata\u005C\u0022\u003E\u005Cn\u003Cstyle\u003E\u005Cndiv.switch#brandLogo {\u005Cn   background\u002Dsize: 192px auto\u003B\u005Cn}\u005Cn\u005Cn.switch#brandLogo {\u005Cn   height: 192px\u003B\u005Cn   width: 192px\u003B\u005Cn}\u005Cn\u005Cn#snippetContainer div.snippet {\u005Cn   margin: 10px 0\u003B\u005Cn}\u005Cn\u005Cn#snippetContainer div.snippet img.icon {\u005Cn    margin: 0 8px 0 0\u003B\u005Cn    float: none\u003B\u005Cn}\u005Cn\u005Cn.snippet p {\u005Cn    padding\u002Dleft: 0\u003B\u005Cn    \u005Cn      direction: ltr\u003B\u005Cn    \u005Cn    width: auto\u003B\u005Cn}\u005Cn\u005Cn.snippet .icon {\u005Cn    position: relative\u003B\u005Cn    right: 0\u003B\u005Cn    top: 0\u003B\u005Cn    display: inline\u002Dblock\u003B\u005Cn    height: auto\u003B\u005Cn    max\u002Dheight: 64px\u003B\u005Cn    vertical\u002Dalign: middle\u003B\u005Cn}\u005Cn\u005Cn\u005Cn  .block\u002Dsnippet\u002Doverlay {\u005Cn      border: 1px solid transparent\u003B\u005Cn      height: 100%\u003B\u005Cn      box\u002Dsizing: border\u002Dbox\u003B\u005Cn      margin: 0px \u002D20px\u003B\u005Cn      padding: 20px\u003B\u005Cn  }\u005Cn\u005Cn  .block\u002Dsnippet\u002Doverlay:hover,\u005Cn  .block\u002Dsnippet\u002Doverlay\u002Dclose {\u005Cn      border: 1px solid rgba(0, 0, 0, 0.1)\u003B\u005Cn      box\u002Dshadow: 0px 2px 2px \u002D1px rgba(0, 0, 0, 0.1)\u003B\u005Cn      border\u002Dradius: 3px\u003B\u005Cn   }\u005Cn\u005Cn\u005Cn\u005Cn\u005Cn .snippet .display\u002Ditem {\u005Cn     display: table\u002Dcell\u003B\u005Cn     vertical\u002Dalign: middle\u003B\u005Cn }\u005Cn .snippet .display\u002Dcontainer {\u005Cn     display: table\u003B\u005Cn }\u005Cn\u005Cn .button\u002Dlink {\u005Cn     white\u002Dspace: nowrap\u003B\u005Cn     margin: 5px\u003B\u005Cn     background: #D3D9DD\u003B\u005Cn     color: #000\u003B\u005Cn     font\u002Dsize: 16px\u003B\u005Cn     padding: 5px 13px\u003B\u005Cn     border\u002Dradius: 6px\u003B\u005Cn }\u005Cn\u005Cn .button\u002Dlink:hover {\u005Cn     background: #2B9EEF\u003B\u005Cn     color: #FFF\u003B\u005Cn }\u005Cn\u005Cn \u005Cn   .block\u002Dsnippet\u002Dbutton {\u005Cn       position: absolute\u003B\u005Cn       top: \u002D12px\u003B\u005Cn       \u005Cn         right: \u002D30px\u003B\u005Cn       \u005Cn       z\u002Dindex: 10\u003B\u005Cn       transform: scale(0)\u003B\u005Cn       transition: transform 200ms\u003B\u005Cn       transition\u002Ddelay: 0ms\u003B\u005Cn       height: 24px\u003B\u005Cn       width: 24px\u003B\u005Cn       background\u002Dimage: url(\u005C\u0022data:image/png\u003Bbase64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAeFBMVEUAAAAAAAAAAAABAQEAAAAAAAAAAAAAAAAAAAAAAADDw8OQkJAAAAAAAAAAAAAAAAD9/f38/Pz6+vr5+fnt7e3i4uLd3d3Z2dmgoKBdXV0mJibv7++amprNzc2amprv7+////9zc3OwsLD29vaPj4+xsbHCwsLBwcHrzmRyAAAAIHRSTlMABAg9HhEMNxkir38xLCkV/Pr39OHTzceOYUrliLuJ5ik+KlgAAAGhSURBVEjHnZbrdoIwDIAXWii3UuV+0wV0+v5vOEBH2ajg8v3y6PlO2pgm+TAAYD0B+HgDsBxbuXzCVbZj7VgAju16USjYhAgjz7WdrVjgKC5FHfh5kxwOSZP7QS0kVw68PJLNJQuKIy44FgGT3LbAHMKNWJviirRlkWsKNIQIqwyNZFU4BFobnihjfEFcCm92tMF83MBnfxwYjBNuchocWN6cCx938AVf5MBywxJ3KUPX0seKqnhfiavIhvlYLMM3yNjP0UDJFmcuN/zF7aI/t1I9lCFIqo1r1y+Nr+6qnXQI87iJDJZGNzra6JZOIG2Y0iWK+bt7N9JrY+Q+/1yIKWmOVy9qt3862lgGPdaeM2U4QDQ52tAEY55BhT4aHS1r/FDBeJUcTY7JwHy8jMVZgybHZGDD+KQkuHbMBiZP5YBrx2zggaCQDka5PiHJhL9yq2B6c8FslmVvKsud4u8Nxb/3xPr1E9t9yP3qIf+vXZylAkJTIrQ+QoMltHHCsCCMJMLgo49XPcTPpiF+1kOcsCrsLSSfeiGhrj305Yqwwn0Dwi/I5rQKpwMAAAAASUVORK5CYII\u003D\u005C\u0022)\u003B\u005Cn       background\u002Drepeat: no\u002Drepeat\u003B\u005Cn       background\u002Dsize: 24px 24px\u003B\u005Cn       background\u002Dcolor: transparent\u003B\u005Cn       border: 0\u003B\u005Cn       cursor: pointer\u003B\u005Cn   }\u005Cn\u005Cn   #snippet:hover \u003E .block\u002Dsnippet\u002Dbutton,\u005Cn   #brandLogo:hover \u003E .block\u002Dsnippet\u002Dbutton {\u005Cn       transform: scale(1)\u003B\u005Cn   }\u005Cn \u005Cn\u005Cn\u003C/style\u003E\u005Cn\u005Cn  \u003Cdiv class\u003D\u005C\u0022snippet\u005C\u0022 id\u003D\u005C\u0022snippet\u005C\u0022\u003E\u005Cn    \u005Cn      \u003Cdiv id\u003D\u005C\u0022block\u002Dsnippet\u002Doverlay\u005C\u0022 class\u003D\u005C\u0022block\u002Dsnippet\u002Doverlay\u005C\u0022\u003E\u005Cn    \u005Cn        \u003Cdiv class\u003D\u005C\u0022display\u002Dcontainer\u005C\u0022\u003E\u005Cn          \u005Cn            \u003Cdiv class\u003D\u005C\u0022display\u002Ditem\u005C\u0022\u003E\u005Cn              \u005Cn                \u003Ca href\u003D\u005C\u0022https://www.mozilla.org/en\u002DUS/developer/#utm_source\u003Ddesktop\u002Dsnippet\u0026amp\u003Butm_medium\u003Dsnippet\u0026amp\u003Butm_campaign\u003Ddeveloper\u002Dresources\u0026amp\u003Butm_term\u003D6898\u0026amp\u003Butm_content\u003Dnightly\u005C\u0022\u003E\u005Cn              \u005Cn              \u003Cimg class\u003D\u005C\u0022icon\u005C\u0022 src\u003D\u005C\u0022data:image/gif\u003Bbase64,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\u003D\u003D\u005C\u0022 /\u003E\u005Cn              \u005Cn                \u003C/a\u003E\u005Cn              \u005Cn            \u003C/div\u003E\u005Cn          \u005Cn\u005Cn          \u003Cp class\u003D\u005C\u0022display\u002Ditem\u005C\u0022\u003ELearning how to develop for the web on the web? Meta. Try the \u003Ca href\u003D\u005C\u0022https://www.mozilla.org/en\u002DUS/developer/#utm_source\u003Ddesktop\u002Dsnippet\u0026amp\u003Butm_medium\u003Dsnippet\u0026amp\u003Butm_campaign\u003Ddeveloper\u002Dresources\u0026amp\u003Butm_term\u003D6898\u0026amp\u003Butm_content\u003Dnightly\u005C\u0022\u003EMozilla Developers tools and resources page.\u003C/a\u003E\u003C/p\u003E\u005Cn\u005Cn          \u005Cn            \u005Cn          \u005Cn        \u003C/div\u003E\u005Cn    \u005Cn      \u003C/div\u003E\u005Cn    \u005Cn\u005Cn    \u005Cn      \u003Cbutton class\u003D\u005C\u0022block\u002Dsnippet\u002Dbutton\u005C\u0022 title\u003D\u005C\u0022Remove this\u005C\u0022\u003E\u005Cn      \u003C/button\u003E\u005Cn    \u005Cn  \u003C/div\u003E\u005Cn\u005Cn\u003Cscript type\u003D\u005C\u0022text/javascript\u005C\u0022\u003E\u005Cn //\u003C![CDATA[\u005Cn (function() {\u005Cn     var snippet \u003D document.getElementById(\u0027snippet\u0027)\u003B\u005Cn\u005Cn     snippet.addEventListener(\u0027show_snippet\u0027, function () {\u005Cn         var overlay \u003D document.getElementById(\u0027block\u002Dsnippet\u002Doverlay\u0027)\u003B\u005Cn         var xbuttons \u003D document.querySelectorAll(\u0027.block\u002Dsnippet\u002Dbutton\u0027)\u003B\u005Cn\u005Cn         \u005Cn\u005Cn         \u005Cn\u005Cn         \u005Cn           var mouseover \u003D function(event) {\u005Cn               overlay.classList.add(\u0027block\u002Dsnippet\u002Doverlay\u002Dclose\u0027)\u003B\u005Cn               \u005Cn           }\u003B\u005Cn\u005Cn           var mouseout \u003D function(event) {\u005Cn               overlay.classList.remove(\u0027block\u002Dsnippet\u002Doverlay\u002Dclose\u0027)\u003B\u005Cn               \u005Cn           }\u003B\u005Cn           for (var k \u003D 0, l \u003D xbuttons.length\u003B k \u003C l\u003B k++) {\u005Cn               var xbutton \u003D xbuttons[k]\u003B\u005Cn               xbutton.addEventListener(\u0027mouseover\u0027, mouseover, false)\u003B\u005Cn               xbutton.addEventListener(\u0027mouseout\u0027, mouseout, false)\u003B\u005Cn           }\u005Cn         \u005Cn     })\u003B\u005Cn })()\u003B\u005Cn //]]\u003E\u005Cn\u003C/script\u003E\u003C/div\u003E\u0022, \u0022exclude_from_search_engines\u0022: [], \u0022name\u0022: \u0022Moco_global_2017_campaign_simple_developer resources_en_nightly\u0022, \u0022campaign\u0022: \u0022developer resources 1\u0022, \u0022countries\u0022: [], \u0022client_options\u0022: {\u0022has_testpilot\u0022: \u0022any\u0022, \u0022is_default_browser\u0022: \u0022any\u0022, \u0022screen_resolutions\u0022: \u00220\u002D1024\u003B1024\u002D1920\u003B1920\u002D50000\u0022, \u0022version_lower_bound\u0022: \u0022any\u0022, \u0022profileage_upper_bound\u0022: \u002D1, \u0022has_fxaccount\u0022: \u0022any\u0022, \u0022profileage_lower_bound\u0022: \u002D1, \u0022version_upper_bound\u0022: \u0022any\u0022}, \u0022id\u0022: 6898, \u0022weight\u0022: 100}]');
+  var CURRENT_RELEASE = 54;
+
+  'use strict';
+
+var SNIPPET_METRICS_SAMPLE_RATE = 0.01;
+var SNIPPET_METRICS_URL = 'https://snippets-stats.moz.works/foo';
+var ABOUTHOME_SHOWN_SNIPPET = null;
+var USER_COUNTRY = null;
+var GEO_CACHE_DURATION = 1000 * 60 * 60 * 24 * 30; // 30 days
+
+// Start MozUITour
+// Copy from https://hg.mozilla.org/mozilla-central/file/tip/browser/components/uitour/UITour-lib.js
+if (typeof Mozilla == 'undefined') {
+    var Mozilla = {};
+}
+
+if (typeof Mozilla.UITour == 'undefined') {
+    Mozilla.UITour = {};
+}
+
+function _sendEvent(action, data) {
+    var event = new CustomEvent('mozUITour', {
+        bubbles: true,
+        detail: {
+            action: action,
+            data: data || {}
+        }
+    });
+
+    document.dispatchEvent(event);
+}
+
+function _generateCallbackID() {
+    return Math.random().toString(36).replace(/[^a-z]+/g, '');
+}
+
+function _waitForCallback(callback) {
+    var id = _generateCallbackID();
+
+    function listener(event) {
+        if (typeof event.detail != 'object')
+            return;
+        if (event.detail.callbackID != id)
+            return;
+
+        document.removeEventListener('mozUITourResponse', listener);
+        callback(event.detail.data);
+    }
+    document.addEventListener('mozUITourResponse', listener);
+
+    return id;
+}
+
+Mozilla.UITour.showHighlight = function(target, effect) {
+    _sendEvent('showHighlight', {
+        target: target,
+        effect: effect
+    });
+};
+
+Mozilla.UITour.hideHighlight = function() {
+    _sendEvent('hideHighlight');
+};
+
+Mozilla.UITour.showMenu = function(name, callback) {
+    var showCallbackID;
+    if (callback)
+        showCallbackID = _waitForCallback(callback);
+
+    _sendEvent('showMenu', {
+        name: name,
+        showCallbackID: showCallbackID
+    });
+};
+
+Mozilla.UITour.hideMenu = function(name) {
+    _sendEvent('hideMenu', {
+        name: name
+    });
+};
+
+Mozilla.UITour.getConfiguration = function(configName, callback) {
+    _sendEvent('getConfiguration', {
+        callbackID: _waitForCallback(callback),
+        configuration: configName,
+    });
+};
+
+Mozilla.UITour.setConfiguration = function(configName, configValue) {
+    _sendEvent('setConfiguration', {
+        configuration: configName,
+        value: configValue
+    });
+};
+// End MozUITour
+
+
+(function(showDefaultSnippets) {
+    'use strict';
+
+    // showDefaultSnippets polyfill, available in about:home v4
+    if (typeof showDefaultSnippets !== 'function') {
+        showDefaultSnippets = function() {
+            localStorage.snippets = '';
+            showSnippets();
+        };
+    }
+
+    // gSnippetsMap polyfill, available in Firefox 22 and above.
+    var gSnippetsMap = null;
+    if (supportsLocalStorage()) {
+        // localStorage is available, so we wrap it with gSnippetsMap.
+        gSnippetsMap = {
+            set: function(key, value) {
+                localStorage[key] = value;
+            },
+            get: function(key) {
+                return localStorage[key];
+            }
+        };
+        window.gSnippetsMap = gSnippetsMap;
+    } else {
+        // localStorage isn't available, use gSnippetsMap (backed by IndexedDB).
+        gSnippetsMap = window.gSnippetsMap;
+    }
+
+
+    var show_snippet = null;
+    if (ABOUTHOME_SNIPPETS.length > 0) {
+        show_snippet = chooseSnippet(ABOUTHOME_SNIPPETS);
+    }
+
+    if (show_snippet) {
+        ABOUTHOME_SHOWN_SNIPPET = show_snippet;
+
+        // Inject the snippet onto the page.
+        var snippetContainer = document.createElement('div');
+        snippetContainer.innerHTML = show_snippet.code;
+        document.getElementById('snippets').appendChild(snippetContainer);
+        activateScriptTags(snippetContainer);
+
+        try {
+            activateSnippetsButtonClick(show_snippet);
+        } catch (err) {
+            // Do nothing, most likely a newer version of Firefox w/o
+            // activateSnippetsButtonClick
+        }
+
+        // By the time show_snippet event reaches #snippets the snippet
+        // will have finished initializing and altering the DOM. It's the
+        // time to modifyLinks() and addSnippetBlockLinks().
+        var snippets = document.getElementById('snippets');
+        snippets.addEventListener('show_snippet', function(event) {
+            var topSection = document.getElementById('topSection');
+            // Add sample rate and snippet ID to currently displayed links.
+            var parameters = ('sample_rate=' + SNIPPET_METRICS_SAMPLE_RATE + '&snippet_name=' +
+                              ABOUTHOME_SHOWN_SNIPPET.id);
+            modifyLinks(topSection.querySelectorAll('a'), parameters);
+            addSnippetBlockLinks(topSection.querySelectorAll('.block-snippet-button'));
+            keypressIsMine(snippetContainer.querySelector('.snippet'));
+            sendImpression();
+        });
+
+        // Trigger show_snippet event
+        var evt = document.createEvent('Event');
+        evt.initEvent('show_snippet', true, true);
+        snippetContainer.querySelector('.snippet').dispatchEvent(evt);
+    } else {
+        showDefaultSnippets();
+    }
+
+    // Update FxAccount Status
+    updateFxAccountStatus();
+
+    // Update Selected Search Engine
+    updateSelectedSearchEngine();
+
+    // Get appinfo from UITour
+    updateAppInfoStatus();
+
+    // Fetch user country if we don't have it.
+    if (!haveUserCountry()) {
+        downloadUserCountry();
+    }
+
+    
+    // Choose which snippet to display to the user based on various factors,
+    // such as which country they are in.
+    function chooseSnippet(snippets) {
+        USER_COUNTRY = getUserCountry();
+        if (USER_COUNTRY) {
+            snippets = snippets.filter(
+                function(snippet) {
+                    var countries = snippet.countries;
+                    if (countries.length && countries.indexOf(USER_COUNTRY) === -1) {
+                        return false;
+                    }
+                    return true;
+                }
+            );
+        }
+        else {
+            // If we don't have the user's country, remove all geolocated snippets.
+            // Bug 1140476
+            snippets = snippets.filter(
+                function(snippet) {
+                    return snippet.countries.length === 0;
+                }
+            );
+        }
+
+        // Filter Snippets based on the has_fxaccount attribute.
+        var has_fxaccount = gSnippetsMap.get('fxaccount');
+        if (has_fxaccount === true) {
+            snippets = snippets.filter(
+                function(snippet) {
+                    return (snippet.client_options.has_fxaccount == 'yes' ||
+                            snippet.client_options.has_fxaccount == 'any');
+                }
+            );
+        } else if (has_fxaccount === false) {
+            snippets = snippets.filter(
+                function(snippet) {
+                    return (snippet.client_options.has_fxaccount == 'no' ||
+                            snippet.client_options.has_fxaccount == 'any');
+                }
+            );
+        } else {
+            snippets = snippets.filter(
+                function(snippet) {
+                    return (snippet.client_options.has_fxaccount == 'any');
+                }
+            );
+        }
+
+        // Filter Snippets based on TestPilot addon existence.
+        var has_testpilot = Boolean(window.navigator.testpilotAddon);
+        if (has_testpilot === true) {
+            snippets = snippets.filter(
+                function(snippet) {
+                    return (snippet.client_options.has_testpilot == 'yes' ||
+                            snippet.client_options.has_testpilot == 'any');
+                }
+            );
+        } else {
+            snippets = snippets.filter(
+                function(snippet) {
+                    return (snippet.client_options.has_testpilot == 'no' ||
+                            snippet.client_options.has_testpilot == 'any');
+                }
+            );
+        }
+
+        // Filter Snippets based on whether Firefox is the default browser or now.
+        var appInfo = gSnippetsMap.get('appInfo');
+        if (appInfo && (appInfo.defaultBrowser === true || appInfo.defaultBrowser === undefined)) {
+            snippets = snippets.filter(
+                function(snippet) {
+                    return (snippet.client_options.is_default_browser == 'yes' ||
+                            snippet.client_options.is_default_browser == 'any');
+                }
+            );
+        } else {
+            snippets = snippets.filter(
+                function(snippet) {
+                    return (snippet.client_options.is_default_browser == 'no' ||
+                            snippet.client_options.is_default_browser == 'any');
+                }
+            );
+        }
+
+        // Exclude snippets from search providers.
+        var searchProvider = gSnippetsMap.get('selectedSearchEngine');
+        if (searchProvider) {
+            snippets = snippets.filter(
+                function(snippet) {
+                    var excludeFromSearchEngines = snippet.exclude_from_search_engines;
+                    if (excludeFromSearchEngines.length && excludeFromSearchEngines.indexOf(searchProvider) !== -1) {
+                        return false;
+                    }
+                    return true;
+                }
+            );
+        }
+
+        // Filter based on Firefox version
+        var userAgent = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
+        var firefox_version  = userAgent ? parseInt(userAgent[1]) : 0;
+        if (firefox_version !== 0) {
+            snippets = snippets.filter(
+                function(snippet) {
+                    var lower_bound = snippet.client_options.version_lower_bound;
+                    var upper_bound = snippet.client_options.version_upper_bound;
+                    if (lower_bound && lower_bound !== 'any') {
+                        if (lower_bound === 'current_release') {
+                            if (firefox_version !== CURRENT_RELEASE)
+                                return false;
+                        }
+                        else {
+                            if (firefox_version < lower_bound) {
+                                return false;
+                            }
+                        }
+                    }
+                    if (upper_bound && upper_bound !== 'any') {
+                        if (upper_bound === 'older_than_current_release') {
+                            if (firefox_version >= CURRENT_RELEASE)
+                                return false;
+                        }
+                        else {
+                            if (firefox_version > upper_bound)
+                                return false;
+                        }
+                    }
+                    return true;
+                });
+        }
+
+        // Filter based on screen resolution
+        var verticalScreenResolution = screen.width;
+        snippets = snippets.filter(
+            function(snippet) {
+                let snippetResolutions = snippet.client_options.screen_resolutions.split(';');
+                let display = false;
+                snippetResolutions.forEach(function(resolution) {
+                    let minmax = resolution.split('-');
+                    if (parseInt(minmax[0]) <= verticalScreenResolution
+                        && verticalScreenResolution < parseInt(minmax[1])) {
+                        display = true;
+                        return;
+                    }
+                });
+                return display;
+            }
+        );
+
+        // Filter based on Profile age
+        //
+        // appInfo.profileCreatedWeeksAgo can be either undefined for Firefox
+        // versions that don't expose this information, or a number >= 0.
+        if (appInfo && appInfo.profileCreatedWeeksAgo !== undefined) {
+            let profileAge = appInfo.profileCreatedWeeksAgo;
+            snippets = snippets.filter(
+                function(snippet) {
+                    let lower_bound = snippet.client_options.profileage_lower_bound;
+                    let upper_bound = snippet.client_options.profileage_upper_bound;
+                    if (lower_bound > -1 && profileAge < lower_bound) {
+                        return false;
+                    }
+                    if (upper_bound > -1 && profileAge >= upper_bound) {
+                        return false;
+                    }
+                    return true;
+                }
+            );
+        }
+        else {
+            // Remove all snippets that use profile age since this information
+            // is not available.
+            snippets = snippets.filter(
+                function(snippet) {
+                    if (snippet.client_options.profileage_lower_bound > -1
+                        || snippet.client_options.profileage_upper_bound > -1) {
+                        return false;
+                    }
+                    return true;
+                }
+            );
+        }
+
+        // Exclude snippets in block list.
+        var blockList = getBlockList();
+        snippets = snippets.filter(
+            function (snippet) {
+                var blockID = snippet.campaign || snippet.id;
+                if (blockList.indexOf(blockID) === -1) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        // Choose a random snippet from the snippets list.
+        if (snippets && snippets.length) {
+            var sum = 0;
+            var number_of_snippets = snippets.length;
+            for (var k = 0; k < number_of_snippets; k++) {
+                sum += snippets[k].weight;
+                snippets[k].weight = sum;
+            }
+            var random_number = Math.random() * sum;
+            for (var k = 0; k < number_of_snippets; k++) {
+                if (random_number < snippets[k].weight) {
+                    return snippets[k];
+                }
+            }
+        } else {
+            return null;
+        }
+    }
+    
+
+    function updateFxAccountStatus() {
+        var callback = function(result) {
+            gSnippetsMap.set('fxaccount', result.setup);
+        };
+        var event = new CustomEvent(
+            'mozUITour', {
+                bubbles: true,
+                detail: {
+                    action:'getConfiguration',
+                    data: {
+                        configuration: 'sync',
+                        callbackID: _waitForCallback(callback)
+                    }
+                }
+            }
+        );
+        document.dispatchEvent(event);
+    }
+
+    function updateAppInfoStatus() {
+        var callback = function(result) {
+            gSnippetsMap.set('appInfo', result);
+        };
+        var event = new CustomEvent(
+            'mozUITour', {
+                bubbles: true,
+                detail: {
+                    action:'getConfiguration',
+                    data: {
+                        configuration: 'appinfo',
+                        callbackID: _waitForCallback(callback)
+                    }
+                }
+            }
+        );
+        document.dispatchEvent(event);
+    }
+
+    function updateSelectedSearchEngine() {
+        var callback = function(result) {
+            gSnippetsMap.set('selectedSearchEngine', result.searchEngineIdentifier);
+        };
+        var event = new CustomEvent(
+            'mozUITour', {
+                bubbles: true,
+                detail: {
+                    action:'getConfiguration',
+                    data: {
+                        configuration: 'selectedSearchEngine',
+                        callbackID: _waitForCallback(callback)
+                    }
+                }
+            }
+        );
+        document.dispatchEvent(event);
+    }
+
+    // Check whether we have the user's country stored and if it is still valid.
+    function haveUserCountry() {
+        // Check if there's an existing country code to use.
+        if (gSnippetsMap.get('geoCountry')) {
+            // Make sure we have a valid lastUpdated date.
+            var lastUpdated = Date.parse(gSnippetsMap.get('geoLastUpdated'));
+            if (lastUpdated) {
+                // Make sure that it is past the lastUpdated date.
+                var now = new Date();
+                if (now < lastUpdated + GEO_CACHE_DURATION) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    function getUserCountry() {
+        if (haveUserCountry()) {
+            return gSnippetsMap.get('geoCountry').toLowerCase();
+        } else {
+            return null;
+        }
+    }
+
+    // Download the user's country using the geolocation service.
+    // Please do not directly use this code or Snippets key.
+    // Contact MLS team for your own credentials.
+    // https://location.services.mozilla.com/contact
+    function downloadUserCountry() {
+        var GEO_URL = "https://location.services.mozilla.com/v1/country?key=fff72d56-b040-4205-9a11-82feda9d83a3";
+        var request = new XMLHttpRequest();
+        request.timeout = 60000;
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+                var country_data = JSON.parse(request.responseText);
+
+                try {
+                    gSnippetsMap.set('geoCountry', country_data.country_code);
+                    gSnippetsMap.set('geoLastUpdated', new Date());
+                } catch (e) {
+                    // Most likely failed to load Data file. Continue on without us,
+                    // we'll try again next time.
+                }
+            }
+        };
+        request.open('GET', GEO_URL, true);
+        request.send();
+    }
+
+    // Notifies stats server that the given snippet ID
+    // was shown. No personally-identifiable information
+    // is sent.
+    function sendImpression() {
+        sendMetric('impression');
+    }
+
+    // Modifies the given links to include the specified GET parameters.
+    function modifyLinks(links, parameters) {
+        for (var k = 0, len = links.length; k < len; k++) {
+            var link = links[k];
+            var delimeter = (link.href.indexOf('?') !== -1 ? '&' : '?');
+
+            // Pull the fragment off of the link
+            var fragment_position = link.href.indexOf('#');
+            if (fragment_position === -1) {
+                fragment_position = link.href.length;
+            }
+
+            var href = link.href.substring(0, fragment_position);
+            var fragment = link.href.substring(fragment_position);
+
+            link.href = href + delimeter + parameters + fragment;
+        }
+    }
+
+    // Add links to buttons that block snippets.
+    function addSnippetBlockLinks(elements) {
+        var blockSnippet = function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            addToBlockList();
+
+            // Waiting for 500ms before reloading the page after user blocks a snippet,
+            // will allow the IndexedDB more time to complete its transaction. While
+            // this is an imperfect non-deterministic solution it will fix the issue
+            // for most of the users. Ideally we would create our own
+            // connection to the iDB and ensure that the write completes
+            // before we reload the page. Bug 1236090.
+            function reloadWindow() {
+                window.location.reload();
+            }
+            sendMetric('snippet-blocked', function() { setTimeout(reloadWindow, 500); });
+        };
+
+        for (var k = 0; k < elements.length; k++) {
+            var button = elements[k];
+            button.addEventListener('click', blockSnippet);
+        }
+    }
+
+    // Bug 1238092. Got fixed in Fx45. We can drop this when Fx44
+    // usage drops significantly.
+    function keypressIsMine(snippet) {
+        snippet.addEventListener('keypress', function(event) {
+            var tagName = event.target.tagName.toLowerCase();
+            if (tagName === 'input' || tagName === 'select') {
+                event.stopPropagation();
+            }
+        });
+    }
+
+    // Check for localStorage support. Copied from Modernizr.
+    function supportsLocalStorage() {
+        var s = 'snippets-test';
+        try {
+            localStorage.setItem(s, s);
+            localStorage.removeItem(s);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    }
+
+    // Scripts injected by innerHTML are inactive, so we have to relocate them
+    // through DOM manipulation to activate their contents.
+    // (Adapted from http://mxr.mozilla.org/mozilla-central/source/browser/base/content/abouthome/aboutHome.js)
+    function activateScriptTags(element) {
+       Array.forEach(element.getElementsByTagName('script'), function(elt) {
+           var relocatedScript = document.createElement('script');
+           relocatedScript.type = 'text/javascript;version=1.8';
+           relocatedScript.text = elt.text;
+           elt.parentNode.replaceChild(relocatedScript, elt);
+       });
+    }
+
+    // Listen for clicks on links, send metrics and handle
+    // about:account custom links.
+    var topSection = document.getElementById('topSection');
+    topSection.addEventListener('click', function(event) {
+        var target = event.target;
+        while (target.tagName && target.tagName.toLowerCase() !== 'a') {
+            // Do not track clicks outside topSection.
+            if (target.id === 'topSection') {
+                return;
+            }
+            target = target.parentNode;
+        }
+
+        // Count snippet clicks.
+        if (target.dataset.eventCounted !== 'true') {
+            target.dataset.eventCounted = 'true';
+            // Fetch custom metric or default to 'click'
+            var metric = target.dataset.metric || 'click';
+            // If user is not opening a new tab, preventDefault action.
+            if (target.href && (event.button === 0 && !(event.metaKey || event.ctrlKey))) {
+                event.preventDefault();
+                var callback = function() {
+                    target.click();
+                };
+            }
+            sendMetric(metric, callback, target.href);
+        }
+
+        // Handle about:accounts clicks.
+        if (target.href && target.href.indexOf('about:accounts') === 0) {
+            var snippet_id = ABOUTHOME_SHOWN_SNIPPET.id;
+            var metric = snippet_id + '-about-accounts-click';
+            var fire_event = function() {
+                var event = new CustomEvent(
+                    'mozUITour',
+                    { bubbles: true, detail: { action:'showFirefoxAccounts', data: {}}}
+                );
+                document.dispatchEvent(event);
+            };
+            sendMetric(metric, fire_event, target.href);
+        }
+    }, false);
+
+
+})(window.showDefaultSnippets);
+
+// Send impressions and other interactions to the service
+// If no parameter is entered, quit function
+function sendMetric(metric, callback, href) {
+    
+    
+      if (!SNIPPET_METRICS_URL || (Math.random() > SNIPPET_METRICS_SAMPLE_RATE) || (!metric)) {
+          if (callback) {
+              // setTimeout is here because when metrics succeeds the callback is async.
+              // When we don't use metrics, we should be consistent and
+              // fire the callback async too.
+              setTimeout(callback);
+          }
+          return;
+      }
+
+      var locale = 'en-US';
+      var userCountry = USER_COUNTRY || '';
+      var campaign = ABOUTHOME_SHOWN_SNIPPET.campaign;
+      var snippet_id = ABOUTHOME_SHOWN_SNIPPET.id;
+      var snippet_full_name = ABOUTHOME_SHOWN_SNIPPET.name;
+
+      var url = (SNIPPET_METRICS_URL + '?snippet_name=' + snippet_id +
+                 '&snippet_full_name=' + snippet_full_name +
+                 '&locale=' + locale + '&country=' + userCountry +
+                 '&metric=' + metric + '&campaign=' + campaign);
+
+      if (href) {
+          url = url + "&href=" + escape(href);
+      }
+
+      var request = new XMLHttpRequest();
+      request.open('GET', url);
+      if (callback) {
+          request.addEventListener('loadend', callback, false);
+      }
+      request.send();
+      return request;
+    
+}
+
+function popFromBlockList(snippetID) {
+    var blockList = getBlockList();
+    var item = blockList.pop(snippetID);
+    gSnippetsMap.set('blockList', blockList);
+    return item;
+}
+
+function addToBlockList(snippetID) {
+    var blockList = getBlockList();
+    if (snippetID === undefined) {
+        snippetID = ABOUTHOME_SHOWN_SNIPPET.campaign || ABOUTHOME_SHOWN_SNIPPET.id;
+    }
+    if (blockList.indexOf(snippetID) === -1) {
+        blockList = [snippetID].concat(blockList);
+        gSnippetsMap.set('blockList', blockList);
+    }
+}
+
+function getBlockList() {
+    if (gSnippetsMap.get('blockList') === undefined) {
+        gSnippetsMap.set('blockList', []);
+    }
+    return gSnippetsMap.get('blockList');
+}
+
+//]]>
+</script>mç)„§      Yx¦ºYx¦º>KaYŸÚÙ   j    a,:https://snippets.cdn.mozilla.net/frankfurt/bundles/bundle_5bfb7b036f9c8476dae6a890c85ccedb255011e2.html necko:classified 1 strongly-framed 1 security-info FnhllAKWRHGAlo+ESXykKAAAAAAAAAAAwAAAAAAAAEaphjojH6pBabDSgSnsfLHeAAQAAgAAAAAAAAAAAAAAAAAAAAAB4vFIJp5wRkeyPxAQ9RJGKPqbqVvKO0mKuIl8ec8o/uhmCjImkVxP+7sgiYWmMt8FvcOXmlQiTNWFiWlrbpbqgwAAAAAAAAU6MIIFNjCCBB6gAwIBAgIQDKnGQ2G/ySp5sd2c+55I7DANBgkqhkiG9w0BAQsFADBNMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMScwJQYDVQQDEx5EaWdpQ2VydCBTSEEyIFNlY3VyZSBTZXJ2ZXIgQ0EwHhcNMTYxMTAzMDAwMDAwWhcNMjAwMjAxMTIwMDAwWjB0MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEcMBoGA1UEChMTTW96aWxsYSBDb3Jwb3JhdGlvbjEaMBgGA1UEAwwRKi5jZG4ubW96aWxsYS5uZXQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDNIU14XnpwQVunAhMzVS+lwRxj5K81HPtSPp3wL5Zx/hyRN/GF45H2eGFBKfvUEf7jis6tm/I8SN/7aN44p0AerR53pzA2Ut8NCjpxbMuJF6XvY2yv/g/tu3ZZjBIKn/IgR/Oyd4FSOdpDjGUM8W12RSaeiQUHC1DuMYKwnPouDijzodMXPDa7O91sahW87t6lKnS7E9CgNdku5lxFTOe480Ic9yd+clJNZZ6dNtnwYfrKaqxyZQAyBD0SNsk4WepelD+VBojDjN3Mc7rMwB67TDnq1MYiQI/lDf8h9Uzpte1iH/PQxX0pMfLxQ7bcjx7LoL6bId3N93a/2+sD3RpLAgMBAAGjggHpMIIB5TAfBgNVHSMEGDAWgBQPgGEcgjFh1S8o541GOLQs4cbZ4jAdBgNVHQ4EFgQUM8CY0nNQNDM7/3c5KcxAZpQKdD0wLQYDVR0RBCYwJIIRKi5jZG4ubW96aWxsYS5uZXSCD2Nkbi5tb3ppbGxhLm5ldDAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMGsGA1UdHwRkMGIwL6AtoCuGKWh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9zc2NhLXNoYTItZzUuY3JsMC+gLaArhilodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vc3NjYS1zaGEyLWc1LmNybDBMBgNVHSAERTBDMDcGCWCGSAGG/WwBATAqMCgGCCsGAQUFBwIBFhxodHRwczovL3d3dy5kaWdpY2VydC5jb20vQ1BTMAgGBmeBDAECAjB8BggrBgEFBQcBAQRwMG4wJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBGBggrBgEFBQcwAoY6aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0U0hBMlNlY3VyZVNlcnZlckNBLmNydDAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQCOU7nHjEm9JLhlTUJk1LFR9AQVVXWHVaL4yrlEy2tDds1vs2z3NnVtXXg5BgH8uDstKWAk9IbAgVgIWCwAMqO2KyjXqIU9JMVw9wNUNY6dyI3YDWB9Nwl9YAz3lxTaoJPSqH34z9YnhpztRoZ8m0Z+iZAveNjC2NMQbPIL/+O81kRKuWADXCFRSeo0XYsHnguBTu5Nlgi6X6o16u/Ba7pI1gFN2kLXfkRugMGrIpNVjfAn/dcR5pdKpXE+KzCqt3nxRhfEXTvkGazSBJoZLlv7t7ykefzurXpAW0I9sYSZtHJK3MxZNxviZzQOEEosq7Q+2aybYrPqSfBUVp12dF+rwC8BAwAAAAABAQAAAAA= request-method GET response-head HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 58458
+Date: Wed, 26 Jul 2017 08:07:54 GMT
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET
+Access-Control-Max-Age: 900
+Last-Modified: Wed, 26 Jul 2017 08:07:14 GMT
+x-amz-expiration: expiry-date="Mon, 25 Sep 2017 00:00:00 GMT", rule-id="bundles"
+Etag: "3323431bdd5234918f3705e4d7abfc12"
+Cache-Control: max-age=2592000
+x-amz-version-id: nATgQz_k.ql2ktXsKewTusYr2glrDQIz
+Accept-Ranges: bytes
+Server: AmazonS3
+Age: 22753
+X-Cache: Hit from cloudfront
+Via: 1.1 7bcb1bea570dabe966ff58f79620c93c.cloudfront.net (CloudFront)
+X-Amz-Cf-Id: hWDV-JUl9IbO8Z10QfgnS-AnCYbZyqhhfd2lpjoe_98wAuqMbb3kWA==
+ original-response-headers Content-Type: text/html
+Content-Length: 58458
+Connection: keep-alive
+Date: Wed, 26 Jul 2017 08:07:54 GMT
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET
+Access-Control-Max-Age: 900
+Last-Modified: Wed, 26 Jul 2017 08:07:14 GMT
+x-amz-expiration: expiry-date="Mon, 25 Sep 2017 00:00:00 GMT", rule-id="bundles"
+Etag: "3323431bdd5234918f3705e4d7abfc12"
+Cache-Control: max-age=2592000
+x-amz-version-id: nATgQz_k.ql2ktXsKewTusYr2glrDQIz
+Accept-Ranges: bytes
+Server: AmazonS3
+Age: 22753
+X-Cache: Hit from cloudfront
+Via: 1.1 7bcb1bea570dabe966ff58f79620c93c.cloudfront.net (CloudFront)
+X-Amz-Cf-Id: hWDV-JUl9IbO8Z10QfgnS-AnCYbZyqhhfd2lpjoe_98wAuqMbb3kWA==
+ uncompressed-len 0 net-response-time-onstart 22 net-response-time-onstop 40   äZ

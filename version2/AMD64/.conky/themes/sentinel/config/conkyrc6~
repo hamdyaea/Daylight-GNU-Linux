@@ -1,0 +1,73 @@
+# — Conky settings — #
+
+background yes
+
+update_interval 1
+total_run_times 0
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+imlib_cache_size 0
+
+temperature_unit celsius
+
+# — Window specifications — #
+
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 764 131
+maximum_width 764
+
+alignment top_right
+
+gap_x 280
+gap_y 0
+
+
+# — Graphics settings — #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# — Text settings — #
+use_xft yes
+xftfont Future:size=8
+xftalpha 0.1
+
+default_color D4ECF4
+default_gauge_size 50 25
+
+uppercase no
+use_spacer right
+
+color0 white
+color1 orange
+color2 green
+
+# — Lua Load — #
+
+##lua_load ~/.Conky/sentinel/scripts/bargraph.lua
+##lua_draw_hook_pre main_rings
+
+TEXT
+${image ~/.Conky/sentinel/images/06.png -p 0,0 -s 764x131}
+${voffset -5}${goto 172}${font Future:size=13}${color red}Alienware M11x R2, Intel Core i7, 8 GB RAM, SSD OCZ Vertex 4 128 Gigas
+${voffset 0}${goto 172}${font Future:size=13}${color red}1GB NVIDIA GT 335M | OS: GNU/${sysname} | Distro: ${pre_exec lsb_release -d | cut -f 2| tr "[:upper:]" "[:lower:]"} ${pre_exec lsb_release -c | cut -f 2| tr "[:upper:]" "[:lower:]"} ${machine}
+${voffset 0}${goto 172}${font Future:size=13}${color red}Escritorio: GNOME 2.32.0 | Kernel: ${kernel} | Usuario: ${nodename}
+${voffset 33}${goto 135}${font Future:size=15}${color red}UPLOAD: ${upspeedgraph wlan0 15,385} ${upspeed wlan0}
+${voffset -114}${goto 28}${font Future:size=11}${color red}CPU0: ${cpugraph cpu0 11,47}
+${voffset 0}${goto 28}${font Future:size=11}${color red}CPU1: ${cpugraph cpu1 11,47}
+${voffset 0}${goto 28}${font Future:size=11}${color red}CPU2: ${cpugraph cpu2 11,47}
+${voffset 0}${goto 28}${font Future:size=11}${color red}CPU3: ${cpugraph cpu3 11,47}

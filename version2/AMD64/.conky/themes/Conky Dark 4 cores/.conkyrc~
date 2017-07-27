@@ -1,0 +1,106 @@
+# Conky settings #
+background no
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+#imlib_cache_size 0
+
+temperature_unit celsius
+
+# Window specifications #
+own_window_class Conky
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 520 600
+maximum_width 520
+
+alignment tr
+gap_x -20
+gap_y 100 
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+default_color gray
+default_shade_color red
+default_outline_color green
+
+# Text settings #
+use_xft yes
+override_utf8_locale yes
+xftfont Pf Tempesta Five:bold:size=6
+xftalpha 0.9
+uppercase no
+
+temperature_unit celsius
+
+default_color 999999
+color0 d00420
+color1 999999
+color2 1994D1
+#color3 1994D1 
+
+# Lua Load  ##${voffset 750}
+lua_load ~/conky/rings-v1.2.1.lua_dark
+#lua_draw_hook_pre ring_stats
+lua_draw_hook_pre conky_main
+
+TEXT
+${font Pf Tempesta Five:bold:size=6}${voffset 16}${goto 160}${color1}${acpitemp} °C
+${font Pf Tempesta Five:bold:size=6}${voffset -1}${goto 128}${color1}CPU 1 ${alignr 330}${color1}${cpu cpu0}%
+${font Pf Tempesta Five:bold:size=6}${voffset 4}${goto 128}${color1}CPU 2${alignr 330}${color1}${cpu cpu1}%
+${font Pf Tempesta Five:bold:size=6}${voffset 4}${goto 128}${color1}CPU 3${alignr 330}${color1}${cpu cpu2}%
+${font Pf Tempesta Five:bold:size=6}${voffset 2}${goto 128}${color1}CPU 4${alignr 330}${color1}${cpu cpu3}%
+${goto 50}${voffset 12}${font Pf Tempesta Five:bold:size=6}${color1}${top name 1}${alignr 306}${top cpu 1}%
+${goto 50}${font Pf Tempesta Five:bold:size=6}${color1}${top name 2}${alignr 306}${top cpu 2}%
+${goto 50}${font Pf Tempesta Five:bold:size=6}${color1}${top name 3}${alignr 306}${top cpu 3}%
+${font Birch Std:size=18}${color0}${goto 52}${voffset 8}CPU  ${freq_g cpu0} Ghz
+${font Birch Std:size=18}${color0}${goto 400}${voffset 48}MEMORY
+${goto 320}${voffset -6}${font Pf Tempesta Five:bold:size=6}${color1}${top_mem name 1}${alignr 40}${top_mem mem 1}%
+${goto 320}${font Pf Tempesta Five:bold:size=6}${color1}${top_mem name 2}${alignr 40}${top_mem mem 2}%
+${goto 320}${font Pf Tempesta Five:bold:size=6}${color1}${top_mem name 3}${alignr 40}${top_mem mem 3}%
+${font Pf Tempesta Five:bold:size=6}${voffset 6}${goto 350}${color1}SWAP${alignr 30}${color1}${swap} / ${color1}${swapmax}
+${font Pf Tempesta Five:bold:size=6}${voffset 4}${goto 350}${color1}RAM ${alignr 30}${color1}${mem} / ${color1}${memmax}
+${font Pf Tempesta Five:bold:size=6}${goto 80}${voffset -68}Root${color1}${alignr 310}${fs_used /} / ${fs_size /}
+${font Pf Tempesta Five:bold:size=6}${goto 80}${voffset 2}Home${alignr 310}${color1}${fs_used /home} / ${fs_size /home}
+${font Pf Tempesta Five:bold:size=6}${goto 80}${voffset 1}Usr${alignr 310}${color1}${fs_used /usr} / ${fs_size /usr}
+${font Birch Std:size=18}${color0}${goto 102}${voffset 12}HARD DRIVE
+${font Birch Std:size=18}${color0}${voffset 30}${goto 330}INTERNET INFO
+# EDITION FINIR WLAN
+${if_existing /proc/net/route wlan0}${font Pf Tempesta Five:bold:size=6}${color1}${goto 320}${voffset -14}WiFi${goto 350}${color1}${wireless_essid wlan0}${font Pf Tempesta Five:bold:size=6}${color1}${goto 300}${voffset 9}Up${goto 350}${color1}${totalup wlan0} / ${color1}${upspeed wlan0}
+${font Pf Tempesta Five:bold:size=6}${goto 300}${color1}Down${goto 350}${color1}${totaldown wlan0} / ${color1}${downspeed wlan0}
+${font Pf Tempesta Five:bold:size=7}${goto 300}${voffset 2}Local IP${goto 370}${addr wlan0}
+${font Pf Tempesta Five:bold:size=7}${goto 300}${voffset -1}Public IP${goto 370}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}
+${font Birch Std:size=18}${goto 128}${voffset -38}${color0}${time %a} ${color0}${time %x}
+${font Birch Std:size=22}${goto 162}${color1}${voffset 0}${time %H}:${time %M}
+${font Birch Std:size=18}${color0}${goto 300}${voffset 22}BATTERIE
+${font Birch Std:size=16}${color0}${goto 282}${voffset -2}${color1}${battery_percent BAT1}%
+# |--ETH0
+${else}${if_existing /proc/net/route eth0}${font Pf Tempesta Five:bold:size=6}${color1}${goto 300}${voffset -6}Up${goto 350}${color1}${totalup eth0} / ${color1}${upspeed eth0}
+${font Pf Tempesta Five:bold:size=6}${goto 300}${color1}Down${goto 350}${color1}${totaldown eth0} / ${color1}${downspeed eth0}
+${font Pf Tempesta Five:bold:size=7}${goto 300}${voffset 2}Local IP${goto 370}${addr eth0}
+${font Pf Tempesta Five:bold:size=7}${goto 300}${voffset -1}Public IP${goto 370}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}
+${font Birch Std:size=18}${goto 128}${voffset -40}${color0}${time %a} ${color0}${time %x}
+${font Birch Std:size=22}${goto 162}${color1}${voffset 0}${time %H}:${time %M}
+${font Birch Std:size=18}${color0}${goto 300}${voffset 26}BATTERIE
+${font Birch Std:size=16}${color0}${goto 282}${voffset -2}${color1}${battery_percent BAT1}%${endif}${endif}
+#${font Pf Tempesta Five:bold:size=6}${goto 180}Uptime${color1}${alignr 100}${uptime_short}
+${font Birch Std:size=24}${color0}${voffset 70}${alignr 130}${pre_exec cat /etc/issue.net}  ${machine}
+#${execpi 53 $HOME/conky/nagios.sh}

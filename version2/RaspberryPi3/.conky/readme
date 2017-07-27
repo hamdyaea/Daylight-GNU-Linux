@@ -1,0 +1,37 @@
+Install Conky Manager in Ubuntu
+
+sudo apt-add-repository -y ppa:teejee2008/ppa
+sudo apt-get update
+sudo apt-get install conky-manager
+
+
+or go to website for more info
+
+http://teejeetech.blogspot.in/p/conky-manager.html
+
+Also install this as-well *********
+
+
+sudo apt-get install conky-all lm-sensors hddtemp
+
+
+Now press Ctrl H together to see hidden files.
+
+Copy folders .conky & .Conky & .fonts into home folder
+
+Now go conky-manager folder in home and open and you will see a folder called themes. Now open and you will also some pre-installed themes already. please leave this folder open
+
+In my super conky pack there is a folder called Themes now open and copy all the themes and put into conky-manager folded under themes. ( do not copy folder just files into folder.)
+
+now open conky manager and refresh the list and you should see the list with all the great cool conky.
+
+Please Note not all conkys will work on some systems.2 core computers will not be able to load 4 core conkys.
+
+***** Most Conky Configs are for gnome works great Cinnamon will need to make some mods to work properly Unity. *****
+
+Enjoy guys  Put together by me , Jesse Avalos
+
+
+
+
+

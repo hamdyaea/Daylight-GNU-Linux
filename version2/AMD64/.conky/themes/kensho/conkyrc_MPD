@@ -1,0 +1,48 @@
+#avoid flicker
+double_buffer yes
+background yes
+
+#own window to run simultanious 2 or more conkys
+own_window yes
+own_window_argb_visual yes
+own_window_type conky
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+own_window_argb_value 0
+own_window_colour 444444
+
+#borders
+draw_borders no
+border_width 1
+border_inner_margin 0
+#border_outer_margin 1
+
+#shades
+draw_shades no
+
+#position
+gap_y 0
+gap_x 0
+alignment bm
+
+#behaviour
+update_interval 1
+
+#font
+use_xft yes
+xftfont AA Typewriter:size=9
+xftalpha 1
+
+
+#to prevent window from movingorange
+#use_spacer none
+minimum_size 1366 14
+maximum_width 1366
+
+
+default_color c3c3c3
+
+lua_load /path/to/conkyrc_MPD.lua
+
+TEXT
+${if_mpd_playing}${lua main_bars}${voffset 1}  ${font musicelements}o${font} ${voffset -3}${mpd_status}${alignc}${offset 40}${mpd_artist} - ${mpd_title}${alignr}${voffset -4}${font Webdings:size=12}X${font} ${mixer}%  ${endif}

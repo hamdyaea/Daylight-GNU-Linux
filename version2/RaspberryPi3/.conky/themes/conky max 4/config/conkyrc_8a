@@ -1,0 +1,130 @@
+#==============================================================================
+#                                  conkyrc_8a
+#
+#  author  : CAYMUS
+#  version : v20120420-09
+#  modified: jerusalem
+#  license : Distributed under the terms of GNU GPL version 2 or later
+#
+#==============================================================================
+
+background yes
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+temperature_unit celsius
+
+double_buffer yes
+no_buffers yes
+text_buffer_size 2048
+
+gap_x 10
+gap_y 30
+minimum_size 260 800
+#maximum_width 190
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+border_inner_margin 0
+border_outer_margin 0
+alignment tr
+
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+override_utf8_locale yes
+use_xft yes
+xftfont 6x10:size=8
+xftalpha 0.5
+uppercase no
+
+default_color FFFFFF
+color1 FFFFFF
+color2 AAAAAA
+color3 DDDDDD
+color4 CC3333
+
+lua_load ~/.conky/conky_8a.lua
+lua_draw_hook_pre main_box
+lua_draw_hook_post main_rings
+
+TEXT
+${image ~/.conky/elegant8a.png -p 0,0 260x800}
+${goto 10}${font 6x10:size=12,weight:bold}${color #FFFFFF}Linux ${goto 100}${font 6x10:size=12:weight=bold}${time %k}:${time %M}:${font 6x10:size=9}${time %S}${goto 200}${font ubuntu:size=12:weight=bold}${color #FFFFFF}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LBSF temperature temperature 30} °C${color}
+${goto 10}${font 6x10:size=8,weight:normal}Release:${goto 100}${color FFFFFF}${pre_exec cat /etc/issue.net}  $machine
+${goto 10}${font 6x10:size=8,weight:normal}Kernel:${goto 100}${color FFFFFF}${kernel}
+${goto 10}${font 6x10:size=8,weight:normal}Public IP:${goto 100}${font 6x10:size=8,weight:normal}${color #FFFFFF}${execi 1800 wget -q -O - http://ip.tupeux.com}$color
+${goto 10}${font 6x10:size=8,weight:normal}PC:${goto 100}${color FFFFFF}${nodename}
+
+${voffset 0}
+${goto 40}${font 6x10:size=12,weight:bold}${color}CPU
+${goto 25}${font 6x10:size=7,weight:normal}${color}core 1:${goto 70}${cpu cpu1}%
+${goto 25}${font 6x10:size=7,weight:normal}${color}core 2:${goto 70}${cpu cpu2}%
+${goto 25}${font 6x10:size=7,weight:normal}${color}${threads} process 
+${goto 25}${font 6x10:size=7,weight:normal}CPU: ${hwmon temp 1} °C
+${voffset -82}
+${goto 178}${font 6x10:size=12,weight:bold}${color}MEM
+${goto 165}${font 6x10:size=7,weight:normal}${color}RAM ${goto 200}$mem
+${goto 165}${font 6x10:size=7,weight:normal}${color}SWAP ${goto 200}$swap
+${voffset 62}
+${goto 170}${font 6x10:size=12,weight:bold}${color}DISKS
+${goto 155}${font 6x10:size=7,weight:normal}${color}Data free:${goto 210}${fs_free /media/Data}
+${goto 155}${font 6x10:size=7,weight:normal}${color}VM free:${goto 210}${fs_free /media/VM}
+${goto 175}${font 6x10:size=7,weight:normal}sdb: ${exec hddtemp /dev/sdb -n --unit=C} °C
+${voffset -75}
+${goto 35}${font 6x10:size=12,weight:bold}${color}DISKS
+${goto 14}${font 6x10:size=7,weight:normal}${color}/free:${goto 70}${fs_free /}
+${goto 14}${font 6x10:size=7,weight:normal}${color}/home free:${goto 70}${fs_free /home}
+${goto 35}${font 6x10:size=7,weight:normal}sda: ${exec hddtemp /dev/sda -n --unit=C} °C
+
+${voffset -16}
+${goto 110}${font 6x10:size=12,weight:bold}${color}NET
+
+${voffset 6}
+${goto 80}${color1}${font 6x10:size=7,weight:bold}${if_up wlan0}wifi ${addr wlan0}
+${goto 60}${color}${font 6x10:size=7,weight:normal}AP: ${wireless_essid wlan0} ${goto 135}Speed: ${wireless_bitrate wlan0}
+${goto 60}Mode: ${wireless_mode wlan0} ${goto 135} Quality: ${wireless_link_qual_perc wlan0}%
+${goto 60}D: ${downspeed wlan0} ${goto 135}U: ${upspeed wlan0}
+${goto 60}TD: ${totaldown wlan0} ${goto 135}TU: ${totalup wlan0} ${else} ${goto 80}"wlan0 unavailable"${endif}
+
+${goto 80}${color}${font 6x10:size=7,weight:bold}${if_up eth0}eth0 ${addr eth0}
+${goto 60}${color}${font 6x10:size=7,weight:normal}D: ${downspeed eth0} ${goto 135}U: ${upspeed eth0}
+${goto 60}TD: ${totaldown eth0} ${goto 135}TU: ${totalup eth0} ${else} ${goto 80}"Network unavailable"${endif}
+
+${goto 80}${color}${font 6x10:size=7,weight:bold}${if_up ppp0}ppp0 ${addr ppp0}
+${goto 60}${color}${font 6x10:size=7,weight:normal}D: ${downspeed ppp0} ${goto 135}U: ${upspeed ppp0}
+${goto 60}TD: ${totaldown eth0} ${goto 135}TU: ${totalup ppp0} ${else} ${goto 80}"ppp0 unavailable"${endif}
+
+#${else} ${goto 60}"Network unavailable"
+#${endif}
+
+${voffset 70}
+${goto 10}${font 6x10:size=7,weight:bold}${color}open ports:${goto 220}${tcp_portmon 1 65535 count}
+${goto 10}${font 6x10:size=7,weight:bold}${color}${offset 10}URL${goto 220}PORT
+${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rhost 0} ${goto 220} ${tcp_portmon 1 65535 rport 0}
+${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rhost 1} ${goto 220} ${tcp_portmon 1 65535 rport 1}
+${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rhost 2} ${goto 220} ${tcp_portmon 1 65535 rport 2}
+${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rhost 3} ${goto 220} ${tcp_portmon 1 65535 rport 3}
+${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rhost 4} ${goto 220} ${tcp_portmon 1 65535 rport 4}
+${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rhost 5} ${goto 220} ${tcp_portmon 1 65535 rport 5}
+${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rhost 6} ${goto 220} ${tcp_portmon 1 65535 rport 6}
+${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rhost 7} ${goto 220} ${tcp_portmon 1 65535 rport 7}
+${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rhost 8} ${goto 220} ${tcp_portmon 1 65535 rport 8}
+${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rhost 9} ${goto 220} ${tcp_portmon 1 65535 rport 9}
+
+
+#${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rip  0}${alignr 1}${tcp_portmon 1 65535 rport  0}
+#${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rip  1}${alignr 1}${tcp_portmon 1 65535 rport  1}
+#${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rip  2}${alignr 1}${tcp_portmon 1 65535 rport  2}
+#${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rip  3}${alignr 1}${tcp_portmon 1 65535 rport  3}
+#${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rip  4}${alignr 1}${tcp_portmon 1 65535 rport  4}
+#${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rip  5}${alignr 1}${tcp_portmon 1 65535 rport  5}
+#${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rip  6}${alignr 1}${tcp_portmon 1 65535 rport  6}
+#${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rip  7}${alignr 1}${tcp_portmon 1 65535 rport  7}
+#${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rip  8}${alignr 1}${tcp_portmon 1 65535 rport  8}
+#${goto 10}${font 6x10:size=7,weight:normal}${color1}${tcp_portmon 1 65535 rip  9}${alignr 1}${tcp_portmon 1 65535 rport  9}
+

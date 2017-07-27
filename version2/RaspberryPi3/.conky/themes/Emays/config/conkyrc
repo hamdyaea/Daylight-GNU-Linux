@@ -1,0 +1,44 @@
+use_xft yes
+xftfont 123:size=8
+xftalpha 0.1
+update_interval 3
+total_run_times 0
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 300 100
+maximum_width 1280
+draw_shades yes
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_color e0e0e0
+default_shade_color black
+default_outline_color green
+alignment top_left
+gap_x 35
+gap_y 75
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 1
+override_utf8_locale yes
+use_spacer right
+
+
+TEXT
+${voffset 10}${color #dddddd}${font Janda Cheerful Script:pixelsize=103}${time %_I:%M%P}${font}${voffset -84}${offset 10}${color #FCD97B}${font Ubuntu:pixelsize=42}${time %d}${voffset -14}${color #dddddd}${font Ubuntu:pixelsize=22} ${time  %B} ${time %Y}${font}${voffset 24}${font Amaze:pixelsize=58}${offset -165}${time %A}${font}
+${voffset -2}${offset 12}${font Ubuntu:pixelsize=12}${color #FCD97B}HD ${offset 5}$color${fs_free /home} / ${fs_size /home}${offset 15}${color #FCD97B}RAM ${offset 5}$color$mem / $memmax${offset 15}${color #FCD97B}CPU ${offset 5}$color${cpu cpu0}%${offset 15}${color #FCD97B}DOWN$color${offset 5}${if_existing /proc/net/route eth1}${downspeed eth1}${else}${if_existing /proc/net/route wlan0}${downspeed wlan0}${else}${if_existing /proc/net/route eth0}${downspeed eth0}${endif}${endif}${endif}${offset 15}${color #FCD97B}UP$color${offset 5}${if_existing /proc/net/route eth1}${upspeed eth1}${else}${if_existing /proc/net/route wlan0}${upspeed wlan0}${else}${if_existing /proc/net/route eth0}${upspeed eth0}${endif}${endif}${endif}
+
+
+
+
+
+
+
+
+
+
+

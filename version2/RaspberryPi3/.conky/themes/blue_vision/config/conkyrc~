@@ -1,0 +1,91 @@
+# — Conky settings — #
+
+background yes
+
+update_interval 1
+total_run_times 0
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+imlib_cache_size 0
+
+temperature_unit celcius
+
+# — Window specifications — #
+
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 717 609
+maximum_width 717
+
+alignment top_right
+
+gap_x 4
+gap_y 26
+
+
+# — Graphics settings — #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# — Text settings — #
+use_xft yes
+xftfont dungeon:size=8
+xftalpha 0.1
+
+default_color FFFFFF
+default_gauge_size 47 25
+
+uppercase no
+use_spacer right
+
+color0 white
+color1 orange
+color2 green
+
+## - SISTEMA - ##
+TEXT
+${image ~/.Conky/blue_vision/images/bg.png -p 0,0 -s 716x690}
+${voffset -12}${goto 392}${color 4682B4}${cpugraph cpu0 8,190} ${goto 616}CP0 ${cpu cpu0}%
+${voffset 1}${goto 392}${color 4682B4}${cpugraph cpu1 8,190} ${goto 616}CP1 ${cpu cpu1}%
+${voffset 1}${goto 392}${color 4682B4}${cpugraph cpu2 8,190} ${goto 616}CP2 ${cpu cpu2}%
+${voffset 1}${goto 392}${color 4682B4}${cpugraph cpu3 8,190} ${goto 616}CP3 ${cpu cpu3}% 
+${voffset 18}${goto 612}${color 4682B4}      TEMP ${hwmon temp 1}ºC
+
+${voffset 3}${goto 392}${color white}MAX: ${memmax}
+${voffset 0}${goto 392}${color white}FREE: ${memfree}
+${voffset 0}${goto 392}${color white}USED: ${memperc}%
+${voffset 0}${goto 392}${color white}MB'S: ${mem}
+${voffset 0}${goto 392}${color white}CACHED: ${cached}% ${color 4682B4}${goto 675}${membar 8,38} 
+${voffset 0}${goto 392}${color white}BUFFERS: ${buffers}
+
+${voffset 64}${goto 510}${color 4682B4}${hddtemp}ºC
+${voffset 1}${goto 512}${color 4682B4}${fs_size}${goto 589}${color 4682B4}CAP: ${fs_size}
+${voffset 1}${goto 512}${color 4682B4}${goto 589}${color 4682B4}USED: ${fs_used}
+${voffset 1}${goto 512}${color 4682B4}${goto 589}${color 4682B4}FREE: ${fs_free}
+${voffset 40}${goto 427}${color 4682B4}HDD: SEAGATE MOMENTUS 320GB
+${voffset 1}${goto 427}${color 4682B4}ROOT /: ${fs_bar_free 12,144 /}
+${voffset 24}${goto 431}${color 4682B4}READ: ${diskiograph_read 12,56}
+${voffset 1}${goto 431}${color 4682B4}WRITE: ${diskiograph_write 12,56}
+${voffset 10}${goto 605}${color 4682B4}${diskio_read}
+
+${voffset 0}${goto 256}${color 4682B4}NETWORK TRAFFIC UP: ${goto 623}${color 4682B4}UP: ${upspeed eth1}
+${voffset 1}${goto 256}${color 4682B4}${upspeedgraph eth1 30,350}
+${voffset 0}${goto 256}${color 4682B4}NETWORK TRAFFIC DOWN: ${goto 623}${color 4682B4}DOWN: ${downspeed eth1}
+${voffset 1}${goto 256}${color 4682B4}${downspeedgraph eth1 30,350}
+
+${voffset 17}${goto 568}${color 4682B4}OS: GNU/${sysname} ${machine}
+${voffset 40}${goto 568}${color 4682B4}DISTRO: UBUNTU 10.10

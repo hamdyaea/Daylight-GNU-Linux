@@ -1,0 +1,58 @@
+## Conky Cairo Sidebar         ##
+## by jpope                    ##
+## version 1.0.2011.09.30      ##
+##                             ##
+#################################
+# — Conky settings — #
+background no
+update_interval 1
+cpu_avg_samples 2
+net_avg_samples 2
+override_utf8_locale yes
+double_buffer yes
+no_buffers yes
+text_buffer_size 2048
+imlib_cache_size 0
+imlib_cache_flush_interval 60
+max_specials 1024
+max_user_text 1024
+#temperature_unit fahrenheit
+
+# — Window specifications — #
+own_window yes
+own_window_type normal
+own_window_argb_visual yes
+own_window_argb_value 0
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
+own_window_title ConkySidebar
+own_window_class ConkySidebar
+border_inner_margin 0
+border_outer_margin 0
+minimum_size 568 568
+maximum_width 180
+alignment top_right #Choices are: top_left, top_right, top_middle, bottom_left, bottom_right, bottom_middle, middle_left, middle_middle, middle_right
+gap_x 8
+gap_y 45
+
+# — Graphics settings — #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# — Text settings — #
+use_xft yes
+xftfont droid sans:size=8
+xftalpha 0
+use_spacer left
+uppercase no
+
+# — Color settings — #
+default_color ffffff
+
+# — Lua Load — #
+lua_load ~/.conky/sidebar.lua
+lua_draw_hook_pre widgets
+
+TEXT
+${execi 3600 aptitude search '~U' | wc -l | tail > ~/.config/conky/cairosidebar/upd}

@@ -1,0 +1,65 @@
+# — Conky settings — #
+
+background yes
+
+update_interval 1
+total_run_times 0
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+imlib_cache_size 0
+
+temperature_unit celcius
+
+# — Window specifications — #
+
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 339 88
+maximum_width 339
+
+alignment top_right
+
+gap_x 0
+gap_y 561
+
+
+# — Graphics settings — #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# — Text settings — #
+use_xft yes
+xftfont Future:size=8
+xftalpha 0.1
+
+default_color D4ECF4
+default_gauge_size 47 25
+
+uppercase no
+use_spacer right
+
+color0 white
+color1 orange
+color2 green
+
+lua_load ~/.Conky/octacore/scripts/bargraph7.lua
+lua_draw_hook_pre main_bars
+
+TEXT
+${image ~/.Conky/octacore/images/cpu6.png -p 1,1 -s 339x88}
+${voffset 0}${color red}  ${cpugraph cpu1 30,210}
+${voffset 10}${color red}${goto 248}TEMPERATURA: ${hwmon temp 1}

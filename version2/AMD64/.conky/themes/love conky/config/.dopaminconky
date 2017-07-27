@@ -1,0 +1,35 @@
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+use_xft yes
+xftfont Zekton:size=9
+override_utf8_locale yes
+text_buffer_size 2048
+own_window_class normal
+own_window yes
+own_window_type desktop
+own_window_transparent yes
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager
+alignment bl
+gap_x 14
+gap_y 35
+minimum_size 444 103
+default_bar_size 30 8
+draw_shades no
+default_color ffffff
+default_shade_color 000000
+color0 00d9ff
+color1 ffffff
+color2 ffffff
+
+TEXT
+${voffset 35}${alignc 147}${font Heartz}${time %m}
+${voffset -35}${font bonzai:size=13}${goto 135}${if_running audacious}${exec audtool --current-song}
+${goto 135}${exec audtool --current-song-bitrate-kbps} kbps / ${exec audtool --current-song-length} ${execbar expr 100 \* $(audtool --current-song-output-length-seconds) \/ $(audtool --current-song-length-seconds)}$endif
+#${voffset -27}${goto 133}${font Zekton:style=bold:size=30}${time %H:%M}${font}
+
+${image ~/.conky/dopamin2.png -p 10,0 -s 444x103}
