@@ -19,6 +19,13 @@ For the last version :
 git checkout Version3
 ```
 
+## Change keyboard language
+
+```
+dpkg-reconfigure console-data
+dpkg-reconfigure keyboard-configuration
+service keyboard-setup restart
+```
 ## Founder -  Developer
 
 Hamdy Abou El Anein
