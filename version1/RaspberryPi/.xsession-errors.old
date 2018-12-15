@@ -1,6 +1,0 @@
-Xsession: X session started for daylight at Mon  8 May 20:02:19 UTC 2017
-localuser:daylight being added to access control list
-** Message: main.vala:99: Session is LXDE
-** Message: main.vala:100: DE is LXDE
-** Message: main.vala:131: log directory: /home/daylight/.cache/lxsession/LXDE
-** Message: main.vala:132: log path: /home/daylight/.cache/lxsession/LXDE/run.log
