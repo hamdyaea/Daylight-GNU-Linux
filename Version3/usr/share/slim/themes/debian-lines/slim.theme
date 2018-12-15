@@ -1,0 +1,114 @@
+### slim taken from:
+### https://github.com/data-modul/slim/blob/master/THEMES
+## background
+# style of background: 'stretch', 'tile', 'center', 'color'
+background_style center
+background_color #000000
+
+# messages such as shutdown, reboot
+msg_x 50%
+msg_y 5%
+msg_color #ffffff
+msg_font DejaVu Sans:bold:size=12:dpi=96
+#msg_shadow_xoffset 1
+#msg_shadow_yoffset 1
+#msg_shadow_color #ff00ff
+
+# session messages eg: pressing F1:
+session_x 50%
+session_y 95%
+session_font DejaVu Sans:bold:size=12:dpi=96
+session_color #ffffff
+#session_shadow_xoffset 1
+#session_shadow_yoffset 1
+#session_shadow_color #000000
+
+# Welcome message position. (relative to the panel)
+# use -1 for both values or comment the options to disable
+# the welcome message
+welcome_x -1
+welcome_y -1
+welcome_font DejaVu Sans:bold:size=12:dpi=96
+welcome_color #ffffff
+#welcome_shadow_xoffset 1
+#welcome_shadow_yoffset 2
+#welcome_shadow_color #444444
+
+## panel
+# Horizonatal and vertical position for the panel.
+input_panel_x 50%
+input_panel_y 50%
+
+# input controls horizontal and vertical positions.
+# IMPORTANT! set input_pass_x and input_pass_y to -1
+# to use a single input box for username/password (GDM Style).
+# Note that this fields only accept absolute values.
+input_name_x 181
+input_name_y 169
+input_pass_x -1
+input_pass_y -1
+# Input controls font and color
+input_font DejaVu Sans:bold:size=12:dpi=96
+input_color #000000
+#input_shadow_xoffset 1
+#input_shadow_yoffset 1
+#input_shadow_color #ff00ff
+
+# 'Enter username' and 'Enter password' position(relative to the panel)
+# use -1 for both values to disable the message
+# note that in case of single inputbox the password values are ignored.
+username_x 260
+username_y 169
+password_x -1
+password_y -1
+username_font DejaVu Sans:bold:size=12:dpi=96
+username_color #bbbbbb
+#username_shadow_xoffset -1
+#username_shadow_yoffset -1
+#username_shadow_color #ff00ff
+
+# The message to be displayed. Leave blank if no message
+# is needed (ie, when already present in the panel image)
+#
+username_msg Please enter your username
+password_msg Please enter your password
+
+### slimlock taken from: 
+### https://github.com/data-modul/slim/blob/master/slimlock.conf
+# number of seconds of inactivity before the screen blanks. Default: 60
+dpms_standby_timeout 60
+
+# same as above, but the screen turns off. Default: 600
+dpms_off_timeout 600
+
+# number of seconds after entering an incorrect password before slimlock
+# will accept another attempt. Default: 2
+wrong_passwd_timeout 2
+
+# message to display after a failed authentication attempt.
+# Default: "Authentication failed"
+passwd_feedback_msg Authentication failed
+
+# message to display after a failed authentication attempt if the
+# CapsLock is on. Default: "Authentication failed (CapsLock is on)"
+passwd_feedback_capslock Authentication failed (CapsLock is on)
+
+# whether or not to display the username on themes with only a single
+# input box. 1 to show, 0 to disable. Default: 1
+show_username 0
+
+# whether or not to display SLiM's welcome message.
+# 1 to show, 0 to disable. Default: 0
+show_welcome_msg 0
+
+# whether or not to allow virtual terminals switching.
+# 1 to disallow, 0 to allow. Default: 1
+tty_lock 1
+
+# whether to ring the bell on authentication failure.
+# 1 to enable, 0 to disable. Default: 1
+bell 1
+
+# character to display when masking password.
+# Only the first character is used. Default: *
+passwd_char *
