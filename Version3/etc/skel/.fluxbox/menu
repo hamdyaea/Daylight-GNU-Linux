@@ -24,6 +24,15 @@
       [exec] (Casino Machine) {python3 /usr/share/daylight/Casino-Slot-Machine/CasinoSlot.py} <>
       [exec] (Daylight Pong) {python3 /usr/share/daylight/Daylight-Pong-python3/DaylightPong.py} <>
       [exec] (Dice Sim) {python3 /usr/share/daylight/dice-simulator/DiceSimulator.py} <>
+      [exec] (Battle) {python3 /usr/share/daylight/Battle-Cards-with-GUI/battle.py} <>
+      [exec] (Blacky Snake) {python3 /usr/share/daylight/Blacky-Snake-Game/Blacky-Snake-Game.py} <>
+      [exec] (Lotery) {python3 /usr/share/daylight/EuroMillions-Lottery/euroMillions.py} <>
+      [exec] (Fifa World cup) {python3 /usr/share/daylight/Fifa-World-Cup-Simulator-Python-3-GUI/WorldCup.py} <>
+      [exec] (Guess the number) {python3 /usr/share/daylight/Guess-the-number/GuessTheNumber.py} <>
+      [exec] (Memory) {python3 /usr/share/daylight/Memory-Child-Game/memory.py} <>
+      [exec] (PySpeaking) {python3 /usr/share/daylight/PySpeaking-GUI/speak.py} <>
+      [exec] (RockPaperScissorsLizardSpock) {python3 /usr/share/daylight/RockPaperScissorsLizardSpock/LizardSpock.py} <>
+      [exec] (Temperature Converter) {python3 /usr/share/daylight/Temperature-Converter-Celcius-Farenheit/TempConverter.py}<>
       [end]
       [submenu] (pdf Reader) {}
       [exec] (Daylight pdf) {okular} <>
@@ -58,9 +67,12 @@
    [end]
       [end]
       [submenu] (System) {}
+         [exec] (Password Generator) {python3 /usr/share/daylight/PasswordGenerator-GUI/PasswordGenerator.py} <>
+         [exec] (PyConnect) {python3 /usr/share/daylight/pyconnect/pyconect.py} <>
          [submenu] (Package manager) {}
             [exec] (Aptitude Package Manager (text\)) { x-terminal-emulator -T "Aptitude Package Manager (text)" -e /usr/bin/aptitude-curses} <>
-      [end]
+#       [exec] (Password Generator) {python3 /usr/share/daylight/PasswordGenerator.py} <>    
+[end]
 [submenu] (System load) {}
 [exec] (htop) {x-terminal-emulator -T "htop" -e  htop} <>
 [exec] (top) {x-terminal-emulator -T "top" -e top} <>
