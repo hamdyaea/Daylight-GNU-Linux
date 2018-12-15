@@ -15,7 +15,9 @@ The last version is the branch Version 3
 
 For the last version :
 
+```
 git checkout Version3
+```
 
 ## Founder -  Developer
 
