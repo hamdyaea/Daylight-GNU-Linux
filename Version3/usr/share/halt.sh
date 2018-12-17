@@ -1,3 +1,3 @@
 # Developer : Hamdy Abou El Anein
 
-halt
+sudo halt
