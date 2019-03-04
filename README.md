@@ -1,4 +1,4 @@
-![Awesome](awesome.svg)   ![Python](Python.png)
+![Awesome](awesome.svg)   ![Python](python.png)
 
 # Daylight Linux
 
