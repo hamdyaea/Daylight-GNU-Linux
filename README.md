@@ -1,4 +1,8 @@
+![Awesome](awesome.svg)   ![Python](Python.png)
+
 # Daylight Linux
+
+![Daylight](DayLightLogoSunSetRPI.png)
 
 
 Welcome to the git of Daylight Linux
