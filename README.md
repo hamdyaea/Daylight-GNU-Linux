@@ -12,6 +12,11 @@ Welcome to the git of Daylight Linux
 
 http://daylightlinux.ch
 
+## Try Daylight Linux Online 
+
+Now you can test Daylight Linux directly in your internet browser at this address:
+
+https://distrotest.net/Daylight%20Linux/V3.02
 
 ## Last version 
 
