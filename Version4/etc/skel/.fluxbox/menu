@@ -1,0 +1,127 @@
+# This is an automatically generated file.
+# Please see <file:/usr/share/doc/menu/README> for information.
+
+# to use your own menu, copy this to ~/.fluxbox/menu, then edit
+# ~/.fluxbox/init and change the session.menuFile path to ~/.fluxbox/menu
+
+[begin] (Daylight linux V4)
+
+# Automatically generated file. Do not edit (see /usr/share/doc/menu/html/index.html)
+
+#   [submenu] (Aide) {}
+#      [exec] (Info) { x-terminal-emulator -T "Info" -e info} <>
+#      [exec] (Xman) {xman} <>
+#   [end]
+#   [submenu] (Daylight) {}
+      [submenu] (Daylight Linux) {}
+      [submenu] (Multimedia) {}
+      [exec] (kodi) {kodi} <>
+      [exec] (smplayer) {smplayer} <>
+      [exec] (clementine) {clementine} <>
+      [end]
+      [submenu] (Astronomy) {}
+      [exec] (Stellarium) {stellarium} <>
+      [exec] (Mars Weather) {python3 /usr/share/daylight/MarsInSightWeather/MarsGUI.py} <>
+      [exec] (People in Space) {python3 /usr/share/daylight/PeopleInSpace/PeopleSpace.py} <>
+      [end]
+      [submenu] (Games) {}
+      [exec] (NBA Sim) {python3 /usr/share/daylight/NBA-Simulator-GUI/NBA.py} <>
+      [exec] (Coin-Flipping) {python3 /usr/share/daylight/Coin-Flipping/CoinFlipping.py} <>
+      [exec] (Casino Machine) {python3 /usr/share/daylight/Casino-Slot-Machine/CasinoSlot.py} <>
+      [exec] (Daylight Pong) {python3 /usr/share/daylight/Daylight-Pong-python3/DaylightPong.py} <>
+      [exec] (Dice Sim) {python3 /usr/share/daylight/dice-simulator/DiceSimulator.py} <>
+      [exec] (Battle) {python3 /usr/share/daylight/Battle-Cards-with-GUI/battle.py} <>
+      [exec] (Blacky Snake) {python3 /usr/share/daylight/Blacky-Snake-Game/Blacky-Snake-Game.py} <>
+      [exec] (Lotery) {python3 /usr/share/daylight/EuroMillions-Lottery/euroMillions.py} <>
+      [exec] (Fifa World cup) {python3 /usr/share/daylight/Fifa-World-Cup-Simulator-Python-3-GUI/WorldCup.py} <>
+      [exec] (Guess the number) {python3 /usr/share/daylight/Guess-the-number/GuessTheNumber.py} <>
+      [exec] (Memory) {python3 /usr/share/daylight/Memory-Child-Game/memory.py} <>
+      [exec] (PySpeaking) {python3 /usr/share/daylight/PySpeaking-GUI/speak.py} <>
+      [exec] (RockPaperScissorsLizardSpock) {python3 /usr/share/daylight/RockPaperScissorsLizardSpock/LizardSpock.py} <>
+      [exec] (Temperature Converter) {python3 /usr/share/daylight/Temperature-Converter-Celcius-Farenheit/TempConverter.py}<>
+      [end]
+      [submenu] (Miscellaneous) {}
+      [exec] (How Many Days){python3 /usr/share/daylight/how-many-days/HowManyDays.py}  <>
+      [exec] (USA Presidents History) {python3 /usr/share/daylight/USA-Presidents-history/presidents.py} <>
+      [exec] (WeatherMeteo) {python3 /usr/share/daylight/WeatherMeteo/meteo.py} <>
+      [end]
+      [submenu] (pdf Reader) {}
+      [exec] (Daylight pdf) {evince} <>
+      [end]
+      [submenu] (Editors) {}
+         [exec] (Pluma) {pluma} <>
+         [exec] (Geany) {geany} <>         
+      [end]
+      [submenu] (Drawing) {}
+          [exec] (Gimp) {gimp} <>
+      [end]
+      [submenu] (File Manager) {}
+         [exec] (Daylight File Manager) {caja} <>
+      [end]
+      [submenu] (Terminal) {}
+         [exec] (Daylight Terminal) {terminology -b /usr/share/daylight/Daylight-linux-3-wallpapers/DayLightLogoSunSet.png} <>
+  #       [exec] (Dash) { x-terminal-emulator -T "Dash" -e /bin/dash -i} <>
+  #       [exec] (Sh) { x-terminal-emulator -T "Sh" -e /bin/sh --login} <>
+      [end]
+      [submenu] (Internet) {}
+         [submenu] (Communication) {}
+           # [exec] (Telnet) { x-terminal-emulator -T "Telnet" -e /usr/bin/telnet.netkit} <>
+           # [exec] (Xbiff) {xbiff} <>
+  [exec] (Network Manager) {wicd-client -n} <>
+  [exec] (Putty) {putty} <>
+         [end]
+         [submenu] (Web Browser) {}
+           # [exec] (Opera) {opera} <>
+   #         [exec] (w3m) { x-terminal-emulator -T "w3m" -e /usr/bin/w3m /usr/share/doc/w3m/MANUAL.html} <>
+   #         [exec] (firefox) { x-terminal-emulator -T "Firefox" -e /usr/bin/firefox} <> 
+    [exec] (Firefox) {/usr/share/firefox/firefox} <>
+   [end]
+      [end]
+      [submenu] (System) {}
+         [exec] (Disk Analyzer) {baobab} <>
+         [exec] (Password Generator) {python3 /usr/share/daylight/PasswordGenerator-GUI/PasswordGenerator.py} <>
+         [exec] (PyConnect) {python3 /usr/share/daylight/pyconnect/pyconect.py} <>
+         [submenu] (Package manager) {}
+            [exec] (Aptitude Package Manager (text\)) { x-terminal-emulator -T "Aptitude Package Manager (text)" -e /usr/bin/aptitude-curses} <>
+#       [exec] (Password Generator) {python3 /usr/share/daylight/PasswordGenerator.py} <>    
+[end]
+[submenu] (System load) {}
+[exec] (htop) {x-terminal-emulator -T "htop" -e  htop} <>
+[exec] (top) {x-terminal-emulator -T "top" -e top} <>
+   [end]
+#   [submenu] (Gestionnaires de fenêtres) {}
+#      [restart] (FluxBox)  {/usr/bin/startfluxbox} <>
+#   [end]
+#   [submenu] (Jeux) {}
+#      [submenu] (Jouets) {}
+#         [exec] (Oclock) {oclock} <>
+#         [exec] (Xclock (analog\)) {xclock -analog} <>
+#         [exec] (Xclock (digital\)) {xclock -digital -update 1} <>
+#         [exec] (Xeyes) {xeyes} <>
+#         [exec] (Xlogo) {xlogo} <>
+#      [end]
+#[end]
+[submenu] (volume) {}
+[exec] (volume mixer) {alsamixergui} <>
+[end]
+[submenu] (Resolution) {}
+[exec] (Daylight Resolution) {arandr} <>
+[end]
+[submenu] (Virtual Keyboard)
+[exec] (Daylight virtual keyboard) {florence} <>
+[end]
+#   [config] (Configuration)
+#   [submenu] (Styles) {}
+#      [stylesdir] (/usr/share/fluxbox/styles)
+#      [stylesdir] (~/.fluxbox/styles)
+#   [end]
+#   [workspaces] (Workspaces)
+#   [reconfig] (Reconfigure)
+#   [restart] (Restart)
+[end]
+   [exit] (Logout)
+ [submenu] (start and stop) {}
+   [exec] (reboot) {/usr/share/reboot.sh} <>
+   [exec] (shutdown) {/usr/share/halt.sh} <>
+     [end]
+

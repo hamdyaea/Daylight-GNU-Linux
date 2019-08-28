@@ -1,10 +1,15 @@
 # Developer : Hamdy Abou El Anein
 
-Daylight Linux Version 3
+Daylight Linux Version 4
 
 Release notes 
 
 ####################################################################
+
+Add compatibility with the Raspberry Pi 4
+Change kernel to 5.x version
+Upgrade all pakckages to Debian 10 and the current packages to the cutting edge version (experimental)
+New Wallpapers
 
 Python games :
 
