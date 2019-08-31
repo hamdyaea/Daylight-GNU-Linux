@@ -12,15 +12,19 @@ Welcome to the git of Daylight Linux
 
 http://daylightlinux.ch
 
+## Download Daylight for Raspberry pi or the live version for computers
+[![Download Daylight_Linux](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/daylight-linux/files/latest/download)
 ## Try Daylight Linux Online 
 
 Now you can test Daylight Linux directly in your internet browser at this address:
 
-https://distrotest.net/Daylight%20Linux/V3.02
+https://distrotest.net/Daylight%20Linux/V4
+
+Be patient for the online operating system boot time.
 
 ## Last version 
 
-The linux kernel is now upgraded to the 5.x version.
+The linux kernel is now upgraded to the 5.3 version for the AMD64 live version and Kernel 4.19.68 for the Raspberry Pi version.
 
 All packages are upgraded to the Debian 10 version or to the cutting edge version (experimental) for all current softwares.
 
@@ -32,6 +36,19 @@ For the last version :
 
 ```
 git checkout Version4
+```
+## Connect to a wireless network
+
+Right click on the desktop then : Internet > Communication > Network Manager 
+
+## Change your network interface on conky
+![GRAPHS](daylight-conky-graphs.png)
+
+In your home folder modify the file .conkyrc just change all enp0s3 with your network interface name. To find your active network interface in the terminal the command is : ip a
+
+```
+Down:${color #8844ee} ${downspeed enp0s3} k/s${color lightgrey} ${offset 70}Up:${color #22ccff} ${upspeed enp0s3} k/s
+${color black}${downspeedgraph enp0s3 32,150 ff0000 0000ff} $alignr${color black}${upspeedgraph enp0s3 32,150 0000ff ff0000}
 ```
 
 ## Change keyboard language
