@@ -7,7 +7,9 @@ Release notes
 ####################################################################
 
 Add compatibility with the Raspberry Pi 4
-Change kernel to 5.x version
+Change kernel to 5.3 version for the compuers live version
+change kernel to the 4.19.68 for the Raspberry pi Version
+Compatible with all the Raspberry pi hardware
 Upgrade all pakckages to Debian 10 and the current packages to the cutting edge version (experimental)
 New Wallpapers
 
