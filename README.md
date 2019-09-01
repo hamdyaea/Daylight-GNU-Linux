@@ -20,6 +20,22 @@ http://daylightlinux.ch
 ## Download the Daylight linux  live version for computers
 [![Download Daylight_Linux](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/daylight-linux/files/latest/download)
 
+## Login
+
+root : toor
+daylight : toor
+
+## How to prepare your micro SD card for the Raspberry Pi
+
+You need at leat a 8 Go card for Daylight Linux. Some 8 Go cards have in reality 7.9 Go or under. The best is to use at least a 16 Go SD Card. Then expand the file system, from the terminal : #sudo raspi-config in the terminal then expand the file system (Advanced options > Expand file system). You can change the system and keyboard language from the raspi-config menu.
+
+## Hot to flash the your micro SD card for the Raspberry Pi with Daylight Linux
+
+```
+sudo dd bs=1M of=/dev/mmcblk0 if=DaylightLinux201RPI.img status=progress  conv=fsync
+```
+
+
 ## Try Daylight Linux Online 
 
 Now you can test Daylight Linux directly in your internet browser at this address:
