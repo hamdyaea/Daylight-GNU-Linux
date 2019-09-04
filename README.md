@@ -18,7 +18,7 @@ http://daylightlinux.ch
 
 
 ## Download the Daylight linux amd64 live version for computers
-[![Download Daylight_Linux](https://sourceforge.net/projects/daylight-linux/files/Daylight_Linux_amd64_Version4.01/Daylight_linux_amd64_Vers4.01.zip/download)
+[![Download Daylight_Linux](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/daylight-linux/files/Daylight_Linux_amd64_Version4.01/Daylight_linux_amd64_Vers4.01.zip/download)
 
 ## Login
 
