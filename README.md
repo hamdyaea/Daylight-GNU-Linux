@@ -23,6 +23,7 @@ http://daylightlinux.ch
 ## Login
 
 root : toor
+
 daylight : toor
 
 ## How to prepare your micro SD card for the Raspberry Pi
@@ -40,7 +41,7 @@ sudo dd bs=1M of=/dev/mmcblk0 if=DaylightLinux201RPI.img status=progress  conv=f
 
 Now you can test Daylight Linux directly in your internet browser at this address:
 
-https://distrotest.net/Daylight%20Linux/V4
+https://distrotest.net/Daylight%20Linux/V4.01
 
 Be patient for the online operating system boot time.
 
