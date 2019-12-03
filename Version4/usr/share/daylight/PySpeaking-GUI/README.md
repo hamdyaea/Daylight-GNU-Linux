@@ -11,10 +11,19 @@ This software use the google_speech api to read and then speak a sentence in the
 
 ## What you need to make it work :  
 
+
 Install google_speech :  
 
 https://pypi.python.org/pypi/google_speech/
 
+```sh
+python3 -m pip install google_speech
+```
+Install dependances :
+
+```sh
+sudo apt-get install sox libsox-fmt-mp3
+```
 
 This software is made for Python 3.  
 
