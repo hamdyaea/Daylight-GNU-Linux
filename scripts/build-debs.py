@@ -96,7 +96,7 @@ def main():
         for folder in ("fluxbox","conky","shell"):
             for p in sorted((ROOT / "config" / folder).glob("*")): copy(desktop,p,f"usr/share/daylight/{folder}/{p.name}")
         for source,dest in [("daylight.desktop","usr/share/xsessions/daylight.desktop"),("control-center.desktop","usr/share/applications/daylight-control-center.desktop"),("terminal.desktop","usr/share/applications/daylight-terminal.desktop")]: copy(desktop,"packaging/"+source,dest)
-        finish("daylight-desktop","all","isolated Fluxbox desktop session",f"daylight-core (= {VERSION}), daylight-themes (= {VERSION}), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils", "")
+        finish("daylight-desktop","all","isolated Fluxbox desktop session",f"daylight-core (= {VERSION}), daylight-themes (= {VERSION}), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils", "")
         applications={"password":"Password Generator","temperature":"Temperature Converter","days":"Days Calculator","connect":"Local Network Information","alarm":"Alarm","speech":"Text to Speech"}
         games={"dice":"Dice Simulator","coin":"Coin Flip","lottery":"Lottery Simulator","rpsls":"Rock Paper Scissors Lizard Spock","cards":"Battle Cards","tournament":"Tournament Simulator","basketball":"Basketball Simulator","memory":"Memory Game","slots":"Slot Simulator","guess":"Guess the Number"}
         for package,entries,category in [("daylight-apps",applications,"Utility;"),("daylight-games",games,"Game;")]:

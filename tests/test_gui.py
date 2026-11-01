@@ -31,7 +31,26 @@ class NativeDialogs(unittest.TestCase):
             time.sleep(0.1)
         self.fail("Expected application window did not appear: " + title)
 
-    def exercise(self, app, title, value=None, cancel=False, delay=0):
+    def expired_alarm(self):
+        # Poll for the result dialog rather than assuming a loaded VM meets a
+        # fixed three-second wall-clock deadline for a two-second GTK timer.
+        deadline = time.monotonic() + 15
+        while time.monotonic() < deadline:
+            result = self.window("Daylight Alarm")
+            prop = subprocess.run(["xprop", "-id", result, "_NET_WM_PID"],
+                                  text=True, capture_output=True, timeout=5)
+            pid = re.search(r"=\s*(\d+)", prop.stdout)
+            if pid:
+                try:
+                    argv = Path("/proc", pid.group(1), "cmdline").read_bytes().split(b"\0")
+                except FileNotFoundError:
+                    continue
+                if b"--text-info" in argv:
+                    return result
+            time.sleep(0.1)
+        self.fail("The two-second alarm never displayed its completion dialog")
+
+    def exercise(self, app, title, value=None, cancel=False):
         process = subprocess.Popen(["/usr/bin/daylight", "app", app],
                                    stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
                                    start_new_session=True)
@@ -46,16 +65,8 @@ class NativeDialogs(unittest.TestCase):
                     self.xdo("type", "--clearmodifiers", "--delay", "0", value)
                     self.xdo("key", "Return")
             if not cancel:
-                time.sleep(delay)
-                result = self.window(title)
-                if app == "alarm":
-                    prop = subprocess.check_output(["xprop", "-id", result, "_NET_WM_PID"], text=True)
-                    pid = re.search(r"=\s*(\d+)", prop)
-                    self.assertIsNotNone(pid, "Alarm result must expose its X11 PID")
-                    argv = Path("/proc", pid.group(1), "cmdline").read_bytes().split(b"\0")
-                    self.assertIn(b"--text-info", argv, "Timer must have expired, not merely opened")
+                result = self.expired_alarm() if app == "alarm" else self.window(title)
                 self.xdo("windowactivate", "--sync", result)
-                # Escape follows YAD's normal close/cancel path. XDestroyWindow does not.
                 self.xdo("key", "Escape")
             _, error = process.communicate(timeout=10)
             self.assertEqual(process.returncode, 0, error.decode(errors="replace"))
@@ -116,7 +127,7 @@ class NativeDialogs(unittest.TestCase):
         self.exercise("guess", "", cancel=True)
 
     def test_alarm(self):
-        self.exercise("alarm", "Daylight Alarm", "2", delay=3)
+        self.exercise("alarm", "Daylight Alarm", "2")
 
 
 if __name__ == "__main__":

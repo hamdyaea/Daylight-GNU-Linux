@@ -7,12 +7,9 @@ export XDG_CURRENT_DESKTOP=Daylight:Fluxbox
 export DAYLIGHT_SESSION=1
 export GTK_THEME="${GTK_THEME:-Adwaita:dark}"
 config=$(/usr/bin/daylight setup-session)
-# Fluxbox initializes its compatibility directory even with -rc. If absent,
-# upstream setupConfigFiles also overwrites the supplied rc file. Create only
-# the directory first; never replace an existing classic Fluxbox configuration.
+# Fluxbox would overwrite the supplied -rc file on first use if this is absent.
+# Existing classic Fluxbox configuration files are never replaced.
 (umask 077; mkdir -p "$HOME/.fluxbox")
-wallpaper=$(/usr/bin/daylight settings get wallpaper)
-/usr/bin/feh --no-fehbg --bg-fill "/usr/share/backgrounds/daylight/$wallpaper"
 conky_pid=
 wm_pid=
 cleanup() {
@@ -22,6 +19,17 @@ cleanup() {
 trap cleanup EXIT HUP INT TERM
 /usr/bin/fluxbox -rc "$config/fluxbox/init" &
 wm_pid=$!
+# Keep the X server alive before feh's short-lived connection sets the pixmap.
+# A bounded readiness check avoids an unconditional startup sleep.
+tries=0
+until /usr/bin/xprop -root _NET_SUPPORTING_WM_CHECK 2>/dev/null | grep -q 'window id'; do
+    kill -0 "$wm_pid" 2>/dev/null || exit 1
+    tries=$((tries + 1))
+    if [ "$tries" -ge 50 ]; then echo 'Daylight: Fluxbox did not become ready.' >&2; exit 1; fi
+    sleep 0.1
+done
+wallpaper=$(/usr/bin/daylight settings get wallpaper)
+/usr/bin/feh --no-fehbg --bg-fill "/usr/share/backgrounds/daylight/$wallpaper"
 if [ "$(/usr/bin/daylight settings get monitor)" = on ]; then
     /usr/bin/conky -c "$config/conky.conf" &
     conky_pid=$!
