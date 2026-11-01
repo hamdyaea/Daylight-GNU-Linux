@@ -1,16 +1,112 @@
 # Developer: Hamdy Abou El Anein
 # Contact: contact@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
-name: Daylight isolated build preparation
+name: Daylight candidate validation
 on:
   push:
     branches: [build/daylight-v5]
+    paths: [bootstrap/READY]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: daylight-candidate
+  cancel-in-progress: false
 jobs:
-  preparation:
+  candidate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 90
     steps:
-      - run: printf 'Daylight build branch created. Production computers are not used by this workflow.\n'
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: build/daylight-v5
+          fetch-depth: 0
+      - name: Restore reviewed source files
+        run: |
+          python3 - <<'PY'
+          import base64, hashlib, json, lzma, pathlib, shutil
+          root = pathlib.Path.cwd()
+          parts = sorted((root / 'bootstrap').glob('part*.b64'))
+          if parts:
+              compressed = base64.b64decode(''.join(p.read_text().strip() for p in parts), validate=True)
+              expected = '5c424836b3096d39ac3e0c6cdfd7c12b3308d473493dfe0bd2bd8f115c5a119a'
+              if hashlib.sha256(compressed).hexdigest() != expected:
+                  raise SystemExit('Source transport checksum mismatch')
+              files = json.loads(lzma.decompress(compressed))
+              if len(files) != 69:
+                  raise SystemExit('Unexpected source manifest')
+              for name, entry in files.items():
+                  relative = pathlib.PurePosixPath(name)
+                  if relative.is_absolute() or '..' in relative.parts or relative.parts[0] in ('.git', '.github', 'bootstrap'):
+                      raise SystemExit('Unsafe source path')
+                  if entry['mode'] not in (0o644, 0o755):
+                      raise SystemExit('Unexpected file permissions')
+                  destination = root / relative
+                  destination.parent.mkdir(parents=True, exist_ok=True)
+                  destination.write_text(entry['text'])
+                  destination.chmod(entry['mode'])
+              shutil.copyfile(root / 'DayLightLogoSunSetRPI.png', root / 'assets/wallpapers/daylight-original.png')
+              print('Restored 69 reviewed source files and the historical wallpaper.')
+          elif not (root / 'Cargo.toml').exists():
+              raise SystemExit('No reviewed sources available')
+          PY
+      - name: Preserve readable source on the candidate branch
+        run: |
+          if test -d bootstrap; then
+            git rm -r --ignore-unmatch bootstrap Version4
+            git rm --ignore-unmatch ReleaseNotes daylight-conky-graphs.png python.png awesome.svg DayLightLogoSunSetRPI.png licence-daylight-linux
+            git add Cargo.toml Cargo.lock rust-toolchain.toml README.md README.fr.md CHANGELOG.md .gitignore src config scripts packaging tests telemetry live docs assets licenses
+            git config user.name 'Hamdy Abou El Anein'
+            git config user.email 'contact@daylightlinux.ch'
+            git commit -m 'Implement Daylight GNU/Linux 5 release candidate with modular Debian packages'
+            git push origin HEAD:build/daylight-v5
+          fi
+      - name: Build prerequisites
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends dpkg-dev imagemagick fonts-dejavu-core python3 curl
+          rustup toolchain install 1.88.0 --profile minimal --component rustfmt --component clippy
+      - name: Source checks and Rust unit tests
+        run: |
+          cargo +1.88.0 fmt --check
+          cargo +1.88.0 clippy --locked --all-targets -- -D warnings
+          cargo +1.88.0 test --locked
+          python3 -m py_compile scripts/*.py tests/*.py telemetry/*.py
+      - name: Build ARM64 and AMD64 packages
+        run: |
+          sh scripts/render-assets.sh
+          sh scripts/build-portable.sh
+          python3 tests/test_integration.py
+          python3 tests/test_collector.py
+      - name: Debian 12 and 13 installation and removal
+        shell: bash
+        run: |
+          set -euo pipefail
+          for suite in bookworm trixie; do
+            mkdir -p "dist/package-tests/$suite"
+            docker run --rm --cpus=2 --memory=1536m --memory-swap=1536m --pids-limit=512 \
+              -e DAYLIGHT_DISPOSABLE_TEST=yes -v "$PWD:/src:ro" \
+              -v "$PWD/dist/package-tests/$suite:/out" "debian:$suite" \
+              /bin/sh /src/scripts/test-packages.sh 2>&1 | tee "dist/package-tests/$suite/lifecycle.log"
+          done
+      - name: Build live ISO only in the disposable runner
+        run: |
+          docker run --rm --privileged --cpus=2 --memory=5g -v "$PWD:/src" -w /src debian:trixie /bin/sh -ec '
+            apt-get update -qq
+            apt-get install -y --no-install-recommends live-build debootstrap squashfs-tools xorriso isolinux syslinux-common grub-pc-bin grub-efi-amd64-bin mtools dosfstools ca-certificates
+            /bin/sh scripts/build-live.sh'
+      - name: Offline live-filesystem boot and screenshot
+        run: |
+          sudo apt-get install -y --no-install-recommends qemu-system-x86 xorriso
+          sudo chown -R "$(id -u):$(id -g)" dist
+          python3 scripts/test-live.py dist/daylight-live_5.0.0-rc.1_amd64.iso
+          convert dist/live-test/desktop.ppm dist/live-test/desktop.png
+      - name: Retain packages and validation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: daylight-candidate-${{ github.run_number }}
+          path: dist/
+          retention-days: 7
+          compression-level: 0
+          if-no-files-found: warn
