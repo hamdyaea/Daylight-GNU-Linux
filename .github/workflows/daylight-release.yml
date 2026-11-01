@@ -58,6 +58,13 @@ jobs:
           cd release-files
           sha256sum -c SHA256SUMS
           test -s daylight-live_5.0.0-rc.1_amd64.iso
+      - name: Record exact installed package provenance from the tested ISO
+        env:
+          SOURCE_SHA: ${{ steps.verified.outputs.sha }}
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends xorriso squashfs-tools
+          python3 release/package-manifest.py release-files/daylight-live_5.0.0-rc.1_amd64.iso --commit "$SOURCE_SHA" --output validation
       - name: Package inspectable test evidence
         run: |
           python3 - <<'PY'
