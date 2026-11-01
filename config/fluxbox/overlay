@@ -1,0 +1,6 @@
+! Developer: Hamdy Abou El Anein
+! Contact: contact@daylightlinux.ch
+! SPDX-License-Identifier: GPL-3.0-only
+! Daylight sets its wallpaper with feh, without rewriting the user's .fehbg.
+! Prevent Fluxbox from restoring a wallpaper from a different desktop session.
+background: unset

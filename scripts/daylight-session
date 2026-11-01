@@ -5,7 +5,12 @@
 set -eu
 export XDG_CURRENT_DESKTOP=Daylight:Fluxbox
 export DAYLIGHT_SESSION=1
+export GTK_THEME="${GTK_THEME:-Adwaita:dark}"
 config=$(/usr/bin/daylight setup-session)
+# Fluxbox initializes its compatibility directory even with -rc. If absent,
+# upstream setupConfigFiles also overwrites the supplied rc file. Create only
+# the directory first; never replace an existing classic Fluxbox configuration.
+(umask 077; mkdir -p "$HOME/.fluxbox")
 wallpaper=$(/usr/bin/daylight settings get wallpaper)
 /usr/bin/feh --no-fehbg --bg-fill "/usr/share/backgrounds/daylight/$wallpaper"
 conky_pid=

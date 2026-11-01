@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 """Exercise native dialogs in a disposable desktop, without recording their contents."""
 import os
+from pathlib import Path
 import re
 import signal
 import subprocess
@@ -47,17 +48,27 @@ class NativeDialogs(unittest.TestCase):
             if not cancel:
                 time.sleep(delay)
                 result = self.window(title)
-                self.xdo("windowclose", result)
+                if app == "alarm":
+                    prop = subprocess.check_output(["xprop", "-id", result, "_NET_WM_PID"], text=True)
+                    pid = re.search(r"=\s*(\d+)", prop)
+                    self.assertIsNotNone(pid, "Alarm result must expose its X11 PID")
+                    argv = Path("/proc", pid.group(1), "cmdline").read_bytes().split(b"\0")
+                    self.assertIn(b"--text-info", argv, "Timer must have expired, not merely opened")
+                self.xdo("windowactivate", "--sync", result)
+                # Escape follows YAD's normal close/cancel path. XDestroyWindow does not.
+                self.xdo("key", "Escape")
             _, error = process.communicate(timeout=10)
             self.assertEqual(process.returncode, 0, error.decode(errors="replace"))
         finally:
             if process.poll() is None:
                 os.killpg(process.pid, signal.SIGTERM)
                 try:
-                    process.wait(timeout=3)
+                    process.communicate(timeout=3)
                 except subprocess.TimeoutExpired:
                     os.killpg(process.pid, signal.SIGKILL)
-                    process.wait()
+                    process.communicate()
+            if process.stderr and not process.stderr.closed:
+                process.stderr.close()
 
     def test_information(self):
         self.exercise("info", "Daylight GNU/Linux")
