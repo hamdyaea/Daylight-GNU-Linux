@@ -10,8 +10,8 @@ root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 arch=$(dpkg --print-architecture)
 printf '#!/bin/sh\nexit 101\n' > /usr/sbin/policy-rc.d
 chmod 755 /usr/sbin/policy-rc.d
-apt-get update -qq
-apt-get install -y --no-install-recommends xvfb xauth x11-utils x11-apps xdotool procps python3 imagemagick desktop-file-utils
+apt-get -o Acquire::Retries=3 update -qq
+apt-get -o Acquire::Retries=3 install -y --no-install-recommends adduser util-linux xvfb xauth x11-utils x11-apps xdotool procps python3 imagemagick desktop-file-utils
 adduser --disabled-password --gecos '' daylight-test
 sha256sum /etc/os-release > /tmp/daylight-os-before
 printf 'existing user config\n' > /home/daylight-test/.conkyrc
