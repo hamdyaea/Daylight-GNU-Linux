@@ -212,7 +212,11 @@ pub fn application(name: &str) -> Result<()> {
             }
         }
         "cards" => {
-            let cards = apps::draw_unique(52, 2)?;
+            let mut cards = apps::draw_unique(52, 2)?;
+            // draw_unique sorts its result; randomly assign the two cards to players.
+            if entropy::uniform(2)? == 1 {
+                cards.swap(0, 1);
+            }
             let a = (cards[0] - 1) % 13 + 2;
             let b = (cards[1] - 1) % 13 + 2;
             show(
@@ -373,20 +377,30 @@ pub fn application(name: &str) -> Result<()> {
         }
         "alarm" => {
             if let Some(input) = ask(
-                "Alarm delay in seconds (1..86400). Local notification; no browser.",
+                "Alarm delay in seconds (1..86400). Keep the countdown open; Cancel stops it.",
                 "300",
             )? {
                 let seconds: u64 = input.parse()?;
                 if !(1..=86400).contains(&seconds) {
                     return Err("Delay must be 1..86400 seconds".into());
                 }
-                Command::new(std::env::current_exe()?)
-                    .args(["alarm", &seconds.to_string(), "--notify"])
-                    .stdin(Stdio::null())
-                    .stdout(Stdio::null())
-                    .stderr(Stdio::null())
-                    .spawn()?;
-                show("Daylight Alarm",&format!("Alarm set for {seconds} seconds from now. It requires this session to stay running."))?;
+                let status = Command::new("/usr/bin/yad")
+                    .args([
+                        "--title=Daylight Alarm",
+                        "--window-icon=daylight",
+                        "--center",
+                        "--width=480",
+                        "--text=Your local timer is running. Keep this session open.",
+                        "--timeout",
+                        &seconds.to_string(),
+                        "--timeout-indicator=top",
+                        "--button=Cancel:1",
+                    ])
+                    .status()?;
+                // YAD returns 70 on timeout. Closing or cancelling must not ring.
+                if status.code() == Some(70) {
+                    show("Daylight Alarm", "Your timer has finished.")?;
+                }
             }
         }
         _ => return Err("Unknown application".into()),
