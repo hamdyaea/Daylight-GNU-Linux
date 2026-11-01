@@ -4,6 +4,10 @@
 live-boot
 live-config
 live-config-systemd
+# live-config only recommends user-setup; it is mandatory with apt-recommends=false.
+user-setup
+adduser
+keyboard-configuration
 linux-image-amd64
 systemd-sysv
 sudo

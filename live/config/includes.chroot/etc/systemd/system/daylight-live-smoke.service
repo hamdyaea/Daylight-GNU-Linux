@@ -8,9 +8,9 @@ ConditionKernelCommandLine=daylight.smoke=1
 [Service]
 Type=oneshot
 ExecStart=/bin/sh /usr/lib/daylight/live-smoke.sh
-StandardOutput=tty
-StandardError=tty
-TTYPath=/dev/ttyS0
-TimeoutStartSec=170
+StandardInput=null
+StandardOutput=journal+console
+StandardError=journal+console
+TimeoutStartSec=260
 [Install]
 WantedBy=multi-user.target
