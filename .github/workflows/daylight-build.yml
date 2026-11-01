@@ -4,13 +4,14 @@
 name: Daylight candidate validation
 on:
   push:
-    branches: [build/daylight-v5]
-    paths: [bootstrap/READY]
+    branches: [master, build/daylight-v5]
+    paths-ignore: ['docs/**', '*.md']
+  pull_request:
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
-  group: daylight-candidate
+  group: daylight-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   candidate:
@@ -19,65 +20,31 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: build/daylight-v5
           fetch-depth: 0
-      - name: Restore reviewed source files
-        run: |
-          python3 - <<'PY'
-          import base64, hashlib, json, lzma, pathlib, shutil
-          root = pathlib.Path.cwd()
-          parts = sorted((root / 'bootstrap').glob('part*.b64'))
-          if parts:
-              compressed = base64.b64decode(''.join(p.read_text().strip() for p in parts), validate=True)
-              expected = '5c424836b3096d39ac3e0c6cdfd7c12b3308d473493dfe0bd2bd8f115c5a119a'
-              if hashlib.sha256(compressed).hexdigest() != expected:
-                  raise SystemExit('Source transport checksum mismatch')
-              files = json.loads(lzma.decompress(compressed))
-              if len(files) != 69:
-                  raise SystemExit('Unexpected source manifest')
-              for name, entry in files.items():
-                  relative = pathlib.PurePosixPath(name)
-                  if relative.is_absolute() or '..' in relative.parts or relative.parts[0] in ('.git', '.github', 'bootstrap'):
-                      raise SystemExit('Unsafe source path')
-                  if entry['mode'] not in (0o644, 0o755):
-                      raise SystemExit('Unexpected file permissions')
-                  destination = root / relative
-                  destination.parent.mkdir(parents=True, exist_ok=True)
-                  destination.write_text(entry['text'])
-                  destination.chmod(entry['mode'])
-              shutil.copyfile(root / 'DayLightLogoSunSetRPI.png', root / 'assets/wallpapers/daylight-original.png')
-              print('Restored 69 reviewed source files and the historical wallpaper.')
-          elif not (root / 'Cargo.toml').exists():
-              raise SystemExit('No reviewed sources available')
-          PY
-      - name: Preserve readable source on the candidate branch
-        run: |
-          if test -d bootstrap; then
-            git rm -r --ignore-unmatch bootstrap Version4
-            git rm --ignore-unmatch ReleaseNotes daylight-conky-graphs.png python.png awesome.svg DayLightLogoSunSetRPI.png licence-daylight-linux
-            git add Cargo.toml Cargo.lock rust-toolchain.toml README.md README.fr.md CHANGELOG.md .gitignore src config scripts packaging tests telemetry live docs assets licenses
-            git config user.name 'Hamdy Abou El Anein'
-            git config user.email 'contact@daylightlinux.ch'
-            git commit -m 'Implement Daylight GNU/Linux 5 release candidate with modular Debian packages'
-            git push origin HEAD:build/daylight-v5
-          fi
+          persist-credentials: false
       - name: Build prerequisites
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends dpkg-dev imagemagick fonts-dejavu-core python3 curl
+          sudo apt-get install -y --no-install-recommends dpkg-dev imagemagick librsvg2-bin fonts-dejavu-core python3 curl
           rustup toolchain install 1.88.0 --profile minimal --component rustfmt --component clippy
       - name: Source checks and Rust unit tests
+        shell: bash
         run: |
+          set -euo pipefail
+          mkdir -p dist/validation
           cargo +1.88.0 fmt --check
           cargo +1.88.0 clippy --locked --all-targets -- -D warnings
-          cargo +1.88.0 test --locked
+          cargo +1.88.0 test --locked 2>&1 | tee dist/validation/rust-tests.log
           python3 -m py_compile scripts/*.py tests/*.py telemetry/*.py
       - name: Build ARM64 and AMD64 packages
+        shell: bash
         run: |
+          set -euo pipefail
           sh scripts/render-assets.sh
           sh scripts/build-portable.sh
-          python3 tests/test_integration.py
-          python3 tests/test_collector.py
+          python3 tests/test_integration.py 2>&1 | tee dist/validation/cli-tests.log
+          python3 tests/test_collector.py 2>&1 | tee dist/validation/collector-tests.log
+          git rev-parse HEAD > dist/validation/source-commit.txt
       - name: Debian 12 and 13 installation and removal
         shell: bash
         run: |
@@ -90,23 +57,46 @@ jobs:
               /bin/sh /src/scripts/test-packages.sh 2>&1 | tee "dist/package-tests/$suite/lifecycle.log"
           done
       - name: Build live ISO only in the disposable runner
+        if: github.event_name != 'pull_request'
+        shell: bash
         run: |
+          set -euo pipefail
           docker run --rm --privileged --cpus=2 --memory=5g -v "$PWD:/src" -w /src debian:trixie /bin/sh -ec '
             apt-get update -qq
             apt-get install -y --no-install-recommends live-build debootstrap squashfs-tools xorriso isolinux syslinux-common grub-pc-bin grub-efi-amd64-bin mtools dosfstools ca-certificates
-            /bin/sh scripts/build-live.sh'
+            /bin/sh scripts/build-live.sh' 2>&1 | tee dist/validation/live-build.log
       - name: Offline live-filesystem boot and screenshot
+        if: github.event_name != 'pull_request'
+        shell: bash
         run: |
+          set -euo pipefail
           sudo apt-get install -y --no-install-recommends qemu-system-x86 xorriso
           sudo chown -R "$(id -u):$(id -g)" dist
-          python3 scripts/test-live.py dist/daylight-live_5.0.0-rc.1_amd64.iso
+          python3 scripts/test-live.py dist/daylight-live_5.0.0-rc.1_amd64.iso --timeout 600
           convert dist/live-test/desktop.ppm dist/live-test/desktop.png
-      - name: Retain packages and validation evidence
+          cd dist
+          sha256sum ./*.deb ./*.iso > SHA256SUMS
+      - name: Retain validation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: daylight-validation-${{ github.run_number }}
+          path: |
+            dist/validation/
+            dist/package-tests/
+            dist/live-test/
+          retention-days: 14
+          compression-level: 6
+          if-no-files-found: warn
+      - name: Retain release candidate packages and image
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: daylight-candidate-${{ github.run_number }}
-          path: dist/
-          retention-days: 7
+          path: |
+            dist/*.deb
+            dist/*.iso
+            dist/SHA256SUMS
+          retention-days: 14
           compression-level: 0
           if-no-files-found: warn
