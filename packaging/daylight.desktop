@@ -7,4 +7,4 @@ Comment=Lightweight Fluxbox desktop without changing the base system
 Exec=/usr/bin/daylight-session
 TryExec=/usr/bin/daylight-session
 Type=Application
-DesktopNames=Daylight;Fluxbox;
+X-LightDM-DesktopName=Daylight
