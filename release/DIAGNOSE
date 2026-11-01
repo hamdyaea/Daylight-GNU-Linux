@@ -1,2 +1,0 @@
-Inspect only the already-built ISO from validation run 41354793988, artifact daylight-candidate-8.
-The diagnostic VM has no network and no host disks. Do not treat this workflow as a release validation pass.
