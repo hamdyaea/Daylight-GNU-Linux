@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
-  actions: read
+  actions: write
 concurrency:
   group: daylight-publication
   cancel-in-progress: false
@@ -79,7 +79,7 @@ jobs:
           PY
           cd release-files
           sha256sum *.deb *.iso *.png daylight-validation.zip > SHA256SUMS
-      - name: Publish an explicitly marked prerelease
+      - name: Publish a complete explicitly marked prerelease
         env:
           TAG: ${{ steps.verified.outputs.tag }}
           SOURCE_SHA: ${{ steps.verified.outputs.sha }}
@@ -91,6 +91,30 @@ jobs:
           gh release create "$TAG" \
             release-files/*.deb release-files/*.iso release-files/*.png \
             release-files/daylight-validation.zip release-files/SHA256SUMS \
-            --target "$SOURCE_SHA" --prerelease \
+            --target "$SOURCE_SHA" --draft --prerelease \
             --title 'Daylight GNU/Linux 5.0.0-rc.1' \
             --notes-file docs/RELEASE.md
+          python3 - <<'PY'
+          import json, os, pathlib, subprocess
+          release = json.loads(subprocess.check_output(['gh', 'release', 'view', os.environ['TAG'], '--json', 'assets']))
+          actual = {asset['name']: asset['size'] for asset in release['assets']}
+          expected = {p.name: p.stat().st_size for p in pathlib.Path('release-files').iterdir() if p.is_file()}
+          if actual != expected:
+              raise SystemExit('Release remains a draft: uploaded asset sizes do not match')
+          PY
+          gh release edit "$TAG" --draft=false
+      - name: Remove only this release's duplicate large CI archive
+        continue-on-error: true
+        env:
+          RUN_ID: ${{ steps.verified.outputs.run_id }}
+          RUN_NUMBER: ${{ steps.verified.outputs.number }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          prefix = 'repos/' + os.environ['GITHUB_REPOSITORY']
+          data = json.loads(subprocess.check_output(['gh', 'api', prefix + '/actions/runs/' + os.environ['RUN_ID'] + '/artifacts']))
+          name = 'daylight-candidate-' + os.environ['RUN_NUMBER']
+          for artifact in data['artifacts']:
+              if artifact['name'] == name:
+                  subprocess.run(['gh', 'api', '--method', 'DELETE', prefix + '/actions/artifacts/' + str(artifact['id'])], check=True)
+          PY
