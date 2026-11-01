@@ -1,0 +1,38 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Diagnose existing Daylight live image
+on:
+  push:
+    branches: [build/daylight-v5]
+    paths: [release/DIAGNOSE]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Download the existing image without rebuilding
+        run: |
+          gh run download 41354793988 --name daylight-candidate-8 --dir dist
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends qemu-system-x86 xorriso imagemagick
+      - name: Inspect the offline disposable guest
+        run: |
+          python3 scripts/diagnose-live.py dist/daylight-live_5.0.0-rc.1_amd64.iso
+          convert dist/live-diagnostic/desktop.ppm dist/live-diagnostic/desktop.png
+      - name: Retain diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: daylight-live-diagnostic
+          path: dist/live-diagnostic/
+          retention-days: 3
