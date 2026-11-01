@@ -1,0 +1,19 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch (project address; activation pending)
+# SPDX-License-Identifier: GPL-3.0-only
+[package]
+name = "daylight"
+version = "5.0.0-rc.1"
+edition = "2021"
+rust-version = "1.70"
+license = "GPL-3.0-only"
+authors = ["Hamdy Abou El Anein"]
+description = "Small, privacy-respecting utilities for Daylight GNU/Linux"
+repository = "https://github.com/hamdyaea/Daylight-GNU-Linux"
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"

@@ -1,0 +1,24 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+[Unit]
+Description=Optional Daylight boot event without installation identifier
+ConditionPathExists=/etc/daylight/telemetry.conf
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/daylight telemetry send
+DynamicUser=yes
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+MemoryMax=48M
+CPUQuota=10%
+TimeoutStartSec=8s

@@ -1,0 +1,7 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+set -e
+if [ -d /run/systemd/system ]; then systemctl daemon-reload || true; fi
+exit 0

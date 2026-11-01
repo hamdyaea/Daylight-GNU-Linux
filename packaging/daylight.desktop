@@ -1,0 +1,10 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+[Desktop Entry]
+Name=Daylight GNU/Linux
+Comment=Lightweight Fluxbox desktop without changing the base system
+Exec=/usr/bin/daylight-session
+TryExec=/usr/bin/daylight-session
+Type=Application
+DesktopNames=Daylight;Fluxbox;

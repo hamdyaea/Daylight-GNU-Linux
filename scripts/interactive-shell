@@ -1,0 +1,14 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+set -eu
+unset DAYLIGHT_FETCH_SHOWN
+shell=${SHELL:-/bin/bash}
+case "$shell" in
+ */bash) exec /bin/bash --rcfile /usr/share/daylight/shell/bashrc -i ;;
+ *) if [ -t 1 ] && [ "${TERM:-dumb}" != dumb ] && [ "$(/usr/bin/daylight settings get fetch)" = on ]; then
+       /usr/bin/daylight info
+    fi
+    if [ -x "$shell" ]; then exec "$shell" -i; else exec /bin/sh -i; fi ;;
+esac

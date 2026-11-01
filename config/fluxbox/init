@@ -1,0 +1,21 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+session.screen0.toolbar.visible: true
+session.screen0.toolbar.placement: BottomCenter
+session.screen0.toolbar.widthPercent: 94
+session.screen0.toolbar.height: 28
+session.screen0.toolbar.tools: workspacename, prevworkspace, nextworkspace, iconbar, systemtray, clock
+session.screen0.toolbar.clock.format: %a %d %b  %H:%M
+session.screen0.workspaces: 4
+session.screen0.workspaceNames: Work,Web,Code,Extra
+session.screen0.focusModel: ClickFocus
+session.screen0.sloppywindowgrouping: false
+session.screen0.windowPlacement: RowSmartPlacement
+session.screen0.fullMaximization: false
+session.menuFile: /usr/share/daylight/fluxbox/menu
+session.keyFile: /usr/share/daylight/fluxbox/keys
+session.styleFile: /usr/share/daylight/fluxbox/style
+session.appsFile: @@CONFIG@@/fluxbox/apps
+session.tabsAttachArea: Window
+session.configVersion: 13

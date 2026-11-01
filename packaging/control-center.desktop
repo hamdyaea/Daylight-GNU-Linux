@@ -1,0 +1,12 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+[Desktop Entry]
+Name=Daylight Control Center
+Name[fr]=Centre de contrôle Daylight
+Comment=Local system information, tools, settings and privacy
+Exec=/usr/bin/daylight control-center
+Icon=daylight
+Terminal=false
+Type=Application
+Categories=Settings;System;

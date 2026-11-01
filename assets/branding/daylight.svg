@@ -1,0 +1,11 @@
+<!-- Developer: Hamdy Abou El Anein | Contact: contact@daylightlinux.ch | SPDX-License-Identifier: GPL-3.0-only -->
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<defs><linearGradient id="sun" x2="0" y2="1"><stop stop-color="#ffdc78"/><stop offset="1" stop-color="#e98b30"/></linearGradient></defs>
+<circle cx="256" cy="256" r="230" fill="#111822" stroke="#dca64b" stroke-width="12"/>
+<path d="M70 298 A186 186 0 0 1 442 298" fill="none" stroke="#e9ad4a" stroke-width="8"/>
+<circle cx="282" cy="202" r="59" fill="url(#sun)"/>
+<path d="M70 348 188 166 265 281 332 207 447 348Z" fill="#dfe7e9"/>
+<path d="m188 166 77 115-38-17-19 8-20-43-32 20Z" fill="#faf5db"/>
+<path d="m70 348 118-119 27 45 50 7 67-74-35 115 61 26Z" fill="#344857"/>
+<path d="M230 410c-72-58 126-76 53-120 113 54-48 81-12 120Z" fill="url(#sun)"/>
+</svg>

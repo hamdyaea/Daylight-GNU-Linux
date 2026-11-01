@@ -1,0 +1,18 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+set -eu
+lb config noauto \
+ --distribution trixie \
+ --architectures amd64 \
+ --binary-images iso-hybrid \
+ --archive-areas 'main contrib non-free-firmware' \
+ --apt-recommends false \
+ --debian-installer none \
+ --memtest none \
+ --iso-application 'Daylight GNU/Linux' \
+ --iso-publisher 'Hamdy Abou El Anein' \
+ --iso-volume 'DAYLIGHT_LIVE' \
+ --bootappend-live 'boot=live components quiet username=daylight hostname=daylight-live locales=en_US.UTF-8 keyboard-layouts=us timezone=UTC noswap' \
+ "$@"

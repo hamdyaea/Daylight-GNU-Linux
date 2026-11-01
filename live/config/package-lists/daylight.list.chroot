@@ -1,0 +1,28 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+live-boot
+live-config
+live-config-systemd
+linux-image-amd64
+systemd-sysv
+sudo
+lightdm
+lightdm-gtk-greeter
+network-manager
+network-manager-gnome
+iproute2
+iputils-ping
+curl
+ca-certificates
+fastfetch
+terminology
+firefox-esr
+firmware-linux-free
+firmware-iwlwifi
+firmware-realtek
+firmware-brcm80211
+locales
+less
+nano
+procps

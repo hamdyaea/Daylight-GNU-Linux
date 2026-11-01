@@ -1,0 +1,12 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+set -eu
+# This hook runs ONLY inside live-build's disposable image root.
+systemctl enable NetworkManager.service
+systemctl enable lightdm.service
+systemctl set-default graphical.target
+# No remote login server or boot counter is enabled in the live environment.
+systemctl mask ssh.service ssh.socket daylight-telemetry.timer
+systemctl enable daylight-live-smoke.service

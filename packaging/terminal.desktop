@@ -1,0 +1,10 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+[Desktop Entry]
+Name=Daylight Terminal
+Exec=/usr/bin/daylight-terminal
+Icon=daylight
+Terminal=false
+Type=Application
+Categories=System;TerminalEmulator;

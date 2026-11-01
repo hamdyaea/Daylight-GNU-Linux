@@ -1,0 +1,13 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+set -e
+case "$1" in
+ remove|deconfigure)
+  if [ -d /run/systemd/system ]; then
+    systemctl disable --now daylight-telemetry.timer || true
+    systemctl stop daylight-telemetry.service || true
+  fi ;;
+esac
+exit 0

@@ -1,86 +1,69 @@
-![Awesome](awesome.svg) [ ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg) ](https://github.com/psf/black)   ![Python](python.png)
+# Daylight GNU/Linux 5
 
-# Daylight Linux
+[Documentation en français](README.fr.md)
 
-![Daylight](DayLightLogoSunSetRPI.png)
+**A lightweight, reversible desktop layer for Debian and Raspberry Pi OS.**
 
+Founder and developer: **Hamdy Abou El Anein**  
+Daylight source license: **GNU GPL version 3 only**  
+Project contact: **contact@daylightlinux.ch — activation pending**
 
-Welcome to the git of Daylight Linux
+Version **5.0.0-rc.1** is a release candidate. The validation report distinguishes implemented features, executed tests and remaining release gates.
 
+![Mountain and sunrise identity](assets/branding/daylight.svg)
 
-## Homepage
+## Included components
 
-http://daylightlinux.ch
+A separate Fluxbox session, streamlined Conky profiles, branded terminal, optional Fastfetch integration with an ASCII fallback, mountain/sun themes and the original background. A small Rust executable provides local diagnostics, monitoring, secure password generation, utilities and modernized games. Native graphical dialogs use YAD (GTK) only while open. No Electron, persistent control-center daemon or automatic network request when a terminal opens.
 
-## Download the Daylight linux Version 4 for Raspberry Pi
-[![Download Daylight_Linux](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/daylight-linux/files/Daylight-GNU-Linux-RPI-Version4/Daylight-Linux-RPI-Version4.zip/download)
+| Package | Purpose |
+|---|---|
+| daylight-core | AMD64 or ARM64 Rust executable, Fastfetch configuration and manual |
+| daylight-themes | Backgrounds and icons |
+| daylight-desktop | Fluxbox session, Conky, terminal and control center |
+| daylight-apps | Utility launchers, speech and notifications |
+| daylight-games | Optional offline game launchers |
+| daylight-linux | Desktop metapackage |
+| daylight-telemetry | Optional boot sender, disabled by default and excluded from the metapackage |
 
+AMD64 and ARM64 builds are provided. ARM 32-bit is not yet supported. The base system remains Debian or Raspberry Pi OS; Daylight does not replace its identity or kernel.
 
+## Installation and use
 
-## Download the Daylight linux amd64 live version for computers
-[![Download Daylight_Linux](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/daylight-linux/files/Daylight_Linux_amd64_Version4.01/Daylight_Linux_amd64_version4.01.zip/download)
+Use matching architecture packages of the same version. Inspect the checksums and APT's proposed changes. Minimal ARM64 installation:
 
-## Login
-
-root : toor
-
-daylight : toor
-
-## How to prepare your micro SD card for the Raspberry Pi
-
-You need at leat a 8 Go card for Daylight Linux. Some 8 Go cards have in reality 7.9 Go or under. The best is to use at least a 16 Go SD Card. Then expand the file system, from the terminal : #sudo raspi-config in the terminal then expand the file system (Advanced options > Expand file system). You can change the system and keyboard language from the raspi-config menu.
-
-## Hot to flash the your micro SD card for the Raspberry Pi with Daylight Linux
-
-```
-sudo dd bs=1M of=/dev/mmcblk0 if=DaylightLinux201RPI.img status=progress  conv=fsync
-```
-
-
-## Try Daylight Linux Online 
-
-Now you can test Daylight Linux directly in your internet browser at this address:
-
-https://distrotest.net/Daylight%20Linux/V4.01
-
-Be patient for the online operating system boot time.
-
-## Last version 
-
-The linux kernel is now upgraded to the 5.3 version for the AMD64 live version and Kernel 4.19.68 for the Raspberry Pi version.
-
-All packages are upgraded to the Debian 10 version or to the cutting edge version (experimental) for all current softwares.
-
-Added compatibility for the Raspberry Pi 4
-
-The last version is the branch Version 4
-
-For the last version :
-
-```
-git checkout Version4
-```
-## Connect to a wireless network
-
-Right click on the desktop then : Internet > Communication > Network Manager 
-
-## Change your network interface on conky
-![GRAPHS](daylight-conky-graphs.png)
-
-In your home folder modify the file .conkyrc just change all enp0s3 with your network interface name. To find your active network interface in the terminal the command is : ip a
-
-```
-Down:${color #8844ee} ${downspeed enp0s3} k/s${color lightgrey} ${offset 70}Up:${color #22ccff} ${upspeed enp0s3} k/s
-${color black}${downspeedgraph enp0s3 32,150 ff0000 0000ff} $alignr${color black}${upspeedgraph enp0s3 32,150 0000ff ff0000}
+```sh
+sudo apt install ./daylight-core_5.0.0~rc1_arm64.deb ./daylight-themes_5.0.0~rc1_all.deb
+daylight status
+daylight doctor
 ```
 
-## Change keyboard language
+The full desktop additionally needs the desktop, apps and linux packages. Select **Daylight GNU/Linux** in an existing display manager, or use `startx /usr/bin/daylight-session` from a suitable local console. Daylight itself does not install or restart a display manager.
 
+```sh
+daylight info
+daylight monitor --watch
+daylight control-center
+daylight password 24
+daylight settings set profile minimal
+daylight update --dry-run
+sudo daylight update
+daylight remove --dry-run
+sudo daylight remove
 ```
-dpkg-reconfigure console-data
-dpkg-reconfigure keyboard-configuration
-service keyboard-setup restart
-```
-## Founder -  Developer
 
-Hamdy Abou El Anein
+Updates require a configured APT repository or newly downloaded local packages. This repository does **not** imply that a public Daylight APT endpoint already exists. Removal targets Daylight packages, never runs autoremove and preserves personal Daylight settings and pre-existing dependencies.
+
+Settings are isolated under `~/.config/daylight` (or XDG_CONFIG_HOME). Existing shell startup files, `~/.fluxbox` and `~/.conkyrc` are not overwritten. `daylight-terminal` uses Terminology when available, otherwise a readable Xterm configuration. Fastfetch is optional; a built-in ASCII display works without it.
+
+## Live edition and privacy
+
+`live/` contains a Debian 13 AMD64 live-image recipe using the same packages. It is not a clone of a personal computer or server. See the validation record before claiming that an ISO has been built or tested. No installation wizard, persistent storage or enabled telemetry is included by default.
+
+Boot statistics are **off by default**, require an optional package and explicit activation. They count received boots, **not unique users**. The payload has no persistent ID. Network endpoints and providers still process the connection's IP; complete transport anonymity is not promised. The reference collector stores daily aggregates and is not automatically deployed.
+
+## Documentation
+
+See `docs/BUILD.md`, `docs/PRIVACY.md`, `docs/PRODUCTION-SAFETY.md`, `docs/LEGACY-AUDIT.md`, `docs/THIRD_PARTY.md` and `docs/VALIDATION.md`.
+
+Historical work is preserved in Git history and archive branches. The new mountain/sun graphics are working designs, not finalized photorealistic artwork. Third-party software retains its original authors and licenses.

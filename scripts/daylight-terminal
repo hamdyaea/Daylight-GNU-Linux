@@ -1,0 +1,12 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+set -eu
+if [ "$#" -gt 0 ]; then
+    exec /usr/bin/xterm -fa 'DejaVu Sans Mono' -fs 11 -bg '#101721' -fg '#f0e9d9' -e "$@"
+fi
+if [ -x /usr/bin/terminology ]; then
+    exec /usr/bin/terminology -b /usr/share/backgrounds/daylight/daylight-terminal.jpg -e /usr/lib/daylight/interactive-shell
+fi
+exec /usr/bin/xterm -fa 'DejaVu Sans Mono' -fs 11 -bg '#101721' -fg '#f0e9d9' -e /usr/lib/daylight/interactive-shell

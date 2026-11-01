@@ -1,0 +1,24 @@
+.\" Developer: Hamdy Abou El Anein
+.\" Contact: contact@daylightlinux.ch
+.\" SPDX-License-Identifier: GPL-3.0-only
+.TH DAYLIGHT 1 "2026-11-01" "Daylight 5.0.0-rc.1" "User Commands"
+.SH NAME
+daylight \- local management and utilities for Daylight GNU/Linux
+.SH SYNOPSIS
+.B daylight
+COMMAND [OPTIONS]
+.SH DESCRIPTION
+Daylight adds an isolated desktop session and local utilities to Debian or Raspberry Pi OS.
+It does not replace the base OS identity, edit existing shell configuration, or enable telemetry by default.
+.SH COMMANDS
+Run daylight --help for the complete command list.
+Status, info, doctor and monitor are read-only. Passwords are generated using the Linux kernel CSPRNG.
+Package update and remove use APT for Daylight packages only; they never run autoremove.
+Desktop settings live under XDG_CONFIG_HOME/daylight, falling back to ~/.config/daylight.
+.SH PRIVACY
+Opening a terminal sends no network request. Optional boot events require explicit activation and a configured HTTPS collector.
+Events count boots, not unique users. Transport providers necessarily see a source IP.
+.SH AUTHOR
+Hamdy Abou El Anein.
+.SH LICENSE
+GNU General Public License version 3 only. Third-party component licenses remain unchanged.

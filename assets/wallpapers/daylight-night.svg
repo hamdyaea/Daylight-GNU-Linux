@@ -1,0 +1,17 @@
+<!-- Developer: Hamdy Abou El Anein | Contact: contact@daylightlinux.ch | SPDX-License-Identifier: GPL-3.0-only -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#121d34"/><stop offset="1" stop-color="#253c54"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#f7d38c" stop-opacity=".48"/><stop offset="1" stop-color="#f7d38c" stop-opacity="0"/></radialGradient>
+<linearGradient id="land" x2="0" y2="1"><stop stop-color="#172a35"/><stop offset="1" stop-color="#0b121b"/></linearGradient></defs>
+<path fill="url(#sky)" d="M0 0h1920v1080H0z"/>
+<circle cx="750" cy="445" r="420" fill="url(#glow)"/>
+<circle cx="750" cy="445" r="94" fill="#dfd9c2"/>
+<path d="M0 690 240 445 395 592 620 292 802 588 971 398 1180 659 1370 473 1614 685 1790 520 1920 686v394H0z" fill="#657883"/>
+<path d="m620 292 182 296-106-83-48 22-33-92-48 82-82 31z" fill="#d8dfe0"/>
+<path d="m971 398 209 261-151-126-53 21-38-47-72 39z" fill="#becbd0"/>
+<path d="M0 725 278 598 490 757 721 562 937 777 1144 621 1338 751 1574 612 1920 786v294H0z" fill="#293f4a"/>
+<path d="M0 882q390-150 690-32t1230-58v288H0z" fill="url(#land)"/>
+<path d="M610 1080q310-116 107-219 250 105 13 219Z" fill="#e2b365" opacity=".8"/>
+<text x="78" y="972" fill="#f1e9d7" font-family="DejaVu Sans, sans-serif" font-size="43" letter-spacing="9">DAYLIGHT</text>
+<text x="81" y="1010" fill="#ddb56d" font-family="DejaVu Sans, sans-serif" font-size="17" letter-spacing="7">GNU/LINUX</text>
+</svg>

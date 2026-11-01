@@ -1,0 +1,4 @@
+Rust MIT and Apache notices: rust-lang/rust tag 1.88.0.
+Rust library notice: installed official Rust 1.88.0 distribution.
+Musl full COPYRIGHT: emscripten-core/musl source mirror, preserving upstream notices.
+Upstream musl source: https://git.musl-libc.org/cgit/musl/

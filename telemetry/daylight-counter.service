@@ -1,0 +1,25 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+[Unit]
+Description=Daylight aggregate boot counter (loopback only)
+After=network.target
+[Service]
+Type=simple
+DynamicUser=yes
+StateDirectory=daylight-counter
+ExecStart=/usr/bin/python3 /usr/lib/daylight-counter/collector.py --database /var/lib/daylight-counter/counts.sqlite3
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+MemoryMax=128M
+TasksMax=64
+CPUQuota=25%
+RestrictAddressFamilies=AF_INET AF_UNIX
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

@@ -1,1 +1,0 @@
-/usr/share/firefox/firefox

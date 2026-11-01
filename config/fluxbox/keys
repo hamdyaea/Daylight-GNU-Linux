@@ -1,0 +1,19 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+OnDesktop Mouse1 :HideMenus
+OnDesktop Mouse2 :WorkspaceMenu
+OnDesktop Mouse3 :RootMenu
+Mod4 Return :Exec /usr/bin/daylight-terminal
+Mod4 p :Exec /usr/bin/daylight control-center
+Mod4 e :Exec /usr/bin/pcmanfm
+Mod4 d :ShowDesktop
+Mod1 Tab :NextWindow {groups}
+Mod1 Shift Tab :PrevWindow {groups}
+Mod1 F4 :Close
+Mod4 Left :PrevWorkspace
+Mod4 Right :NextWorkspace
+Mod4 1 :Workspace 1
+Mod4 2 :Workspace 2
+Mod4 3 :Workspace 3
+Mod4 4 :Workspace 4

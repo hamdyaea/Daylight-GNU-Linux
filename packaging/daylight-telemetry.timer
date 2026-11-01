@@ -1,0 +1,12 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+[Unit]
+Description=Optional Daylight boot counter (explicit opt-in)
+[Timer]
+OnBootSec=90s
+RandomizedDelaySec=300s
+AccuracySec=30s
+Unit=daylight-telemetry.service
+[Install]
+WantedBy=timers.target

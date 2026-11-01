@@ -1,0 +1,26 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+[begin] (Daylight GNU/Linux)
+ [exec] (Terminal) {/usr/bin/daylight-terminal}
+ [exec] (Files) {/usr/bin/pcmanfm}
+ [exec] (Daylight Control Center) {/usr/bin/daylight control-center}
+ [exec] (System information) {/usr/bin/daylight app info}
+ [separator]
+ [submenu] (Daylight applications)
+  [exec] (Password generator) {/usr/bin/daylight app password}
+  [exec] (Temperature converter) {/usr/bin/daylight app temperature}
+  [exec] (Days calculator) {/usr/bin/daylight app days}
+  [exec] (Local network information) {/usr/bin/daylight app connect}
+  [exec] (Alarm) {/usr/bin/daylight app alarm}
+ [end]
+ [submenu] (System applications)
+  [include] (/etc/X11/fluxbox/fluxbox-menu)
+ [end]
+ [submenu] (Workspaces)
+  [workspaces] (Workspaces)
+ [end]
+ [separator]
+ [reconfig] (Reload window manager settings)
+ [exit] (Log out of Daylight)
+[end]
