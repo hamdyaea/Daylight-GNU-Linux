@@ -1,0 +1,16 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Daylight isolated build preparation
+on:
+  push:
+    branches: [build/daylight-v5]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preparation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - run: printf 'Daylight build branch created. Production computers are not used by this workflow.\n'
