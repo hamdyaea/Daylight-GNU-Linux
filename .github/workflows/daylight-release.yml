@@ -1,0 +1,96 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Publish verified Daylight candidate
+on:
+  push:
+    branches: [build/daylight-v5]
+    paths: [release/READY.json]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: daylight-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify source and completed validation
+        id: verified
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, pathlib, re, subprocess
+          request = json.loads(pathlib.Path('release/READY.json').read_text())
+          run_id, sha, tag = request['run_id'], request['commit'], request['tag']
+          if not isinstance(run_id, int) or run_id <= 0 or not re.fullmatch('[0-9a-f]{40}', sha):
+              raise SystemExit('Invalid validation reference')
+          if tag != 'v5.0.0-rc.1':
+              raise SystemExit('Only the reviewed release-candidate version is permitted')
+          run = json.loads(subprocess.check_output(['gh', 'api', f'repos/{os.environ["GITHUB_REPOSITORY"]}/actions/runs/{run_id}']))
+          required = run['conclusion'] == 'success' and run['status'] == 'completed'
+          required &= run['head_sha'] == sha and run['head_branch'] == 'build/daylight-v5'
+          required &= run['path'] == '.github/workflows/daylight-build.yml'
+          required &= run['head_repository']['full_name'].lower() == os.environ['GITHUB_REPOSITORY'].lower()
+          if not required:
+              raise SystemExit('The exact source commit has not passed the complete validation workflow')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'run_id={run_id}\nsha={sha}\ntag={tag}\nnumber={run["run_number"]}\n')
+          pathlib.Path('verified-run.json').write_text(json.dumps({'run_id': run_id, 'commit': sha, 'tag': tag}, indent=2)+'\n')
+          PY
+      - name: Retrieve the tested artifacts, without rebuilding
+        env:
+          RUN_ID: ${{ steps.verified.outputs.run_id }}
+          RUN_NUMBER: ${{ steps.verified.outputs.number }}
+        run: |
+          gh run download "$RUN_ID" --name "daylight-candidate-$RUN_NUMBER" --dir release-files
+          gh run download "$RUN_ID" --name "daylight-validation-$RUN_NUMBER" --dir validation
+          cd release-files
+          sha256sum -c SHA256SUMS
+          test -s daylight-live_5.0.0-rc.1_amd64.iso
+      - name: Package inspectable test evidence
+        run: |
+          python3 - <<'PY'
+          import pathlib, shutil
+          root = pathlib.Path('validation')
+          for suite in ('bookworm', 'trixie'):
+              log = (root / 'package-tests' / suite / 'lifecycle.log').read_text()
+              if 'DAYLIGHT_PACKAGE_LIFECYCLE_OK' not in log:
+                  raise SystemExit('Missing package lifecycle evidence for '+suite)
+          if 'PASS:' not in (root / 'live-test/result.txt').read_text():
+              raise SystemExit('Missing live boot evidence')
+          shutil.copyfile('verified-run.json', root / 'verified-run.json')
+          shutil.make_archive('release-files/daylight-validation', 'zip', root)
+          for source, destination in [
+              ('package-tests/bookworm/daylight-desktop.png', 'daylight-desktop-debian12.png'),
+              ('package-tests/trixie/daylight-desktop.png', 'daylight-desktop-debian13.png'),
+              ('live-test/desktop.png', 'daylight-live-desktop.png')]:
+              shutil.copyfile(root / source, pathlib.Path('release-files') / destination)
+          PY
+          cd release-files
+          sha256sum *.deb *.iso *.png daylight-validation.zip > SHA256SUMS
+      - name: Publish an explicitly marked prerelease
+        env:
+          TAG: ${{ steps.verified.outputs.tag }}
+          SOURCE_SHA: ${{ steps.verified.outputs.sha }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo 'This release already exists; it will not be overwritten.' >&2
+            exit 1
+          fi
+          gh release create "$TAG" \
+            release-files/*.deb release-files/*.iso release-files/*.png \
+            release-files/daylight-validation.zip release-files/SHA256SUMS \
+            --target "$SOURCE_SHA" --prerelease \
+            --title 'Daylight GNU/Linux 5.0.0-rc.1' \
+            --notes-file docs/RELEASE.md
