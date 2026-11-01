@@ -5,7 +5,7 @@ name: Daylight candidate validation
 on:
   push:
     branches: [master, build/daylight-v5]
-    paths-ignore: ['docs/**', '*.md']
+    paths-ignore: ['docs/**', '*.md', 'release/**']
   pull_request:
   workflow_dispatch:
 permissions:
@@ -25,7 +25,7 @@ jobs:
       - name: Build prerequisites
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends dpkg-dev imagemagick librsvg2-bin fonts-dejavu-core python3 curl
+          sudo apt-get install -y --no-install-recommends dpkg-dev imagemagick librsvg2-bin fonts-dejavu-core python3 curl gnupg
           rustup toolchain install 1.88.0 --profile minimal --component rustfmt --component clippy
       - name: Source checks and Rust unit tests
         shell: bash
@@ -44,6 +44,7 @@ jobs:
           sh scripts/build-portable.sh
           python3 tests/test_integration.py 2>&1 | tee dist/validation/cli-tests.log
           python3 tests/test_collector.py 2>&1 | tee dist/validation/collector-tests.log
+          python3 tests/test_repository.py 2>&1 | tee dist/validation/repository-tests.log
           git rev-parse HEAD > dist/validation/source-commit.txt
       - name: Debian 12 and 13 installation and removal
         shell: bash
@@ -62,7 +63,15 @@ jobs:
         run: |
           set -euo pipefail
           docker run --rm --privileged --cpus=2 --memory=5g -v "$PWD:/src" -w /src debian:trixie /bin/sh -ec '
-            apt-get update -qq
+            # This is a newly created disposable container, never a production host.
+            printf "Acquire::Retries \"3\";\nAcquire::http::No-Cache \"true\";\nAcquire::http::Pipeline-Depth \"0\";\n" > /etc/apt/apt.conf.d/80-daylight-build-retries
+            attempt=1
+            until apt-get update -qq; do
+              if [ "$attempt" -ge 3 ]; then exit 1; fi
+              attempt=$((attempt + 1))
+              find /var/lib/apt/lists -type f -delete
+              sleep 5
+            done
             apt-get install -y --no-install-recommends live-build debootstrap squashfs-tools xorriso isolinux syslinux-common grub-pc-bin grub-efi-amd64-bin mtools dosfstools ca-certificates
             /bin/sh scripts/build-live.sh' 2>&1 | tee dist/validation/live-build.log
       - name: Offline live-filesystem boot and screenshot
@@ -76,6 +85,12 @@ jobs:
           convert dist/live-test/desktop.ppm dist/live-test/desktop.png
           cd dist
           sha256sum ./*.deb ./*.iso > SHA256SUMS
+      - name: Make disposable-container test evidence readable
+        if: always()
+        run: |
+          if test -d dist; then
+            sudo chown -R "$(id -u):$(id -g)" dist
+          fi
       - name: Retain validation evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
