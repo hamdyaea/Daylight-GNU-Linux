@@ -2,7 +2,7 @@
 # Developer: Hamdy Abou El Anein
 # Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
-"""Run the actual AMD64 live ISO with noVNC, no guest network and a bounded lifetime."""
+"""Run the verified AMD64 live ISO privately with noVNC and a bounded lifetime."""
 import argparse
 import hashlib
 import json
@@ -90,8 +90,11 @@ def main():
     with tempfile.TemporaryDirectory(prefix='daylight-demo-') as temporary:
         work=Path(temporary)
         vnc=work/'vnc.sock'
-        qemu=['qemu-system-x86_64','-accel','tcg','-cpu','max','-m','1536','-smp','1','-display','none','-vga','std','-nic','none','-no-reboot','-boot','d','-cdrom',str(iso),'-monitor','none','-serial','file:'+str(work/'serial.log'),'-vnc','unix:'+str(vnc),'-usb','-device','usb-tablet','-sandbox','on,obsolete=deny,elevateprivileges=deny,spawn=deny,resourcecontrol=deny']
-        # Do not pass repository/API credentials or SSH-agent variables to child processes.
+        readiness=work/'guest-readiness.log'
+        qemu=['qemu-system-x86_64','-accel','tcg','-cpu','max','-m','1536','-smp','1','-display','none','-vga','std','-nic','none','-no-reboot','-boot','d','-cdrom',str(iso),'-monitor','none','-serial','file:'+str(work/'serial.log'),'-vnc','unix:'+str(vnc),'-usb','-device','usb-tablet','-sandbox','on,obsolete=deny,elevateprivileges=deny,spawn=deny,resourcecontrol=deny',
+              '-device','virtio-serial-pci','-chardev','file,id=daylight-ready,path='+str(readiness),'-device','virtserialport,chardev=daylight-ready,name=org.daylightlinux.test']
+        # Only a tiny readiness report crosses this dedicated observation channel.
+        # No host disk, shared directory, repository credential or SSH agent is exposed.
         child_env={'PATH':'/usr/local/bin:/usr/bin:/bin','HOME':str(work),'LANG':'C.UTF-8','TMPDIR':str(work)}
         children=[]
         def stop(signum=None,frame=None):
@@ -114,11 +117,20 @@ def main():
                 proxy=subprocess.Popen(['websockify','--web',str(web),'--unix-target',str(vnc),'--heartbeat','30',f'{args.listen}:{args.port}'],env=child_env)
                 children.append(proxy)
                 print(f'Daylight browser demo: http://127.0.0.1:{args.port}/vnc.html?autoconnect=true&resize=scale',flush=True)
+                print('The VM is booting; an established VNC connection does not yet mean the desktop is ready.',flush=True)
                 print('No guest network, no host disks, no persistence. Session terminates automatically after '+str(args.duration)+' seconds.',flush=True)
                 deadline=time.monotonic()+args.duration
+                announced=False
                 while time.monotonic()<deadline:
                     if guest.poll() is not None or proxy.poll() is not None:
                         raise RuntimeError('The demo guest or frontend exited unexpectedly')
+                    if not announced and readiness.exists():
+                        with readiness.open('rb') as stream: report=stream.read(65536)
+                        if b'DAYLIGHT_LIVE_FAILED' in report:
+                            raise RuntimeError('The live guest reported a desktop startup failure')
+                        if b'DAYLIGHT_LIVE_READY' in report:
+                            print('DAYLIGHT_DESKTOP_READY: live user, Fluxbox and Conky are running.',flush=True)
+                            announced=True
                     time.sleep(1)
             except KeyboardInterrupt:
                 pass
