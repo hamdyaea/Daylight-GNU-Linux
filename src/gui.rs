@@ -428,7 +428,8 @@ fn settings() -> Result<()> {
         "Minimal profile",
         "Balanced profile",
         "Mountains wallpaper",
-        "Night wallpaper",
+        "Dark photographic wallpaper",
+        "Sunrise wallpaper",
         "Original wallpaper",
     ])? {
         let (key, value) = match choice.as_str() {
@@ -439,7 +440,8 @@ fn settings() -> Result<()> {
             "Minimal profile" => ("profile", "minimal"),
             "Balanced profile" => ("profile", "balanced"),
             "Mountains wallpaper" => ("wallpaper", "daylight-mountains.jpg"),
-            "Night wallpaper" => ("wallpaper", "daylight-night.jpg"),
+            "Dark photographic wallpaper" => ("wallpaper", "daylight-night.jpg"),
+            "Sunrise wallpaper" => ("wallpaper", "daylight-sunrise.jpg"),
             "Original wallpaper" => ("wallpaper", "daylight-original.png"),
             _ => return Ok(()),
         };

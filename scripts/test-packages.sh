@@ -19,7 +19,7 @@ printf '# existing shell config\n' > /home/daylight-test/.bashrc
 printf '# existing wallpaper setting\n' > /home/daylight-test/.fehbg
 chown daylight-test:daylight-test /home/daylight-test/.conkyrc /home/daylight-test/.bashrc /home/daylight-test/.fehbg
 sha256sum /home/daylight-test/.conkyrc /home/daylight-test/.bashrc /home/daylight-test/.fehbg > /tmp/daylight-user-before
-apt-get install -y --no-install-recommends "$root/dist/daylight-core_5.0.0~rc1_${arch}.deb" "$root/dist/daylight-themes_5.0.0~rc1_all.deb" "$root/dist/daylight-desktop_5.0.0~rc1_all.deb" "$root/dist/daylight-apps_5.0.0~rc1_all.deb" "$root/dist/daylight-games_5.0.0~rc1_all.deb" "$root/dist/daylight-telemetry_5.0.0~rc1_all.deb" "$root/dist/daylight-linux_5.0.0~rc1_all.deb"
+apt-get install -y --no-install-recommends "$root/dist/daylight-core_5.0.0~rc2_${arch}.deb" "$root/dist/daylight-themes_5.0.0~rc2_all.deb" "$root/dist/daylight-desktop_5.0.0~rc2_all.deb" "$root/dist/daylight-apps_5.0.0~rc2_all.deb" "$root/dist/daylight-games_5.0.0~rc2_all.deb" "$root/dist/daylight-telemetry_5.0.0~rc2_all.deb" "$root/dist/daylight-linux_5.0.0~rc2_all.deb"
 for entry in /usr/share/applications/daylight*.desktop /usr/share/xsessions/daylight*.desktop; do desktop-file-validate "$entry"; done
 if apt-cache show fastfetch >/dev/null 2>&1; then
   apt-get install -y --no-install-recommends fastfetch
@@ -87,7 +87,7 @@ pgrep -u daylight-existing -x fluxbox
 DISPLAY=:100 xprop -root _NET_DESKTOP_NAMES | grep '"Work"'
 kill "$existing" 2>/dev/null || :
 # Reinstall the same version to check non-destructive idempotency.
-dpkg -i "$root/dist/daylight-core_5.0.0~rc1_${arch}.deb"
+dpkg -i "$root/dist/daylight-core_5.0.0~rc2_${arch}.deb"
 /usr/bin/daylight remove --dry-run
 apt-get remove -y --no-auto-remove daylight-linux daylight-desktop daylight-apps daylight-games daylight-telemetry daylight-themes daylight-core
 sha256sum -c /tmp/daylight-os-before

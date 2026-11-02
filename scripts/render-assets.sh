@@ -6,8 +6,5 @@ set -eu
 root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$root"
 if command -v magick >/dev/null; then renderer=magick; else renderer=convert; fi
-for name in daylight-mountains daylight-night; do
- "$renderer" "assets/wallpapers/$name.svg" -quality 88 "assets/wallpapers/$name.jpg"
-done
-"$renderer" assets/wallpapers/daylight-night.jpg -fill '#080d15' -colorize 58 assets/wallpapers/daylight-terminal.jpg
+python3 scripts/render-photography.py
 "$renderer" -background none assets/branding/daylight.svg assets/branding/daylight.png

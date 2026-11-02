@@ -56,9 +56,7 @@ pub fn valid(key: &str, value: &str) -> bool {
             "daylight-mountains.jpg"
                 | "daylight-night.jpg"
                 | "daylight-original.png"
-                | "daylight-alpine.jpg"
-                | "daylight-coast.jpg"
-                | "daylight-forest.jpg"
+                | "daylight-sunrise.jpg"
         ),
         _ => false,
     }

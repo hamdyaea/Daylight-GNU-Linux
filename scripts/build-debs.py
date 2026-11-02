@@ -15,7 +15,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc1"
+VERSION = "5.0.0~rc2"
 MAINTAINER = "Hamdy Abou El Anein <contact@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: contact@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -60,6 +60,9 @@ def main():
                     shutil.copyfile(license_file, doc / license_file.name)
                 (doc / "copyright").write_text((doc / "copyright").read_text()+"\nFiles: usr/bin/daylight\nCopyright: 2026 Hamdy Abou El Anein; the Rust project contributors; musl contributors\nLicense: GPL-3.0-only and MIT and Apache-2.0\n The statically linked Rust standard library and musl retain their notices.\n See bundled third-party license files and THIRD_PARTY.md.\n")
                 if (ROOT / "docs/THIRD_PARTY.md").exists(): shutil.copyfile(ROOT / "docs/THIRD_PARTY.md", doc / "THIRD_PARTY.md")
+            if package == "daylight-themes":
+                with (doc / "copyright").open("a") as notice:
+                    notice.write("\nFiles: usr/share/backgrounds/daylight/daylight-mountains.jpg usr/share/backgrounds/daylight/daylight-sunrise.jpg usr/share/backgrounds/daylight/daylight-night.jpg usr/share/backgrounds/daylight/daylight-terminal.jpg\nCopyright: Ali Sabbagh; Alice Donovan Rouse\nLicense: CC0-1.0\n Photographs are public-domain dedications; see CREDITS.txt for original sources and checksums.\n https://creativecommons.org/publicdomain/zero/1.0/\n")
             size = sum(p.stat().st_size for p in base.rglob("*") if p.is_file()) // 1024 + 1
             control = f"Package: {package}\nVersion: {VERSION}\nArchitecture: {architecture}\nMaintainer: {MAINTAINER}\nSection: {'x11' if package == 'daylight-desktop' else 'utils'}\nPriority: optional\nInstalled-Size: {size}\nHomepage: https://daylightlinux.ch\n"
             if depends: control += f"Depends: {depends}\n"
@@ -89,7 +92,8 @@ def main():
             if p.suffix in (".jpg", ".png"): copy(themes,p,"usr/share/backgrounds/daylight/"+p.name)
         copy(themes,"assets/branding/daylight.svg","usr/share/icons/hicolor/scalable/apps/daylight.svg")
         copy(themes,"assets/branding/daylight.png","usr/share/icons/hicolor/512x512/apps/daylight.png")
-        finish("daylight-themes","all","mountain and sunrise identity, backgrounds and icons")
+        copy(themes,"assets/wallpapers/CREDITS.txt","usr/share/doc/daylight-themes/CREDITS.txt")
+        finish("daylight-themes","all","photographic mountain and sunrise identity, backgrounds and icons")
         desktop = work / "daylight-desktop"
         for name in ("daylight-session","daylight-terminal"): copy(desktop,"scripts/"+name,"usr/bin/"+name,0o755)
         copy(desktop,"scripts/interactive-shell","usr/lib/daylight/interactive-shell",0o755)

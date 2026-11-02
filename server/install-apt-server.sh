@@ -29,7 +29,6 @@ for tool in gpg gpgv dpkg-scanpackages python3 runuser systemctl; do command -v 
 [ -d /var/www/daylightlinux ] || { echo 'Expected existing Daylight Apache document root is missing.' >&2; exit 1; }
 [ ! -L /var/www/daylightlinux/apt ] || { echo 'Refusing an unexpected APT-root symlink.' >&2; exit 1; }
 [ -s "$packages/PACKAGE-SHA256SUMS" ] || { echo 'Verified package checksum manifest is required.' >&2; exit 1; }
-(cd "$packages" && sha256sum -c PACKAGE-SHA256SUMS)
 # Validate manifest paths before copying anything to a privileged location.
 python3 - "$packages" <<'PY'
 import pathlib,re,sys
@@ -41,6 +40,7 @@ for line in lines:
  if not re.fullmatch('[a-f0-9]{64}',digest) or not re.fullmatch(r'daylight-[a-z-]+_[A-Za-z0-9.~+-]+_(?:all|amd64|arm64)\.deb',name): raise SystemExit('Invalid manifest path')
  if (base/name).is_symlink(): raise SystemExit('Symlink package input rejected')
 PY
+(cd "$packages" && sha256sum -c PACKAGE-SHA256SUMS)
 fingerprint=$(gpg --homedir "$keyhome" --batch --with-colons --list-secret-keys 2>/dev/null | awk -F: '$1=="fpr"{print $10;exit}')
 [ "$fingerprint" = B0575F821A31DD20753DE07C50D21240F4BCB02E ] || { echo 'Unexpected archive signing key.' >&2; exit 1; }
 state=/var/lib/daylight-archive
