@@ -1,0 +1,43 @@
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Verify deployed graphical browser preview
+on:
+  push:
+    branches: [master]
+    paths: [.github/workflows/daylight-public-preview.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: daylight-public-preview
+  cancel-in-progress: false
+jobs:
+  public-graphical-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify public HTTPS access, exact deployed interface and signed APT indexes
+        run: python3 web-live/test-public-access.py
+      - name: Prepare disposable browser tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/daylight-preview" --ignore-scripts --no-audit --no-fund playwright@1.55.0
+          echo "DAYLIGHT_PLAYWRIGHT=$RUNNER_TEMP/daylight-preview/node_modules/playwright" >> "$GITHUB_ENV"
+          echo "DAYLIGHT_BROWSER=$(command -v google-chrome || command -v chromium)" >> "$GITHUB_ENV"
+      - name: Boot the real graphical guest and verify keyboard, windows and lifecycle
+        env:
+          DAYLIGHT_DEMO_URL: https://daylightlinux.ch/live/
+        run: node web-live/test-browser.cjs
+      - name: Retain graphical and access evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: daylight-browser-preview-${{ github.run_number }}
+          path: dist/web-live-validation/
+          retention-days: 14
+          if-no-files-found: warn
