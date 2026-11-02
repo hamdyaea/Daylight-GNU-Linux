@@ -12,6 +12,12 @@ class Startup(unittest.TestCase):
     def test_shell_syntax(self):
         for name in ('init', 'daylight-terminal', 'daylight-shell'):
             subprocess.run(['sh', '-n', str(ROOT/'web-live'/name)], check=True)
+    def test_conky_overlay_starts_before_terminal(self):
+        init=(ROOT/'web-live/init').read_text()
+        self.assertLess(init.index('conky -c /root/.conkyrc'),init.index('/usr/local/bin/daylight-terminal >'))
+        config=(ROOT/'web-live/conky.conf').read_text()
+        self.assertIn("alignment = 'top_right'",config)
+        self.assertIn('own_window_transparent = true',config)
     def test_terminal_is_the_only_startup_app(self):
         text=(ROOT/'web-live/init').read_text()
         self.assertEqual(text.count('/usr/local/bin/daylight-terminal >'), 1)

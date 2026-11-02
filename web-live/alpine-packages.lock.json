@@ -90,6 +90,24 @@
     "U": "https://www.mozilla.org/en-US/about/governance/policies/security-group/certs/"
   },
   {
+    "P": "cairo",
+    "V": "1.18.4-r0",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later OR MPL-1.1",
+    "o": "cairo",
+    "c": "7fe77742880d49da1db854abd16e78073d538983",
+    "U": "https://cairographics.org/"
+  },
+  {
+    "P": "conky",
+    "V": "1.22.1-r0",
+    "A": "x86",
+    "L": "GPL-3.0-or-later",
+    "o": "conky",
+    "c": "4d2925d3fb1222f412f6f643ea3f46454e52157b",
+    "U": "https://github.com/brndnmtthws/conky"
+  },
+  {
     "P": "cryptsetup-libs",
     "V": "2.7.5-r1",
     "A": "x86",
@@ -198,6 +216,15 @@
     "U": "https://www.freetype.org/"
   },
   {
+    "P": "fribidi",
+    "V": "1.0.16-r1",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "fribidi",
+    "c": "be0833caee3020f089f02c5d7223e971a9a11ffb",
+    "U": "https://github.com/fribidi/fribidi"
+  },
+  {
     "P": "giflib",
     "V": "5.2.2-r2",
     "A": "x86",
@@ -207,6 +234,15 @@
     "U": "https://sourceforge.net/projects/giflib/"
   },
   {
+    "P": "glib",
+    "V": "2.84.4-r0",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "glib",
+    "c": "9a0d606dfb2af556b9b96a9e8bb511b2bd0ddbed",
+    "U": "https://developer.gnome.org/glib/"
+  },
+  {
     "P": "gmp",
     "V": "6.3.0-r3",
     "A": "x86",
@@ -214,6 +250,24 @@
     "o": "gmp",
     "c": "187e3f7791d3390e18bc06969a5f34c385fd883e",
     "U": "https://gmplib.org/"
+  },
+  {
+    "P": "graphite2",
+    "V": "1.3.14-r6",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later OR MPL-1.1",
+    "o": "graphite2",
+    "c": "33283848034c9885d984c8e8697c645c57324938",
+    "U": "https://graphite.sil.org/"
+  },
+  {
+    "P": "harfbuzz",
+    "V": "11.2.1-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "harfbuzz",
+    "c": "c9247a23f6a64eefde9d75b2e6a7c7c7454d8c83",
+    "U": "https://harfbuzz.github.io/"
   },
   {
     "P": "hwdata-pci",
@@ -432,6 +486,15 @@
     "U": "https://www.gnu.org/software/libidn#libidn2"
   },
   {
+    "P": "libintl",
+    "V": "0.24.1-r0",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "gettext",
+    "c": "215a26431d1b09c56cb2a9ffe10175feb9518fd8",
+    "U": "https://www.gnu.org/software/gettext/gettext.html"
+  },
+  {
     "P": "libjpeg-turbo",
     "V": "3.1.0-r0",
     "A": "x86",
@@ -457,6 +520,15 @@
     "o": "libmd",
     "c": "73e716067b9edc32c4cc7818cb7d206e57fdde15",
     "U": "https://www.hadrons.org/software/libmd/"
+  },
+  {
+    "P": "libmount",
+    "V": "2.41.6-r1",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "util-linux",
+    "c": "b91fb14e28957c6f5a13c02eb9ec136c82ebd50e",
+    "U": "https://git.kernel.org/cgit/utils/util-linux/util-linux.git"
   },
   {
     "P": "libncursesw",
@@ -612,6 +684,15 @@
     "U": "https://gitlab.freedesktop.org/xorg/lib/libxcvt"
   },
   {
+    "P": "libxdamage",
+    "V": "1.1.6-r5",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxdamage",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
     "P": "libxdmcp",
     "V": "1.1.5-r1",
     "A": "x86",
@@ -626,6 +707,15 @@
     "A": "x86",
     "L": "MIT",
     "o": "libxext",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxfixes",
+    "V": "6.0.1-r4",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxfixes",
     "c": "614e9166706cec427fc3d907b8d981390a42e088",
     "U": "https://xorg.freedesktop.org/"
   },
@@ -774,6 +864,15 @@
     "U": "https://llvm.org/"
   },
   {
+    "P": "lua5.4-libs",
+    "V": "5.4.7-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "lua5.4",
+    "c": "0b3df5ad9304b104a069304318efe438cdc21fb4",
+    "U": "https://www.lua.org/"
+  },
+  {
     "P": "mdev-conf",
     "V": "4.8-r0",
     "A": "x86",
@@ -891,6 +990,24 @@
     "U": "https://nghttp2.org"
   },
   {
+    "P": "pango",
+    "V": "1.56.3-r0",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "pango",
+    "c": "7072d5b4762ad6280669406526c5f391e444800e",
+    "U": "https://www.pango.org/"
+  },
+  {
+    "P": "pcre2",
+    "V": "10.46-r1",
+    "A": "x86",
+    "L": "BSD-3-Clause",
+    "o": "pcre2",
+    "c": "f5ca111ded52f3c1f4298b09e118af54fba80aa1",
+    "U": "https://pcre.org/"
+  },
+  {
     "P": "pixman",
     "V": "0.46.4-r0",
     "A": "x86",
@@ -970,6 +1087,15 @@
     "o": "wayland",
     "c": "4abf33c74f2d6576e60fa01507040e9137709fc1",
     "U": "https://wayland.freedesktop.org"
+  },
+  {
+    "P": "wireless-tools-libs",
+    "V": "30_pre9-r5",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "wireless-tools",
+    "c": "999fda402ae45258bb76de73c05946c52eae3067",
+    "U": "https://hewlettpackard.github.io/wireless-tools/Tools.html"
   },
   {
     "P": "xcalc",

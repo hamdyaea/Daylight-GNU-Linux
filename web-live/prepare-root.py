@@ -67,6 +67,7 @@ def main():
  style=base/'usr/share/daylight/fluxbox.style';style.parent.mkdir(parents=True,exist_ok=True)
  shutil.copyfile(ROOT/'web-live/daylight.style',style)
 
+ write('root/.conkyrc',(ROOT/'web-live/conky.conf').read_text())
  write('root/.daylight-shellrc',HEADER+"PS1='daylight:\\w$ '\n")
  for name in ('daylight-terminal','daylight-shell'):
   write('usr/local/bin/'+name,(ROOT/'web-live'/name).read_text(),0o755)

@@ -96,7 +96,9 @@ if [ "$ready" = yes ]; then
   sleep 1
  done
  feh --no-fehbg --bg-scale /usr/share/daylight/wallpaper.jpg >/dev/null 2>&1
- # The terminal is the only startup application. Calculator/About are opt-in.
+ # Conky is a passive desktop overlay, not a foreground application.
+ conky -c /root/.conkyrc >/tmp/daylight-conky.log 2>&1 &
+ # The terminal is the only foreground startup application. Calculator/About are opt-in.
  /usr/local/bin/daylight-terminal >/tmp/daylight-terminal.log 2>&1 &
  terminal_pid=$!
  terminal_ready=no
