@@ -32,13 +32,13 @@ jobs:
           cargo +1.88.0 fmt
           python3 -m py_compile release/prepare-rc2.py scripts/*.py server/*.py website/*.py demo/*.py tests/*.py
           for file in scripts/*.sh server/*.sh demo/*.sh; do sh -n "$file"; done
-      - name: Commit the migrated sources before validation
+      - name: Commit the migrated sources before explicit validation
         run: |
           git config user.name 'Hamdy Abou El Anein'
           git config user.email 'contact@daylightlinux.ch'
-          git add Cargo.toml Cargo.lock src scripts tests packaging server .github/workflows
+          git add Cargo.toml Cargo.lock src scripts tests packaging server
           if ! git diff --cached --quiet; then
-            git commit -m 'Complete RC2 source integration and extend exact-source validation gates'
+            git commit -m 'Complete RC2 source integration; validate via explicit workflow dispatch [skip ci]'
             gh auth setup-git
             git push origin HEAD:build/daylight-v5-rc2
           fi

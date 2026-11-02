@@ -4,8 +4,8 @@
 name: Daylight candidate validation
 on:
   push:
-    branches: [master, build/daylight-v5]
-    paths-ignore: ['docs/**', '*.md', 'release/**']
+    branches: [master, build/daylight-v5, build/daylight-v5-rc2]
+    paths-ignore: ['docs/**', '*.md', 'release/**', '.github/workflows/daylight-release.yml', '.github/workflows/daylight-prepare-rc2.yml']
   pull_request:
   workflow_dispatch:
 permissions:
@@ -22,10 +22,10 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Build prerequisites
+      - name: Build prerequisites in the disposable runner
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends dpkg-dev imagemagick librsvg2-bin fonts-dejavu-core python3 curl gnupg
+          sudo apt-get install -y --no-install-recommends dpkg-dev imagemagick librsvg2-bin fonts-dejavu-core python3 python3-pil python3-venv curl gnupg qemu-system-x86 xorriso ovmf novnc websockify
           rustup toolchain install 1.88.0 --profile minimal --component rustfmt --component clippy
       - name: Source checks and Rust unit tests
         shell: bash
@@ -35,8 +35,9 @@ jobs:
           cargo +1.88.0 fmt --check
           cargo +1.88.0 clippy --locked --all-targets -- -D warnings
           cargo +1.88.0 test --locked 2>&1 | tee dist/validation/rust-tests.log
-          python3 -m py_compile scripts/*.py tests/*.py telemetry/*.py
-      - name: Build ARM64 and AMD64 packages
+          python3 -m py_compile scripts/*.py tests/*.py telemetry/*.py server/*.py demo/*.py website/*.py
+          for file in scripts/*.sh server/*.sh demo/*.sh; do sh -n "$file"; done
+      - name: Build and test the exact AMD64 and ARM64 candidate packages
         shell: bash
         run: |
           set -euo pipefail
@@ -45,6 +46,7 @@ jobs:
           python3 tests/test_integration.py 2>&1 | tee dist/validation/cli-tests.log
           python3 tests/test_collector.py 2>&1 | tee dist/validation/collector-tests.log
           python3 tests/test_repository.py 2>&1 | tee dist/validation/repository-tests.log
+          python3 tests/test_release_tools.py 2>&1 | tee dist/validation/release-tools-tests.log
           git rev-parse HEAD > dist/validation/source-commit.txt
       - name: Debian 12 and 13 installation and removal
         shell: bash
@@ -57,40 +59,46 @@ jobs:
               -v "$PWD/dist/package-tests/$suite:/out" "debian:$suite" \
               /bin/sh /src/scripts/test-packages.sh 2>&1 | tee "dist/package-tests/$suite/lifecycle.log"
           done
-      - name: Build live ISO only in the disposable runner
+      - name: Build the live ISO only in the disposable runner
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
           docker run --rm --privileged --cpus=2 --memory=5g -v "$PWD:/src" -w /src debian:trixie /bin/sh -ec '
-            # This is a newly created disposable container, never a production host.
-            printf "Acquire::Retries \"3\";\nAcquire::http::No-Cache \"true\";\nAcquire::http::Pipeline-Depth \"0\";\n" > /etc/apt/apt.conf.d/80-daylight-build-retries
-            attempt=1
-            until apt-get update -qq; do
-              if [ "$attempt" -ge 3 ]; then exit 1; fi
-              attempt=$((attempt + 1))
-              find /var/lib/apt/lists -type f -delete
-              sleep 5
-            done
+            apt-get update -qq
             apt-get install -y --no-install-recommends live-build debootstrap squashfs-tools xorriso isolinux syslinux-common grub-pc-bin grub-efi-amd64-bin mtools dosfstools ca-certificates
             /bin/sh scripts/build-live.sh' 2>&1 | tee dist/validation/live-build.log
+          sudo chown -R "$(id -u):$(id -g)" dist
       - name: Offline live-filesystem boot and screenshot
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
-          sudo apt-get install -y --no-install-recommends qemu-system-x86 xorriso
-          sudo chown -R "$(id -u):$(id -g)" dist
-          python3 scripts/test-live.py dist/daylight-live_5.0.0-rc.1_amd64.iso --timeout 600
+          python3 scripts/test-live.py dist/daylight-live_5.0.0-rc.2_amd64.iso --timeout 600
           convert dist/live-test/desktop.ppm dist/live-test/desktop.png
-          cd dist
-          sha256sum ./*.deb ./*.iso > SHA256SUMS
-      - name: Make disposable-container test evidence readable
-        if: always()
+      - name: Real BIOS and UEFI ISO bootloader tests
+        if: github.event_name != 'pull_request'
+        shell: bash
         run: |
-          if test -d dist; then
-            sudo chown -R "$(id -u):$(id -g)" dist
-          fi
+          set -euo pipefail
+          for firmware in bios uefi; do
+            python3 scripts/test-boot.py dist/daylight-live_5.0.0-rc.2_amd64.iso --firmware "$firmware" --timeout 600
+            convert "dist/boot-$firmware/desktop.ppm" "dist/boot-$firmware/desktop.png"
+          done
+      - name: Real browser connection to the candidate live guest
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv dist/browser-venv
+          dist/browser-venv/bin/pip install playwright==1.55.0
+          dist/browser-venv/bin/python tests/test_browser_demo.py
+      - name: Final candidate integrity manifest
+        if: github.event_name != 'pull_request'
+        run: cd dist && sha256sum ./*.deb ./*.iso > SHA256SUMS
+      - name: Make disposable-container evidence readable
+        if: always()
+        run: sudo chown -R "$(id -u):$(id -g)" dist && chmod -R u+rwX dist
       - name: Retain validation evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -100,10 +108,12 @@ jobs:
             dist/validation/
             dist/package-tests/
             dist/live-test/
+            dist/boot-bios/
+            dist/boot-uefi/
+            dist/browser-demo/
           retention-days: 14
-          compression-level: 6
           if-no-files-found: warn
-      - name: Retain release candidate packages and image
+      - name: Retain candidate packages and image
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
@@ -112,6 +122,6 @@ jobs:
             dist/*.deb
             dist/*.iso
             dist/SHA256SUMS
-          retention-days: 14
+          retention-days: 2
           compression-level: 0
           if-no-files-found: warn

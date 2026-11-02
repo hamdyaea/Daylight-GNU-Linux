@@ -3,15 +3,13 @@
 # SPDX-License-Identifier: GPL-3.0-only
 name: Publish verified Daylight candidate
 on:
+  push:
+    branches: [build/daylight-v5-rc2]
+    paths: [release/READY.json]
   workflow_dispatch:
-    inputs:
-      validation_run:
-        description: Successful complete validation run for this candidate
-        required: true
-        type: string
 permissions:
   contents: write
-  actions: read
+  actions: write
 concurrency:
   group: daylight-publication
   cancel-in-progress: false
@@ -22,96 +20,12 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
-      REQUESTED_RUN: ${{ inputs.validation_run }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
+          fetch-depth: 0
           persist-credentials: false
-      - name: Verify the complete validation and available release name
-        id: verified
-        run: |
-          python3 - <<'PY'
-          import json, os, re, subprocess
-          run_id=os.environ['REQUESTED_RUN']
-          if not re.fullmatch('[1-9][0-9]*',run_id):
-              raise SystemExit('Invalid validation run')
-          prefix='repos/'+os.environ['GITHUB_REPOSITORY']
-          run=json.loads(subprocess.check_output(['gh','api',prefix+'/actions/runs/'+run_id]))
-          required=run['status']=='completed' and run['conclusion']=='success'
-          required &= run['path']=='.github/workflows/daylight-build.yml'
-          required &= run['head_branch'] in ('master','build/daylight-v5')
-          required &= run['head_repository']['full_name'].lower()==os.environ['GITHUB_REPOSITORY'].lower()
-          if not required:
-              raise SystemExit('The selected run did not pass complete project validation')
-          tag='v5.0.0-rc.1'
-          # This version-specific publisher deliberately refuses to overwrite an existing release.
-          if subprocess.run(['gh','release','view',tag],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode==0:
-              raise SystemExit('Release already exists; leave its validated assets unchanged')
-          with open(os.environ['GITHUB_OUTPUT'],'a') as output:
-              output.write(f'run_id={run_id}\nsha={run["head_sha"]}\nnumber={run["run_number"]}\ntag={tag}\n')
-          open('verified-run.json','w').write(json.dumps({'run_id':int(run_id),'commit':run['head_sha'],'tag':tag},indent=2)+'\n')
-          PY
-      - name: Retrieve tested artifacts without rebuilding
-        env:
-          RUN_ID: ${{ steps.verified.outputs.run_id }}
-          RUN_NUMBER: ${{ steps.verified.outputs.number }}
-        run: |
-          gh run download "$RUN_ID" --name "daylight-candidate-$RUN_NUMBER" --dir release-files
-          gh run download "$RUN_ID" --name "daylight-validation-$RUN_NUMBER" --dir validation
-          cd release-files
-          sha256sum -c SHA256SUMS
-          test -s daylight-live_5.0.0-rc.1_amd64.iso
-      - name: Record exact installed package provenance
-        env:
-          SOURCE_SHA: ${{ steps.verified.outputs.sha }}
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends xorriso squashfs-tools
-          python3 release/package-manifest.py release-files/daylight-live_5.0.0-rc.1_amd64.iso --commit "$SOURCE_SHA" --output validation
-      - name: Check evidence and prepare GitHub-compatible asset names
-        env:
-          SOURCE_SHA: ${{ steps.verified.outputs.sha }}
-        run: |
-          python3 - <<'PY'
-          import os,pathlib,shutil
-          root=pathlib.Path('validation')
-          for suite in ('bookworm','trixie'):
-              if 'DAYLIGHT_PACKAGE_LIFECYCLE_OK' not in (root/'package-tests'/suite/'lifecycle.log').read_text():
-                  raise SystemExit('Missing package lifecycle evidence for '+suite)
-          if not (root/'live-test/result.txt').read_text().startswith('PASS:'):
-              raise SystemExit('Missing live boot evidence')
-          if (root/'validation/source-commit.txt').read_text().strip()!=os.environ['SOURCE_SHA']:
-              raise SystemExit('Evidence source commit mismatch')
-          shutil.copyfile('verified-run.json',root/'verified-run.json')
-          shutil.make_archive('release-files/daylight-validation','zip',root)
-          for source,dest in [('package-tests/bookworm/daylight-desktop.png','daylight-desktop-debian12.png'),('package-tests/trixie/daylight-desktop.png','daylight-desktop-debian13.png'),('live-test/desktop.png','daylight-live-desktop.png')]:
-              shutil.copyfile(root/source,pathlib.Path('release-files')/dest)
-          for source in pathlib.Path('release-files').glob('*.deb'):
-              destination=source.with_name(source.name.replace('~','.'))
-              if source!=destination:
-                  if destination.exists(): raise SystemExit('Normalized filename collision')
-                  source.rename(destination)
-          PY
-          cd release-files
-          sha256sum *.deb *.iso *.png daylight-validation.zip > SHA256SUMS
-      - name: Upload a draft, verify payloads, then publish
-        env:
-          TAG: ${{ steps.verified.outputs.tag }}
-          SOURCE_SHA: ${{ steps.verified.outputs.sha }}
-        run: |
-          gh release create "$TAG" release-files/*.deb release-files/*.iso release-files/*.png release-files/daylight-validation.zip release-files/SHA256SUMS \
-            --target "$SOURCE_SHA" --draft --prerelease --title 'Daylight GNU/Linux 5.0.0-rc.1' --notes-file docs/RELEASE.md
-          python3 - <<'PY'
-          import hashlib,json,os,pathlib,subprocess
-          release=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GH_REPO']+'/releases/tags/'+os.environ['TAG']]))
-          actual={a['name']:a for a in release['assets']}
-          paths={p.name:p for p in pathlib.Path('release-files').iterdir() if p.is_file()}
-          if set(actual)!=set(paths): raise SystemExit('Draft retained: asset set mismatch')
-          for name,path in paths.items():
-              h=hashlib.sha256()
-              with path.open('rb') as stream:
-                  for block in iter(lambda:stream.read(4*1024*1024),b''): h.update(block)
-              if actual[name]['size']!=path.stat().st_size or actual[name]['digest']!='sha256:'+h.hexdigest():
-                  raise SystemExit('Draft retained: payload verification failed for '+name)
-          PY
-          gh release edit "$TAG" --draft=false
+      - name: Publication inspection prerequisites
+        run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends xorriso squashfs-tools
+      - name: Publish only exact validated artifacts and verified uploaded bytes
+        run: python3 release/publish.py
