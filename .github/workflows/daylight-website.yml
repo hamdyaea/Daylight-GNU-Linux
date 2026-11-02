@@ -1,0 +1,52 @@
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Daylight website validation
+on:
+  push:
+    branches: [master]
+    paths: ['website/**', 'tests/test_website*', '.github/ISSUE_TEMPLATE/**', '.github/workflows/daylight-website.yml']
+  pull_request:
+    paths: ['website/**', 'tests/test_website*', '.github/ISSUE_TEMPLATE/**', '.github/workflows/daylight-website.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: daylight-website-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  website:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Build static assets in the disposable runner
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends python3-pil imagemagick librsvg2-bin fonts-dejavu-core
+          sh scripts/render-assets.sh
+          python3 website/build.py --output dist/site
+      - name: Verify content, complete navigation, metadata and local links
+        run: python3 tests/test_website.py --site dist/site
+      - name: Verify mobile, desktop and no-JavaScript navigation
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/daylight-web" --ignore-scripts --no-audit --no-fund playwright@1.55.0
+          export DAYLIGHT_PLAYWRIGHT="$RUNNER_TEMP/daylight-web/node_modules/playwright"
+          export DAYLIGHT_BROWSER="$(command -v google-chrome || command -v chromium)"
+          python3 -m http.server 34402 --bind 127.0.0.1 --directory dist/site > /tmp/daylight-web-preview.log 2>&1 &
+          preview=$!
+          trap 'kill "$preview" 2>/dev/null || true' EXIT
+          sleep 1
+          node tests/test_website_browser.cjs
+      - name: Retain website validation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: daylight-website-${{ github.run_number }}
+          path: dist/site-pi-qa/
+          retention-days: 7
+          if-no-files-found: warn
