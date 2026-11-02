@@ -1,0 +1,11 @@
+{
+  "name": "Daylight AMD64 live browser demo",
+  "build": {"dockerfile": "../../demo/Dockerfile", "context": "../.."},
+  "remoteUser": "demo",
+  "overrideCommand": true,
+  "forwardPorts": [6080],
+  "portsAttributes": {"6080": {"label": "Daylight live desktop (private)", "onAutoForward": "openBrowser", "protocol": "http"}},
+  "hostRequirements": {"cpus": 2, "memory": "4gb", "storage": "8gb"},
+  "postStartCommand": "bash demo/start-codespace.sh",
+  "shutdownAction": "stopContainer"
+}

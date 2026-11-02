@@ -2,15 +2,15 @@
 # Contact: contact@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 [Unit]
-Description=Daylight live CI check (explicit kernel flag only)
-After=lightdm.service
-ConditionKernelCommandLine=daylight.smoke=1
+Description=Daylight live validation (explicit test flag or dedicated virtual test channel only)
+After=lightdm.service systemd-udev-trigger.service
+ConditionKernelCommandLine=|daylight.smoke=1
+ConditionPathExists=|/dev/virtio-ports/org.daylightlinux.test
 [Service]
 Type=oneshot
 ExecStart=/bin/sh /usr/lib/daylight/live-smoke.sh
-StandardInput=null
 StandardOutput=journal+console
 StandardError=journal+console
-TimeoutStartSec=260
+TimeoutStartSec=230
 [Install]
 WantedBy=multi-user.target

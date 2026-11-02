@@ -1,0 +1,47 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Prepare and validate Daylight RC2
+on:
+  push:
+    branches: [build/daylight-v5-rc2]
+    paths: [release/APPLY-RC2.json]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: daylight-rc2-source-preparation
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Apply the reviewed source migration
+        run: |
+          python3 release/prepare-rc2.py
+          rustup toolchain install 1.88.0 --profile minimal --component rustfmt
+          cargo +1.88.0 fmt
+          python3 -m py_compile release/prepare-rc2.py scripts/*.py server/*.py website/*.py demo/*.py tests/*.py
+          for file in scripts/*.sh server/*.sh demo/*.sh; do sh -n "$file"; done
+      - name: Commit the migrated sources before validation
+        run: |
+          git config user.name 'Hamdy Abou El Anein'
+          git config user.email 'contact@daylightlinux.ch'
+          git add Cargo.toml Cargo.lock src scripts tests packaging server .github/workflows
+          if ! git diff --cached --quiet; then
+            git commit -m 'Complete RC2 source integration and extend exact-source validation gates'
+            gh auth setup-git
+            git push origin HEAD:build/daylight-v5-rc2
+          fi
+          git rev-parse HEAD
+      - name: Validate that exact committed revision
+        run: gh workflow run daylight-build.yml --ref build/daylight-v5-rc2

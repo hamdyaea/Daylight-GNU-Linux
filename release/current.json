@@ -1,0 +1,10 @@
+{
+  "version": "5.0.0-rc.1",
+  "tag": "v5.0.0-rc.1",
+  "commit": "85715705501b18138712173327b7df1fb63ef889",
+  "iso": "daylight-live_5.0.0-rc.1_amd64.iso",
+  "iso_sha256": "22c7929194de36d009b653047b002fff4708540fd197439b0f6f529a7608d108",
+  "iso_bytes": 1265106944,
+  "validation_run": 41357700732,
+  "prerelease": true
+}
