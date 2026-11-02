@@ -89,16 +89,32 @@ done
 if [ "$ready" = yes ]; then
  xset s off -dpms >/dev/null 2>&1 || true
  fluxbox -rc /root/.fluxbox/init >/tmp/fluxbox.log 2>&1 &
- sleep 2
+ # Wait for the real window manager, not a fixed startup delay.
+ wm_ready=no
+ for n in $(seq 1 30); do
+  if xprop -root _NET_SUPPORTING_WM_CHECK 2>/dev/null | grep -Eq '0x[1-9a-fA-F][0-9a-fA-F]*'; then wm_ready=yes;break;fi
+  sleep 1
+ done
  feh --no-fehbg --bg-scale /usr/share/daylight/wallpaper.jpg >/dev/null 2>&1
- xterm -title 'Daylight Web - Alpine preview' -geometry 62x16+35+65 -bg '#10191f' -fg '#f5eddb' -fa 'DejaVu Sans Mono' -fs 11 -e /usr/local/bin/daylight-shell >/tmp/daylight-terminal.log 2>&1 &
+ # The terminal is the only startup application. Calculator/About are opt-in.
+ /usr/local/bin/daylight-terminal >/tmp/daylight-terminal.log 2>&1 &
  terminal_pid=$!
- xcalc -title 'Daylight Calculator' -geometry 250x310+710+85 >/tmp/daylight-calculator.log 2>&1 &
- sleep 2
- if kill -0 "$terminal_pid" 2>/dev/null; then
-  printf '\nDAYLIGHT_WEB_TERMINAL_STARTING\n' >/dev/ttyS0
+ terminal_ready=no
+ for n in $(seq 1 40); do
+  kill -0 "$terminal_pid" 2>/dev/null || break
+  window=$(xdotool search --all --onlyvisible --pid "$terminal_pid" --name '^Daylight Start$' 2>/dev/null | head -n 1)
+  if [ "$wm_ready" = yes ] && [ -n "$window" ] && [ -f /run/daylight-shell-ready ]; then
+   xdotool windowraise "$window" >/dev/null 2>&1 || true
+   timeout 5 xdotool windowactivate --sync "$window" >/dev/null 2>&1 || true
+   active=$(xdotool getactivewindow 2>/dev/null)
+   if [ "$active" = "$window" ]; then terminal_ready=yes;break;fi
+  fi
+  sleep 1
+ done
+ if [ "$terminal_ready" = yes ]; then
+  printf '\nDAYLIGHT_WEB_DESKTOP_READY\n' >/dev/ttyS0
  else
-  cat /tmp/daylight-terminal.log >/dev/ttyS0
+  cat /tmp/daylight-terminal.log /tmp/fluxbox.log >/dev/ttyS0
   printf '\nDAYLIGHT_WEB_GRAPHICS_FAILED\n' >/dev/ttyS0
  fi
 else

@@ -6,7 +6,7 @@ let emulator=null, generation=0, controller=null, state='idle', deadline=null, l
 let lang=new URLSearchParams(location.search).get('lang')==='en'?'en':'fr';
 const $=id=>document.getElementById(id);
 const text=(fr,en)=>lang==='fr'?fr:en;
-const english={title:'A real Linux desktop.<br>Inside your browser.',intro:'A lightweight, temporary preview of the Daylight spirit. Computing happens on your device, not on our Raspberry Pi.','scope-title':'A preview, not the complete distribution.',scope:'This experimental edition uses Alpine Linux x86 and Fluxbox. Daylight for Raspberry Pi remains based on Debian / Raspberry Pi OS ARM64. This preview does not include all of its Rust tools.',instructions:'Click inside the desktop to use the keyboard. Move windows by their title bar. Right-click the wallpaper or use Linux menu for Fluxbox. Try the real graphical calculator, or use uname, free, top, ls and vi in the terminal.','privacy-title':'Your session stays local',privacy:'No account, no disk shared with our server, no external guest-network relay and no telemetry. Demo files download over HTTPS; the host sees that connection like any webpage request.','temporary-title':'Nothing to install',temporary:'Changes are temporary: closing, stopping or restarting discards the session. Do not enter passwords or sensitive data. The demo pauses when its tab is hidden and stops after 20 minutes.','requirements-title':'A bounded preview',requirements:'The Linux guest receives 256 MiB of RAM; the browser also needs its own memory. Startup depends on your device and connection. No public container runs on our Pi.','technical-title':'Technical details and licenses',technical:'Linux is actually emulated in WebAssembly using v86. This is not an interactive screenshot. The guest has no external network relay. Free-software components retain their own licenses.',cta:'Ready to use Daylight on your Raspberry Pi?','placeholder-text':'Your session starts here.'};
+const english={title:'A real Linux desktop.<br>Inside your browser.',intro:'A lightweight, temporary preview of the Daylight spirit. Computing happens on your device, not on our Raspberry Pi.','scope-title':'A preview, not the complete distribution.',scope:'This experimental edition uses Alpine Linux x86 and Fluxbox. Daylight for Raspberry Pi remains based on Debian / Raspberry Pi OS ARM64. This preview does not include all of its Rust tools.',instructions:'Daylight Start opens your terminal automatically. Calculator opens only when selected. Click inside the terminal to use the keyboard. Move windows by their title bar. Right-click the wallpaper or use Linux menu for Fluxbox. Try the real graphical calculator, or use uname, free, top, ls and vi in the terminal.','privacy-title':'Your session stays local',privacy:'No account, no disk shared with our server, no external guest-network relay and no telemetry. Demo files download over HTTPS; the host sees that connection like any webpage request.','temporary-title':'Nothing to install',temporary:'Changes are temporary: closing, stopping or restarting discards the session. Do not enter passwords or sensitive data. The demo pauses when its tab is hidden and stops after 20 minutes.','requirements-title':'A bounded preview',requirements:'The Linux guest receives 256 MiB of RAM; the browser also needs its own memory. Startup depends on your device and connection. No public container runs on our Pi.','technical-title':'Technical details and licenses',technical:'Linux is actually emulated in WebAssembly using v86. This is not an interactive screenshot. The guest has no external network relay. Free-software components retain their own licenses.',cta:'Ready to use Daylight on your Raspberry Pi?','placeholder-text':'Your session starts here.'};
 const original=Object.fromEntries(Object.keys(english).map(id=>[id,$(id).innerHTML]));
 function labels(){
  document.documentElement.lang=lang;
@@ -14,7 +14,7 @@ function labels(){
  $('cta').href=lang==='fr'?'/fr/raspberry-pi.html':'/raspberry-pi.html';
  for(const [id,value] of Object.entries(lang==='en'?english:original))$(id).innerHTML=value;
  $('language').textContent=lang==='fr'?'English':'Français';
- $('start').textContent=text('Démarrer la démo','Start the demo');
+ $('start').textContent='Daylight Start';
  $('desktop').textContent=text('Bureau','Desktop');$('menu').textContent=text('Menu Linux','Linux menu');$('terminal').textContent='Terminal';$('calculator').textContent=text('Calculatrice','Calculator');$('about').textContent=text('À propos','About');
  $('display').setAttribute('aria-label',text('Bureau Linux interactif','Interactive Linux desktop'));
  $('pause').textContent=state==='paused'?text('Reprendre','Resume'):text('Pause','Pause');
@@ -101,7 +101,7 @@ async function start(){
   for(const name of names)assets[name]=await verified(name,manifest.files[name],signal,onProgress);
   if(id!==generation)return;
   $('progress').hidden=true;$('placeholder').hidden=true;
-  setState('booting');status(text('Démarrage du véritable système Alpine…','Booting the actual Alpine Linux system…'));
+  setState('booting');status(text('Daylight Start — ouverture du terminal…','Daylight Start — opening your terminal…'));
   serial='';
   emulator=new V86({
    wasm_fn:async imports=>(await WebAssembly.instantiate(assets['v86.wasm'],imports)).instance.exports,
@@ -121,7 +121,7 @@ async function start(){
    if(serial.includes('DAYLIGHT_WEB_DESKTOP_READY')&&state==='booting'){
     clearTimeout(deadline);deadline=null;setState('running');
     lifetime=setTimeout(async()=>{await stop();status(text('Session terminée après 20 minutes. Vous pouvez recommencer.','Session ended after 20 minutes. You can start again.'));},20*60*1000);
-    status(text('Bureau prêt. Cliquez dans la fenêtre pour commencer.','Desktop ready. Click inside the window to begin.'));
+    status(text('Daylight Start est prêt. Cliquez dans le terminal pour écrire.','Daylight Start is ready. Click inside the terminal to type.'));
    }
   });
   deadline=setTimeout(()=>fail(Error(text('Le démarrage a dépassé la limite sur cet appareil.','Startup exceeded the time limit on this device.'))),180000);

@@ -33,6 +33,8 @@ def main():
     evidence=json.loads(args.evidence.read_text())
     if evidence.get('result')!='PASS' or evidence.get('realKeyboard') is not True or evidence.get('manifestSha256')!=sha(source/'manifest.json'):
         raise SystemExit('Exact-runtime browser and keyboard validation is required')
+    if evidence.get('terminalOnlyStartup') is not True or evidence.get('startupFocused') is not True or evidence.get('startupTitle') != 'Daylight Start':
+        raise SystemExit('Verified terminal-first Daylight Start startup is required')
     for name in ('index.html','demo.js','demo.css'):
         if evidence.get('interfaceSha256',{}).get(name)!=sha(source/name):
             raise SystemExit('Exact graphical-interface browser validation is required: '+name)

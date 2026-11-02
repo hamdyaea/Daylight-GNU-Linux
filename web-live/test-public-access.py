@@ -64,6 +64,7 @@ def main():
         expected=json.loads((ROOT/'web-live/published-runtime.json').read_text())
         if public!=expected:raise RuntimeError('Public runtime differs from the source-pinned manifest')
         page=get('/live/')
+        if b'id="start" type="button">Daylight Start' not in page:raise RuntimeError('Missing Daylight Start entry button')
         # Follow the actual versioned resources, never stale compatibility URLs.
         hashes={name:hashlib.sha256((ROOT/'web-live'/name).read_bytes()).hexdigest() for name in ('demo.js','demo.css')}
         for name,path in interface_paths(page,hashes).items():

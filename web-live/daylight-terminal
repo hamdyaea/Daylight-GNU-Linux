@@ -1,0 +1,8 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+# One launcher for boot, the desktop menu and the browser Terminal button.
+exec xterm -title 'Daylight Start' -n 'Daylight Start' \
+    -geometry 78x22+40+65 -bg '#10191f' -fg '#f5eddb' \
+    -fa 'DejaVu Sans Mono' -fs 11 -e /usr/local/bin/daylight-shell

@@ -5,7 +5,9 @@ Daylight glue and interface: GPL-3.0-only. Upstream licenses remain separate.
 
 ## What users get
 
-https://daylightlinux.ch/live/ opens a real graphical Linux guest without a GitHub account. Start downloads the emulator, firmware, kernel and initramfs; it then boots Alpine x86 and Fluxbox inside WebAssembly. Windows, the taskbar, the desktop menu, xterm, the calculator and the About dialog are real guest processes. The preview uses the same dark/gold Fluxbox theme as Daylight, not a missing upstream theme name. The Desktop, Linux menu, Terminal, Calculator and About controls send fixed physical key sequences to Fluxbox.
+https://daylightlinux.ch/live/ opens a real graphical Linux guest without a GitHub account. The **Daylight Start** button downloads the emulator, firmware, kernel and initramfs; it then boots Alpine x86 and Fluxbox inside WebAssembly. Startup opens exactly one visible, focused terminal titled **Daylight Start**. Calculator and About stay closed until explicitly requested. The same terminal launcher is used by the menu and toolbar. The boot-ready event is emitted only after the real terminal is mapped, focused and its prompt initialised.
+
+Windows, the taskbar, the desktop menu, xterm, the calculator and the About dialog are real guest processes. The preview uses the same dark/gold Fluxbox theme as Daylight, not a missing upstream theme name. The Desktop, Linux menu, Terminal, Calculator and About controls send fixed physical key sequences to Fluxbox.
 
 The guest receives 256 MiB of RAM plus 8 MiB video memory. The browser/emulator needs additional memory. The six runtime payloads total about 42 MB; timing depends on the device and network. Nothing boots or downloads the guest payload before Start. Background tabs pause a running guest and the session is stopped after 20 minutes. Stop/reset/closing discards modifications. No guest network relay, shared host filesystem, account, clipboard bridge or telemetry is configured. Serving the page still exposes ordinary connection metadata to hosting/network providers.
 
@@ -38,7 +40,7 @@ Serve `dist/web-live-publish` on 127.0.0.1:34403. With Playwright and Chromium i
 node web-live/test-browser.cjs
 ```
 
-The browser check waits for actual graphical readiness, captures the canvas, types through the browser into xterm and verifies the resulting guest file, opens a second terminal and calculator, verifies the native About dialog, hides/restores real windows, opens the menu, and checks pause/resume/stop. It rejects external-origin requests and pre-consent guest downloads. A serial boot message alone is not sufficient.
+The browser check waits for actual graphical readiness, captures the canvas, types through the browser into xterm and verifies the resulting guest file, requires the Daylight Start title and terminal focus, verifies zero automatic calculators/About dialogs, opens a second consistently titled terminal and an on-demand calculator, verifies the native About dialog, hides/restores real windows, opens the menu, and checks pause/resume/stop. It rejects external-origin requests and pre-consent guest downloads. A serial boot message alone is not sufficient.
 
 Use `DAYLIGHT_DEMO_URL=https://daylightlinux.ch/live/` to repeat it against public HTTPS. `DAYLIGHT_PLAYWRIGHT` and `DAYLIGHT_BROWSER` can point to existing project-local tools. This is not physical Safari/iOS certification; a desktop/laptop browser with keyboard and mouse is recommended.
 
