@@ -1,0 +1,12 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+[Unit]
+Description=Renew Daylight APT signatures daily before their 30-day expiry
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=2h
+Persistent=true
+Unit=daylight-archive-refresh.service
+[Install]
+WantedBy=timers.target

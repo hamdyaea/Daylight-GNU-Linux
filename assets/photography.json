@@ -1,0 +1,18 @@
+[
+  {
+    "name": "himalaya-sunrise",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Himalaya_sunrise.jpg",
+    "author": "Ali Sabbagh",
+    "source": "https://commons.wikimedia.org/wiki/File:Himalaya_sunrise.jpg",
+    "license": "CC0-1.0",
+    "sha256": "93af6e06cb6f42ff28c4d016fcfcc641f7c516ee80682914755fb43e43d931da"
+  },
+  {
+    "name": "mountain-sunrise",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/85/Mountain_sunrise_%28Unsplash%29.jpg",
+    "author": "Alice Donovan Rouse",
+    "source": "https://commons.wikimedia.org/wiki/File:Mountain_sunrise_(Unsplash).jpg",
+    "license": "CC0-1.0",
+    "sha256": "43d4f3dcf9da46eba9b66e5c22e81c9e468249c6ae9c1f4b63fe0a371714b64b"
+  }
+]

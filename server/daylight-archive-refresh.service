@@ -1,0 +1,29 @@
+# Developer: Hamdy Abou El Anein
+# Contact: contact@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+[Unit]
+Description=Refresh only the signed Daylight APT metadata
+ConditionPathExists=/var/lib/daylight-archive/gnupg/pubring.kbx
+[Service]
+Type=oneshot
+User=daylight-archive
+Group=daylight-archive
+Environment=HOME=/var/lib/daylight-archive
+Environment=GNUPGHOME=/var/lib/daylight-archive/gnupg
+ExecStart=/usr/bin/python3 /usr/local/lib/daylight-archive/refresh-apt.py
+TimeoutStartSec=180
+UMask=0022
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/daylight-archive/gnupg /var/lib/daylight-archive/work /var/lib/daylight-archive/refresh.lock /var/www/daylightlinux/apt
+RestrictAddressFamilies=AF_UNIX
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryMax=192M
+CPUQuota=25%
