@@ -1,0 +1,5 @@
+{
+  "target_version": "5.0.0-rc.2",
+  "action": "apply reviewed source migration, commit it, then validate that exact commit",
+  "production_changes": false
+}
