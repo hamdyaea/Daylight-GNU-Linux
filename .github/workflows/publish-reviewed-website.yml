@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: dd060ea506c26d171d3900508dbf29a68a99b058
+          ref: 5d21dac9667e36f0fbb0371663cafff2227695a8
           fetch-depth: 0
           persist-credentials: false
       - name: Retrieve the public reviewed source archive and verify its pinned hash
@@ -32,7 +32,7 @@ jobs:
           curl --disable --fail --silent --show-error --location --proto '=https' --proto-redir '=https' --retry 3 --max-time 90 \
             https://daylightlinux.ch/media/daylight-source-06bf5a6ed2ab.zip -o "$RUNNER_TEMP/reviewed-source.zip"
           echo '356f7501d5e0486891ace01af18d9c14f91fdbba762770a9ed93fa451925bb06  '"$RUNNER_TEMP/reviewed-source.zip" | sha256sum -c -
-      - name: Import only safe source entries and require the exact reviewed Git tree
+      - name: Import safe source entries and require the exact reviewed Git tree
         shell: bash
         run: |
           set -euo pipefail
@@ -72,7 +72,9 @@ jobs:
           git add --all
           test "$(git write-tree)" = 54dc561f7cc56f1a51f4be1b89aacd35c97691a2
           git diff --cached --check
-      - name: Publish by ordinary fast-forward, without rewriting history
+          # The workflow token publishes content only; it must not change workflow definitions.
+          git diff --cached --quiet -- .github/workflows
+      - name: Publish by ordinary fast-forward without rewriting history
         shell: bash
         run: |
           set -euo pipefail
