@@ -48,8 +48,14 @@ function assert(value, message) { if (!value) throw new Error(message); }
             assert((await first.getAttribute('href')).endsWith('/raspberry-pi.html'),'Hero must lead to Raspberry Pi');
           }
           if(name==='download.html') {
-            const order=await page.evaluate(()=>document.getElementById('raspberry-pi').compareDocumentPosition(document.getElementById('pc-live')) & Node.DOCUMENT_POSITION_FOLLOWING);
-            assert(order,'Raspberry Pi must precede the PC live image');
+            assert(await page.locator('main').innerText().then(t=>t.includes('Raspberry Pi OS')),'Raspberry Pi installation must remain prominent');
+            assert(await page.locator('#pc-live').count()===0,'Retired PC live trial must not reappear');
+          }
+          if(name==='index.html') {
+            const preview=page.frameLocator('iframe.daylight-live-frame');
+            await preview.locator('#start').waitFor();
+            const labels=await preview.locator('.toolbar button').allTextContents();
+            assert(labels.join('|')===(language==='fr'?'Démarrer|Redémarrer|Stop':'Start|Restart|Stop'),'Only three embedded controls allowed: '+labels);
           }
           if(language==='fr' && [390,1440].includes(width) && ['index.html','download.html'].includes(name)) {
             await page.screenshot({path:path.join(output,width+'-'+name.replace('.html','.png')),fullPage:true});
