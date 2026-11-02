@@ -12,3 +12,7 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 .home-demo{scroll-margin-top:90px}.daylight-live-frame{display:block;width:100%;height:960px;border:1px solid #56665f;border-radius:16px;background:#10191f}@media(max-width:650px){.daylight-live-frame{height:1040px}}
+/* Show the live controls within the first viewport instead of below a tall hero. */
+.pi-hero{min-height:0}
+.pi-hero .wrap{padding-top:34px;padding-bottom:18px}
+.home-demo{padding-top:8px}
