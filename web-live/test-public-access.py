@@ -60,7 +60,7 @@ def main():
         get('/apt/apt.css')
         for path in ['/fr','/fr/try-online.html','/fr/books.html','/old/site/index.html']:
             data=get(path)
-            if path.endswith('try-online.html') and (b'/live/?lang=fr' not in data or b'Ouvrir le bureau graphique' not in data):raise RuntimeError('The public entry still does not lead to the no-account graphical demo')
+            if path.endswith('try-online.html') and b'/fr/index.html#daylight-demo' not in data:raise RuntimeError('The public entry no longer leads to the embedded no-account graphical demo')
         public=json.loads(get('/live/manifest.json'))
         expected=json.loads((ROOT/'web-live/published-runtime.json').read_text())
         if public!=expected:raise RuntimeError('Public runtime differs from the source-pinned manifest')
