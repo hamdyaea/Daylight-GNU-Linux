@@ -29,7 +29,7 @@ until /usr/bin/xprop -root _NET_SUPPORTING_WM_CHECK 2>/dev/null | grep -q 'windo
     sleep 0.1
 done
 wallpaper=$(/usr/bin/daylight settings get wallpaper)
-/usr/bin/feh --no-fehbg --bg-fill "/usr/share/backgrounds/daylight/$wallpaper"
+/usr/bin/feh --no-fehbg --bg-max "/usr/share/backgrounds/daylight/$wallpaper"
 if [ "$(/usr/bin/daylight settings get monitor)" = on ]; then
     /usr/bin/conky -c "$config/conky.conf" &
     conky_pid=$!

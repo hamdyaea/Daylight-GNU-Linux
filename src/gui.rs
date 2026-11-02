@@ -430,6 +430,7 @@ fn settings() -> Result<()> {
         "Mountains wallpaper",
         "Dark photographic wallpaper",
         "Sunrise wallpaper",
+        "Himalayan wallpaper",
         "Original wallpaper",
     ])? {
         let (key, value) = match choice.as_str() {
@@ -442,6 +443,7 @@ fn settings() -> Result<()> {
             "Mountains wallpaper" => ("wallpaper", "daylight-mountains.jpg"),
             "Dark photographic wallpaper" => ("wallpaper", "daylight-night.jpg"),
             "Sunrise wallpaper" => ("wallpaper", "daylight-sunrise.jpg"),
+            "Himalayan wallpaper" => ("wallpaper", "daylight-himalaya.jpg"),
             "Original wallpaper" => ("wallpaper", "daylight-original.png"),
             _ => return Ok(()),
         };
@@ -449,7 +451,7 @@ fn settings() -> Result<()> {
         if key == "wallpaper" {
             let path = format!("/usr/share/backgrounds/daylight/{value}");
             Command::new("/usr/bin/feh")
-                .args(["--no-fehbg", "--bg-fill", &path])
+                .args(["--no-fehbg", "--bg-max", &path])
                 .status()?;
         }
         show("Daylight Settings","Saved. Profile and monitor changes apply when the Daylight session is restarted; no services were restarted.")?;
