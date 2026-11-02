@@ -1,0 +1,90 @@
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Publish reviewed graphical preview
+on:
+  push:
+    branches: [publish/graphical-preview-20261102]
+    paths: [.github/workflows/publish-graphical-preview.yml]
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: daylight-graphical-source-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 91d329eae114846a19eb2e87c9b74534a340c617
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify the reviewed public source snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --disable --fail --silent --show-error --location --proto '=https' --proto-redir '=https' --retry 3 --max-time 90 https://daylightlinux.ch/media/daylight-graphical-source-9cfa72a881fd.zip -o "$RUNNER_TEMP/reviewed.zip"
+          echo '9dc391b0b3719c924db1bf963fb713f15614e1b7ec8772fe633faec77f45305f  '"$RUNNER_TEMP/reviewed.zip" | sha256sum -c -
+          python3 - <<'PY'
+          import os, pathlib, stat, zipfile
+          archive = pathlib.Path(os.environ['RUNNER_TEMP']) / 'reviewed.zip'
+          if archive.stat().st_size != 1231885:
+              raise SystemExit('Reviewed archive size mismatch')
+          root = pathlib.Path.cwd()
+          with zipfile.ZipFile(archive) as source:
+              entries = source.infolist()
+              if len(entries) != 205 or sum(e.file_size for e in entries) > 15000000:
+                  raise SystemExit('Unexpected source inventory')
+              seen = set()
+              for entry in entries:
+                  path = pathlib.PurePosixPath(entry.filename)
+                  if not path.parts or path.parts[0] != 'daylight-source' or path.is_absolute() or '..' in path.parts or '.git' in path.parts:
+                      raise SystemExit('Unsafe source path')
+                  if stat.S_ISLNK(entry.external_attr >> 16):
+                      raise SystemExit('Source symlinks are not permitted')
+                  relative = pathlib.Path(*path.parts[1:])
+                  if relative == pathlib.Path('.'):
+                      continue
+                  if str(relative) in seen:
+                      raise SystemExit('Duplicate source entry')
+                  seen.add(str(relative))
+                  destination = root / relative
+                  if destination.is_symlink() or root not in destination.resolve().parents:
+                      raise SystemExit('Source escapes checkout')
+                  if entry.is_dir():
+                      destination.mkdir(parents=True, exist_ok=True)
+                  else:
+                      destination.parent.mkdir(parents=True, exist_ok=True)
+                      destination.write_bytes(source.read(entry))
+                      destination.chmod(0o755 if (entry.external_attr >> 16) & 0o111 else 0o644)
+          PY
+          git add --all
+          test "$(git write-tree)" = 9ae65dc570f0e6d60cc83b9297e7d4284d6df7d7
+          git diff --cached --check
+          git diff --cached --quiet -- .github/workflows
+      - name: Publish the validated tree by normal fast-forward
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'Hamdy Abou El Anein'
+          git config user.email 'info@daylightlinux.ch'
+          git commit -m 'Publish reviewed graphical browser controls and no-account discovery path [skip ci]'
+          gh auth setup-git
+          git fetch origin master
+          test "$(git rev-parse FETCH_HEAD)" = 91d329eae114846a19eb2e87c9b74534a340c617
+          git merge-base --is-ancestor FETCH_HEAD HEAD
+          git push origin HEAD:refs/heads/master
+          git rev-parse HEAD
+      - name: Run graphical, website and public APT checks independently
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh workflow run daylight-public-preview.yml --ref master
+          gh workflow run daylight-website.yml --ref master
+          gh workflow run daylight-source-sync.yml --ref master
