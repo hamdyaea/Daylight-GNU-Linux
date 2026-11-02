@@ -1,33 +1,54 @@
 # Installation, update and removal
 
-This release candidate supports Debian-based AMD64 and ARM64 systems. The packages do not change the kernel, OS identity, network, display-manager selection or existing home configurations. Inspect APT's proposed changes before accepting them. Keep an appropriate backup; package removal is not a disk snapshot. These .deb files are not Arch/Manjaro packages.
+Developer: Hamdy Abou El Anein — info@daylightlinux.ch
 
-## Published filenames versus local builds
+Daylight adds optional components to Debian 12/13 and compatible 64-bit Raspberry Pi OS installations. Supported executable architectures are **amd64 and arm64**. It is not a Manjaro/Arch package and the PC live ISO is not a Raspberry Pi boot image.
 
-The public release is `v5.0.0-rc.1`. GitHub normalized the tilde in uploaded filenames, so downloaded files use `5.0.0.rc1`, while locally built files use `5.0.0~rc1`. Their internal Debian version is **5.0.0~rc1** in both cases. The following commands use the published filenames. Select exactly one core architecture.
+## Public signed repository
 
-## Minimal server-safe core
+The repository is operational at **https://daylightlinux.ch/apt/**. It publishes only the seven Daylight package types, with separate AMD64/ARM64 core binaries. APT verifies the signed metadata and package checksums. The dedicated signing-key fingerprint is:
 
-For a 64-bit Raspberry Pi, after downloading the matching files:
+```text
+B057 5F82 1A31 DD20 753D E07C 50D2 1240 F4BC B02E
+```
+
+Metadata expires after 30 days and is renewed by a restricted daily service. `/apt/status.json` reports the last signing time and package-file count. The private key is not published. The source tree's `release/current.json` identifies the release that was actually published; a development branch or a pending CI run is not a downloadable release.
+
+## Download, inspect and choose a profile
 
 ```sh
-sudo apt install ./daylight-core_5.0.0.rc1_arm64.deb ./daylight-themes_5.0.0.rc1_all.deb
+curl --fail --show-error --silent --proto '=https' \
+  https://daylightlinux.ch/install.sh -o daylight-install.sh
+less daylight-install.sh
+sh daylight-install.sh --plan
+```
+
+The default is **plan-only and core-only**. No files or packages change without `--yes`. The script refuses unsupported architectures, pins the exact archive key and scopes repository priority to Daylight packages. It checks signatures and metadata expiration without disabling APT authentication.
+
+Minimal command-line core and backgrounds:
+
+```sh
+sudo sh daylight-install.sh --core --yes
 daylight status
 daylight info
 daylight doctor
 ```
 
-`sha256sum -c SHA256SUMS` verifies the complete downloaded set. If only selected assets are downloaded, verify their corresponding lines and distinguish missing files from mismatched hashes. Checksums detect corruption but are not independent authentication when obtained from the same untrusted source; obtain files from the official repository.
-
-## Full desktop
+Full optional desktop:
 
 ```sh
-sudo apt install ./daylight-core_5.0.0.rc1_arm64.deb ./daylight-themes_5.0.0.rc1_all.deb ./daylight-desktop_5.0.0.rc1_all.deb ./daylight-apps_5.0.0.rc1_all.deb ./daylight-linux_5.0.0.rc1_all.deb
+sudo sh daylight-install.sh --desktop --yes
 ```
 
-Use the AMD64 core instead on a PC. Games and telemetry are separate optional packages. Installing the desktop does not automatically install or start a display manager. Select the Daylight GNU/Linux session in an existing display manager; on a suitable local console, `startx /usr/bin/daylight-session` is an alternative. Do not launch a desktop as root or replace a productive server's active session remotely.
+Add `--games` only with `--desktop`. Use `--repo-only --yes` to configure the repository without installing Daylight packages. Telemetry is never installed or activated by this bootstrap. It does not perform a global package upgrade or reboot.
 
-Fastfetch and Terminology are optional. Without them, Daylight uses its built-in ASCII information display and Xterm. Do not add Debian 13 repositories to Debian 12 merely to obtain Fastfetch. User settings are stored under `${XDG_CONFIG_HOME:-$HOME/.config}/daylight`. Fluxbox may create missing compatibility files under `~/.fluxbox`, but existing files there are not replaced.
+The bootstrap saves any existing managed repository configuration under `/var/backups/daylight-apt.*` and restores those files if installation fails. This is a configuration rollback, not a rollback of every dependency operation. Unmanaged files and symlink configuration targets are not overwritten. Keep an appropriate system backup, especially on a productive server.
+
+## Graphical session
+
+Desktop installation does not install/start a new display manager or change the default boot target. Choose **Daylight GNU/Linux** at the next login in your existing graphical login manager. On an appropriate local console, `startx /usr/bin/daylight-session` is an alternative. Do not run the desktop as root or replace a productive server's active session remotely.
+
+Fastfetch and Terminology are optional; the fallbacks are the built-in ASCII information display and Xterm. Never mix Debian 13 system repositories into Debian 12 just to obtain Fastfetch. Daylight settings live in `${XDG_CONFIG_HOME:-$HOME/.config}/daylight`. Existing shell, Conky and classic Fluxbox files are not replaced. Fluxbox can create missing compatibility files under `~/.fluxbox`.
 
 ## Updates
 
@@ -36,21 +57,27 @@ daylight update --dry-run
 sudo daylight update
 ```
 
-These commands ask APT to update installed Daylight packages, not to perform a distribution upgrade. A signed Daylight repository must first exist and be configured, or newer .deb files must be installed locally. The public repository is **not yet deployed**; the builder and its signature/tamper tests are supplied.
+Only installed Daylight packages are requested for upgrade. APT can propose dependency changes: inspect its confirmation. An index-refresh error aborts the upgrade. No distribution upgrade or autoremove is performed.
 
 ## Removal
 
-Log out of the Daylight graphical session before removing its desktop packages.
+Log out of the Daylight graphical session before removing desktop packages.
 
 ```sh
 daylight remove --dry-run
 sudo daylight remove
 ```
 
-Removal targets installed Daylight packages and never invokes autoremove. APT may propose additional removals if other installed software depends on Daylight; inspect its confirmation. Shared dependencies and personal settings remain. Existing shell/Fluxbox/Conky files and base OS identity are not overwritten in the first place. This is not a snapshot rollback.
+The command targets installed Daylight packages, without autoremove. APT may propose removal of other software that explicitly depends on them; inspect its confirmation. Shared dependencies, personal settings and the repository configuration are retained. This is deliberately not presented as a bit-for-bit restoration or a filesystem snapshot.
 
-## Live ISO and privacy
+## Offline release files
 
-The AMD64 ISO is for PC exploration, not a Raspberry Pi boot image. The validated QEMU test boots its live filesystem with extracted kernel/initrd; BIOS/UEFI, Secure Boot and physical hardware require separate validation. It includes no disk installer, persistence or active telemetry. Do not mount or modify internal disks when exploring the live session.
+Download the architecture-appropriate `.deb` files and SHA256SUMS from the official GitHub release. Install exactly one core architecture with its architecture-independent companion packages using `sudo apt install ./<filename>.deb`. Public filenames replace the Debian version's `~` with `.`, while the internal package version retains `~` and correct Debian release-candidate ordering.
 
-Do not enable `daylight-telemetry` unless its collection policy and HTTPS endpoint have been reviewed. The reference collector and public mailbox are not deployed/activated. See `PRIVACY.md` and `VALIDATION.md`.
+`sha256sum -c SHA256SUMS` checks a complete downloaded set. For a partial set, verify its corresponding lines and distinguish missing files from mismatches. A checksum from the same source is not an independent publisher signature; the public APT repository provides signed metadata.
+
+## Live session and privacy
+
+The live image uses temporary storage, has no disk installer or persistence by default, and does not activate SSH or telemetry. Do not mount or modify internal disks while exploring. Read the version-specific validation record for actual BIOS/UEFI/browser evidence; virtual-machine tests do not certify Secure Boot, physical Wi-Fi/audio or all Raspberry Pi graphics hardware.
+
+The optional collector remains a separate deployment. No activation or mail delivery is inferred merely from an email address or a configuration file being present. See `PRIVACY.md`, `VALIDATION.md` and `VALIDATION-RC2.md`.
