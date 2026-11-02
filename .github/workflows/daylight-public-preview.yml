@@ -20,6 +20,10 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+      - name: Verify terminal-first startup and cache-selection regressions
+        run: |
+          python3 tests/test_web_live_startup.py
+          python3 tests/test_web_live_interface.py
       - name: Verify public HTTPS access, exact deployed interface and signed APT indexes
         run: python3 web-live/test-public-access.py
       - name: Prepare disposable browser tools
