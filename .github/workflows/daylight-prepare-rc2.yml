@@ -8,7 +8,7 @@ on:
     paths: [.github/workflows/daylight-prepare-rc2.yml]
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
   actions: write
 concurrency:
   group: daylight-rc2-source-preparation
@@ -23,25 +23,39 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          fetch-depth: 0
           persist-credentials: false
-      - name: Preserve the approved lettering and expose every landscape
+      - name: Stop only the superseded candidate with the known missing GRUB timeout
         run: |
-          python3 release/finalize-layout.py
-          rustup toolchain install 1.88.0 --profile minimal --component rustfmt
-          cargo +1.88.0 fmt
-          python3 -m py_compile scripts/*.py server/*.py website/*.py demo/*.py tests/*.py
-          for file in scripts/*.sh server/*.sh demo/*.sh; do sh -n "$file"; done
-      - name: Commit reviewed layout before explicit validation
+          python3 - <<'PY'
+          import json,os,subprocess
+          run_id=41407421287
+          prefix='repos/'+os.environ['GITHUB_REPOSITORY']
+          run=json.loads(subprocess.check_output(['gh','api',prefix+'/actions/runs/'+str(run_id)]))
+          if run['head_branch']!='build/daylight-v5-rc2' or run['head_sha']!='125b41e9733bc69a08ed52dd35e0b9ca3ae8caa4':
+              raise SystemExit('Unexpected run identity; no cancellation performed')
+          if run['status']!='completed':
+              subprocess.run(['gh','run','cancel',str(run_id)],check=True)
+          PY
+      - name: Regression checks for missing, disabled and repeated GRUB timeouts
         run: |
-          git config user.name 'Hamdy Abou El Anein'
-          git config user.email 'info@daylightlinux.ch'
-          git add src/gui.rs scripts/daylight-session
-          if ! git diff --cached --quiet; then
-            git commit -m 'Keep the Daylight signature visible at every display aspect ratio [skip ci]'
-            gh auth setup-git
-            git push origin HEAD:build/daylight-v5-rc2
-          fi
-          git rev-parse HEAD
-      - name: Validate that exact committed revision
+          python3 - <<'PY'
+          import importlib.util,pathlib,tempfile
+          spec=importlib.util.spec_from_file_location('bootmenu','scripts/configure-boot-menu.py')
+          module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+          for text in ('set default=0\nsource /boot/grub/theme.cfg\n','set timeout=-1\n','set timeout="0"\nset timeout_style=hidden\n'):
+              result=module.grub_config(text)
+              assert result.count('set timeout=8')==1 and 'set timeout=-1' not in result
+              assert module.grub_config(result)==result
+          with tempfile.TemporaryDirectory() as directory:
+              root=pathlib.Path(directory)
+              (root/'isolinux').mkdir();(root/'grub-pc').mkdir()
+              (root/'isolinux/isolinux.cfg').write_text('default vesamenu.c32\ntimeout 0\n')
+              (root/'grub-pc/config.cfg').write_text('set default=0\nsource /boot/grub/theme.cfg\n')
+              (root/'splash.png').write_bytes(b'test fixture')
+              module.configure(root,root/'splash.png')
+              assert 'timeout 80' in (root/'isolinux/isolinux.cfg').read_text()
+              assert 'set timeout=8' in (root/'grub-pc/config.cfg').read_text()
+          print('PASS: missing/negative/zero GRUB defaults, idempotency and copied-template integration.')
+          PY
+      - name: Validate the complete corrected candidate
         run: gh workflow run daylight-build.yml --ref build/daylight-v5-rc2
