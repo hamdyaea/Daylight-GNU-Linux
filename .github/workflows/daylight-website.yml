@@ -5,9 +5,9 @@ name: Daylight website validation
 on:
   push:
     branches: [master]
-    paths: ['website/**', 'tests/test_website*', '.github/ISSUE_TEMPLATE/**', '.github/workflows/daylight-website.yml']
+    paths: ['website/**', 'web-live/*.html', 'web-live/*.css', 'web-live/*.js', 'tests/test_website*', '.github/ISSUE_TEMPLATE/**', '.github/workflows/daylight-website.yml']
   pull_request:
-    paths: ['website/**', 'tests/test_website*', '.github/ISSUE_TEMPLATE/**', '.github/workflows/daylight-website.yml']
+    paths: ['website/**', 'web-live/*.html', 'web-live/*.css', 'web-live/*.js', 'tests/test_website*', '.github/ISSUE_TEMPLATE/**', '.github/workflows/daylight-website.yml']
   workflow_dispatch:
 permissions:
   contents: read
