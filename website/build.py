@@ -11,6 +11,7 @@ from pathlib import Path
 import shutil
 import zipfile
 from PIL import Image
+from discovery import enhance
 
 ROOT = Path(__file__).resolve().parent.parent
 GITHUB = 'https://github.com/hamdyaea/Daylight-GNU-Linux'
@@ -207,6 +208,7 @@ def build(out, evidence=None):
         write(old, '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0; url=/' + new + '"><title>Daylight GNU/Linux</title><p><a href="/' + new + '">Continue to Daylight GNU/Linux</a></p></html>')
     write('robots.txt','User-agent: *\nAllow: /\nSitemap: https://daylightlinux.ch/sitemap.xml\n')
     write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + ''.join('<url><loc>' + e(url) + '</loc></url>' for url in urls) + '</urlset>')
+    enhance(out, release, evidence)
     manifest = {str(p.relative_to(out)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.rglob('*')) if p.is_file() and p.name != 'site-manifest.json'}
     write('site-manifest.json',json.dumps({'release':release,'files':manifest},indent=2)+'\n')
     print('Bilingual static site built:',out,'files:',len(manifest))

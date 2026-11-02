@@ -1,0 +1,21 @@
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Idea / Proposer une amélioration
+description: Suggest a focused improvement for the Raspberry Pi experience.
+title: "[Idea] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve / Besoin
+      description: Who benefits and what is difficult today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement / Proposition
+      description: Describe one small change, with performance and privacy tradeoffs if relevant.
+    validations:
+      required: true

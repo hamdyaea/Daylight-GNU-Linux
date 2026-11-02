@@ -1,0 +1,46 @@
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Raspberry Pi hardware report / Retour matériel
+description: Help document real compatibility, including what does not work.
+title: "[Hardware] "
+body:
+  - type: markdown
+    attributes:
+      value: "This is a public, voluntary report, not automatic telemetry. Never include IP/MAC addresses, machine IDs, usernames or serial numbers."
+  - type: input
+    id: board
+    attributes:
+      label: Raspberry Pi model / Modèle
+      placeholder: Raspberry Pi 4
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: OS, architecture and Daylight version
+      placeholder: Raspberry Pi OS / Debian base, arm64, Daylight version
+    validations:
+      required: true
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Profile tested / Profil testé
+      options:
+        - Core only / Cœur CLI
+        - Desktop / Bureau
+        - Desktop and games / Bureau et jeux
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What works and what fails / Résultat
+      description: Installation, session startup, display, input, tools, update and removal. Mark untested items explicitly.
+    validations:
+      required: true
+  - type: textarea
+    id: measurements
+    attributes:
+      label: Optional measurements / Mesures facultatives
+      description: Give the method and active services. Do not compare unlike workloads or publish personal data.

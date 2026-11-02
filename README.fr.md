@@ -6,6 +6,12 @@ Fondateur et développeur : **Hamdy Abou El Anein** · Contact : **info@daylight
 
 [Site en français](https://daylightlinux.ch/fr/) · [Téléchargements](https://daylightlinux.ch/fr/download.html) · [Installation](https://daylightlinux.ch/fr/install.html) · [Essai dans le navigateur](https://daylightlinux.ch/fr/try-online.html) · [Livres](https://daylightlinux.ch/fr/books.html) · [Old](https://daylightlinux.ch/fr/old/) · [English](README.md)
 
+## Raspberry Pi en priorité
+
+Le projet vise d’abord une utilisation sur Raspberry Pi OS 64 bits. L’ISO AMD64 est un live pour découvrir et tester le bureau sur PC, pas une image à écrire sur la carte SD du Pi.
+
+[Commencer sur Raspberry Pi](https://daylightlinux.ch/fr/raspberry-pi.html) · [FAQ](https://daylightlinux.ch/fr/faq.html) · [Communauté](https://daylightlinux.ch/fr/community.html)
+
 ## Deux façons de découvrir Daylight
 
 **Paquets Debian :** un cœur Rust ARM64 ou AMD64, des thèmes, une session Fluxbox indépendante et des applications facultatives, sur Debian 12/13 ou une installation compatible de Raspberry Pi OS 64 bits.

@@ -1,0 +1,11 @@
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+blank_issues_enabled: true
+contact_links:
+  - name: Installation and FAQ / Installation et FAQ
+    url: https://daylightlinux.ch/faq.html
+    about: Check compatibility and the installation guide first.
+  - name: Security / Sécurité
+    url: https://github.com/hamdyaea/Daylight-GNU-Linux/blob/master/SECURITY.md
+    about: Do not publish secrets or sensitive vulnerability details in a public issue.

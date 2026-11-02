@@ -1,0 +1,36 @@
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Bug report / Signaler un bug
+description: Report a reproducible Daylight problem without personal data.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "Merci / Thank you. Do not include IP addresses, serial numbers, tokens, passwords, or unredacted logs. This issue is public."
+  - type: input
+    id: version
+    attributes:
+      label: Daylight version / Version
+      placeholder: "For example: 5.0.0-rc.2"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: System / Système
+      description: "Pi model or PC/VM, OS version, architecture and desktop/core profile. No hostname or serial number."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce / Étapes
+      description: What did you do, what did you expect, and what happened?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Redacted evidence / Preuves anonymisées
+      description: Only include the relevant lines or a screenshot with private details removed.

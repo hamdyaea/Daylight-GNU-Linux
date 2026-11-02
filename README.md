@@ -1,12 +1,12 @@
 # Daylight GNU/Linux 5
 
-**A lightweight desktop, a sunrise identity, and installation that respects the existing system.**
+**A lightweight, customisable desktop for Raspberry Pi OS 64-bit. A PC live edition to discover and test it.**
 
 Founder and developer: **Hamdy Abou El Anein** · Contact: **info@daylightlinux.ch** · Daylight code: **GNU GPL v3**
 
-[Website](https://daylightlinux.ch/) · [Downloads](https://daylightlinux.ch/download.html) · [Install](https://daylightlinux.ch/install.html) · [Try in your browser](https://daylightlinux.ch/try-online.html) · [Books](https://daylightlinux.ch/books.html) · [Old](https://daylightlinux.ch/old/) · [Français](README.fr.md)
+[Website](https://daylightlinux.ch/) · [Raspberry Pi](https://daylightlinux.ch/raspberry-pi.html) · [Downloads](https://daylightlinux.ch/download.html) · [Community](https://daylightlinux.ch/community.html) · [Install](https://daylightlinux.ch/install.html) · [Try in your browser](https://daylightlinux.ch/try-online.html) · [Books](https://daylightlinux.ch/books.html) · [Old](https://daylightlinux.ch/old/) · [Français](README.fr.md)
 
-## Two ways to discover Daylight
+## Raspberry Pi first; PC live for discovery
 
 **Debian packages:** a Rust core for ARM64 or AMD64, themes, an independent Fluxbox session and optional native applications, for Debian 12/13 and compatible 64-bit Raspberry Pi OS installations.
 
