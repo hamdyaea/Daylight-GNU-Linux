@@ -1,5 +1,5 @@
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 # This rcfile is used only by Daylight Terminal. Existing user files are not edited.
 if [ -r "$HOME/.bashrc" ]; then . "$HOME/.bashrc"; fi

@@ -1,4 +1,4 @@
-<!-- Developer: Hamdy Abou El Anein | Contact: contact@daylightlinux.ch | SPDX-License-Identifier: GPL-3.0-only -->
+<!-- Developer: Hamdy Abou El Anein | Contact: info@daylightlinux.ch | SPDX-License-Identifier: GPL-3.0-only -->
 <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
 <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#121d34"/><stop offset="1" stop-color="#253c54"/></linearGradient>
 <radialGradient id="glow"><stop stop-color="#f7d38c" stop-opacity=".48"/><stop offset="1" stop-color="#f7d38c" stop-opacity="0"/></radialGradient>

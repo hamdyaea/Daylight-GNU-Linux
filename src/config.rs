@@ -1,5 +1,5 @@
 // Developer: Hamdy Abou El Anein
-// Contact: contact@daylightlinux.ch
+// Contact: info@daylightlinux.ch
 // Copyright (C) 2026 Hamdy Abou El Anein
 // SPDX-License-Identifier: GPL-3.0-only
 use crate::Result;
@@ -57,6 +57,7 @@ pub fn valid(key: &str, value: &str) -> bool {
                 | "daylight-night.jpg"
                 | "daylight-original.png"
                 | "daylight-sunrise.jpg"
+                | "daylight-himalaya.jpg"
         ),
         _ => false,
     }
@@ -93,7 +94,7 @@ pub fn set(key: &str, value: &str) -> Result<()> {
     let directory = root()?;
     fs::create_dir_all(&directory)?;
     fs::set_permissions(&directory, fs::Permissions::from_mode(0o700))?;
-    let mut content = String::from("# Developer: Hamdy Abou El Anein\n# Contact: contact@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n# Daylight user settings; no shell code is evaluated.\n");
+    let mut content = String::from("# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n# Daylight user settings; no shell code is evaluated.\n");
     for (k, v) in data {
         content.push_str(&format!("{k}={v}\n"));
     }

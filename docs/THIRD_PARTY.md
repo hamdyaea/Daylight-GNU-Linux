@@ -1,6 +1,6 @@
 # Third-party software and licenses
 
-Daylight source code is GPL-3.0-only. Founder and developer: Hamdy Abou El Anein. Contact: contact@daylightlinux.ch (activation pending).
+Daylight source code is GPL-3.0-only. Founder and developer: Hamdy Abou El Anein. Contact: info@daylightlinux.ch (activation pending).
 
 The Rust executables statically link the Rust standard library and the musl runtime. Those components retain their MIT, Apache-2.0 and other applicable notices. The `licenses/` directory accompanies the core package. Toolchain 1.88.0 is pinned for builds; this is not a claim it is the latest toolchain. The maintainer must rebuild the executable when bundled runtime security updates are relevant.
 

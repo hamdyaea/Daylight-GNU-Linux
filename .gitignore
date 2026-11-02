@@ -16,3 +16,4 @@ __pycache__/
 assets/wallpapers/*.jpg
 assets/branding/daylight.png
 licenses/RUST-STANDARD-LIBRARY.html
+assets/branding/boot-splash.png

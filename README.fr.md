@@ -49,7 +49,7 @@ Le test live utilise le noyau et l'initrd extraits de l'ISO : il ne certifie pas
 
 Le compteur de démarrages est facultatif et désactivé par défaut. Il ne compte pas des utilisateurs uniques ; l'adresse IP reste visible au niveau réseau. Le collecteur de référence n'est pas déployé.
 
-Le générateur de dépôt APT signé est développé et testé, mais le dépôt public n'est pas hébergé. `daylight update` a besoin d'une source configurée proposant de nouveaux paquets. Le contact **contact@daylightlinux.ch reste à activer** ; utiliser les issues GitHub en attendant.
+Le générateur de dépôt APT signé est développé et testé, mais le dépôt public n'est pas hébergé. `daylight update` a besoin d'une source configurée proposant de nouveaux paquets. Le contact **info@daylightlinux.ch reste à activer** ; utiliser les issues GitHub en attendant.
 
 Les wallpapers vectoriels sont des propositions de travail, pas la collection photoréaliste définitive. ARM 32 bits, validation matérielle élargie et publication encyclopédique ne sont pas réalisés dans cette version candidate.
 

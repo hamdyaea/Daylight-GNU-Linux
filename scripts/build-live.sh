@@ -1,6 +1,6 @@
 #!/bin/sh
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 set -eu
 if [ "$(id -u)" -ne 0 ]; then echo 'Run inside a disposable Debian live-build VM/container as root; never on a production server.' >&2; exit 2; fi
@@ -17,6 +17,9 @@ for package in core desktop themes apps games linux; do
   test -s "$source"
   cp "$source" "$work/config/packages.chroot/"
 done
+# Copy the distribution bootloader templates, then apply small documented overrides.
+cp -a /usr/share/live/build/bootloaders "$work/config/bootloaders"
+python3 "$root/scripts/configure-boot-menu.py" "$work/config/bootloaders" "$root/assets/branding/boot-splash.png"
 cd "$work"
 lb config
 lb build

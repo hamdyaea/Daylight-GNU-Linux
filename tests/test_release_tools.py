@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 """Regression checks for installer scope, wallpaper integrity and website structure."""
 from html.parser import HTMLParser
@@ -56,7 +56,7 @@ class ReleaseTools(unittest.TestCase):
     def test_wallpaper_dimensions(self):
         for name in ('daylight-mountains','daylight-sunrise','daylight-night'):
             with Image.open(ROOT/'assets/wallpapers'/f'{name}.jpg') as image:
-                self.assertEqual(image.size,(3840,2160));self.assertFalse(image.getexif())
+                self.assertEqual(image.size,(3840,2160) if name == 'daylight-sunrise' else (1672,941));self.assertFalse(image.getexif())
     def test_settings_match_shipped_wallpapers(self):
         values=re.findall(r'"(daylight-[a-z-]+\.(?:jpg|png))"',(ROOT/'src/config.rs').read_text())
         self.assertGreaterEqual(len(values),4)
@@ -73,13 +73,16 @@ class ReleaseTools(unittest.TestCase):
             root=Path(temporary)
             subprocess.run(['python3',str(ROOT/'website/build.py'),'--output',str(root)],check=True,timeout=90,capture_output=True)
             for language,prefix in [('en',''),('fr','fr/')]:
-                for page in ('index.html','download.html','install.html','try-online.html','wallpapers.html','old/index.html','privacy.html'):
+                for page in ('index.html','download.html','install.html','try-online.html','wallpapers.html','books.html','old/index.html','privacy.html'):
                     parser=Links();parser.feed((root/(prefix+page)).read_text())
                     self.assertEqual(parser.lang,language);self.assertEqual(parser.h1,1)
                     for ref in parser.refs:
                         if ref.startswith('/') and not ref.startswith(('/apt/','/old/site/')):
                             self.assertTrue((root/ref.lstrip('/').split('#')[0]).exists(),ref)
             self.assertTrue((root/'install.sh').is_file())
+            self.assertIn('https://www.amazon.fr/stores/author/B0BM89T88X',(root/'books.html').read_text())
+            self.assertIn('info@daylightlinux.ch',(root/'fr/books.html').read_text())
+            self.assertIn('url=/books.html',(root/'linux-book.html').read_text())
             self.assertNotIn('fonts.googleapis.com',(root/'index.html').read_text())
             self.assertNotIn('google-analytics',(root/'assets/v5/main.js').read_text())
 

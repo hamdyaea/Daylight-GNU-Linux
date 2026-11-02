@@ -1,6 +1,6 @@
 #!/bin/sh
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 # Installs only a static signed archive and a low-resource local signing timer.
 set -eu
@@ -35,10 +35,14 @@ import pathlib,re,sys
 base=pathlib.Path(sys.argv[1])
 lines=(base/'PACKAGE-SHA256SUMS').read_text().splitlines()
 if len(lines)!=8: raise SystemExit('Expected exactly eight reviewed Daylight package files')
+names=[]
 for line in lines:
  digest,name=line.split(None,1);name=name.strip().lstrip('*')
+ names.append(name)
  if not re.fullmatch('[a-f0-9]{64}',digest) or not re.fullmatch(r'daylight-[a-z-]+_[A-Za-z0-9.~+-]+_(?:all|amd64|arm64)\.deb',name): raise SystemExit('Invalid manifest path')
- if (base/name).is_symlink(): raise SystemExit('Symlink package input rejected')
+ if (base/name).is_symlink() or not (base/name).is_file(): raise SystemExit('Package input must be a regular file')
+if len(set(names)) != len(names) or set(names) != {p.name for p in base.glob('*.deb')}:
+ raise SystemExit('The package directory must contain exactly the eight checksummed files')
 PY
 (cd "$packages" && sha256sum -c PACKAGE-SHA256SUMS)
 fingerprint=$(gpg --homedir "$keyhome" --batch --with-colons --list-secret-keys 2>/dev/null | awk -F: '$1=="fpr"{print $10;exit}')

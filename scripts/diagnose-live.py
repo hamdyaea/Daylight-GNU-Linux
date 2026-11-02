@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 """Inspect an already-built disposable live guest, with no network or host disks."""
 import argparse

@@ -1,5 +1,5 @@
 // Developer: Hamdy Abou El Anein
-// Contact: contact@daylightlinux.ch
+// Contact: info@daylightlinux.ch
 // Copyright (C) 2026 Hamdy Abou El Anein
 // SPDX-License-Identifier: GPL-3.0-only
 //! Linux getrandom with initialization blocking and unbiased rejection sampling.

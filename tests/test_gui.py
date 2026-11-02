@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 """Exercise native dialogs in a disposable desktop, without recording their contents."""
 import os

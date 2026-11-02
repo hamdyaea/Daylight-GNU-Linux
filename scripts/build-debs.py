@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # Copyright (C) 2026 Hamdy Abou El Anein
 # SPDX-License-Identifier: GPL-3.0-only
 """Build self-contained Daylight binary packages without changing the host OS."""
@@ -16,8 +16,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
 VERSION = "5.0.0~rc2"
-MAINTAINER = "Hamdy Abou El Anein <contact@daylightlinux.ch>"
-HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: contact@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
+MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
+HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -62,7 +62,7 @@ def main():
                 if (ROOT / "docs/THIRD_PARTY.md").exists(): shutil.copyfile(ROOT / "docs/THIRD_PARTY.md", doc / "THIRD_PARTY.md")
             if package == "daylight-themes":
                 with (doc / "copyright").open("a") as notice:
-                    notice.write("\nFiles: usr/share/backgrounds/daylight/daylight-mountains.jpg usr/share/backgrounds/daylight/daylight-sunrise.jpg usr/share/backgrounds/daylight/daylight-night.jpg usr/share/backgrounds/daylight/daylight-terminal.jpg\nCopyright: Ali Sabbagh; Alice Donovan Rouse\nLicense: CC0-1.0\n Photographs are public-domain dedications; see CREDITS.txt for original sources and checksums.\n https://creativecommons.org/publicdomain/zero/1.0/\n")
+                    notice.write("\nFiles: usr/share/backgrounds/daylight/daylight-sunrise.jpg usr/share/backgrounds/daylight/daylight-himalaya.jpg\nCopyright: Ali Sabbagh; Alice Donovan Rouse\nLicense: CC0-1.0\n Photographs are public-domain dedications; see CREDITS.txt for original sources and checksums.\n https://creativecommons.org/publicdomain/zero/1.0/\n")
             size = sum(p.stat().st_size for p in base.rglob("*") if p.is_file()) // 1024 + 1
             control = f"Package: {package}\nVersion: {VERSION}\nArchitecture: {architecture}\nMaintainer: {MAINTAINER}\nSection: {'x11' if package == 'daylight-desktop' else 'utils'}\nPriority: optional\nInstalled-Size: {size}\nHomepage: https://daylightlinux.ch\n"
             if depends: control += f"Depends: {depends}\n"

@@ -1,9 +1,11 @@
-# Daylight photographic artwork
+# Daylight artwork
 
-The RC2 package replaces the two flat-vector desktop backgrounds with genuine high-resolution photographs licensed CC0-1.0. The authors and canonical sources are recorded in `assets/photography.json`; the SHA256 of each original is pinned and checked before rendering. Desktop files are 3840×2160 crops of higher-resolution originals, not upscaled low-resolution images. No logo is burned into the wallpaper.
+Developer: Hamdy Abou El Anein — info@daylightlinux.ch
 
-- **Himalayan dawn:** Ali Sabbagh, *Himalaya sunrise*, CC0-1.0.
-- **Sun above the clouds:** Alice Donovan Rouse, *Mountain sunrise*, published under CC0 before Unsplash's license change in June 2017.
-- **Dark photographic variant:** an explicitly exposure-adjusted derivative of Himalayan dawn; not a claim that the original was photographed at night.
+The approved photorealistic Alpine-lake scene is preserved at its delivered 1672 × 941 resolution. Its exact rasterized wordmark reads **Daylight Linux**. It is AI-generated scenery, not a photograph of a named place and not native 4K. The compressed transfer source and the JPEG rendering source are versioned; generated-art.json pins its SHA256. Dark and terminal editions are derived from it.
 
-Originals and rendered resources are distributed with their CC0 notice and credits, independently of the GPL-3.0-only license of the Daylight application. The historical wallpaper and vector designs remain in the source archive. No private images, host fonts or unrelated files are included.
+Two additional actual mountain photographs are CC0, with pinned upstream checksums and credits in assets/photography.json. They are rendered at 3840 × 2160 with an elegant rasterized Daylight Linux wordmark. No font files are redistributed. The package contains the credits file.
+
+The other generated scenes visible in the design conversation were not available as separate full-resolution source files to this build. They are not falsely represented by unrelated photographs.
+
+Run `python3 scripts/render-photography.py` to reproduce the shipped landscape editions from these inputs.

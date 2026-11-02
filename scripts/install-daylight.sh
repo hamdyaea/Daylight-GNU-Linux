@@ -1,6 +1,6 @@
 #!/bin/sh
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 # Download, inspect, then execute. A plan is printed unless --yes is explicit.
 set -eu

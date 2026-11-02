@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 """Run the actual AMD64 live ISO with noVNC, no guest network and a bounded lifetime."""
 import argparse

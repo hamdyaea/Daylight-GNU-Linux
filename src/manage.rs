@@ -1,5 +1,5 @@
 // Developer: Hamdy Abou El Anein
-// Contact: contact@daylightlinux.ch
+// Contact: info@daylightlinux.ch
 // Copyright (C) 2026 Hamdy Abou El Anein
 // SPDX-License-Identifier: GPL-3.0-only
 use crate::{config, system, Result};
@@ -52,7 +52,9 @@ pub fn packages(action: &str, dry_run: bool) -> Result<()> {
         );
     }
     if action == "update" && !dry_run {
-        let status = Command::new("/usr/bin/apt-get").arg("update").status()?;
+        let status = Command::new("/usr/bin/apt-get")
+            .args(["-o", "APT::Update::Error-Mode=any", "update"])
+            .status()?;
         if !status.success() {
             return Err("APT index refresh failed; no upgrade was attempted".into());
         }
@@ -158,7 +160,7 @@ pub fn telemetry(action: &str) -> Result<()> {
             if action == "on" && !valid_endpoint(&endpoint) {
                 return Err("A deployed, privacy-reviewed HTTPS collector endpoint must be configured first; nothing was enabled".into());
             }
-            let content=format!("# Developer: Hamdy Abou El Anein\n# Contact: contact@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n# Explicit opt-in; review the privacy documentation before enabling.\nenabled={}\nendpoint={}\n",if action=="on"{"yes"}else{"no"},endpoint);
+            let content=format!("# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n# Explicit opt-in; review the privacy documentation before enabling.\nenabled={}\nendpoint={}\n",if action=="on"{"yes"}else{"no"},endpoint);
             config::atomic_write(
                 Path::new("/etc/daylight/telemetry.conf"),
                 content.as_bytes(),

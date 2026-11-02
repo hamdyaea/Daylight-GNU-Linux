@@ -1,6 +1,6 @@
 # Privacy and boot statistics
 
-Developer: Hamdy Abou El Anein. Project contact: contact@daylightlinux.ch (activation pending).
+Developer: Hamdy Abou El Anein. Project contact: info@daylightlinux.ch (activation pending).
 
 The default environment works offline. The terminal banner, Conky and local tools make no automatic Internet request. A network check requires an explicit `daylight connect --check HOST` action.
 

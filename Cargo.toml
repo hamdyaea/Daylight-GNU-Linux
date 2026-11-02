@@ -1,5 +1,5 @@
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch (project address; activation pending)
+# Contact: info@daylightlinux.ch (project address; activation pending)
 # SPDX-License-Identifier: GPL-3.0-only
 [package]
 name = "daylight"

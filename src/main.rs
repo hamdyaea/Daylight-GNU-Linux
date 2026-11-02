@@ -1,5 +1,5 @@
 // Developer: Hamdy Abou El Anein
-// Contact: contact@daylightlinux.ch
+// Contact: info@daylightlinux.ch
 // Copyright (C) 2026 Hamdy Abou El Anein
 // SPDX-License-Identifier: GPL-3.0-only
 use daylight::{apps, config, entropy, gui, manage, system, Result};
@@ -41,7 +41,7 @@ fn help() {
 Desktop applications: info, welcome, password, temperature, days, connect,
 dice, coin, lottery, rpsls, cards, tournament, basketball, memory, slots,
 guess, speech, alarm. Changes to APT and telemetry require explicit sudo.
-Licence: GPL-3.0-only. Contact: contact@daylightlinux.ch (activation pending).
+Licence: GPL-3.0-only. Contact: info@daylightlinux.ch (activation pending).
 "#,
         version = daylight::VERSION
     )

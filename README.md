@@ -49,6 +49,6 @@ Native ARM64 CLI checks also passed on the maintainer's Raspberry Pi without ins
 
 The signed APT builder is implemented and tested, but no public Daylight APT repository is deployed. `daylight update` requires a configured source of newer packages. Production telemetry hosting, 32-bit ARM, final photorealistic wallpapers and broader hardware certification remain separate tasks.
 
-The project mailbox **contact@daylightlinux.ch is pending activation**. Use this repository's issues until delivery has been verified.
+The project mailbox **info@daylightlinux.ch is pending activation**. Use this repository's issues until delivery has been verified.
 
 Original code retains GPLv3; third-party component licenses remain applicable. See [SOURCES.md](docs/SOURCES.md), [THIRD_PARTY.md](docs/THIRD_PARTY.md), [PRIVACY.md](docs/PRIVACY.md) and [BUILD.md](docs/BUILD.md). Historical versions are preserved under `old/*`, with their original branches also retained.

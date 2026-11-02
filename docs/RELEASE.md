@@ -28,6 +28,6 @@ The signed APT repository builder is supplied, but a public repository on daylig
 
 Telemetry is an optional package, disabled by default, and its reference collector is not deployed. It counts received boot events, not unique users, and does not promise that transport IP addresses are invisible.
 
-The public mailbox `contact@daylightlinux.ch` is pending activation; use GitHub issues meanwhile. The new vector graphics are working designs, not the final photorealistic wallpaper collection. A 32-bit ARM build and broader hardware certification remain outside this candidate.
+The public mailbox `info@daylightlinux.ch` is pending activation; use GitHub issues meanwhile. The new vector graphics are working designs, not the final photorealistic wallpaper collection. A 32-bit ARM build and broader hardware certification remain outside this candidate.
 
 Checksums detect corruption. The release checksum list is not a separately signed public trust anchor. Download only from the official project repository.

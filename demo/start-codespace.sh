@@ -1,6 +1,6 @@
 #!/bin/sh
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 set -eu
 # Private Codespaces port forwarding is the authentication boundary, not VNC.

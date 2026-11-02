@@ -1,0 +1,14 @@
+{
+  "name": "Approved Alpine lake sunrise",
+  "path": "assets/source/daylight-alpine-lake.jpg",
+  "sha256": "0e1c47307fa0bd923e8b1bba404f4a53ba3e60356fe53ca9952edce337f46fc9",
+  "dimensions": [
+    1672,
+    941
+  ],
+  "kind": "AI-generated photorealistic scenery with exact rasterized Daylight Linux wordmark",
+  "developer": "Hamdy Abou El Anein",
+  "contact": "info@daylightlinux.ch",
+  "license": "GPL-3.0-only to the extent copyright applies",
+  "native_4k": false
+}

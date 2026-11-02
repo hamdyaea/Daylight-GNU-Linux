@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 """Publish exact passed artifacts; normalize filenames before hashing; never overwrite a published release."""
 import hashlib
@@ -83,7 +83,7 @@ def main():
     current={'version':version,'tag':tag,'commit':sha,'iso':iso.name,'iso_sha256':digest(iso),'iso_bytes':iso.stat().st_size,'validation_run':run_id,'prerelease':'-rc.' in version}
     (ROOT/'release/current.json').write_text(json.dumps(current,indent=2)+'\n')
     subprocess.run(['git','config','user.name','Hamdy Abou El Anein'],check=True)
-    subprocess.run(['git','config','user.email','contact@daylightlinux.ch'],check=True)
+    subprocess.run(['git','config','user.email','info@daylightlinux.ch'],check=True)
     subprocess.run(['git','add','release/current.json'],check=True)
     if subprocess.run(['git','diff','--cached','--quiet']).returncode:
         subprocess.run(['git','commit','-m','Record the published verified release manifest [skip ci]'],check=True)
