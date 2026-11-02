@@ -72,11 +72,12 @@ jobs:
               for path, data in checked.items():
                   path.parent.mkdir(parents=True, exist_ok=True)
                   path.write_bytes(data)
-                  path.chmod(0o644)
+                  path.chmod(0o755 if str(path) == 'website/build.py' else 0o644)
           pathlib.Path('/tmp/daylight-source-paths').write_text('\n'.join(sorted(allowed))+'\n')
-          print('Verified and applied exactly 17 reviewed public source files.')
+          print('Verified and applied exactly 17 reviewed public source files, preserving the executable builder.')
           PY
           git add --pathspec-from-file=/tmp/daylight-source-paths
+          git write-tree
           test "$(git write-tree)" = 54dc561f7cc56f1a51f4be1b89aacd35c97691a2
           git diff --cached --check
       - name: Build and validate the static site in the disposable runner
