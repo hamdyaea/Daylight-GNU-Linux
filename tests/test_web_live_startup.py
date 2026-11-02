@@ -16,6 +16,10 @@ class Startup(unittest.TestCase):
         text=(ROOT/'web-live/init').read_text()
         self.assertEqual(text.count('/usr/local/bin/daylight-terminal >'), 1)
         self.assertNotRegex(text, r'(?m)^\s*(?:xcalc|xmessage)\b')
+    def test_terminal_starts_at_filesystem_root(self):
+        shell=(ROOT/'web-live/daylight-shell').read_text()
+        self.assertIn('cd / || exit 1',shell)
+        self.assertNotIn('cd "$HOME"',shell)
     def test_explicit_daylight_title(self):
         text=(ROOT/'web-live/daylight-terminal').read_text()
         self.assertIn("-title 'Daylight Start'", text)
