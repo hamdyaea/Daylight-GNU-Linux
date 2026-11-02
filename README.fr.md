@@ -76,6 +76,10 @@ Les crédits distinguent explicitement les scènes générées des photographies
 
 ## Essai web sans charger le serveur du projet
 
+**Aperçu léger en un clic :** [Daylight Web](https://daylightlinux.ch/live/?lang=fr) démarre un véritable Linux Alpine x86 avec Fluxbox directement dans le navigateur, grâce à v86/WebAssembly. Sans compte ni installation : environ 42 Mo au premier lancement et 256 Mio de RAM pour le système invité, plus la mémoire du navigateur. Aucun relais réseau externe ni stockage persistant. Il s'agit explicitement d'un aperçu expérimental Alpine, pas de la version complète Debian/Raspberry Pi OS. [Construction, tests et sources](web-live/README.md)
+
+**Édition live Debian complète :**
+
 `demo/` fournit un environnement privé QEMU/noVNC utilisant la véritable ISO, pas une imitation HTML. La configuration Codespaces est disponible depuis la page d'essai. **Aucune machine virtuelle visiteur ne fonctionne sur le Raspberry Pi hébergeant le site.**
 
 Le compte et le quota Codespaces du visiteur sont utilisés ; des frais peuvent s'appliquer. Le système invité n'a ni réseau, ni disque hôte, ni persistance ; sa durée est limitée. Il faut arrêter/supprimer le Codespace séparément après utilisation. Ce n'est pas un service anonyme public multi-utilisateur. L'inscription sur DistroSea dépend de son opérateur et n'est pas présentée comme effectuée. [Détails et limites](demo/README.md)

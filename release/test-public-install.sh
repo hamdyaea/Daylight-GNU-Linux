@@ -11,6 +11,14 @@ chmod 755 /usr/sbin/policy-rc.d
 apt-get -o APT::Update::Error-Mode=any update -qq
 apt-get install -y --no-install-recommends ca-certificates curl gnupg gpgv
 sha256sum /etc/os-release > /tmp/os-before
+# A repository must be understandable in a browser as well as consumable by APT.
+curl --disable --fail --silent --show-error --proto '=https' --max-time 30 https://daylightlinux.ch/apt/ -o /tmp/daylight-apt-index.html
+grep -q 'daylight-archive-keyring.gpg' /tmp/daylight-apt-index.html
+grep -q 'binary-arm64/Packages' /tmp/daylight-apt-index.html
+curl --disable --fail --silent --show-error --proto '=https' --max-time 30 https://daylightlinux.ch/apt/apt.css -o /tmp/daylight-apt.css
+test -s /tmp/daylight-apt.css
+curl --disable --fail --silent --show-error --head --proto '=https' --max-time 30 https://daylightlinux.ch/apt -o /tmp/daylight-apt-redirect.headers
+tr -d '\r' < /tmp/daylight-apt-redirect.headers | grep -qi '^location: https://daylightlinux.ch/apt/$'
 curl --disable --fail --silent --show-error --proto '=https' --max-time 60 https://daylightlinux.ch/install.sh -o /tmp/daylight-install.sh
 cmp /tmp/daylight-install.sh /src/scripts/install-daylight.sh
 sh /tmp/daylight-install.sh --plan

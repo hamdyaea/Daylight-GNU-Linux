@@ -1,0 +1,111 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+# PID 1 only inside the disposable Alpine browser guest.
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devtmpfs devtmpfs /dev
+mkdir -p /dev/pts /run /tmp /var/log /etc/X11
+mount -t devpts devpts /dev/pts
+mount -t tmpfs -o mode=1777,size=64m tmpfs /tmp
+hostname daylight-web
+export HOME=/root TERM=linux PATH=/usr/local/bin:/usr/bin:/bin:/sbin:/usr/sbin
+/sbin/modprobe bochs 2>/dev/null || true
+/sbin/modprobe evdev 2>/dev/null || true
+/sbin/modprobe psmouse 2>/dev/null || true
+/sbin/mdev -s
+printf '\nDAYLIGHT_WEB_KERNEL_READY\n' >/dev/ttyS0
+cat >/etc/X11/xorg-daylight.conf <<'XORG'
+Section "ServerFlags"
+ Option "AutoAddDevices" "false"
+ Option "AutoEnableDevices" "false"
+EndSection
+Section "Module"
+ Disable "glx"
+EndSection
+Section "Device"
+ Identifier "Video"
+ Driver "fbdev"
+ Option "fbdev" "/dev/fb0"
+EndSection
+Section "Screen"
+ Identifier "Screen"
+ Device "Video"
+ DefaultDepth 24
+EndSection
+XORG
+keyboard=
+mouse=
+for event in /sys/class/input/event*; do
+ name=$(cat "$event/device/name" 2>/dev/null)
+ case "$name" in
+  *keyboard*|*Keyboard*) keyboard="/dev/input/$(basename "$event")" ;;
+  *[Mm]ouse*|*[Pp][Ss]/2*)
+   absolute=$(cat "$event/device/capabilities/abs" 2>/dev/null)
+   if [ -n "$absolute" ] && [ "$absolute" != 0 ]; then
+    mouse="/dev/input/$(basename "$event")"
+    absolute_mouse=yes
+   elif [ "${absolute_mouse:-no}" != yes ]; then
+    mouse="/dev/input/$(basename "$event")"
+   fi ;;
+ esac
+done
+if [ -n "$keyboard" ]; then
+ cat >>/etc/X11/xorg-daylight.conf <<XORG
+Section "InputDevice"
+ Identifier "Keyboard"
+ Driver "evdev"
+ Option "Device" "$keyboard"
+ Option "CoreKeyboard"
+EndSection
+XORG
+fi
+if [ -n "$mouse" ]; then
+ cat >>/etc/X11/xorg-daylight.conf <<XORG
+Section "InputDevice"
+ Identifier "Mouse"
+ Driver "evdev"
+ Option "Device" "$mouse"
+ Option "CorePointer"
+EndSection
+XORG
+fi
+cat >>/etc/X11/xorg-daylight.conf <<XORG
+Section "ServerLayout"
+ Identifier "Layout"
+ Screen "Screen"
+ $(test -n "$keyboard" && echo 'InputDevice "Keyboard" "CoreKeyboard"')
+ $(test -n "$mouse" && echo 'InputDevice "Mouse" "CorePointer"')
+EndSection
+XORG
+Xorg :0 -config /etc/X11/xorg-daylight.conf -nolisten tcp -noreset > /tmp/xorg.log 2>&1 &
+export DISPLAY=:0
+ready=no
+for n in $(seq 1 30); do
+ if xset q >/dev/null 2>&1; then ready=yes;break;fi
+ sleep 1
+done
+if [ "$ready" = yes ]; then
+ xset s off -dpms >/dev/null 2>&1 || true
+ fluxbox -rc /root/.fluxbox/init >/tmp/fluxbox.log 2>&1 &
+ sleep 2
+ feh --no-fehbg --bg-scale /usr/share/daylight/wallpaper.jpg >/dev/null 2>&1
+ xterm -title 'Daylight Web - Alpine preview' -geometry 76x22+55+55 -bg '#10191f' -fg '#f5eddb' -fa 'DejaVu Sans Mono' -fs 11 -e /usr/local/bin/daylight-shell >/tmp/daylight-terminal.log 2>&1 &
+ terminal_pid=$!
+ sleep 2
+ if kill -0 "$terminal_pid" 2>/dev/null; then
+  printf '\nDAYLIGHT_WEB_TERMINAL_STARTING\n' >/dev/ttyS0
+ else
+  cat /tmp/daylight-terminal.log >/dev/ttyS0
+  printf '\nDAYLIGHT_WEB_GRAPHICS_FAILED\n' >/dev/ttyS0
+ fi
+else
+ cat /tmp/xorg.log /var/log/Xorg.0.log >/dev/ttyS0
+ ls -l /dev/fb* /etc/X11/xorg-daylight.conf >/dev/ttyS0 2>&1
+ cat /etc/X11/xorg-daylight.conf >/dev/ttyS0
+ dmesg | tail -30 >/dev/ttyS0
+ printf '\nDAYLIGHT_WEB_GRAPHICS_FAILED\n' >/dev/ttyS0
+fi
+# Test console only; no network relay or host filesystem is attached.
+while true; do setsid sh -c 'exec sh </dev/ttyS0 >/dev/ttyS0 2>&1';sleep 1;done

@@ -74,6 +74,9 @@ install -m 644 "$root/server/daylight-archive-refresh.timer" /etc/systemd/system
 touch "$state/refresh.lock"
 chown daylight-archive:daylight-archive "$state/refresh.lock" /var/www/daylightlinux/apt
 runuser -u daylight-archive -- env HOME="$state" GNUPGHOME="$state/gnupg" python3 /usr/local/lib/daylight-archive/refresh-apt.py
+# Human-readable landing page; keep automatic directory indexes disabled.
+install -m 644 "$root/server/apt-index.html" /var/www/daylightlinux/apt/index.html
+install -m 644 "$root/server/apt.css" /var/www/daylightlinux/apt/apt.css
 systemctl daemon-reload
 systemctl enable --now daylight-archive-refresh.timer
 printf '%s\n' 'APT files published under https://daylightlinux.ch/apt/' 'Apache, Cloudflare, Docker, Nextcloud, network and desktop services were not restarted or reconfigured.' 'Keep the private signing key and revocation certificate outside the public document root and source repository.'

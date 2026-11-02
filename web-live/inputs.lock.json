@@ -1,0 +1,13 @@
+{
+  "alpine_version": "3.22.7",
+  "alpine_branch": "v3.22",
+  "architecture": "x86",
+  "minirootfs_sha256": "cb3459c743d0f2e0236c79a0abc49956b6d1190a709da51aa1c2acbc9e1e0c66",
+  "v86_version": "0.5.473",
+  "v86_source_ref": "315b2b0",
+  "v86_npm_sha512": "mNHB0DXDmfxn0CrlqCmlgMR1W7aKuD+sHmSctLcTROOwpOvbE4qsAhmaE6Vy+riQfcE4PfA2xvW59/ZXsYnHNw==",
+  "firmware": {
+    "seabios.bin": "73e3f359102e3a9982c35fce98eb7cd08f18303ac7f1ba6ebfbe6cdc1c244d98",
+    "vgabios.bin": "a4bc0d80cc3ca028c73dafa8fee396b8d054ce87ebd8abfbd31b06b437607880"
+  }
+}

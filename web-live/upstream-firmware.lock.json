@@ -1,0 +1,32 @@
+[
+  {
+    "file": "seabios-rel-1.16.2.tar.gz",
+    "url": "https://codeload.github.com/coreboot/seabios/tar.gz/refs/tags/rel-1.16.2",
+    "sha256": "fcb12b790971dd9918b1c631b34677f996bd283f0f8ee5c57aa98ab90645f5c0",
+    "bytes": 635922
+  },
+  {
+    "file": "v86-315b2b0.tar.gz",
+    "url": "https://codeload.github.com/copy/v86/tar.gz/315b2b0",
+    "sha256": "c06243a6598d1665df971c2b0f54fa4fa6a629f7fdac959f0a48dbca08f61d04",
+    "bytes": 1264386
+  },
+  {
+    "file": "seabios.config",
+    "url": "https://raw.githubusercontent.com/copy/v86/315b2b0/bios/seabios.config",
+    "sha256": "7d1337b30591277356ca1b1bf1a192c2c1f17e15ec9e5740befcc57bb000339d",
+    "bytes": 2157
+  },
+  {
+    "file": "fetch-and-build-seabios.sh",
+    "url": "https://raw.githubusercontent.com/copy/v86/315b2b0/bios/fetch-and-build-seabios.sh",
+    "sha256": "057856a817ae3dc85b18dc00f19274f6e877e6f28a36dce1afc5be751739e24a",
+    "bytes": 371
+  },
+  {
+    "file": "COPYING.LESSER",
+    "url": "https://raw.githubusercontent.com/copy/v86/315b2b0/bios/COPYING.LESSER",
+    "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+    "bytes": 7639
+  }
+]

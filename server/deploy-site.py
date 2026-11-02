@@ -29,6 +29,8 @@ def main():
             parser.error('Source symlinks are not allowed')
         if path.is_file():
             rel = path.relative_to(source)
+            if rel.parts[0] == 'live':
+                continue  # Separately validated runtime, managed by deploy-web-live.py.
             if path.suffix not in ALLOWED or any(p.startswith('.') for p in rel.parts) or rel.parts[0] == 'apt':
                 parser.error('Unexpected static publication path: ' + str(rel))
             files.append((path, rel))
@@ -42,7 +44,7 @@ def main():
         raise SystemExit('Expected existing document-root directory, not a symlink')
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     backup = Path('/var/backups/daylight-site') / stamp
-    shutil.copytree(WEB, backup, symlinks=True, ignore=shutil.ignore_patterns('apt', 'old'))
+    shutil.copytree(WEB, backup, symlinks=True, ignore=shutil.ignore_patterns('apt', 'old', 'live'))
     archive = WEB / 'old/site'
     if not archive.exists():
         shutil.copytree(backup, archive, symlinks=True)

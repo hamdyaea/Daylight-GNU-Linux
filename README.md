@@ -70,6 +70,10 @@ Credits explicitly distinguish generated scenery from real photography. Original
 
 ## Browser testing without burdening the production server
 
+**One-click lightweight preview:** [Daylight Web](https://daylightlinux.ch/live/?lang=en) boots a real Alpine x86 Linux/Fluxbox desktop inside the visitor's browser using v86/WebAssembly. No account or installation is required. The initial runtime download is about 42 MB and the Linux guest receives 256 MiB of RAM, with additional browser overhead. It has no external guest-network relay or persistent storage. This is explicitly an experimental Alpine preview, not the complete Debian/Raspberry Pi OS release. [Build, validation and sources](web-live/README.md)
+
+**Complete Debian live edition:**
+
 `demo/` supplies a private QEMU/noVNC environment using the real ISO, not an HTML imitation. The website links to its Codespaces configuration. **No visitor VM runs on the Raspberry Pi hosting the website.**
 
 Codespaces uses the visitor's account and allowance; charges can apply. The guest has no network, host disk or persistence, and its lifetime is bounded. Stop/delete the Codespace separately after testing. This is not an anonymous public multi-tenant VM service. DistroSea inclusion is controlled by its operator and is not claimed. [Operation and security boundaries](demo/README.md)

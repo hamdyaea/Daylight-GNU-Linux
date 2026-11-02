@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 """Regression checks for installer scope, wallpaper integrity and website structure."""
 from html.parser import HTMLParser
+from urllib.parse import urlsplit, unquote
 import json
 from pathlib import Path
 import re
@@ -78,7 +79,7 @@ class ReleaseTools(unittest.TestCase):
                     self.assertEqual(parser.lang,language);self.assertEqual(parser.h1,1)
                     for ref in parser.refs:
                         if ref.startswith('/') and not ref.startswith(('/apt/','/old/site/')):
-                            self.assertTrue((root/ref.lstrip('/').split('#')[0]).exists(),ref)
+                            self.assertTrue((root/unquote(urlsplit(ref).path).lstrip('/')).exists(),ref)
             self.assertTrue((root/'install.sh').is_file())
             self.assertIn('https://www.amazon.fr/stores/author/B0BM89T88X',(root/'books.html').read_text())
             self.assertIn('info@daylightlinux.ch',(root/'fr/books.html').read_text())
