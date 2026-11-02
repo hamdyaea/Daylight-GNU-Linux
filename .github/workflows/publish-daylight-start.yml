@@ -1,0 +1,82 @@
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Publish verified Daylight Start
+on:
+  push:
+    branches: [publish/daylight-start-20261102]
+    paths: [.github/workflows/publish-daylight-start.yml]
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: daylight-start-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 6075f5bc1e8ed95e772b5160212aaea5c77e0122
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Retrieve and verify the reviewed public source archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --disable --fail --silent --show-error --location --proto '=https' --proto-redir '=https' --retry 2 --max-time 90 https://daylightlinux.ch/media/daylight-start-source-cac321ab6877.zip -o "$RUNNER_TEMP/source.zip"
+          echo '7448eb489e31889786eab878028e6836b8118269bd5c24aabaa2ca90c45c2947  '"$RUNNER_TEMP/source.zip" | sha256sum -c -
+          python3 - <<'PY'
+          import os, pathlib, stat, zipfile
+          root=pathlib.Path.cwd()
+          path=pathlib.Path(os.environ['RUNNER_TEMP'])/'source.zip'
+          if path.stat().st_size!=1225981: raise SystemExit('Unexpected archive size')
+          with zipfile.ZipFile(path) as archive:
+              entries=archive.infolist()
+              if len(entries)!=172 or sum(x.file_size for x in entries)!=1577841: raise SystemExit('Unexpected source inventory')
+              seen=set()
+              for item in entries:
+                  name=pathlib.PurePosixPath(item.filename)
+                  if len(name.parts)<2 or name.parts[0]!='daylight-source' or name.is_absolute() or '..' in name.parts or '.git' in name.parts: raise SystemExit('Unsafe source path')
+                  mode=item.external_attr>>16
+                  if stat.S_ISLNK(mode) or item.is_dir(): raise SystemExit('Only regular source files are allowed')
+                  relative=pathlib.Path(*name.parts[1:])
+                  if str(relative) in seen: raise SystemExit('Duplicate source entry')
+                  seen.add(str(relative))
+                  destination=root/relative
+                  if destination.is_symlink() or root not in destination.resolve().parents: raise SystemExit('Source escapes checkout')
+                  destination.parent.mkdir(parents=True,exist_ok=True)
+                  destination.write_bytes(archive.read(item))
+                  destination.chmod(0o755 if mode&0o111 else 0o644)
+          PY
+          git add --all
+          test "$(git write-tree)" = af3a834c0062751f67a31c50cd11054ff9475f71
+          test -z "$(git diff --cached --name-only -- .github/workflows)"
+          git diff --cached --check
+      - name: Verify startup policy and exact resource selection
+        run: |
+          python3 tests/test_web_live_startup.py
+          python3 tests/test_web_live_interface.py
+          node --check web-live/demo.js
+          node --check web-live/test-browser.cjs
+      - name: Publish by fast-forward without changing workflow permissions
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'Hamdy Abou El Anein'
+          git config user.email 'info@daylightlinux.ch'
+          git commit -m 'Publish verified Daylight Start terminal-first browser preview [skip ci]'
+          gh auth setup-git
+          git fetch origin master
+          git merge-base --is-ancestor FETCH_HEAD HEAD
+          git push --atomic origin HEAD:refs/heads/master HEAD:refs/heads/improve/daylight-start-20261102
+      - name: Validate the actual public preview, website and APT installer
+        run: |
+          gh workflow run daylight-public-preview.yml --ref master
+          gh workflow run daylight-website.yml --ref master
+          gh workflow run daylight-source-sync.yml --ref master
