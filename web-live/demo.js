@@ -6,7 +6,7 @@ let emulator=null, generation=0, controller=null, state='idle', deadline=null, l
 let lang=new URLSearchParams(location.search).get('lang')==='en'?'en':'fr';
 const $=id=>document.getElementById(id);
 const text=(fr,en)=>lang==='fr'?fr:en;
-const english={title:'A real Linux desktop.<br>Inside your browser.',intro:'A lightweight, temporary preview of the Daylight spirit. Computing happens on your device, not on our Raspberry Pi.','scope-title':'A preview, not the complete distribution.',scope:'This experimental edition uses Alpine Linux x86 and Fluxbox. Daylight for Raspberry Pi remains based on Debian / Raspberry Pi OS ARM64. This preview does not include all of its Rust tools.',instructions:'Click inside the desktop to use the keyboard. Move windows by their title bar. Right-click the wallpaper or use Linux menu for Fluxbox. Try uname, free, top, ls and vi in the terminal.','privacy-title':'Your session stays local',privacy:'No account, no disk shared with our server, no external guest-network relay and no telemetry. Demo files download over HTTPS; the host sees that connection like any webpage request.','temporary-title':'Nothing to install',temporary:'Changes are temporary: closing, stopping or restarting discards the session. Do not enter passwords or sensitive data. The demo pauses when its tab is hidden and stops after 20 minutes.','requirements-title':'A bounded preview',requirements:'The Linux guest receives 256 MiB of RAM; the browser also needs its own memory. Startup depends on your device and connection. No public container runs on our Pi.','technical-title':'Technical details and licenses',technical:'Linux is actually emulated in WebAssembly using v86. This is not an interactive screenshot. The guest has no external network relay. Free-software components retain their own licenses.',cta:'Ready to use Daylight on your Raspberry Pi?','placeholder-text':'Your session starts here.'};
+const english={title:'A real Linux desktop.<br>Inside your browser.',intro:'A lightweight, temporary preview of the Daylight spirit. Computing happens on your device, not on our Raspberry Pi.','scope-title':'A preview, not the complete distribution.',scope:'This experimental edition uses Alpine Linux x86 and Fluxbox. Daylight for Raspberry Pi remains based on Debian / Raspberry Pi OS ARM64. This preview does not include all of its Rust tools.',instructions:'Click inside the desktop to use the keyboard. Move windows by their title bar. Right-click the wallpaper or use Linux menu for Fluxbox. Try the real graphical calculator, or use uname, free, top, ls and vi in the terminal.','privacy-title':'Your session stays local',privacy:'No account, no disk shared with our server, no external guest-network relay and no telemetry. Demo files download over HTTPS; the host sees that connection like any webpage request.','temporary-title':'Nothing to install',temporary:'Changes are temporary: closing, stopping or restarting discards the session. Do not enter passwords or sensitive data. The demo pauses when its tab is hidden and stops after 20 minutes.','requirements-title':'A bounded preview',requirements:'The Linux guest receives 256 MiB of RAM; the browser also needs its own memory. Startup depends on your device and connection. No public container runs on our Pi.','technical-title':'Technical details and licenses',technical:'Linux is actually emulated in WebAssembly using v86. This is not an interactive screenshot. The guest has no external network relay. Free-software components retain their own licenses.',cta:'Ready to use Daylight on your Raspberry Pi?','placeholder-text':'Your session starts here.'};
 const original=Object.fromEntries(Object.keys(english).map(id=>[id,$(id).innerHTML]));
 function labels(){
  document.documentElement.lang=lang;
@@ -15,7 +15,7 @@ function labels(){
  for(const [id,value] of Object.entries(lang==='en'?english:original))$(id).innerHTML=value;
  $('language').textContent=lang==='fr'?'English':'Français';
  $('start').textContent=text('Démarrer la démo','Start the demo');
- $('desktop').textContent=text('Bureau','Desktop');$('menu').textContent=text('Menu Linux','Linux menu');$('terminal').textContent='Terminal';
+ $('desktop').textContent=text('Bureau','Desktop');$('menu').textContent=text('Menu Linux','Linux menu');$('terminal').textContent='Terminal';$('calculator').textContent=text('Calculatrice','Calculator');$('about').textContent=text('À propos','About');
  $('display').setAttribute('aria-label',text('Bureau Linux interactif','Interactive Linux desktop'));
  $('pause').textContent=state==='paused'?text('Reprendre','Resume'):text('Pause','Pause');
  $('reset').textContent=text('Recommencer','Restart');$('stop').textContent=text('Arrêter','Stop');$('fullscreen').textContent=text('Plein écran','Fullscreen');
@@ -29,7 +29,7 @@ function setState(value){
  $('pause').disabled=!['running','paused'].includes(value);
  $('reset').disabled=!['running','paused','error'].includes(value);
  $('fullscreen').disabled=!['running','paused'].includes(value)||!$('display').requestFullscreen;
- for(const id of ['desktop','menu','terminal'])$(id).disabled=value!=='running';
+ for(const id of ['desktop','menu','terminal','calculator','about'])$(id).disabled=value!=='running';
  labels();
 }
 function hex(bytes){return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');}
@@ -37,14 +37,33 @@ async function verified(name,record,signal,onProgress){
  if(!/^[a-zA-Z0-9_.-]+$/.test(name)||!record||!Number.isSafeInteger(record.bytes)||record.bytes<1||record.bytes>100000000||!/^[a-f0-9]{64}$/.test(record.sha256))throw Error('Invalid asset manifest');
  const file=record.file||name;
  if(!/^[a-zA-Z0-9_.-]+$/.test(file))throw Error('Invalid asset filename');
- const response=await fetch(file+'?sha256='+record.sha256,{credentials:'omit',signal,cache:'force-cache'});
- if(!response.ok)throw Error('HTTP '+response.status+' for '+name);
- const reader=response.body.getReader();const chunks=[];let length=0;
- while(true){const {done,value}=await reader.read();if(done)break;length+=value.length;if(length>record.bytes)throw Error('Unexpected asset size');chunks.push(value);onProgress(value.length);}
- if(length!==record.bytes)throw Error('Incomplete asset: '+name);
- const bytes=new Uint8Array(length);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
- if(hex(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)))!==record.sha256)throw Error('Asset integrity check failed: '+name);
- return bytes.buffer;
+ // Retry transport failures only, never a bad hash or an oversized payload.
+ for(let attempt=0;attempt<3;attempt++){
+  if(signal.aborted)throw new DOMException('Cancelled','AbortError');
+  const transfer=new AbortController();
+  const cancel=()=>transfer.abort();signal.addEventListener('abort',cancel,{once:true});
+  const timeout=setTimeout(()=>transfer.abort(),90000);
+  let length=0;
+  try{
+   const response=await fetch(file+'?sha256='+record.sha256,{credentials:'omit',signal:transfer.signal,cache:'force-cache'});
+   if(!response.ok){const error=Error('HTTP '+response.status+' for '+name);error.retryable=[408,429,500,502,503,504].includes(response.status);throw error;}
+   if(!response.body)throw Error('Empty response body: '+name);
+   const reader=response.body.getReader();const chunks=[];
+   while(true){const {done,value}=await reader.read();if(done)break;if(length+value.length>record.bytes){await reader.cancel();throw Error('Unexpected asset size');}length+=value.length;chunks.push(value);onProgress(value.length);}
+   if(length!==record.bytes){const error=Error('Incomplete asset: '+name);error.retryable=true;throw error;}
+   const bytes=new Uint8Array(length);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
+   if(hex(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)))!==record.sha256)throw Error('Asset integrity check failed: '+name);
+   return bytes.buffer;
+  }catch(error){
+   if(signal.aborted)throw new DOMException('Cancelled','AbortError');
+   const network=error instanceof TypeError||error.name==='AbortError'||error.retryable===true;
+   if(!network)throw error;
+   if(attempt===2)throw Error(text('Connexion interrompue après trois essais. Vérifiez le réseau puis cliquez sur Recommencer.','Connection interrupted after three attempts. Check your network and select Restart.'));
+   if(length)onProgress(-length);
+   status(text('Connexion interrompue. Nouvel essai ','Connection interrupted. Retrying ')+(attempt+2)+'/3…');
+   await new Promise(resolve=>setTimeout(resolve,500*(attempt+1)));
+  }finally{clearTimeout(timeout);signal.removeEventListener('abort',cancel);}
+ }
 }
 async function library(manifest){
  if(window.V86)return;
@@ -118,6 +137,8 @@ function guestShortcut(code){
 $('desktop').addEventListener('click',()=>guestShortcut(0x20));
 $('menu').addEventListener('click',()=>guestShortcut(0x39));
 $('terminal').addEventListener('click',()=>guestShortcut(0x1C));
+$('calculator').addEventListener('click',()=>guestShortcut(0x2E));
+$('about').addEventListener('click',()=>guestShortcut(0x17));
 $('start').addEventListener('click',start);$('stop').addEventListener('click',stop);$('pause').addEventListener('click',pause);
 $('reset').addEventListener('click',async()=>{await stop();await start();});
 $('fullscreen').addEventListener('click',()=>{$('display').requestFullscreen().catch(error=>status(error.message));});

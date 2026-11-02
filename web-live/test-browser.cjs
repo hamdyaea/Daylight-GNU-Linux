@@ -9,14 +9,18 @@ const output=path.resolve('dist/web-live-validation');fs.mkdirSync(output,{recur
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.DAYLIGHT_BROWSER||'/usr/bin/chromium',headless:true,args:['--disable-dev-shm-usage']});
  const context=await browser.newContext({viewport:{width:1280,height:1050}});
- const page=await context.newPage();const errors=[],requests=[];let manifestResponse=null;
+ const page=await context.newPage();const errors=[],requests=[];let manifestResponse=null;const interfaceResponses={};
  page.on('response',response=>{if(new URL(response.url()).pathname.endsWith('/manifest.json')&&response.status()===200)manifestResponse=response.body();});
  page.on('pageerror',e=>errors.push(e.message));
  page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
+ page.on('response',response=>{const name=new URL(response.url()).pathname.split('/').pop();if(['demo.js','demo.css'].includes(name)&&response.status()===200)interfaceResponses[name]=response.body();});
  page.on('request',r=>requests.push(r.url()));
  try{
   const response=await page.goto(base,{waitUntil:'networkidle'});
   if(response.status()!==200)throw Error('Demo document unavailable');
+  interfaceResponses['index.html']=response.body();
+  if(new URL(base).hostname==='daylightlinux.ch' && !(response.headers()['cache-control']||'').includes('no-transform'))throw Error('Public HTML must forbid proxy transformations');
+  if(await page.locator('script[src*="cloudflareinsights"]').count())throw Error('Injected analytics script detected; fix origin no-transform, never weaken CSP');
   if(await page.evaluate(()=>!!window.daylightEmulator))throw Error('Emulator starts without consent');
   if(requests.some(u=>/initrd|vmlinuz|v86.wasm/.test(u)))throw Error('Guest downloaded before Start click');
   const started=Date.now();await page.locator('#start').click();
@@ -43,11 +47,30 @@ const output=path.resolve('dist/web-live-validation');fs.mkdirSync(output,{recur
   fs.writeFileSync(path.join(output,'interaction.log'),serial);
   // Verify actual Fluxbox windows rather than only a successful terminal boot.
   async function guiState(expectedProcesses, visible) {
-    await page.evaluate(()=>{window.testSerial='';window.daylightEmulator.serial0_send('n=$(pgrep -x xterm | wc -l); v=$(DISPLAY=:0 xdotool search --onlyvisible --class XTerm 2>/dev/null | wc -l); printf "\nGUISTATE=%s,%s\n" "$n" "$v"\n');});
-    await page.waitForFunction(()=>/\r\nGUISTATE=[0-9]+,[0-9]+\r\n/.test(window.testSerial),{},{timeout:15000});
-    const values=await page.evaluate(()=>window.testSerial.match(/\r\nGUISTATE=([0-9]+),([0-9]+)\r\n/).slice(1).map(Number));
-    if(values[0]!==expectedProcesses || (visible ? values[1]<expectedProcesses : values[1]!==0))throw Error('Unexpected real GUI state: '+values);
+    // Guest process creation and X11 mapping are asynchronous under emulation.
+    // Keep the real visibility assertion; poll it instead of trusting a fixed sleep.
+    let values=[];
+    for(let attempt=0;attempt<20;attempt++){
+      await page.evaluate(()=>{window.testSerial='';window.daylightEmulator.serial0_send('n=$(pgrep -x xterm | wc -l); v=$(DISPLAY=:0 xdotool search --onlyvisible --class XTerm 2>/dev/null | wc -l); printf "\nGUISTATE=%s,%s\n" "$n" "$v"\n');});
+      await page.waitForFunction(()=>/\r\nGUISTATE=[0-9]+,[0-9]+\r\n/.test(window.testSerial),{},{timeout:15000});
+      values=await page.evaluate(()=>window.testSerial.match(/\r\nGUISTATE=([0-9]+),([0-9]+)\r\n/).slice(1).map(Number));
+      if(values[0]===expectedProcesses && (visible ? values[1]>=expectedProcesses : values[1]===0))return;
+      await page.waitForTimeout(500);
+    }
+    throw Error('Real GUI state did not converge: '+values+'; expected '+expectedProcesses+' processes, visible='+visible);
   }
+  async function nativeApp(name,count){
+    await page.evaluate(name=>{window.testSerial='';window.daylightEmulator.serial0_send('n=$(pgrep -x '+name+' | wc -l); printf "\\nAPPSTATE=%s\\n" "$n"\n');},name);
+    await page.waitForFunction(()=>/\r\nAPPSTATE=[0-9]+\r\n/.test(window.testSerial),{},{timeout:15000});
+    const actual=await page.evaluate(()=>Number(window.testSerial.match(/\r\nAPPSTATE=([0-9]+)\r\n/)[1]));
+    if(actual!==count)throw Error('Native application '+name+' count '+actual+', expected '+count);
+  }
+  await nativeApp('xcalc',1);
+  await page.locator('#calculator').click();await page.waitForTimeout(2000);await nativeApp('xcalc',2);
+  await page.locator('#about').click();await page.waitForTimeout(1500);await nativeApp('xmessage',1);
+  await canvas.screenshot({path:path.join(output,'graphical-applications.png')});
+  await page.evaluate(()=>window.daylightEmulator.serial0_send('pkill -x xmessage\n'));
+  await page.waitForTimeout(500);
   await guiState(1,true);
   await page.locator('#terminal').click();await page.waitForTimeout(2000);await guiState(2,true);
   await page.locator('#desktop').click();await page.waitForTimeout(800);await guiState(2,false);
@@ -59,11 +82,14 @@ const output=path.resolve('dist/web-live-validation');fs.mkdirSync(output,{recur
   await page.locator('#pause').click();await page.waitForFunction(()=>document.body.dataset.state==='running');
   await page.locator('#stop').click();await page.waitForFunction(()=>document.body.dataset.state==='idle'&&!window.daylightEmulator);
   const own=new URL(base).origin;
-  if(requests.some(u=>new URL(u).origin!==own))throw Error('Unexpected external browser request');
+  const external=requests.filter(u=>new URL(u).origin!==own);
+  if(external.length)throw Error('Unexpected external browser request: '+external.join(', '));
   if(errors.length)throw Error('Browser errors: '+errors.join('; '));
   if(!manifestResponse)throw Error('The actual boot manifest was not observed');
   const manifestSha256=crypto.createHash('sha256').update(await manifestResponse).digest('hex');
-  const result={result:'PASS',url:base,manifestSha256,bootAndInteractionMilliseconds:Date.now()-started,canvas:size,realKeyboard:true,graphicalControls:true,twoTerminalWindows:true,desktopHideRestore:true,pauseResume:true,stop:true,externalRequests:0,autostart:false};
+  const interfaceSha256={};
+  for(const name of ['index.html','demo.js','demo.css']){if(!interfaceResponses[name])throw Error('Missing tested interface response: '+name);interfaceSha256[name]=crypto.createHash('sha256').update(await interfaceResponses[name]).digest('hex');}
+  const result={result:'PASS',url:base,manifestSha256,interfaceSha256,bootAndInteractionMilliseconds:Date.now()-started,canvas:size,realKeyboard:true,graphicalControls:true,nativeCalculator:true,nativeAboutDialog:true,twoTerminalWindows:true,desktopHideRestore:true,pauseResume:true,stop:true,externalRequests:0,autostart:false};
   fs.writeFileSync(path.join(output,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));
  }catch(error){
   await page.screenshot({path:path.join(output,'failure.png'),fullPage:true}).catch(()=>{});

@@ -5,6 +5,8 @@
 """Read-only public access and signature checks. No host APT configuration is changed."""
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
+from html.parser import HTMLParser
+from urllib.parse import urljoin, urlsplit
 import hashlib
 import json
 from pathlib import Path
@@ -16,17 +18,41 @@ BASE='https://daylightlinux.ch'
 FPR='B0575F821A31DD20753DE07C50D21240F4BCB02E'
 
 
+def interface_paths(page, hashes):
+    """Return only exact, same-origin, fingerprinted resources referenced by HTML."""
+    class Resources(HTMLParser):
+        def __init__(self):
+            super().__init__(); self.urls=[]
+        def handle_starttag(self, tag, attrs):
+            values=dict(attrs)
+            if tag=='script' and values.get('src'): self.urls.append(values['src'])
+            if tag=='link' and values.get('rel')=='stylesheet': self.urls.append(values.get('href',''))
+    resources=Resources(); resources.feed(page.decode('utf-8'))
+    paths={}
+    for name, digest in hashes.items():
+        expected=BASE+'/live/'+name+'?v='+digest[:12]
+        matches=[urljoin(BASE+'/live/',value) for value in resources.urls if urlsplit(value).path.split('/')[-1]==name]
+        if matches!=[expected]: raise RuntimeError('Page references an unreviewed interface version: '+name)
+        paths[name]=expected[len(BASE):]
+    return paths
+
+
 def main():
     checks=[]
     with tempfile.TemporaryDirectory(prefix='daylight-public-check-') as temporary:
         work=Path(temporary)
         def get(path):
             target=work/('fetch-'+str(len(checks)))
-            run=subprocess.run(['curl','--disable','--fail','--silent','--show-error','--location','--proto','=https','--proto-redir','=https','--retry','2','--connect-timeout','10','--max-time','45','--max-filesize','2097152','--output',str(target),'--write-out','%{http_code} %{url_effective}',BASE+path],capture_output=True,text=True,timeout=150)
+            run=subprocess.run(['curl','--disable','--fail','--silent','--show-error','--location','--proto','=https','--proto-redir','=https','--retry','2','--connect-timeout','10','--max-time','45','--max-filesize','2097152','--dump-header',str(target)+'.headers','--output',str(target),'--write-out','%{http_code} %{url_effective}',BASE+path],capture_output=True,text=True,timeout=150)
             if run.returncode:raise RuntimeError(path+': '+run.stderr[-300:])
             status,url=run.stdout.split(' ',1)
             if status!='200' or not url.startswith(BASE+'/'):raise RuntimeError('Unexpected public route: '+path+' '+run.stdout)
-            data=target.read_bytes();checks.append({'path':path,'bytes':len(data),'status':int(status),'final_url':url})
+            data=target.read_bytes()
+            headers=Path(str(target)+'.headers').read_text().lower()
+            if 'content-type: text/html' in headers:
+                if 'no-transform' not in headers:raise RuntimeError('Public HTML permits proxy injection: '+path)
+                if b'static.cloudflareinsights.com' in data:raise RuntimeError('Unexpected analytics injection: '+path)
+            checks.append({'path':path,'bytes':len(data),'status':int(status),'final_url':url})
             return data
         landing=get('/apt')
         if b'daylight-archive-keyring.gpg' not in landing or b'binary-arm64/Packages' not in landing:raise RuntimeError('Missing APT landing-page links')
@@ -37,10 +63,12 @@ def main():
         public=json.loads(get('/live/manifest.json'))
         expected=json.loads((ROOT/'web-live/published-runtime.json').read_text())
         if public!=expected:raise RuntimeError('Public runtime differs from the source-pinned manifest')
-        for name in ['demo.js','demo.css']:
-            if hashlib.sha256(get('/live/'+name)).digest()!=hashlib.sha256((ROOT/'web-live'/name).read_bytes()).digest():raise RuntimeError('Public interface differs from reviewed source: '+name)
         page=get('/live/')
-        for marker in [b'id="desktop"',b'id="menu"',b'id="terminal"',b'id="screen"']:
+        # Follow the actual versioned resources, never stale compatibility URLs.
+        hashes={name:hashlib.sha256((ROOT/'web-live'/name).read_bytes()).hexdigest() for name in ('demo.js','demo.css')}
+        for name,path in interface_paths(page,hashes).items():
+            if hashlib.sha256(get(path)).hexdigest()!=hashes[name]:raise RuntimeError('Loaded public interface differs from reviewed source: '+name)
+        for marker in [b'id="desktop"',b'id="menu"',b'id="terminal"',b'id="calculator"',b'id="about"',b'id="screen"']:
             if marker not in page:raise RuntimeError('Missing graphical demo control')
         home=work/'gnupg';home.mkdir(mode=0o700)
         key=work/'archive.gpg';key.write_bytes(get('/apt/daylight-archive-keyring.gpg'))

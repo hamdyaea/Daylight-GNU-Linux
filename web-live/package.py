@@ -44,7 +44,7 @@ def main():
         for path in sorted(SOURCES.rglob('*')):
             if path.is_file() and not path.is_symlink() and not path.name.endswith('.partial'):archive.write(path,'upstream/'+str(path.relative_to(SOURCES)))
         for path in sorted((ROOT/'web-live').iterdir()):
-            if path.is_file() and (path.name=='init' or path.suffix in ('.py','.sh','.mjs','.cjs','.js','.css','.html','.json','.md','.license')):archive.write(path,'daylight/'+path.name)
+            if path.is_file() and (path.name=='init' or path.suffix in ('.py','.sh','.mjs','.cjs','.js','.css','.html','.json','.md','.license','.style')):archive.write(path,'daylight/'+path.name)
         archive.write(ROOT/'LICENSE','daylight/LICENSE-GPL-3.txt')
     license_text='''Daylight Web Preview — experimental browser edition
 Developer: Hamdy Abou El Anein

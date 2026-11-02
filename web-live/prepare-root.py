@@ -58,11 +58,15 @@ def main():
   if path.exists():path.chmod(mode)
   path.write_text(data);path.chmod(mode)
  shutil.copyfile(ROOT/'web-live/init',base/'init');(base/'init').chmod(0o755)
- write('root/.fluxbox/init',HEADER+'session.screen0.toolbar.tools: workspacename, prevwindow, nextwindow, iconbar, systemtray, clock\nsession.screen0.toolbar.widthPercent: 100\nsession.screen0.toolbar.placement: BottomCenter\nsession.screen0.workspaces: 2\nsession.menuFile: /root/.fluxbox/menu\nsession.keyFile: /root/.fluxbox/keys\nsession.styleFile: /usr/share/fluxbox/styles/Black\n')
- write('root/.fluxbox/menu',HEADER+'[begin] (Daylight Linux - Web)\n[exec] (Terminal) {xterm -bg "#10191f" -fg "#f5eddb" -fa "DejaVu Sans Mono" -fs 11 -e /usr/local/bin/daylight-shell}\n[exec] (System monitor) {xterm -title "System monitor" -e top}\n[exec] (About this preview) {xterm -hold -e cat /etc/daylight-preview}\n[workspaces] (Workspaces)\n[reconfig] (Reload Fluxbox)\n[end]\n')
- write('root/.fluxbox/keys',HEADER+'OnDesktop Mouse3 :RootMenu\nMod1 F4 :Close\nMod4 Return :Exec xterm -e /usr/local/bin/daylight-shell\nMod4 d :ShowDesktop\nMod4 space :RootMenu\n')
+ write('root/.fluxbox/init',HEADER+'session.screen0.toolbar.tools: workspacename, prevwindow, nextwindow, iconbar, systemtray, clock\nsession.screen0.toolbar.widthPercent: 100\nsession.screen0.toolbar.placement: BottomCenter\nsession.screen0.workspaces: 2\nsession.menuFile: /root/.fluxbox/menu\nsession.keyFile: /root/.fluxbox/keys\nsession.styleFile: /usr/share/daylight/fluxbox.style\n')
+ write('root/.fluxbox/menu',HEADER+'[begin] (Daylight Linux - Web)\n[exec] (Terminal) {xterm -bg "#10191f" -fg "#f5eddb" -fa "DejaVu Sans Mono" -fs 11 -e /usr/local/bin/daylight-shell}\n[exec] (System monitor) {xterm -title "System monitor" -e top}\n[exec] (Calculator) {xcalc -title "Daylight Calculator" -geometry 250x310+710+85}\n[exec] (About this preview) {/usr/local/bin/daylight-about}\n[workspaces] (Workspaces)\n[reconfig] (Reload Fluxbox)\n[end]\n')
+ write('root/.fluxbox/keys',HEADER+'OnDesktop Mouse3 :RootMenu\nMod1 F4 :Close\nMod4 Return :Exec xterm -e /usr/local/bin/daylight-shell\nMod4 d :ShowDesktop\nMod4 space :RootMenu\nMod4 c :Exec xcalc -title "Daylight Calculator" -geometry 250x310+710+85\nMod4 i :Exec /usr/local/bin/daylight-about\n')
  write('etc/daylight-preview','Daylight Web Preview\nDeveloper: Hamdy Abou El Anein\nContact: info@daylightlinux.ch\n\nExperimental Alpine x86 / Fluxbox inside v86 WebAssembly.\nThe main Daylight release remains Debian/Raspberry Pi OS.\nThis preview is not the complete installable distribution.\nTemporary files, no external guest network, no host disks.\nClosing or resetting the tab discards your session.\n\nDaylight glue: GPL-3.0-only. Upstream licenses are retained.\n')
  write('etc/resolv.conf','# No external guest network.\n')
+ write('usr/local/bin/daylight-about','#!/bin/sh\n'+HEADER+"exec xmessage -title 'About Daylight Web' -geometry 470x230+250+200 -bg '#172330' -fg '#f5eddb' -fn 'fixed' -buttons 'Close:0' -default Close -file /etc/daylight-preview\n",0o755)
+ style=base/'usr/share/daylight/fluxbox.style';style.parent.mkdir(parents=True,exist_ok=True)
+ shutil.copyfile(ROOT/'web-live/daylight.style',style)
+
  write('usr/local/bin/daylight-shell','#!/bin/sh\n'+HEADER+'''export HOME=/root TERM=xterm-256color PS1='daylight:~$ '
 clear
 printf '\\033[1;33m   /\\\\    DAYLIGHT LINUX\\n__/  \\\\__ WEB PREVIEW\\033[0m\\n\\n'

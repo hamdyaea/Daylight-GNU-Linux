@@ -91,8 +91,9 @@ if [ "$ready" = yes ]; then
  fluxbox -rc /root/.fluxbox/init >/tmp/fluxbox.log 2>&1 &
  sleep 2
  feh --no-fehbg --bg-scale /usr/share/daylight/wallpaper.jpg >/dev/null 2>&1
- xterm -title 'Daylight Web - Alpine preview' -geometry 76x22+55+55 -bg '#10191f' -fg '#f5eddb' -fa 'DejaVu Sans Mono' -fs 11 -e /usr/local/bin/daylight-shell >/tmp/daylight-terminal.log 2>&1 &
+ xterm -title 'Daylight Web - Alpine preview' -geometry 62x16+35+65 -bg '#10191f' -fg '#f5eddb' -fa 'DejaVu Sans Mono' -fs 11 -e /usr/local/bin/daylight-shell >/tmp/daylight-terminal.log 2>&1 &
  terminal_pid=$!
+ xcalc -title 'Daylight Calculator' -geometry 250x310+710+85 >/tmp/daylight-calculator.log 2>&1 &
  sleep 2
  if kill -0 "$terminal_pid" 2>/dev/null; then
   printf '\nDAYLIGHT_WEB_TERMINAL_STARTING\n' >/dev/ttyS0

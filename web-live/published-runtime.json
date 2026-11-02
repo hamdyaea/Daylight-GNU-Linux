@@ -33,9 +33,9 @@
       "file": "vmlinuz-2df278c6989043b2.bin"
     },
     "initrd.bin": {
-      "bytes": 31143026,
-      "sha256": "218a9f01d7daf95a365ecbe2677860d3aa7a068b15e848542d3d9012746132aa",
-      "file": "initrd-218a9f01d7daf95a.bin"
+      "bytes": 31166358,
+      "sha256": "0665a94babc9bf8980c8f70d47dc8870817ed69a2b803ccc6e64e9bf85b2f4f7",
+      "file": "initrd-0665a94babc9bf89.bin"
     }
   }
 }

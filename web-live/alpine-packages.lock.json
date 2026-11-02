@@ -972,6 +972,15 @@
     "U": "https://wayland.freedesktop.org"
   },
   {
+    "P": "xcalc",
+    "V": "1.1.2-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xcalc",
+    "c": "796e9f0e433fc86de572625b99e7a375af213909",
+    "U": "https://www.x.org"
+  },
+  {
     "P": "xdotool",
     "V": "3.20211022.1-r1",
     "A": "x86",
@@ -1024,6 +1033,15 @@
     "o": "xkeyboard-config",
     "c": "4f37a562ee62763122c3f5d5060f2ee6ba0d01ea",
     "U": "https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config"
+  },
+  {
+    "P": "xmessage",
+    "V": "1.0.7-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xmessage",
+    "c": "c9b0213d9578751e3db2bd15d9bbe0b144323aec",
+    "U": "https://xorg.freedesktop.org/"
   },
   {
     "P": "xorg-server",

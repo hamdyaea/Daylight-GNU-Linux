@@ -5,7 +5,7 @@ Daylight glue and interface: GPL-3.0-only. Upstream licenses remain separate.
 
 ## What users get
 
-https://daylightlinux.ch/live/ opens a real graphical Linux guest without a GitHub account. Start downloads the emulator, firmware, kernel and initramfs; it then boots Alpine x86 and Fluxbox inside WebAssembly. Windows, the taskbar, the desktop menu and xterm are real guest processes. The Desktop, Linux menu and Terminal controls send fixed physical key sequences to Fluxbox.
+https://daylightlinux.ch/live/ opens a real graphical Linux guest without a GitHub account. Start downloads the emulator, firmware, kernel and initramfs; it then boots Alpine x86 and Fluxbox inside WebAssembly. Windows, the taskbar, the desktop menu, xterm, the calculator and the About dialog are real guest processes. The preview uses the same dark/gold Fluxbox theme as Daylight, not a missing upstream theme name. The Desktop, Linux menu, Terminal, Calculator and About controls send fixed physical key sequences to Fluxbox.
 
 The guest receives 256 MiB of RAM plus 8 MiB video memory. The browser/emulator needs additional memory. The six runtime payloads total about 42 MB; timing depends on the device and network. Nothing boots or downloads the guest payload before Start. Background tabs pause a running guest and the session is stopped after 20 minutes. Stop/reset/closing discards modifications. No guest network relay, shared host filesystem, account, clipboard bridge or telemetry is configured. Serving the page still exposes ordinary connection metadata to hosting/network providers.
 
@@ -38,10 +38,24 @@ Serve `dist/web-live-publish` on 127.0.0.1:34403. With Playwright and Chromium i
 node web-live/test-browser.cjs
 ```
 
-The browser check waits for actual graphical readiness, captures the canvas, types through the browser into xterm and verifies the resulting guest file, opens a second terminal, hides/restores real windows, opens the menu, and checks pause/resume/stop. It rejects external-origin requests and pre-consent guest downloads. A serial boot message alone is not sufficient.
+The browser check waits for actual graphical readiness, captures the canvas, types through the browser into xterm and verifies the resulting guest file, opens a second terminal and calculator, verifies the native About dialog, hides/restores real windows, opens the menu, and checks pause/resume/stop. It rejects external-origin requests and pre-consent guest downloads. A serial boot message alone is not sufficient.
 
 Use `DAYLIGHT_DEMO_URL=https://daylightlinux.ch/live/` to repeat it against public HTTPS. `DAYLIGHT_PLAYWRIGHT` and `DAYLIGHT_BROWSER` can point to existing project-local tools. This is not physical Safari/iOS certification; a desktop/laptop browser with keyboard and mouse is recommended.
 
 Publication uses `server/deploy-web-live.py`, requiring successful browser evidence for the exact runtime manifest. The general website deployer skips `/live` so a site rebuild cannot replace a validated runtime. Payload filenames contain content hashes; metadata and the HTML entry point are replaced last. No emulator daemon or public server-side container is launched.
 
 Upstream documentation: https://github.com/copy/v86 and https://copy.sh/v86/ .
+
+## Public HTML and CI failures
+
+The Daylight virtual host sets `Cache-Control: public, max-age=0, must-revalidate, no-transform` on HTML. This prevents a reverse proxy from injecting analytics or email-rewriting scripts into reviewed pages. The strict CSP is retained; third-party scripts are not allowlisted to make a test pass. `server/configure-static-delivery.py` applies only that scoped policy, with configuration checks, a backup and a graceful Apache reload.
+
+An actual public CI failure in run 41453755155 was caused by Cloudflare's injected RUM beacon outside Europe. The guest had reached its desktop and passed the keyboard/window tests, but the browser correctly rejected the unexpected external script. The unchanged run passed after the origin delivery policy was corrected. Old failed attempts remain in GitHub history; notifications were not disabled to hide errors.
+
+## Transport and cache regressions
+
+Runtime downloads retry transport failures at most three times, with a 90-second per-attempt deadline. Cancellation is respected. An incorrect SHA256 or oversized response is rejected immediately; no verification is bypassed. `node web-live/test-transfer.cjs` injects controlled local transport failures and tests retry recovery, integrity rejection, size bounds, cancellation and exhaustion.
+
+The public check follows the exact fingerprinted JS/CSS URLs in the current HTML, rather than testing stale unversioned CDN compatibility URLs. `python3 tests/test_web_live_interface.py` checks same-origin resource selection and rejects missing, duplicated, old or external resources.
+
+The graphical browser test polls the actual X11 mapping state of launched windows within a fixed limit instead of assuming that an emulated process is visible exactly two seconds after creation. It still fails when the expected windows do not become visible.

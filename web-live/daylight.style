@@ -1,0 +1,44 @@
+! Developer: Hamdy Abou El Anein
+! Contact: info@daylightlinux.ch
+! SPDX-License-Identifier: GPL-3.0-only
+*.font: DejaVu Sans-10
+*.borderColor: #344251
+*.borderWidth: 1
+window.title.focus: flat solid
+window.title.focus.color: #202e3e
+window.title.unfocus: flat solid
+window.title.unfocus.color: #141e29
+window.label.focus: parentrelative
+window.label.focus.textColor: #f5c777
+window.label.unfocus: parentrelative
+window.label.unfocus.textColor: #9aa8b7
+window.button.focus: flat solid
+window.button.focus.color: #29394b
+window.button.focus.picColor: #f5c777
+window.handle.focus: flat solid
+window.handle.focus.color: #d5a252
+window.handleWidth: 3
+window.bevelWidth: 5
+menu.title: flat solid
+menu.title.color: #233346
+menu.title.textColor: #f5c777
+menu.frame: flat solid
+menu.frame.color: #131d29
+menu.frame.textColor: #e8edf3
+menu.hilite: flat solid
+menu.hilite.color: #344a61
+menu.hilite.textColor: #ffffff
+menu.itemHeight: 28
+menu.titleHeight: 32
+menu.bevelWidth: 6
+toolbar: flat solid
+toolbar.color: #172330
+toolbar.clock: parentrelative
+toolbar.clock.textColor: #e8edf3
+toolbar.workspace: parentrelative
+toolbar.workspace.textColor: #f5c777
+toolbar.iconbar.focused: flat solid
+toolbar.iconbar.focused.color: #344a61
+toolbar.iconbar.focused.textColor: #ffffff
+toolbar.iconbar.unfocused: parentrelative
+toolbar.iconbar.unfocused.textColor: #b2becb
