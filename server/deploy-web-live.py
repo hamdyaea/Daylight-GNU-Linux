@@ -35,6 +35,8 @@ def main():
         raise SystemExit('Exact-runtime browser and keyboard validation is required')
     if evidence.get('terminalOnlyStartup') is not True or evidence.get('startupFocused') is not True or evidence.get('startupTitle') != 'Daylight Start':
         raise SystemExit('Verified terminal-first Daylight Start startup is required')
+    if evidence.get('simpleToolbar') is not True or evidence.get('restartCleanGuest') is not True or evidence.get('automaticVisibilityResume') is not True:
+        raise SystemExit('Validated three-control interface, clean restart and automatic resume are required')
     for name in ('index.html','demo.js','demo.css'):
         if evidence.get('interfaceSha256',{}).get(name)!=sha(source/name):
             raise SystemExit('Exact graphical-interface browser validation is required: '+name)

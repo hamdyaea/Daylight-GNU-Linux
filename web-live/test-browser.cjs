@@ -5,7 +5,7 @@
 const {chromium}=require(process.env.DAYLIGHT_PLAYWRIGHT||'../dist/browser-tools/node_modules/playwright');
 const fs=require('fs');const path=require('path');const crypto=require('crypto');
 const base=process.env.DAYLIGHT_DEMO_URL||'http://127.0.0.1:34403/';
-const output=path.resolve('dist/web-live-validation');fs.mkdirSync(output,{recursive:true});
+const output=path.resolve(process.env.DAYLIGHT_DEMO_EVIDENCE||'dist/web-live-validation');fs.mkdirSync(output,{recursive:true});
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.DAYLIGHT_BROWSER||'/usr/bin/chromium',headless:true,args:['--disable-dev-shm-usage']});
  const context=await browser.newContext({viewport:{width:1280,height:1050}});
@@ -23,7 +23,9 @@ const output=path.resolve('dist/web-live-validation');fs.mkdirSync(output,{recur
   if(await page.locator('script[src*="cloudflareinsights"]').count())throw Error('Injected analytics script detected; fix origin no-transform, never weaken CSP');
   if(await page.evaluate(()=>!!window.daylightEmulator))throw Error('Emulator starts without consent');
   if(requests.some(u=>/initrd|vmlinuz|v86.wasm/.test(u)))throw Error('Guest downloaded before Start click');
-  if((await page.locator('#start').innerText())!=='Daylight Start')throw Error('Missing Daylight Start branding');
+  if(!(await page.locator('.eyebrow').innerText()).includes('DAYLIGHT START'))throw Error('Missing Daylight Start branding');
+  const toolbar=await page.locator('.toolbar button').evaluateAll(items=>items.map(item=>({id:item.id,text:item.textContent})));
+  if(JSON.stringify(toolbar)!==JSON.stringify([{id:'start',text:'Démarrer'},{id:'reset',text:'Redémarrer'},{id:'stop',text:'Stop'}]))throw Error('Incorrect three-button toolbar');
   const started=Date.now();await page.locator('#start').click();
   await page.waitForFunction(()=>['running','error'].includes(document.body.dataset.state),{},{timeout:200000});
   if(await page.locator('body').getAttribute('data-state')!=='running')throw Error(await page.locator('#status').innerText());
@@ -70,23 +72,42 @@ const output=path.resolve('dist/web-live-validation');fs.mkdirSync(output,{recur
     const actual=await page.evaluate(()=>Number(window.testSerial.match(/\r\nAPPSTATE=([0-9]+)\r\n/)[1]));
     if(actual!==count)throw Error('Native application '+name+' count '+actual+', expected '+count);
   }
+  async function shortcut(key){
+    await page.locator('#display').focus();
+    await page.evaluate(()=>window.daylightEmulator.keyboard_set_enabled(true));
+    await page.keyboard.press('Meta+'+key);
+  }
   await nativeApp('xcalc',0);
-  await page.locator('#calculator').click();await page.waitForTimeout(2000);await nativeApp('xcalc',1);
-  await page.locator('#about').click();await page.waitForTimeout(1500);await nativeApp('xmessage',1);
+  await shortcut('c');await page.waitForTimeout(2000);await nativeApp('xcalc',1);
+  await shortcut('i');await page.waitForTimeout(1500);await nativeApp('xmessage',1);
   await canvas.screenshot({path:path.join(output,'graphical-applications.png')});
   await page.evaluate(()=>window.daylightEmulator.serial0_send('pkill -x xmessage\n'));
   await page.waitForTimeout(500);
   await guiState(1,true);
-  await page.locator('#terminal').click();await page.waitForTimeout(2000);await guiState(2,true);
+  await shortcut('Enter');await page.waitForTimeout(2000);await guiState(2,true);
   await page.evaluate(()=>{window.testSerial='';window.daylightEmulator.serial0_send('t=$(DISPLAY=:0 xdotool getactivewindow getwindowname); printf "\\nNEWTITLE=%s\\n" "$t"\n');});
   await page.waitForFunction(()=>window.testSerial.includes('\r\nNEWTITLE=Daylight Start\r\n'),{},{timeout:15000});
-  await page.locator('#desktop').click();await page.waitForTimeout(800);await guiState(2,false);
-  await page.locator('#menu').click();await page.waitForTimeout(800);
+  await shortcut('d');await page.waitForTimeout(800);await guiState(2,false);
+  await shortcut('Space');await page.waitForTimeout(800);
   await canvas.screenshot({path:path.join(output,'desktop-menu.png')});
   await page.evaluate(()=>window.daylightEmulator.keyboard_send_scancodes([0x01,0x81]));
-  await page.locator('#desktop').click();await page.waitForTimeout(800);await guiState(2,true);
-  await page.locator('#pause').click();await page.waitForFunction(()=>document.body.dataset.state==='paused');
-  await page.locator('#pause').click();await page.waitForFunction(()=>document.body.dataset.state==='running');
+  await shortcut('d');await page.waitForTimeout(800);await guiState(2,true);
+  // Trigger the real visibility handler: hidden guest pauses, visible guest resumes.
+  await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});document.dispatchEvent(new Event('visibilitychange'));});
+  await page.waitForFunction(()=>document.body.dataset.state==='paused');
+  await page.evaluate(()=>{delete document.hidden;document.dispatchEvent(new Event('visibilitychange'));});
+  await page.waitForFunction(()=>document.body.dataset.state==='running');
+  // Restart must create a clean guest, not merely relabel a paused session.
+  console.log('Initial terminal, native shortcuts and automatic pause/resume passed; testing a clean restart.');
+  await page.locator('#reset').click();
+  await page.waitForFunction(()=>['running','error'].includes(document.body.dataset.state),{},{timeout:200000});
+  if(await page.locator('body').getAttribute('data-state')!=='running')throw Error('Restart failed: '+await page.locator('#status').innerText());
+  // GUI readiness precedes the optional test console; wait for that console before probing it.
+  await page.waitForFunction(()=>typeof serial==='string'&&serial.includes('/ # '),{},{timeout:15000});
+  await page.evaluate(()=>{window.testSerial='';window.daylightEmulator.add_listener('serial0-output-byte',b=>{window.testSerial=(window.testSerial+String.fromCharCode(b)).slice(-16000);});window.daylightEmulator.serial0_send('test ! -e /tmp/browser-keyboard-test && echo RESTART_CLEAN; t=$(DISPLAY=:0 xdotool getactivewindow getwindowname); n=$(pgrep -x xterm | wc -l); c=$(pgrep -x xcalc | wc -l); printf "\\nRESTART_STATE=%s|%s|%s\\n" "$t" "$n" "$c"\n');});
+  await page.waitForFunction(()=>window.testSerial.includes('\r\nRESTART_CLEAN\r\n')&&window.testSerial.includes('\r\nRESTART_STATE=Daylight Start|1|0\r\n'),{},{timeout:15000});
+  console.log('Restart produced a fresh foreground Daylight Start terminal with no prior session files.');
+  fs.writeFileSync(path.join(output,'restart.log'),await page.evaluate(()=>window.testSerial));
   await page.locator('#stop').click();await page.waitForFunction(()=>document.body.dataset.state==='idle'&&!window.daylightEmulator);
   const own=new URL(base).origin;
   const external=requests.filter(u=>new URL(u).origin!==own);
@@ -96,7 +117,7 @@ const output=path.resolve('dist/web-live-validation');fs.mkdirSync(output,{recur
   const manifestSha256=crypto.createHash('sha256').update(await manifestResponse).digest('hex');
   const interfaceSha256={};
   for(const name of ['index.html','demo.js','demo.css']){if(!interfaceResponses[name])throw Error('Missing tested interface response: '+name);interfaceSha256[name]=crypto.createHash('sha256').update(await interfaceResponses[name]).digest('hex');}
-  const result={result:'PASS',url:base,manifestSha256,interfaceSha256,bootAndInteractionMilliseconds:Date.now()-started,canvas:size,realKeyboard:true,graphicalControls:true,terminalOnlyStartup:true,startupTitle:"Daylight Start",startupFocused:true,calculatorOnDemand:true,nativeCalculator:true,nativeAboutDialog:true,twoTerminalWindows:true,desktopHideRestore:true,pauseResume:true,stop:true,externalRequests:0,autostart:false};
+  const result={result:'PASS',url:base,manifestSha256,interfaceSha256,bootAndInteractionMilliseconds:Date.now()-started,canvas:size,realKeyboard:true,graphicalControls:true,simpleToolbar:true,nativeShortcuts:true,automaticVisibilityResume:true,restartCleanGuest:true,terminalOnlyStartup:true,startupTitle:"Daylight Start",startupFocused:true,calculatorOnDemand:true,nativeCalculator:true,nativeAboutDialog:true,twoTerminalWindows:true,desktopHideRestore:true,pauseResume:true,stop:true,externalRequests:0,autostart:false};
   fs.writeFileSync(path.join(output,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));
  }catch(error){
   await page.screenshot({path:path.join(output,'failure.png'),fullPage:true}).catch(()=>{});

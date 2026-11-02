@@ -5,11 +5,11 @@ Daylight glue and interface: GPL-3.0-only. Upstream licenses remain separate.
 
 ## What users get
 
-https://daylightlinux.ch/live/ opens a real graphical Linux guest without a GitHub account. The **Daylight Start** button downloads the emulator, firmware, kernel and initramfs; it then boots Alpine x86 and Fluxbox inside WebAssembly. Startup opens exactly one visible, focused terminal titled **Daylight Start**. Calculator and About stay closed until explicitly requested. The same terminal launcher is used by the menu and toolbar. The boot-ready event is emitted only after the real terminal is mapped, focused and its prompt initialised.
+https://daylightlinux.ch/live/ opens a real graphical Linux guest without a GitHub account. The **Démarrer / Start** button downloads the emulator, firmware, kernel and initramfs; it then boots Alpine x86 and Fluxbox inside WebAssembly. Startup opens exactly one visible, focused terminal titled **Daylight Start**. Calculator and About stay closed until explicitly requested. The same terminal launcher is used by automatic startup, the native menu and guest keyboard shortcut. The boot-ready event is emitted only after the real terminal is mapped, focused and its prompt initialised.
 
-Windows, the taskbar, the desktop menu, xterm, the calculator and the About dialog are real guest processes. The preview uses the same dark/gold Fluxbox theme as Daylight, not a missing upstream theme name. The Desktop, Linux menu, Terminal, Calculator and About controls send fixed physical key sequences to Fluxbox.
+Windows, the taskbar, the desktop menu, xterm, the calculator and the About dialog are real guest processes. The preview uses the same dark/gold Fluxbox theme as Daylight, not a missing upstream theme name. The web toolbar contains only Start, Restart and Stop. Applications remain accessible in the native Fluxbox menu and through guest shortcuts.
 
-The guest receives 256 MiB of RAM plus 8 MiB video memory. The browser/emulator needs additional memory. The six runtime payloads total about 42 MB; timing depends on the device and network. Nothing boots or downloads the guest payload before Start. Background tabs pause a running guest and the session is stopped after 20 minutes. Stop/reset/closing discards modifications. No guest network relay, shared host filesystem, account, clipboard bridge or telemetry is configured. Serving the page still exposes ordinary connection metadata to hosting/network providers.
+The guest receives 256 MiB of RAM plus 8 MiB video memory. The browser/emulator needs additional memory. The six runtime payloads total about 42 MB; timing depends on the device and network. Nothing boots or downloads the guest payload before Start. Background tabs pause a running guest; returning to the tab resumes it automatically. The session stops after 20 minutes. Stop/reset/closing discards modifications. No guest network relay, shared host filesystem, account, clipboard bridge or telemetry is configured. Serving the page still exposes ordinary connection metadata to hosting/network providers.
 
 This is an experimental, deliberately pruned Alpine preview, not the complete Debian Daylight release, a Raspberry Pi emulator, or a generally upgradeable Alpine system. The main product remains Raspberry Pi OS/Debian ARM64. The full Debian AMD64 ISO remains available separately.
 
@@ -61,3 +61,13 @@ Runtime downloads retry transport failures at most three times, with a 90-second
 The public check follows the exact fingerprinted JS/CSS URLs in the current HTML, rather than testing stale unversioned CDN compatibility URLs. `python3 tests/test_web_live_interface.py` checks same-origin resource selection and rejects missing, duplicated, old or external resources.
 
 The graphical browser test polls the actual X11 mapping state of launched windows within a fixed limit instead of assuming that an emulated process is visible exactly two seconds after creation. It still fails when the expected windows do not become visible.
+
+## Three-button startup and network handling
+
+The toolbar has only Démarrer / Redémarrer / Stop (Start / Restart / Stop in English). The terminal still opens in the foreground as Daylight Start. Native menu and shortcuts remain available; calculator and About are not automatically launched. A running guest pauses when the tab is hidden and resumes on return without a separate Pause button.
+
+All startup file requests, including the initial JSON manifest and emulator library bytes, use cancellable bounded transfers. A transient network failure or selected transient HTTP response gets at most three attempts. The manifest is limited to 64 KiB and validated before payload downloads. Invalid JSON, wrong hashes, oversized content and non-retryable HTTP errors are rejected. Error messages identify the failed step rather than expose only “Failed to fetch”. A failing browser/network cannot be made reachable by retries alone; the UI never claims that it can.
+
+The script element retains Subresource Integrity and same-origin loading, after its bytes have been independently verified. No CSP restriction is relaxed. Stop aborts the current transfer/retry and suppresses stale errors; Restart starts a new session.
+
+`web-live/test-startup-network.cjs` runs only against a localhost preview. It reproduces a failed initial manifest request, checks recovery, bounded failure, invalid replies, cancellation and the three-control layout. It must not fault-inject the public server.

@@ -35,7 +35,8 @@ class Startup(unittest.TestCase):
         self.assertNotIn(':Exec xterm -e /usr/local/bin/daylight-shell', text)
     def test_browser_brand_and_upstream_disclosure(self):
         text=(ROOT/'web-live/index.html').read_text()
-        self.assertIn('id="start" type="button">Daylight Start', text)
+        self.assertIn('id="start" type="button">Démarrer', text)
+        self.assertEqual(re.findall(r'<button id="([^"]+)"',text), ['start','reset','stop'])
         self.assertIn('Alpine Linux x86', text)
         self.assertIn('Daylight Start — opening your terminal',(ROOT/'web-live/demo.js').read_text())
     def test_corresponding_sources_include_helpers(self):

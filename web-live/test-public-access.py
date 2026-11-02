@@ -8,6 +8,7 @@ from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlsplit
 import hashlib
+import re
 import json
 from pathlib import Path
 import subprocess
@@ -64,12 +65,13 @@ def main():
         expected=json.loads((ROOT/'web-live/published-runtime.json').read_text())
         if public!=expected:raise RuntimeError('Public runtime differs from the source-pinned manifest')
         page=get('/live/')
-        if b'id="start" type="button">Daylight Start' not in page:raise RuntimeError('Missing Daylight Start entry button')
+        if b'id="start" type="button">D\xc3\xa9marrer' not in page:raise RuntimeError('Missing Daylight start control')
+        if re.findall(rb'<button id="([^"]+)"',page)!=[b'start',b'reset',b'stop']:raise RuntimeError('The public interface must contain exactly Start, Restart and Stop')
         # Follow the actual versioned resources, never stale compatibility URLs.
         hashes={name:hashlib.sha256((ROOT/'web-live'/name).read_bytes()).hexdigest() for name in ('demo.js','demo.css')}
         for name,path in interface_paths(page,hashes).items():
             if hashlib.sha256(get(path)).hexdigest()!=hashes[name]:raise RuntimeError('Loaded public interface differs from reviewed source: '+name)
-        for marker in [b'id="desktop"',b'id="menu"',b'id="terminal"',b'id="calculator"',b'id="about"',b'id="screen"']:
+        for marker in [b'id="start"',b'id="reset"',b'id="stop"',b'id="screen"']:
             if marker not in page:raise RuntimeError('Missing graphical demo control')
         home=work/'gnupg';home.mkdir(mode=0o700)
         key=work/'archive.gpg';key.write_bytes(get('/apt/daylight-archive-keyring.gpg'))
