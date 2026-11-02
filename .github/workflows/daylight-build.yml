@@ -1,11 +1,11 @@
 # Developer: Hamdy Abou El Anein
-# Contact: contact@daylightlinux.ch
+# Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 name: Daylight candidate validation
 on:
   push:
     branches: [master, build/daylight-v5, build/daylight-v5-rc2]
-    paths-ignore: ['docs/**', '*.md', 'release/**', '.github/workflows/daylight-release.yml', '.github/workflows/daylight-prepare-rc2.yml']
+    paths-ignore: ['docs/**', '*.md', 'release/**', '.github/workflows/daylight-release.yml', '.github/workflows/daylight-prepare-rc2.yml', '.github/workflows/daylight-source-sync.yml']
   pull_request:
   workflow_dispatch:
 permissions:
@@ -66,7 +66,7 @@ jobs:
           set -euo pipefail
           docker run --rm --privileged --cpus=2 --memory=5g -v "$PWD:/src" -w /src debian:trixie /bin/sh -ec '
             apt-get update -qq
-            apt-get install -y --no-install-recommends live-build debootstrap squashfs-tools xorriso isolinux syslinux-common grub-pc-bin grub-efi-amd64-bin mtools dosfstools ca-certificates
+            apt-get install -y --no-install-recommends python3 live-build debootstrap squashfs-tools xorriso isolinux syslinux-common grub-pc-bin grub-efi-amd64-bin mtools dosfstools ca-certificates
             /bin/sh scripts/build-live.sh' 2>&1 | tee dist/validation/live-build.log
           sudo chown -R "$(id -u):$(id -g)" dist
       - name: Offline live-filesystem boot and screenshot
