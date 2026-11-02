@@ -1,10 +1,10 @@
 {
-  "version": "5.0.0-rc.1",
-  "tag": "v5.0.0-rc.1",
-  "commit": "85715705501b18138712173327b7df1fb63ef889",
-  "iso": "daylight-live_5.0.0-rc.1_amd64.iso",
-  "iso_sha256": "22c7929194de36d009b653047b002fff4708540fd197439b0f6f529a7608d108",
-  "iso_bytes": 1265106944,
-  "validation_run": 41357700732,
+  "version": "5.0.0-rc.2",
+  "tag": "v5.0.0-rc.2",
+  "commit": "1e234ed4d13bb1961cb1c9fc29bdf2f3393d59d2",
+  "iso": "daylight-live_5.0.0-rc.2_amd64.iso",
+  "iso_sha256": "d41b373386f081e5d76926e356cb6ac8355c9b31935bacd628b9336e0e807e27",
+  "iso_bytes": 1267597312,
+  "validation_run": 41413451558,
   "prerelease": true
 }
