@@ -1,56 +1,85 @@
 # Daylight GNU/Linux 5
 
-**Un environnement léger et réversible pour Debian et Raspberry Pi OS.**
+**Un bureau léger, une identité solaire, une installation qui respecte le système existant.**
 
-Fondateur et développeur : **Hamdy Abou El Anein**. Licence du code Daylight : **GNU GPL v3**.
+Fondateur et développeur : **Hamdy Abou El Anein** · Contact : **info@daylightlinux.ch** · Code Daylight : **GNU GPL v3**
 
-[Télécharger 5.0.0-rc.1](https://github.com/hamdyaea/Daylight-GNU-Linux/releases/tag/v5.0.0-rc.1) · [Installation](docs/INSTALL.md) · [Tests vérifiés](docs/VALIDATION.md) · [English](README.md)
+[Site en français](https://daylightlinux.ch/fr/) · [Téléchargements](https://daylightlinux.ch/fr/download.html) · [Installation](https://daylightlinux.ch/fr/install.html) · [Essai dans le navigateur](https://daylightlinux.ch/fr/try-online.html) · [Livres](https://daylightlinux.ch/fr/books.html) · [Old](https://daylightlinux.ch/fr/old/) · [English](README.md)
 
-## Une première version candidate publiée
+## Deux façons de découvrir Daylight
 
-**Daylight GNU/Linux 5.0.0-rc.1 est disponible** : huit fichiers `.deb`, une ISO live Debian 13 pour PC AMD64, les captures du bureau, les sommes SHA256 et les preuves de validation. Il s'agit d'une version candidate, pas d'une version stable certifiée sur tous les matériels.
+**Paquets Debian :** un cœur Rust ARM64 ou AMD64, des thèmes, une session Fluxbox indépendante et des applications facultatives, sur Debian 12/13 ou une installation compatible de Raspberry Pi OS 64 bits.
 
-L'ISO fait environ **1,27 Go**. Elle utilise les mêmes paquets et ne copie aucun ordinateur personnel. SSH et télémétrie sont désactivés ; aucun installateur sur disque ni persistance ne sont inclus.
+**Image live PC :** une ISO Debian 13 AMD64 construite depuis une base propre avec ces mêmes paquets. Pas de copie d'un ordinateur personnel, pas de serveur SSH actif, pas de télémétrie, pas d'installateur sur disque ni de persistance par défaut. La version réellement publiée est indiquée sur la page Téléchargements et dans `release/current.json` ; une branche de développement ne constitue pas une publication.
 
-![Capture réelle du bureau live](https://github.com/hamdyaea/Daylight-GNU-Linux/releases/download/v5.0.0-rc.1/daylight-live-desktop.png)
+La série **5.0.0-rc** reste une version candidate. Les essais virtuels ne constituent pas une certification de chaque matériel physique.
 
-## Contenu
+## Installer depuis le dépôt APT signé
 
-Une session Fluxbox distincte, deux profils Conky, un terminal personnalisé avec Fastfetch et un affichage ASCII de secours, des thèmes montagne et soleil et le fond d'écran historique. Les utilitaires et la logique des jeux utilisent un petit programme Rust ; les fenêtres natives utilisent YAD uniquement lorsqu'elles sont ouvertes. Aucun Electron ni service permanent de réglages.
-
-Le programme fournit notamment `daylight status`, `daylight doctor`, `daylight info`, `daylight monitor`, `daylight password`, `daylight control-center`, `daylight update` et `daylight remove`. Conky est conservé et optimisé : il n'est pas présenté comme réécrit en Rust.
-
-Sept types de paquets : `daylight-core`, `daylight-themes`, `daylight-desktop`, `daylight-apps`, `daylight-games`, `daylight-telemetry` et `daylight-linux`. Le core existe en ARM64 et AMD64 ; les six autres paquets sont indépendants de l'architecture.
-
-## Installation minimale sur un Pi 64 bits
-
-Après téléchargement des fichiers correspondants de la Release :
+Télécharger et inspecter le script, puis afficher son plan :
 
 ```sh
-sudo apt install ./daylight-core_5.0.0.rc1_arm64.deb ./daylight-themes_5.0.0.rc1_all.deb
-daylight status
-daylight info
-daylight remove --dry-run
+curl --fail --show-error --silent --proto '=https' \
+  https://daylightlinux.ch/install.sh -o daylight-install.sh
+less daylight-install.sh
+sh daylight-install.sh --plan
 ```
 
-Ces paquets sont destinés à Debian/Raspberry Pi OS, **pas à Manjaro**. Lire `docs/INSTALL.md` avant installation. GitHub remplace le caractère `~` par `.` dans les noms publiés ; la version Debian interne reste `5.0.0~rc1`. Les constructions locales conservent les noms avec `~`.
+Installation minimale, sans bureau :
 
-Aucun gestionnaire de connexion n'est démarré automatiquement. Les fichiers personnels `.bashrc`, `.fluxbox` et `.conkyrc` existants ne sont pas remplacés ; les réglages Daylight sont séparés. Fluxbox peut créer ses fichiers de compatibilité lorsqu'ils sont absents. La suppression ne lance pas `apt autoremove` et conserve les réglages personnels et dépendances partagées : ce n'est pas un retour bit à bit par snapshot.
+```sh
+sudo sh daylight-install.sh --core --yes
+daylight status
+daylight info
+daylight doctor
+```
 
-## Validation réelle
+Pour ajouter le bureau, utiliser `--desktop --yes`. Les jeux nécessitent `--desktop --games --yes`. Le profil `--repo-only --yes` configure uniquement le dépôt. Sans `--yes`, le script n'effectue aucun changement.
 
-Le commit candidat `85715705501b18138712173327b7df1fb63ef889` a passé la validation complète : **27 tests Rust, 11 tests CLI, 4 tests du collecteur, un test du dépôt APT signé**, puis installation, réinstallation et suppression sur Debian 12 et 13. **16 tests graphiques passent sur chacune des deux versions.**
+Le dépôt **https://daylightlinux.ch/apt/** utilise une clé dédiée, des métadonnées signées et une priorité limitée aux paquets Daylight. Empreinte publique :
 
-L'ISO démarre hors réseau dans QEMU avec le compte live, Fluxbox et Conky. La capture ci-dessus provient de ce test. Les essais ARM64 ont aussi réussi sur le Raspberry Pi réel, par extraction du paquet sans installation du bureau ni interruption des services. Les détails sont dans `docs/VALIDATION.md`.
+```text
+B057 5F82 1A31 DD20 753D E07C 50D2 1240 F4BC B02E
+```
 
-Le test live utilise le noyau et l'initrd extraits de l'ISO : il ne certifie pas les chargeurs BIOS/UEFI, Secure Boot, le Wi-Fi/audio physique ou une session graphique matérielle sur Pi.
+Les installations Daylight ne déclenchent ni mise à niveau globale du système, ni redémarrage, ni activation de télémétrie. Ces paquets sont destinés à Debian/Raspberry Pi OS, **pas à Manjaro/Arch**. Lire le [guide détaillé](docs/INSTALL.md), en particulier sur un serveur productif.
 
-## Confidentialité et travaux restants
+## Bureau, terminal et applications
 
-Le compteur de démarrages est facultatif et désactivé par défaut. Il ne compte pas des utilisateurs uniques ; l'adresse IP reste visible au niveau réseau. Le collecteur de référence n'est pas déployé.
+Fluxbox conserve une session séparée ; Conky propose des profils sobres ; le terminal affiche le logo ASCII et les informations du système avec Fastfetch, ou avec son affichage de secours. Aucun appel Internet n'est effectué à l'ouverture du terminal. Les fenêtres natives utilisent YAD uniquement pendant leur utilisation : pas d'Electron ni de service permanent de réglages.
 
-Le générateur de dépôt APT signé est développé et testé, mais le dépôt public n'est pas hébergé. `daylight update` a besoin d'une source configurée proposant de nouveaux paquets. Le contact **info@daylightlinux.ch reste à activer** ; utiliser les issues GitHub en attendant.
+Les utilitaires et jeux partagent un programme Rust : mots de passe, températures, différences entre dates, état réseau local, alarme, intégration de synthèse vocale et jeux facultatifs. **Conky est configuré et optimisé, pas réécrit en Rust.**
 
-Les wallpapers vectoriels sont des propositions de travail, pas la collection photoréaliste définitive. ARM 32 bits, validation matérielle élargie et publication encyclopédique ne sont pas réalisés dans cette version candidate.
+```sh
+daylight control-center
+daylight monitor
+daylight password 24
+daylight update --dry-run
+sudo daylight update
+daylight remove --dry-run
+sudo daylight remove
+```
 
-Les licences des composants tiers restent applicables. Les anciennes versions sont conservées dans `old/*` et leurs branches d'origine sont également préservées.
+Les opérations APT demandent confirmation. La suppression ne lance jamais autoremove, ne remplace pas les fichiers personnels préexistants et conserve les dépendances partagées ainsi que les réglages utilisateur. Ce n'est pas une restauration bit à bit par snapshot. Aucun nouveau gestionnaire de connexion n'est installé automatiquement.
+
+## Paysages signés Daylight Linux
+
+Le fond alpin approuvé, sa variante sombre et le fond de terminal utilisent une scène photoréaliste générée, à sa résolution livrée de **1672 × 941**. Deux photographies de montagne CC0 complètent la collection en **3840 × 2160**. Les paysages portent la signature **Daylight Linux**, conservée dans le cadrage sur différents formats d'écran.
+
+Les crédits distinguent explicitement les scènes générées des photographies réelles. Les sources et leurs empreintes sont documentées ; aucune résolution agrandie n'est vendue comme de la 4K native. Aucun fichier de police autonome n'est redistribué. [Fonds d'écran](https://daylightlinux.ch/fr/wallpapers.html) · [Provenance](docs/ARTWORK.md)
+
+## Essai web sans charger le serveur du projet
+
+`demo/` fournit un environnement privé QEMU/noVNC utilisant la véritable ISO, pas une imitation HTML. La configuration Codespaces est disponible depuis la page d'essai. **Aucune machine virtuelle visiteur ne fonctionne sur le Raspberry Pi hébergeant le site.**
+
+Le compte et le quota Codespaces du visiteur sont utilisés ; des frais peuvent s'appliquer. Le système invité n'a ni réseau, ni disque hôte, ni persistance ; sa durée est limitée. Il faut arrêter/supprimer le Codespace séparément après utilisation. Ce n'est pas un service anonyme public multi-utilisateur. L'inscription sur DistroSea dépend de son opérateur et n'est pas présentée comme effectuée. [Détails et limites](demo/README.md)
+
+## Tests, confidentialité et maintenance
+
+Le pipeline vérifie le Rust, les commandes, le collecteur, les signatures APT, les ressources, le cycle d'installation/suppression et les fenêtres natives sous Debian 12/13. Il teste également le démarrage du système live, les véritables chargeurs BIOS/UEFI et la connexion du navigateur au bureau effectivement prêt. Les résultats, révisions exactes et limites sont conservés dans [la validation RC2](docs/VALIDATION-RC2.md) et les archives de chaque publication.
+
+Le compteur de démarrages est optionnel, désactivé et non installé par le bootstrap. Son serveur n'est pas activé en production. Il compte des démarrages reçus, **pas des utilisateurs uniques** ; l'adresse IP reste visible au niveau transport. Voir [Confidentialité](docs/PRIVACY.md).
+
+Les textes, configurations et signatures actuels utilisent `info@daylightlinux.ch`. La livraison effective du courrier n'est pas certifiée par un build ; les issues GitHub restent disponibles. Les publications historiques immuables conservent leurs métadonnées d'origine.
+
+[Construction](docs/BUILD.md) · [Exploitation du dépôt et du site](docs/OPERATIONS.md) · [Sécurité du serveur productif](docs/PRODUCTION-SAFETY.md) · [Anciennes versions](https://daylightlinux.ch/fr/old/)
