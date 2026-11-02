@@ -1,96 +1,46 @@
 # Developer: Hamdy Abou El Anein
 # Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
-name: Finalize verified Raspberry Pi website
+name: Final public website and RC2 checks
 on:
   push:
     branches: [publish/daylight-website-final]
     paths: [.github/workflows/daylight-finalize-website.yml]
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
-  group: daylight-website-publication
+  group: daylight-final-readonly-verification
   cancel-in-progress: false
 jobs:
-  validate-and-publish:
+  website:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: master
-          fetch-depth: 0
+          ref: 2de81327cc76a889f693997358a7952d32af4822
           persist-credentials: false
-      - name: Verify exact source archive and unchanged publication base
-        shell: bash
+      - name: Check exact published source and build static resources
         run: |
-          set -euo pipefail
-          test "$(git rev-parse HEAD)" = dd060ea506c26d171d3900508dbf29a68a99b058
-          curl --disable --fail --silent --show-error --proto '=https' --proto-redir '=https' --location --retry 3 --max-time 90 https://daylightlinux.ch/media/source/daylight-website-source-06bf5a6.zip -o /tmp/daylight-website-source.zip
-          printf 'e85412cfef85d3f1ebe0f004defe25afd0b0376f00a95bf0a2d823ac13a0aadd  /tmp/daylight-website-source.zip\n' | sha256sum -c -
-          python3 - <<'PY'
-          import hashlib, json, pathlib, stat, zipfile
-          allowed = {
-              '.github/ISSUE_TEMPLATE/bug_report.yml', '.github/ISSUE_TEMPLATE/config.yml',
-              '.github/ISSUE_TEMPLATE/feature_request.yml', '.github/ISSUE_TEMPLATE/hardware_report.yml',
-              '.github/workflows/daylight-build.yml', '.github/workflows/daylight-website.yml',
-              'CONTRIBUTING.md', 'README.fr.md', 'README.md', 'SECURITY.md', 'docs/WEBSITE.md',
-              'tests/test_website.py', 'tests/test_website_browser.cjs', 'website/build.py',
-              'website/discovery.css', 'website/discovery.js', 'website/discovery.py'
-          }
-          with zipfile.ZipFile('/tmp/daylight-website-source.zip') as archive:
-              if archive.testzip() is not None:
-                  raise SystemExit('Corrupt source archive')
-              names = archive.namelist()
-              if len(names) != 18 or set(names) != {'manifest.json'} | {'source/' + p for p in allowed}:
-                  raise SystemExit('Unexpected, duplicate or missing archive member')
-              manifest = json.loads(archive.read('manifest.json'))
-              if manifest['base_commit'] != 'dd060ea506c26d171d3900508dbf29a68a99b058' or manifest['source_commit'] != '06bf5a6ed2ab44cda729bfce4a3eec0bf6ce8d21':
-                  raise SystemExit('Source provenance mismatch')
-              if set(manifest['files']) != allowed:
-                  raise SystemExit('Unexpected source manifest')
-              checked = {}
-              for name in sorted(allowed):
-                  item = archive.getinfo('source/' + name)
-                  if stat.S_ISLNK(item.external_attr >> 16) or item.file_size > 200000:
-                      raise SystemExit('Unsafe source member')
-                  data = archive.read(item)
-                  data.decode('utf-8')
-                  expected = manifest['files'][name]
-                  if hashlib.sha256(data).hexdigest() != expected['sha256']:
-                      raise SystemExit('Source checksum mismatch: ' + name)
-                  path = pathlib.Path(name)
-                  if path.is_symlink():
-                      raise SystemExit('Unexpected existing symlink')
-                  if expected['base_sha256'] is None:
-                      if path.exists():
-                          raise SystemExit('New source path already exists')
-                  elif not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected['base_sha256']:
-                      raise SystemExit('Publication base changed: ' + name)
-                  checked[path] = data
-              for path, data in checked.items():
-                  path.parent.mkdir(parents=True, exist_ok=True)
-                  path.write_bytes(data)
-                  path.chmod(0o755 if str(path) == 'website/build.py' else 0o644)
-          pathlib.Path('/tmp/daylight-source-paths').write_text('\n'.join(sorted(allowed))+'\n')
-          print('Verified and applied exactly 17 reviewed public source files, preserving the executable builder.')
-          PY
-          git add --pathspec-from-file=/tmp/daylight-source-paths
-          git write-tree
-          test "$(git write-tree)" = 54dc561f7cc56f1a51f4be1b89aacd35c97691a2
-          git diff --cached --check
-      - name: Build and validate the static site in the disposable runner
-        shell: bash
-        run: |
-          set -euo pipefail
+          set -eu
+          test "$(git rev-parse HEAD^{tree})" = 54dc561f7cc56f1a51f4be1b89aacd35c97691a2
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends python3-pil imagemagick librsvg2-bin fonts-dejavu-core
           mkdir -p dist/site-pi-qa
+          git rev-parse HEAD > dist/site-pi-qa/verified-source.txt
           sh scripts/render-assets.sh
           python3 website/build.py --output dist/site
+      - name: Verify structure and existing installer/site regressions
+        shell: bash
+        run: |
+          set -euo pipefail
           python3 tests/test_website.py --site dist/site | tee dist/site-pi-qa/structure.json
           python3 tests/test_release_tools.py 2>&1 | tee dist/site-pi-qa/regression.log
+      - name: Test desktop, mobile, keyboard and no-JavaScript navigation
+        shell: bash
+        run: |
+          set -euo pipefail
           npm install --prefix "$RUNNER_TEMP/daylight-web" --ignore-scripts --no-audit --no-fund playwright@1.55.0
           export DAYLIGHT_PLAYWRIGHT="$RUNNER_TEMP/daylight-web/node_modules/playwright"
           export DAYLIGHT_BROWSER="$(command -v google-chrome || command -v chromium)"
@@ -99,26 +49,42 @@ jobs:
           trap 'kill "$preview" 2>/dev/null || true' EXIT
           sleep 1
           node tests/test_website_browser.cjs
-      - name: Publish only the validated source tree without rewriting history
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          test "$(git write-tree)" = 54dc561f7cc56f1a51f4be1b89aacd35c97691a2
-          git config user.name 'Hamdy Abou El Anein'
-          git config user.email 'info@daylightlinux.ch'
-          git commit -m 'Publish verified Raspberry Pi-first website, complete mobile menus and community guides [skip ci]'
-          gh auth setup-git
-          git fetch origin master
-          test "$(git rev-parse FETCH_HEAD)" = dd060ea506c26d171d3900508dbf29a68a99b058
-          git push --atomic origin HEAD:refs/heads/master HEAD:refs/heads/site/raspberry-first-20261102
-          git rev-parse HEAD | tee dist/site-pi-qa/published-commit.txt
-      - name: Retain source and browser validation evidence
+      - name: Retain inspectable website checks
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: daylight-website-final-${{ github.run_number }}
+          name: daylight-final-website-${{ github.run_number }}
           path: dist/site-pi-qa/
+          retention-days: 14
+          if-no-files-found: warn
+  public-installer:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [bookworm, trixie]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 2de81327cc76a889f693997358a7952d32af4822
+          persist-credentials: false
+      - name: Exercise the deployed signed RC2 installer in a disposable container
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist/public-client
+          docker run --rm --cpus=2 --memory=1g --pids-limit=256 \
+            -e DAYLIGHT_DISPOSABLE_TEST=yes -v "$PWD:/src:ro" \
+            debian:${{ matrix.suite }} sh /src/release/test-public-install.sh \
+            2>&1 | tee dist/public-client/${{ matrix.suite }}.log
+          grep -q 'DAYLIGHT_PUBLIC_INSTALLER_LIFECYCLE_OK' dist/public-client/${{ matrix.suite }}.log
+          grep -q 'Daylight GNU/Linux 5.0.0-rc.2' dist/public-client/${{ matrix.suite }}.log
+      - name: Retain public RC2 lifecycle evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: daylight-final-client-${{ matrix.suite }}-${{ github.run_number }}
+          path: dist/public-client/
           retention-days: 14
           if-no-files-found: warn
