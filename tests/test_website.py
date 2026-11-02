@@ -73,7 +73,7 @@ def validate(site):
             assert not any('fonts.googleapis' in ref or 'google-analytics' in ref for ref in parsed.refs),path
             count+=1
         download=(site/(prefix+'download.html')).read_text()
-        assert download.index('id="raspberry-pi"')<download.index('id="pc-live"')
+        assert 'Raspberry Pi OS' in download and 'id="pc-live"' not in download
         home=(site/(prefix+'index.html')).read_text().split('<main',1)[1]
         assert re.search(r'class="button" href="/'+prefix+r'raspberry-pi.html"',home)
         feed=ET.parse(site/(prefix+'feed.xml')).getroot()

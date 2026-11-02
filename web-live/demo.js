@@ -6,6 +6,7 @@ let emulator=null, generation=0, controller=null, state='idle', deadline=null, l
 let stopTask=null, visibilityBusy=false, loadedLibraryHash=null;
 const lang=new URLSearchParams(location.search).get('lang')==='en'?'en':'fr';
 const $=id=>document.getElementById(id);
+if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embedded-preview');
 const text=(fr,en)=>lang==='fr'?fr:en;
 const english={title:'A real Linux desktop.<br>Inside your browser.',intro:'A lightweight, temporary preview of the Daylight spirit. Computing happens on your device, not on our Raspberry Pi.','scope-title':'A preview, not the complete distribution.',scope:'This experimental edition uses Alpine Linux x86 and Fluxbox. Daylight for Raspberry Pi remains based on Debian / Raspberry Pi OS ARM64. This preview does not include all of its Rust tools.',instructions:'Daylight Start opens your terminal automatically. Click inside it to type. Right-click the wallpaper for applications, or use Super+Enter for another terminal. Restart discards the current session; Stop releases it.','privacy-title':'Your session stays local',privacy:'No account, no disk shared with our server, no external guest-network relay and no telemetry. Demo files download over HTTPS; the host sees that connection like any webpage request.','temporary-title':'Nothing to install',temporary:'Changes are temporary: closing, stopping or restarting discards the session. Do not enter passwords or sensitive data. The demo pauses when its tab is hidden, resumes when you return, and stops after 20 minutes.','requirements-title':'A bounded preview',requirements:'The Linux guest receives 256 MiB of RAM; the browser also needs its own memory. Startup depends on your device and connection. No public container runs on our Pi.','technical-title':'Technical details and licenses',technical:'Linux is actually emulated in WebAssembly using v86. This is not an interactive screenshot. The guest has no external network relay. Free-software components retain their own licenses.',cta:'Ready to use Daylight on your Raspberry Pi?','placeholder-text':'Your session starts here.'};
 const original=Object.fromEntries(Object.keys(english).map(id=>[id,$(id).innerHTML]));
@@ -173,14 +174,14 @@ async function start(){
   await library(manifest,signal,onProgress);const assets={};
   for(const name of names)assets[name]=await verified(name,manifest.files[name],signal,onProgress);
   checkCancelled(signal);if(id!==generation)return;
-  $('progress').hidden=true;$('placeholder').hidden=true;serial='';
+  $('progress').hidden=false;$('progress').removeAttribute('value');$('placeholder').hidden=true;serial='';
   setState('booting');status(text('Daylight Start — ouverture du terminal…','Daylight Start — opening your terminal…'));
   emulator=new V86({
    wasm_fn:async imports=>(await WebAssembly.instantiate(assets['v86.wasm'],imports)).instance.exports,
    memory_size:256*1024*1024,vga_memory_size:8*1024*1024,
    screen_container:$('screen'),bios:{buffer:assets['seabios.bin']},vga_bios:{buffer:assets['vgabios.bin']},
    bzimage:{buffer:assets['vmlinuz.bin']},initrd:{buffer:assets['initrd.bin']},
-   cmdline:'rdinit=/init console=ttyS0,115200 console=tty0 loglevel=4 random.trust_cpu=on pci=conf1 tsc=reliable',
+   cmdline:'rdinit=/init console=ttyS0,115200 loglevel=0 quiet random.trust_cpu=on pci=conf1 tsc=reliable',
    acpi:false,autostart:true,disable_speaker:true
    // No external guest-network relay, shared host disk, clipboard bridge or telemetry.
   });
@@ -190,7 +191,7 @@ async function start(){
    serial=(serial+String.fromCharCode(byte)).slice(-6000);
    if(serial.includes('DAYLIGHT_WEB_GRAPHICS_FAILED')){void fail(Error('Guest graphics startup failed'),id);return;}
    if(serial.includes('DAYLIGHT_WEB_DESKTOP_READY')&&state==='booting'){
-    clearTimeout(deadline);deadline=null;setState('running');
+    clearTimeout(deadline);deadline=null;$('progress').hidden=true;setState('running');
     lifetime=setTimeout(async()=>{if(id!==generation)return;await stop();status(text('Session terminée après 20 minutes. Cliquez sur Démarrer pour une nouvelle session.','Session ended after 20 minutes. Select Start for a new session.'));},20*60*1000);
     status(text('Daylight Start est prêt. Cliquez dans le terminal pour écrire.','Daylight Start is ready. Click inside the terminal to type.'));
     void syncVisibility();
