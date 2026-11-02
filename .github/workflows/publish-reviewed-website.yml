@@ -1,0 +1,92 @@
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Publish reviewed Raspberry Pi website
+on:
+  push:
+    branches: [publish/site-20261102]
+    paths: [.github/workflows/publish-reviewed-website.yml]
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: daylight-reviewed-website-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: dd060ea506c26d171d3900508dbf29a68a99b058
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Retrieve the public reviewed source archive and verify its pinned hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --disable --fail --silent --show-error --location --proto '=https' --proto-redir '=https' --retry 3 --max-time 90 \
+            https://daylightlinux.ch/media/daylight-source-06bf5a6ed2ab.zip -o "$RUNNER_TEMP/reviewed-source.zip"
+          echo '356f7501d5e0486891ace01af18d9c14f91fdbba762770a9ed93fa451925bb06  '"$RUNNER_TEMP/reviewed-source.zip" | sha256sum -c -
+      - name: Import only safe source entries and require the exact reviewed Git tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os, pathlib, stat, zipfile
+          archive = pathlib.Path(os.environ['RUNNER_TEMP']) / 'reviewed-source.zip'
+          if archive.stat().st_size != 1059489:
+              raise SystemExit('Archive size differs from the reviewed source')
+          root = pathlib.Path.cwd()
+          with zipfile.ZipFile(archive) as source:
+              entries = source.infolist()
+              if len(entries) != 174 or sum(e.file_size for e in entries) > 15000000:
+                  raise SystemExit('Unexpected source archive inventory')
+              seen = set()
+              for entry in entries:
+                  path = pathlib.PurePosixPath(entry.filename)
+                  if not path.parts or path.parts[0] != 'daylight-source' or path.is_absolute() or '..' in path.parts or '.git' in path.parts:
+                      raise SystemExit('Unsafe archive path')
+                  if stat.S_ISLNK(entry.external_attr >> 16):
+                      raise SystemExit('Symlink source entries are not permitted')
+                  relative = pathlib.Path(*path.parts[1:])
+                  if relative == pathlib.Path('.'):
+                      continue
+                  if str(relative) in seen:
+                      raise SystemExit('Duplicate archive path')
+                  seen.add(str(relative))
+                  destination = root / relative
+                  if destination.is_symlink() or root not in destination.resolve().parents:
+                      raise SystemExit('Source path escapes checkout')
+                  if entry.is_dir():
+                      destination.mkdir(parents=True, exist_ok=True)
+                  else:
+                      destination.parent.mkdir(parents=True, exist_ok=True)
+                      destination.write_bytes(source.read(entry))
+                      destination.chmod(0o755 if (entry.external_attr >> 16) & 0o111 else 0o644)
+          PY
+          git add --all
+          test "$(git write-tree)" = 54dc561f7cc56f1a51f4be1b89aacd35c97691a2
+          git diff --cached --check
+      - name: Publish by ordinary fast-forward, without rewriting history
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'Hamdy Abou El Anein'
+          git config user.email 'info@daylightlinux.ch'
+          git commit -m 'Publish the reviewed Raspberry Pi-first website and complete mobile navigation [skip ci]'
+          gh auth setup-git
+          git fetch origin master
+          git merge-base --is-ancestor FETCH_HEAD HEAD
+          git push --atomic origin HEAD:refs/heads/master HEAD:refs/heads/site/raspberry-first-20261102
+          git rev-parse HEAD
+      - name: Run dedicated website and public installer checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh workflow run daylight-website.yml --ref master
+          gh workflow run daylight-source-sync.yml --ref master
