@@ -1,0 +1,66 @@
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+name: Import reviewed RC2 sources
+on:
+  push:
+    branches: [build/daylight-v5-rc2]
+    paths: [.github/workflows/daylight-source-sync.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+jobs:
+  import:
+    if: github.ref == 'refs/heads/build/daylight-v5-rc2'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify pinned public sources and reject concurrent edits
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --show-error --silent --proto '=https' --tlsv1.2 --max-time 60 --output /tmp/daylight-source.json.gz https://daylightlinux.ch/project-source/rc2-source-b33d557ddfdb68d47b3b.json.gz
+          echo 'b33d557ddfdb68d47b3b22a763928bb7488d5cb17e117de9e5611944891d2650  /tmp/daylight-source.json.gz' | sha256sum -c -
+          python3 - <<'PY'
+          import base64,gzip,hashlib,json,pathlib,subprocess
+          document=json.loads(gzip.decompress(pathlib.Path('/tmp/daylight-source.json.gz').read_bytes()))
+          if document['base'] != 'e058df8b5946b85af3daad132b851e248caca8a0' or len(document['files']) != 89:
+              raise SystemExit('Unexpected source manifest')
+          subprocess.run(['git','merge-base','--is-ancestor',document['base'],'HEAD'],check=True)
+          staged=[]
+          for item in document['files']:
+              path=pathlib.Path(item['path'])
+              if path.is_absolute() or '..' in path.parts or path.parts[0] in ('.git','.github','dist','local-state') or item['mode'] not in (420,493):
+                  raise SystemExit('Disallowed source path or mode')
+              if path.is_symlink():raise SystemExit('Source path is a symlink')
+              old=hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+              data=base64.b64decode(item['data'],validate=True)
+              new=hashlib.sha256(data).hexdigest()
+              if new!=item['sha256'] or old not in (item['base_sha256'],new):
+                  raise SystemExit('Integrity mismatch or concurrent source edit: '+str(path))
+              staged.append((path,data,item['mode']))
+          for path,data,mode in staged:
+              path.parent.mkdir(parents=True,exist_ok=True)
+              path.write_bytes(data);path.chmod(mode)
+          subprocess.run(['git','add','--',*[str(x[0]) for x in staged]],check=True)
+          print('Verified and staged',len(staged),'public source files. No credentials included.')
+          PY
+      - name: Commit the reviewed sources on the development branch
+        run: |
+          git config user.name 'Hamdy Abou El Anein'
+          git config user.email 'info@daylightlinux.ch'
+          if ! git diff --cached --quiet; then
+            git commit -m 'Complete branded artwork, site, signed archive tools and native ISO boot menu [skip ci]'
+            gh auth setup-git
+            git push origin HEAD:build/daylight-v5-rc2
+          fi
+      - name: Validate the exact committed candidate
+        run: gh workflow run daylight-build.yml --ref build/daylight-v5-rc2
