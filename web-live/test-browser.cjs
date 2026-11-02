@@ -9,7 +9,8 @@ const output=path.resolve('dist/web-live-validation');fs.mkdirSync(output,{recur
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.DAYLIGHT_BROWSER||'/usr/bin/chromium',headless:true,args:['--disable-dev-shm-usage']});
  const context=await browser.newContext({viewport:{width:1280,height:1050}});
- const page=await context.newPage();const errors=[],requests=[];
+ const page=await context.newPage();const errors=[],requests=[];let manifestResponse=null;
+ page.on('response',response=>{if(new URL(response.url()).pathname.endsWith('/manifest.json')&&response.status()===200)manifestResponse=response.body();});
  page.on('pageerror',e=>errors.push(e.message));
  page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
  page.on('request',r=>requests.push(r.url()));
@@ -40,16 +41,29 @@ const output=path.resolve('dist/web-live-validation');fs.mkdirSync(output,{recur
   await page.waitForFunction(()=>window.testSerial.includes('\r\nkeyboardworks\r\n'),{},{timeout:15000});
   const serial=await page.evaluate(()=>window.testSerial);
   fs.writeFileSync(path.join(output,'interaction.log'),serial);
+  // Verify actual Fluxbox windows rather than only a successful terminal boot.
+  async function guiState(expectedProcesses, visible) {
+    await page.evaluate(()=>{window.testSerial='';window.daylightEmulator.serial0_send('n=$(pgrep -x xterm | wc -l); v=$(DISPLAY=:0 xdotool search --onlyvisible --class XTerm 2>/dev/null | wc -l); printf "\nGUISTATE=%s,%s\n" "$n" "$v"\n');});
+    await page.waitForFunction(()=>/\r\nGUISTATE=[0-9]+,[0-9]+\r\n/.test(window.testSerial),{},{timeout:15000});
+    const values=await page.evaluate(()=>window.testSerial.match(/\r\nGUISTATE=([0-9]+),([0-9]+)\r\n/).slice(1).map(Number));
+    if(values[0]!==expectedProcesses || (visible ? values[1]<expectedProcesses : values[1]!==0))throw Error('Unexpected real GUI state: '+values);
+  }
+  await guiState(1,true);
+  await page.locator('#terminal').click();await page.waitForTimeout(2000);await guiState(2,true);
+  await page.locator('#desktop').click();await page.waitForTimeout(800);await guiState(2,false);
+  await page.locator('#menu').click();await page.waitForTimeout(800);
+  await canvas.screenshot({path:path.join(output,'desktop-menu.png')});
+  await page.evaluate(()=>window.daylightEmulator.keyboard_send_scancodes([0x01,0x81]));
+  await page.locator('#desktop').click();await page.waitForTimeout(800);await guiState(2,true);
   await page.locator('#pause').click();await page.waitForFunction(()=>document.body.dataset.state==='paused');
   await page.locator('#pause').click();await page.waitForFunction(()=>document.body.dataset.state==='running');
   await page.locator('#stop').click();await page.waitForFunction(()=>document.body.dataset.state==='idle'&&!window.daylightEmulator);
   const own=new URL(base).origin;
   if(requests.some(u=>new URL(u).origin!==own))throw Error('Unexpected external browser request');
   if(errors.length)throw Error('Browser errors: '+errors.join('; '));
-  const metadata=await page.request.get(new URL('manifest.json',base).toString());
-  if(!metadata.ok())throw Error('Final runtime manifest unavailable');
-  const manifestSha256=crypto.createHash('sha256').update(await metadata.body()).digest('hex');
-  const result={result:'PASS',url:base,manifestSha256,bootAndInteractionMilliseconds:Date.now()-started,canvas:size,realKeyboard:true,pauseResume:true,stop:true,externalRequests:0,autostart:false};
+  if(!manifestResponse)throw Error('The actual boot manifest was not observed');
+  const manifestSha256=crypto.createHash('sha256').update(await manifestResponse).digest('hex');
+  const result={result:'PASS',url:base,manifestSha256,bootAndInteractionMilliseconds:Date.now()-started,canvas:size,realKeyboard:true,graphicalControls:true,twoTerminalWindows:true,desktopHideRestore:true,pauseResume:true,stop:true,externalRequests:0,autostart:false};
   fs.writeFileSync(path.join(output,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));
  }catch(error){
   await page.screenshot({path:path.join(output,'failure.png'),fullPage:true}).catch(()=>{});

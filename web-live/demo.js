@@ -6,7 +6,7 @@ let emulator=null, generation=0, controller=null, state='idle', deadline=null, l
 let lang=new URLSearchParams(location.search).get('lang')==='en'?'en':'fr';
 const $=id=>document.getElementById(id);
 const text=(fr,en)=>lang==='fr'?fr:en;
-const english={title:'A real Linux desktop.<br>Inside your browser.',intro:'A lightweight, temporary preview of the Daylight spirit. Computing happens on your device, not on our Raspberry Pi.','scope-title':'A preview, not the complete distribution.',scope:'This experimental edition uses Alpine Linux x86 and Fluxbox. Daylight for Raspberry Pi remains based on Debian / Raspberry Pi OS ARM64. This preview does not include all of its Rust tools.',instructions:'Click inside the desktop to use the keyboard. Right-click the wallpaper for the Fluxbox menu. Try uname, free, top, ls and vi in the terminal.','privacy-title':'Your session stays local',privacy:'No account, no disk shared with our server, no external guest-network relay and no telemetry. Demo files download over HTTPS; the host sees that connection like any webpage request.','temporary-title':'Nothing to install',temporary:'Changes are temporary: closing, stopping or restarting discards the session. Do not enter passwords or sensitive data. The demo pauses when its tab is hidden and stops after 20 minutes.','requirements-title':'A bounded preview',requirements:'The Linux guest receives 256 MiB of RAM; the browser also needs its own memory. Startup depends on your device and connection. No public container runs on our Pi.','technical-title':'Technical details and licenses',technical:'Linux is actually emulated in WebAssembly using v86. This is not an interactive screenshot. The guest has no external network relay. Free-software components retain their own licenses.',cta:'Ready to use Daylight on your Raspberry Pi?','placeholder-text':'Your session starts here.'};
+const english={title:'A real Linux desktop.<br>Inside your browser.',intro:'A lightweight, temporary preview of the Daylight spirit. Computing happens on your device, not on our Raspberry Pi.','scope-title':'A preview, not the complete distribution.',scope:'This experimental edition uses Alpine Linux x86 and Fluxbox. Daylight for Raspberry Pi remains based on Debian / Raspberry Pi OS ARM64. This preview does not include all of its Rust tools.',instructions:'Click inside the desktop to use the keyboard. Move windows by their title bar. Right-click the wallpaper or use Linux menu for Fluxbox. Try uname, free, top, ls and vi in the terminal.','privacy-title':'Your session stays local',privacy:'No account, no disk shared with our server, no external guest-network relay and no telemetry. Demo files download over HTTPS; the host sees that connection like any webpage request.','temporary-title':'Nothing to install',temporary:'Changes are temporary: closing, stopping or restarting discards the session. Do not enter passwords or sensitive data. The demo pauses when its tab is hidden and stops after 20 minutes.','requirements-title':'A bounded preview',requirements:'The Linux guest receives 256 MiB of RAM; the browser also needs its own memory. Startup depends on your device and connection. No public container runs on our Pi.','technical-title':'Technical details and licenses',technical:'Linux is actually emulated in WebAssembly using v86. This is not an interactive screenshot. The guest has no external network relay. Free-software components retain their own licenses.',cta:'Ready to use Daylight on your Raspberry Pi?','placeholder-text':'Your session starts here.'};
 const original=Object.fromEntries(Object.keys(english).map(id=>[id,$(id).innerHTML]));
 function labels(){
  document.documentElement.lang=lang;
@@ -15,6 +15,8 @@ function labels(){
  for(const [id,value] of Object.entries(lang==='en'?english:original))$(id).innerHTML=value;
  $('language').textContent=lang==='fr'?'English':'Français';
  $('start').textContent=text('Démarrer la démo','Start the demo');
+ $('desktop').textContent=text('Bureau','Desktop');$('menu').textContent=text('Menu Linux','Linux menu');$('terminal').textContent='Terminal';
+ $('display').setAttribute('aria-label',text('Bureau Linux interactif','Interactive Linux desktop'));
  $('pause').textContent=state==='paused'?text('Reprendre','Resume'):text('Pause','Pause');
  $('reset').textContent=text('Recommencer','Restart');$('stop').textContent=text('Arrêter','Stop');$('fullscreen').textContent=text('Plein écran','Fullscreen');
  if(state==='idle')status(text('Aucun système lancé. Environ 42 Mo seront téléchargés au premier démarrage.','Nothing is running. The first start downloads about 42 MB.'));
@@ -26,7 +28,8 @@ function setState(value){
  $('stop').disabled=['idle','error'].includes(value);
  $('pause').disabled=!['running','paused'].includes(value);
  $('reset').disabled=!['running','paused','error'].includes(value);
- $('fullscreen').disabled=!['running','paused'].includes(value);
+ $('fullscreen').disabled=!['running','paused'].includes(value)||!$('display').requestFullscreen;
+ for(const id of ['desktop','menu','terminal'])$(id).disabled=value!=='running';
  labels();
 }
 function hex(bytes){return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');}
@@ -107,6 +110,14 @@ async function start(){
 }
 async function fail(error){await stop();setState('error');status(text('Impossible de démarrer : ','Unable to start: ')+error.message);}
 async function pause(){if(!emulator)return;if(state==='running'){await emulator.stop();setState('paused');status(text('En pause : le processeur invité est arrêté.','Paused: guest CPU stopped.'));}else if(state==='paused'){await emulator.run();setState('running');status(text('Session reprise.','Session resumed.'));}}
+// Convenience controls send physical keys to the real guest window manager.
+function guestShortcut(code){
+ if(!emulator||state!=='running')return;
+ emulator.keyboard_send_scancodes([0xE0,0x5B,code,code|0x80,0xE0,0xDB]);
+}
+$('desktop').addEventListener('click',()=>guestShortcut(0x20));
+$('menu').addEventListener('click',()=>guestShortcut(0x39));
+$('terminal').addEventListener('click',()=>guestShortcut(0x1C));
 $('start').addEventListener('click',start);$('stop').addEventListener('click',stop);$('pause').addEventListener('click',pause);
 $('reset').addEventListener('click',async()=>{await stop();await start();});
 $('fullscreen').addEventListener('click',()=>{$('display').requestFullscreen().catch(error=>status(error.message));});
