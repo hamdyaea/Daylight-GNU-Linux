@@ -86,4 +86,4 @@ The optional boot counter is disabled and is not installed by the bootstrap. Its
 
 Current sources, configuration and archive signatures use `info@daylightlinux.ch`. A software build does not certify mailbox delivery; GitHub issues remain available. Historical immutable releases retain their original metadata.
 
-[Build](docs/BUILD.md) · [Archive and website operations](docs/OPERATIONS.md) · [Production safety](docs/PRODUCTION-SAFETY.md) · [Historical editions](https://daylightlinux.ch/old/)
+[Build packages](docs/BUILD.md) · [Build a live ISO from source](docs/BUILD-ISO.md) · [Archive and website operations](docs/OPERATIONS.md) · [Production safety](docs/PRODUCTION-SAFETY.md) · [Historical editions](https://daylightlinux.ch/old/)
