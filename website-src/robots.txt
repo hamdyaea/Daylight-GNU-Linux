@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://daylightlinux.ch/sitemap.xml

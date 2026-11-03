@@ -1,0 +1,1262 @@
+[
+  {
+    "P": "alpine-baselayout",
+    "V": "3.7.0-r0",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "alpine-baselayout",
+    "c": "540d8477019887cc6534152e92c3b12676e35d7b",
+    "U": "https://git.alpinelinux.org/cgit/aports/tree/main/alpine-baselayout"
+  },
+  {
+    "P": "alpine-baselayout-data",
+    "V": "3.7.0-r0",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "alpine-baselayout",
+    "c": "540d8477019887cc6534152e92c3b12676e35d7b",
+    "U": "https://git.alpinelinux.org/cgit/aports/tree/main/alpine-baselayout"
+  },
+  {
+    "P": "alpine-keys",
+    "V": "2.5-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "alpine-keys",
+    "c": "6d473fb38effb2389f567b29fb7eb27039b3a279",
+    "U": "https://alpinelinux.org"
+  },
+  {
+    "P": "alpine-release",
+    "V": "3.22.7-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "alpine-base",
+    "c": "d5ce2bfde5b90c0ee710a4bd0323a74671b2983b",
+    "U": "https://alpinelinux.org"
+  },
+  {
+    "P": "apk-tools",
+    "V": "2.14.12-r0",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "apk-tools",
+    "c": "a53adea12086d36717300ea195ede9ad75f98e1f",
+    "U": "https://gitlab.alpinelinux.org/alpine/apk-tools"
+  },
+  {
+    "P": "brotli-libs",
+    "V": "1.1.1-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "brotli",
+    "c": "0b8db0af6fbe8b8bc7e50e5f64b2f88bc0d6aa16",
+    "U": "https://github.com/google/brotli"
+  },
+  {
+    "P": "busybox",
+    "V": "1.37.0-r20",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "busybox",
+    "c": "2e97d754a30d558f15524b8e422303c8a96832df",
+    "U": "https://busybox.net/"
+  },
+  {
+    "P": "busybox-binsh",
+    "V": "1.37.0-r20",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "busybox",
+    "c": "2e97d754a30d558f15524b8e422303c8a96832df",
+    "U": "https://busybox.net/"
+  },
+  {
+    "P": "c-ares",
+    "V": "1.34.9-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "c-ares",
+    "c": "2abc7d1defd146f59390a22caf74efe85e5130d9",
+    "U": "https://c-ares.org/"
+  },
+  {
+    "P": "ca-certificates-bundle",
+    "V": "20261020-r0",
+    "A": "x86",
+    "L": "MPL-2.0 AND MIT",
+    "o": "ca-certificates",
+    "c": "ce7bff87478cd936f5b7031ce822b02d4fdd313a",
+    "U": "https://www.mozilla.org/en-US/about/governance/policies/security-group/certs/"
+  },
+  {
+    "P": "cairo",
+    "V": "1.18.4-r0",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later OR MPL-1.1",
+    "o": "cairo",
+    "c": "7fe77742880d49da1db854abd16e78073d538983",
+    "U": "https://cairographics.org/"
+  },
+  {
+    "P": "conky",
+    "V": "1.22.1-r0",
+    "A": "x86",
+    "L": "GPL-3.0-or-later",
+    "o": "conky",
+    "c": "4d2925d3fb1222f412f6f643ea3f46454e52157b",
+    "U": "https://github.com/brndnmtthws/conky"
+  },
+  {
+    "P": "cryptsetup-libs",
+    "V": "2.7.5-r1",
+    "A": "x86",
+    "L": "GPL-2.0-or-later WITH cryptsetup-OpenSSL-exception",
+    "o": "cryptsetup",
+    "c": "d63289c555dc047e5c39fcff691770ce9743b464",
+    "U": "https://gitlab.com/cryptsetup/cryptsetup"
+  },
+  {
+    "P": "device-mapper-libs",
+    "V": "2.03.32-r0",
+    "A": "x86",
+    "L": "GPL-2.0-or-later AND LGPL-2.1-or-later AND BSD-2-Clause",
+    "o": "lvm2",
+    "c": "cac22b1b3bd0fb3cda7e0d7d9d011f1fa5512dfd",
+    "U": "https://sourceware.org/lvm2/"
+  },
+  {
+    "P": "encodings",
+    "V": "1.0.7-r1",
+    "A": "x86",
+    "L": "Public Domain",
+    "o": "encodings",
+    "c": "b24a4cdf2a2e4b41de4d78979aa9aae0d1383ebc",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "eudev-libs",
+    "V": "3.2.14-r5",
+    "A": "x86",
+    "L": "GPL-2.0-or-later",
+    "o": "eudev",
+    "c": "8bac74716d06c84627ab02d101fd9d2bafd0a34c",
+    "U": "https://github.com/eudev-project/eudev"
+  },
+  {
+    "P": "feh",
+    "V": "3.10.3-r0",
+    "A": "x86",
+    "L": "MIT-feh",
+    "o": "feh",
+    "c": "d16bed6f567d4048c9f9741148d5bae2f13845b1",
+    "U": "https://feh.finalrewind.org"
+  },
+  {
+    "P": "fluxbox",
+    "V": "1.3.7-r8",
+    "A": "x86",
+    "L": "MIT",
+    "o": "fluxbox",
+    "c": "183b05ebd06982213390b68167dbff263d40bb26",
+    "U": "https://fluxbox.org/"
+  },
+  {
+    "P": "font-alias",
+    "V": "1.0.5-r0",
+    "A": "x86",
+    "L": "custom",
+    "o": "font-alias",
+    "c": "ae9232982eb677d120e663a4ead0cabc81b244d8",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "font-cursor-misc",
+    "V": "1.0.4-r1",
+    "A": "x86",
+    "L": "Public Domain",
+    "o": "font-cursor-misc",
+    "c": "b24a4cdf2a2e4b41de4d78979aa9aae0d1383ebc",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "font-dejavu",
+    "V": "2.37-r6",
+    "A": "x86",
+    "L": "Bitstream-Vera",
+    "o": "font-dejavu",
+    "c": "59420f440b2e664f7be1a6e135a3175aab56cd51",
+    "U": "https://dejavu-fonts.github.io/"
+  },
+  {
+    "P": "font-misc-misc",
+    "V": "1.1.3-r1",
+    "A": "x86",
+    "L": "Public Domain",
+    "o": "font-misc-misc",
+    "c": "b24a4cdf2a2e4b41de4d78979aa9aae0d1383ebc",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "fontconfig",
+    "V": "2.15.0-r3",
+    "A": "x86",
+    "L": "MIT",
+    "o": "fontconfig",
+    "c": "51e91d4ddc3af0a24206dad5e43d71a6863f90ba",
+    "U": "https://www.freedesktop.org/wiki/Software/fontconfig"
+  },
+  {
+    "P": "freetype",
+    "V": "2.13.3-r0",
+    "A": "x86",
+    "L": "FTL OR GPL-2.0-or-later",
+    "o": "freetype",
+    "c": "2d656868790548d7f0d43f6caf59c2b2e43eb251",
+    "U": "https://www.freetype.org/"
+  },
+  {
+    "P": "fribidi",
+    "V": "1.0.16-r1",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "fribidi",
+    "c": "be0833caee3020f089f02c5d7223e971a9a11ffb",
+    "U": "https://github.com/fribidi/fribidi"
+  },
+  {
+    "P": "giflib",
+    "V": "5.2.2-r2",
+    "A": "x86",
+    "L": "MIT",
+    "o": "giflib",
+    "c": "ab17c9ef3de3423c445cd0a9680d6eb1e1dc7077",
+    "U": "https://sourceforge.net/projects/giflib/"
+  },
+  {
+    "P": "glib",
+    "V": "2.84.4-r0",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "glib",
+    "c": "9a0d606dfb2af556b9b96a9e8bb511b2bd0ddbed",
+    "U": "https://developer.gnome.org/glib/"
+  },
+  {
+    "P": "gmp",
+    "V": "6.3.0-r3",
+    "A": "x86",
+    "L": "LGPL-3.0-or-later OR GPL-2.0-or-later",
+    "o": "gmp",
+    "c": "187e3f7791d3390e18bc06969a5f34c385fd883e",
+    "U": "https://gmplib.org/"
+  },
+  {
+    "P": "graphite2",
+    "V": "1.3.14-r6",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later OR MPL-1.1",
+    "o": "graphite2",
+    "c": "33283848034c9885d984c8e8697c645c57324938",
+    "U": "https://graphite.sil.org/"
+  },
+  {
+    "P": "harfbuzz",
+    "V": "11.2.1-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "harfbuzz",
+    "c": "c9247a23f6a64eefde9d75b2e6a7c7c7454d8c83",
+    "U": "https://harfbuzz.github.io/"
+  },
+  {
+    "P": "hwdata-pci",
+    "V": "0.395-r0",
+    "A": "x86",
+    "L": "GPL-2.0-or-later OR XFree86-1.1",
+    "o": "hwdata",
+    "c": "384053bb3c4e39ea7b97de07cabfdf6b72cd26ae",
+    "U": "https://github.com/vcrhonek/hwdata"
+  },
+  {
+    "P": "imlib2",
+    "V": "1.12.4-r0",
+    "A": "x86",
+    "L": "Imlib2",
+    "o": "imlib2",
+    "c": "cc50f5fba7219ae46fcf613e1dd717ba0979203c",
+    "U": "https://sourceforge.net/projects/enlightenment/"
+  },
+  {
+    "P": "json-c",
+    "V": "0.18-r1",
+    "A": "x86",
+    "L": "MIT",
+    "o": "json-c",
+    "c": "fe078081479c2be15581196ce067bac15406a5d0",
+    "U": "https://github.com/json-c/json-c/wiki"
+  },
+  {
+    "P": "kmod",
+    "V": "34.2-r0",
+    "A": "x86",
+    "L": "GPL-2.0-or-later",
+    "o": "kmod",
+    "c": "0f8b0736b11ab01346f98ccd73fb356050abedb6",
+    "U": "http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary"
+  },
+  {
+    "P": "kmod-libs",
+    "V": "34.2-r0",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "kmod",
+    "c": "0f8b0736b11ab01346f98ccd73fb356050abedb6",
+    "U": "http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary"
+  },
+  {
+    "P": "lddtree",
+    "V": "1.27-r0",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "lddtree",
+    "c": "007305e7880a70d5c804019aa3da115da732776b",
+    "U": "https://github.com/ncopa/lddtree"
+  },
+  {
+    "P": "libapk2",
+    "V": "2.14.12-r0",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "apk-tools",
+    "c": "a53adea12086d36717300ea195ede9ad75f98e1f",
+    "U": "https://gitlab.alpinelinux.org/alpine/apk-tools"
+  },
+  {
+    "P": "libblkid",
+    "V": "2.41.6-r1",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "util-linux",
+    "c": "b91fb14e28957c6f5a13c02eb9ec136c82ebd50e",
+    "U": "https://git.kernel.org/cgit/utils/util-linux/util-linux.git"
+  },
+  {
+    "P": "libbsd",
+    "V": "0.12.2-r0",
+    "A": "x86",
+    "L": "BSD-3-Clause",
+    "o": "libbsd",
+    "c": "02365e78d654a7beb23fd35d7d69f4a649009ede",
+    "U": "https://libbsd.freedesktop.org/"
+  },
+  {
+    "P": "libbz2",
+    "V": "1.0.8-r6",
+    "A": "x86",
+    "L": "bzip2-1.0.6",
+    "o": "bzip2",
+    "c": "33283848034c9885d984c8e8697c645c57324938",
+    "U": "https://sourceware.org/bzip2/"
+  },
+  {
+    "P": "libcrypto3",
+    "V": "3.5.9-r0",
+    "A": "x86",
+    "L": "Apache-2.0",
+    "o": "openssl",
+    "c": "b6d0d5c5639c0034e9073c39e9ff139e28e71818",
+    "U": "https://www.openssl.org/"
+  },
+  {
+    "P": "libcurl",
+    "V": "8.14.1-r4",
+    "A": "x86",
+    "L": "curl",
+    "o": "curl",
+    "c": "d1a2a43ff0517fffb947e767cdaeee61e7376cf2",
+    "U": "https://curl.se/"
+  },
+  {
+    "P": "libdrm",
+    "V": "2.4.124-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libdrm",
+    "c": "b8caec52f2b5014431a3ac8e53e37414ec9836e4",
+    "U": "https://gitlab.freedesktop.org/mesa/drm"
+  },
+  {
+    "P": "libeconf",
+    "V": "0.6.3-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libeconf",
+    "c": "1e0aa723fba50417893fe5f6cf72f76d044b8192",
+    "U": "https://github.com/openSUSE/libeconf"
+  },
+  {
+    "P": "libelf",
+    "V": "0.193-r0",
+    "A": "x86",
+    "L": "GPL-3.0-or-later AND ( GPL-2.0-or-later OR LGPL-3.0-or-later )",
+    "o": "elfutils",
+    "c": "dc9603691bcc8473911a223cfd0f3e713e6a5e2c",
+    "U": "https://sourceware.org/elfutils/"
+  },
+  {
+    "P": "libepoxy",
+    "V": "1.5.10-r1",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libepoxy",
+    "c": "ed8448e144ae84145eb4a8163aa09315910dc938",
+    "U": "https://github.com/anholt/libepoxy"
+  },
+  {
+    "P": "libevdev",
+    "V": "1.13.3-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libevdev",
+    "c": "8cd6f2bc8f9abeb4b3d2a74a41f77f44f978a3a8",
+    "U": "https://www.freedesktop.org/wiki/Software/libevdev"
+  },
+  {
+    "P": "libexpat",
+    "V": "2.9.0-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "expat",
+    "c": "f71ec7147f3df6e984064717d4200875fc8834c4",
+    "U": "https://libexpat.github.io/"
+  },
+  {
+    "P": "libffi",
+    "V": "3.4.8-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libffi",
+    "c": "be5e49159a2ccca93a3290af3d8ab25443523363",
+    "U": "https://sourceware.org/libffi/"
+  },
+  {
+    "P": "libfontenc",
+    "V": "1.1.8-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libfontenc",
+    "c": "e96b6cee19bcd4ef22fc6fd58e5b84386639ca0b",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libgcc",
+    "V": "14.2.0-r6",
+    "A": "x86",
+    "L": "GPL-2.0-or-later AND LGPL-2.1-or-later",
+    "o": "gcc",
+    "c": "fbf60319be3bbaf6dd32ef55cc6fb7189e05c266",
+    "U": "https://gcc.gnu.org"
+  },
+  {
+    "P": "libice",
+    "V": "1.1.2-r0",
+    "A": "x86",
+    "L": "X11",
+    "o": "libice",
+    "c": "d4941e833167c30aa1172e6d8420d084698254ab",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libid3tag",
+    "V": "0.16.3-r0",
+    "A": "x86",
+    "L": "GPL-2.0-or-later",
+    "o": "libid3tag",
+    "c": "aba518f5d23e1127e33658418aade664d2d5bb43",
+    "U": "https://codeberg.org/tenacityteam/libid3tag"
+  },
+  {
+    "P": "libidn2",
+    "V": "2.3.7-r0",
+    "A": "x86",
+    "L": "GPL-2.0-or-later OR LGPL-3.0-or-later",
+    "o": "libidn2",
+    "c": "1cdcdd0eccbee1f60078417a7aaf83f92f6e6754",
+    "U": "https://www.gnu.org/software/libidn#libidn2"
+  },
+  {
+    "P": "libintl",
+    "V": "0.24.1-r0",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "gettext",
+    "c": "215a26431d1b09c56cb2a9ffe10175feb9518fd8",
+    "U": "https://www.gnu.org/software/gettext/gettext.html"
+  },
+  {
+    "P": "libjpeg-turbo",
+    "V": "3.1.0-r0",
+    "A": "x86",
+    "L": "BSD-3-Clause AND IJG AND Zlib",
+    "o": "libjpeg-turbo",
+    "c": "a78c772b57d3dd6b70cdfd239493112b396a0485",
+    "U": "https://libjpeg-turbo.org/"
+  },
+  {
+    "P": "libmagic",
+    "V": "5.46-r2",
+    "A": "x86",
+    "L": "BSD-2-Clause",
+    "o": "file",
+    "c": "bd570c2a8fc5988357b1415c93c0c69b3f4c8996",
+    "U": "https://www.darwinsys.com/file/"
+  },
+  {
+    "P": "libmd",
+    "V": "1.1.0-r0",
+    "A": "x86",
+    "L": "BSD-3-Clause AND BSD-2-Clause AND ISC AND Beerware AND Public Domain",
+    "o": "libmd",
+    "c": "73e716067b9edc32c4cc7818cb7d206e57fdde15",
+    "U": "https://www.hadrons.org/software/libmd/"
+  },
+  {
+    "P": "libmount",
+    "V": "2.41.6-r1",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "util-linux",
+    "c": "b91fb14e28957c6f5a13c02eb9ec136c82ebd50e",
+    "U": "https://git.kernel.org/cgit/utils/util-linux/util-linux.git"
+  },
+  {
+    "P": "libncursesw",
+    "V": "6.5_p20250503-r0",
+    "A": "x86",
+    "L": "X11",
+    "o": "ncurses",
+    "c": "3fefbe8dda8b3e85458edb190e2f3a69ad16035c",
+    "U": "https://invisible-island.net/ncurses/"
+  },
+  {
+    "P": "libpciaccess",
+    "V": "0.18.1-r0",
+    "A": "x86",
+    "L": "X11",
+    "o": "libpciaccess",
+    "c": "9bda3b34ae265f5b18e3e0de94261e63dbe8d586",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libpng",
+    "V": "1.6.59-r0",
+    "A": "x86",
+    "L": "Libpng",
+    "o": "libpng",
+    "c": "e95748873fa2f7e0e54cf27557fe0deff27b6c80",
+    "U": "http://www.libpng.org"
+  },
+  {
+    "P": "libpsl",
+    "V": "0.21.5-r3",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libpsl",
+    "c": "4cf07ce428e77d8bca8e45258ba1937db8b18661",
+    "U": "https://rockdaboot.github.io/libpsl"
+  },
+  {
+    "P": "libsharpyuv",
+    "V": "1.5.0-r0",
+    "A": "x86",
+    "L": "BSD-3-Clause",
+    "o": "libwebp",
+    "c": "5494fdecea7831c01f277cf8ca80719d02f47771",
+    "U": "https://developers.google.com/speed/webp"
+  },
+  {
+    "P": "libsm",
+    "V": "1.2.5-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libsm",
+    "c": "b1ad94dc4022b4397665817e1dabc08afe2773e2",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libssl3",
+    "V": "3.5.9-r0",
+    "A": "x86",
+    "L": "Apache-2.0",
+    "o": "openssl",
+    "c": "b6d0d5c5639c0034e9073c39e9ff139e28e71818",
+    "U": "https://www.openssl.org/"
+  },
+  {
+    "P": "libstdc++",
+    "V": "14.2.0-r6",
+    "A": "x86",
+    "L": "GPL-2.0-or-later AND LGPL-2.1-or-later",
+    "o": "gcc",
+    "c": "fbf60319be3bbaf6dd32ef55cc6fb7189e05c266",
+    "U": "https://gcc.gnu.org"
+  },
+  {
+    "P": "libunistring",
+    "V": "1.3-r0",
+    "A": "x86",
+    "L": "GPL-2.0-or-later OR LGPL-3.0-or-later",
+    "o": "libunistring",
+    "c": "22200a467cea998010743cc288889dbde0496d4a",
+    "U": "https://www.gnu.org/software/libunistring/"
+  },
+  {
+    "P": "libuuid",
+    "V": "2.41.6-r1",
+    "A": "x86",
+    "L": "BSD-3-Clause",
+    "o": "util-linux",
+    "c": "b91fb14e28957c6f5a13c02eb9ec136c82ebd50e",
+    "U": "https://git.kernel.org/cgit/utils/util-linux/util-linux.git"
+  },
+  {
+    "P": "libwebp",
+    "V": "1.5.0-r0",
+    "A": "x86",
+    "L": "BSD-3-Clause",
+    "o": "libwebp",
+    "c": "5494fdecea7831c01f277cf8ca80719d02f47771",
+    "U": "https://developers.google.com/speed/webp"
+  },
+  {
+    "P": "libwebpdemux",
+    "V": "1.5.0-r0",
+    "A": "x86",
+    "L": "BSD-3-Clause",
+    "o": "libwebp",
+    "c": "5494fdecea7831c01f277cf8ca80719d02f47771",
+    "U": "https://developers.google.com/speed/webp"
+  },
+  {
+    "P": "libx11",
+    "V": "1.8.11-r0",
+    "A": "x86",
+    "L": "X11",
+    "o": "libx11",
+    "c": "857ef3b9553dcb3927c61119359520902fd2f710",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxau",
+    "V": "1.0.12-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxau",
+    "c": "c911b00ecb8f42c3281d4be61ce9acb4fe985a14",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxaw",
+    "V": "1.0.16-r1",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxaw",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://www.x.org/"
+  },
+  {
+    "P": "libxcb",
+    "V": "1.17.0-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxcb",
+    "c": "56abd9107430e190174cbc368cf4d9faa6bdd758",
+    "U": "https://xcb.freedesktop.org/"
+  },
+  {
+    "P": "libxcvt",
+    "V": "0.1.3-r0",
+    "A": "x86",
+    "L": "custom",
+    "o": "libxcvt",
+    "c": "68e887cbf59009caf08c641174e4d706c87074d7",
+    "U": "https://gitlab.freedesktop.org/xorg/lib/libxcvt"
+  },
+  {
+    "P": "libxdamage",
+    "V": "1.1.6-r5",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxdamage",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxdmcp",
+    "V": "1.1.5-r1",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxdmcp",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxext",
+    "V": "1.3.6-r2",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxext",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxfixes",
+    "V": "6.0.1-r4",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxfixes",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxfont2",
+    "V": "2.0.7-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxfont2",
+    "c": "82328476b26cd74c105f4759a9cd9c271b5bb75f",
+    "U": "https://www.x.org"
+  },
+  {
+    "P": "libxft",
+    "V": "2.3.8-r3",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxft",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxinerama",
+    "V": "1.1.5-r4",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxinerama",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxkbcommon",
+    "V": "1.8.1-r2",
+    "A": "x86",
+    "L": "MIT AND MIT-open-group AND HPND AND HPND-sell-variant AND LicenseRef-digital-equipment-corporation",
+    "o": "libxkbcommon",
+    "c": "0bbcc16cbd21758cab1ee29c487e85ba8dc4f3b9",
+    "U": "https://xkbcommon.org/"
+  },
+  {
+    "P": "libxkbfile",
+    "V": "1.1.3-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxkbfile",
+    "c": "b1d387b24ddf55940c59aff7cc326d1df88f7ed6",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxml2",
+    "V": "2.13.9-r1",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxml2",
+    "c": "0f705887341201fb4fffd22984d951f63eedce79",
+    "U": "https://gitlab.gnome.org/GNOME/libxml2"
+  },
+  {
+    "P": "libxmu",
+    "V": "1.2.1-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxmu",
+    "c": "02a824efdb1a6591d6be6f91c41a3431e7748b38",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxpm",
+    "V": "3.5.19-r0",
+    "A": "x86",
+    "L": "X11",
+    "o": "libxpm",
+    "c": "6a9b9cd9d79074041cbb7f4efb7e396169173dc1",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxrandr",
+    "V": "1.5.4-r1",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxrandr",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxrender",
+    "V": "0.9.12-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxrender",
+    "c": "74030d4140b68e8d4d36a357751f156ab31840c2",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxshmfence",
+    "V": "1.3.3-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxshmfence",
+    "c": "8bac74716d06c84627ab02d101fd9d2bafd0a34c",
+    "U": "https://www.x.org/"
+  },
+  {
+    "P": "libxt",
+    "V": "1.3.1-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxt",
+    "c": "60222ebeadec75e483e49194130c6963d0fcbf75",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "libxtst",
+    "V": "1.2.5-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxtst",
+    "c": "f285d63f704f8e1c74e14ca7abceb419383922c9",
+    "U": "https://wiki.freedesktop.org/xorg/"
+  },
+  {
+    "P": "libxxf86vm",
+    "V": "1.1.7-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "libxxf86vm",
+    "c": "1d33cdc5eccb275f8411d55b72958858dc4f53fd",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "linux-virt",
+    "V": "6.12.115-r0",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "linux-lts",
+    "c": "37040d7745c15e7bf6cd48d5bbb73005153c6688",
+    "U": "https://www.kernel.org"
+  },
+  {
+    "P": "llvm20-libs",
+    "V": "20.1.8-r0",
+    "A": "x86",
+    "L": "Apache-2.0",
+    "o": "llvm20",
+    "c": "9cf763a63d7ef49e00a4c6becac86468771fe592",
+    "U": "https://llvm.org/"
+  },
+  {
+    "P": "lua5.4-libs",
+    "V": "5.4.7-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "lua5.4",
+    "c": "0b3df5ad9304b104a069304318efe438cdc21fb4",
+    "U": "https://www.lua.org/"
+  },
+  {
+    "P": "mdev-conf",
+    "V": "4.8-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "mdev-conf",
+    "c": "d92b19909d7b8e4061da5ceea5f0acc8ee83e32d",
+    "U": "https://gitlab.alpinelinux.org/alpine/mdev-conf"
+  },
+  {
+    "P": "mesa",
+    "V": "25.1.9-r0",
+    "A": "x86",
+    "L": "MIT AND SGI-B-2.0 AND BSL-1.0",
+    "o": "mesa",
+    "c": "dd9d35b82a5100ea5a3440943a74ab3bf71db4e5",
+    "U": "https://www.mesa3d.org"
+  },
+  {
+    "P": "mesa-egl",
+    "V": "25.1.9-r0",
+    "A": "x86",
+    "L": "MIT AND SGI-B-2.0 AND BSL-1.0",
+    "o": "mesa",
+    "c": "dd9d35b82a5100ea5a3440943a74ab3bf71db4e5",
+    "U": "https://www.mesa3d.org"
+  },
+  {
+    "P": "mesa-gbm",
+    "V": "25.1.9-r0",
+    "A": "x86",
+    "L": "MIT AND SGI-B-2.0 AND BSL-1.0",
+    "o": "mesa",
+    "c": "dd9d35b82a5100ea5a3440943a74ab3bf71db4e5",
+    "U": "https://www.mesa3d.org"
+  },
+  {
+    "P": "mesa-gl",
+    "V": "25.1.9-r0",
+    "A": "x86",
+    "L": "MIT AND SGI-B-2.0 AND BSL-1.0",
+    "o": "mesa",
+    "c": "dd9d35b82a5100ea5a3440943a74ab3bf71db4e5",
+    "U": "https://www.mesa3d.org"
+  },
+  {
+    "P": "mkfontscale",
+    "V": "1.2.3-r1",
+    "A": "x86",
+    "L": "MIT",
+    "o": "mkfontscale",
+    "c": "d3b558e1b8572decb53ac74fe4f3a5393fdb2eb9",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "mkinitfs",
+    "V": "3.12.0-r0",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "mkinitfs",
+    "c": "b8e5b649721d57677c1b49af92a65bb9f2aba094",
+    "U": "https://gitlab.alpinelinux.org/alpine/mkinitfs"
+  },
+  {
+    "P": "mtdev",
+    "V": "1.1.7-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "mtdev",
+    "c": "6867e384dbfbd0b8efadbca989e9778190e89496",
+    "U": "http://bitmath.org/code/mtdev/"
+  },
+  {
+    "P": "musl",
+    "V": "1.2.5-r13",
+    "A": "x86",
+    "L": "MIT",
+    "o": "musl",
+    "c": "ddaf59b84bc6983a37d6e24d2210c2c4791642bb",
+    "U": "https://musl.libc.org/"
+  },
+  {
+    "P": "musl-utils",
+    "V": "1.2.5-r13",
+    "A": "x86",
+    "L": "MIT AND BSD-2-Clause AND GPL-2.0-or-later",
+    "o": "musl",
+    "c": "ddaf59b84bc6983a37d6e24d2210c2c4791642bb",
+    "U": "https://musl.libc.org/"
+  },
+  {
+    "P": "ncurses-terminfo-base",
+    "V": "6.5_p20250503-r0",
+    "A": "x86",
+    "L": "X11",
+    "o": "ncurses",
+    "c": "3fefbe8dda8b3e85458edb190e2f3a69ad16035c",
+    "U": "https://invisible-island.net/ncurses/"
+  },
+  {
+    "P": "nettle",
+    "V": "3.10.2-r0",
+    "A": "x86",
+    "L": "GPL-2.0-or-later OR LGPL-3.0-or-later",
+    "o": "nettle",
+    "c": "d1a58b83bd3186946ce6c0d5e1ee2bf9a8592bec",
+    "U": "https://www.lysator.liu.se/~nisse/nettle/"
+  },
+  {
+    "P": "nghttp2-libs",
+    "V": "1.69.0-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "nghttp2",
+    "c": "87de39802b2c34c9a7c62a52b3e39e05af1c974e",
+    "U": "https://nghttp2.org"
+  },
+  {
+    "P": "pango",
+    "V": "1.56.3-r0",
+    "A": "x86",
+    "L": "LGPL-2.1-or-later",
+    "o": "pango",
+    "c": "7072d5b4762ad6280669406526c5f391e444800e",
+    "U": "https://www.pango.org/"
+  },
+  {
+    "P": "pcre2",
+    "V": "10.46-r1",
+    "A": "x86",
+    "L": "BSD-3-Clause",
+    "o": "pcre2",
+    "c": "f5ca111ded52f3c1f4298b09e118af54fba80aa1",
+    "U": "https://pcre.org/"
+  },
+  {
+    "P": "pixman",
+    "V": "0.46.4-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "pixman",
+    "c": "43db2f639237fba90ef09320e83f847561d9b0fc",
+    "U": "https://gitlab.freedesktop.org/pixman"
+  },
+  {
+    "P": "pkgconf",
+    "V": "2.4.3-r0",
+    "A": "x86",
+    "L": "ISC",
+    "o": "pkgconf",
+    "c": "5be535df8a0565ca60a69a44601937d4288e353c",
+    "U": "https://gitea.treehouse.systems/ariadne/pkgconf"
+  },
+  {
+    "P": "scanelf",
+    "V": "1.3.8-r1",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "pax-utils",
+    "c": "9818c555f344e3085d0dd1f3d917d8e23e244cb1",
+    "U": "https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities"
+  },
+  {
+    "P": "spirv-tools",
+    "V": "1.4.313.0-r0",
+    "A": "x86",
+    "L": "Apache-2.0",
+    "o": "spirv-tools",
+    "c": "5e92a103a8ac7baea97f089965f902c4b738c191",
+    "U": "https://github.com/KhronosGroup/SPIRV-Tools"
+  },
+  {
+    "P": "ssl_client",
+    "V": "1.37.0-r20",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "busybox",
+    "c": "2e97d754a30d558f15524b8e422303c8a96832df",
+    "U": "https://busybox.net/"
+  },
+  {
+    "P": "tiff",
+    "V": "4.7.2-r0",
+    "A": "x86",
+    "L": "libtiff",
+    "o": "tiff",
+    "c": "a19ba329cabf74e010b845cae4368898ba6dbc03",
+    "U": "https://gitlab.com/libtiff/libtiff"
+  },
+  {
+    "P": "util-macros",
+    "V": "1.20.1-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "util-macros",
+    "c": "703e2dac1c698c3d15461b47b9a3952fe5a92107",
+    "U": "https://xorg.freedesktop.org"
+  },
+  {
+    "P": "wayland-libs-client",
+    "V": "1.23.1-r3",
+    "A": "x86",
+    "L": "MIT",
+    "o": "wayland",
+    "c": "4abf33c74f2d6576e60fa01507040e9137709fc1",
+    "U": "https://wayland.freedesktop.org"
+  },
+  {
+    "P": "wayland-libs-server",
+    "V": "1.23.1-r3",
+    "A": "x86",
+    "L": "MIT",
+    "o": "wayland",
+    "c": "4abf33c74f2d6576e60fa01507040e9137709fc1",
+    "U": "https://wayland.freedesktop.org"
+  },
+  {
+    "P": "wireless-tools-libs",
+    "V": "30_pre9-r5",
+    "A": "x86",
+    "L": "GPL-2.0-only",
+    "o": "wireless-tools",
+    "c": "999fda402ae45258bb76de73c05946c52eae3067",
+    "U": "https://hewlettpackard.github.io/wireless-tools/Tools.html"
+  },
+  {
+    "P": "xcalc",
+    "V": "1.1.2-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xcalc",
+    "c": "796e9f0e433fc86de572625b99e7a375af213909",
+    "U": "https://www.x.org"
+  },
+  {
+    "P": "xdotool",
+    "V": "3.20211022.1-r1",
+    "A": "x86",
+    "L": "BSD-3-Clause",
+    "o": "xdotool",
+    "c": "40ea6c48d709733051b824abfc3d0ed2309ae339",
+    "U": "https://github.com/jordansissel/xdotool"
+  },
+  {
+    "P": "xf86-input-evdev",
+    "V": "2.10.6-r2",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xf86-input-evdev",
+    "c": "4f8157b2e125ac222cade929bb25bda16305fefc",
+    "U": "https://xorg.freedesktop.org"
+  },
+  {
+    "P": "xf86-video-fbdev",
+    "V": "0.5.0-r6",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xf86-video-fbdev",
+    "c": "614e9166706cec427fc3d907b8d981390a42e088",
+    "U": "https://www.x.org"
+  },
+  {
+    "P": "xf86-video-vesa",
+    "V": "2.6.0-r4",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xf86-video-vesa",
+    "c": "e687249793e013a4804c0830018a56e1dbb590ee",
+    "U": "https://xorg.freedesktop.org/wiki/"
+  },
+  {
+    "P": "xkbcomp",
+    "V": "1.5.0-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xkbcomp",
+    "c": "7cce7621b7ca94b8be482625a456e7d31dc5d1cb",
+    "U": "https://xorg.freedesktop.org"
+  },
+  {
+    "P": "xkeyboard-config",
+    "V": "2.43-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xkeyboard-config",
+    "c": "4f37a562ee62763122c3f5d5060f2ee6ba0d01ea",
+    "U": "https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config"
+  },
+  {
+    "P": "xmessage",
+    "V": "1.0.7-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xmessage",
+    "c": "c9b0213d9578751e3db2bd15d9bbe0b144323aec",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "xorg-server",
+    "V": "21.1.19-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xorg-server",
+    "c": "9698c31a1eadbdcbb6ed7882792bc3b52ba2cf64",
+    "U": "https://www.x.org/wiki"
+  },
+  {
+    "P": "xorg-server-common",
+    "V": "21.1.19-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xorg-server",
+    "c": "9698c31a1eadbdcbb6ed7882792bc3b52ba2cf64",
+    "U": "https://www.x.org/wiki"
+  },
+  {
+    "P": "xprop",
+    "V": "1.2.8-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xprop",
+    "c": "6867e384dbfbd0b8efadbca989e9778190e89496",
+    "U": "https://cgit.freedesktop.org/xorg/app/xprop"
+  },
+  {
+    "P": "xrandr",
+    "V": "1.5.2-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xrandr",
+    "c": "fad4c74ebc333376b7e80f08d42d13f2bcffdac9",
+    "U": "https://www.x.org/wiki/"
+  },
+  {
+    "P": "xset",
+    "V": "1.2.5-r1",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xset",
+    "c": "1c8874eacceeaf02712129a30a1bbdab7be04528",
+    "U": "https://xorg.freedesktop.org/"
+  },
+  {
+    "P": "xterm",
+    "V": "399-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xterm",
+    "c": "4a5d6084404d7aa7ab35f2234ef5ecee1d7022c7",
+    "U": "https://invisible-island.net/xterm"
+  },
+  {
+    "P": "xwininfo",
+    "V": "1.1.6-r0",
+    "A": "x86",
+    "L": "MIT",
+    "o": "xwininfo",
+    "c": "55a9d95d44c8c4830342df61685d7f3f97a5b4e6",
+    "U": "https://cgit.freedesktop.org/xorg/app/xwininfo"
+  },
+  {
+    "P": "xz-libs",
+    "V": "5.8.4-r0",
+    "A": "x86",
+    "L": "GPL-2.0-or-later AND 0BSD AND Public-Domain AND LGPL-2.1-or-later",
+    "o": "xz",
+    "c": "4ad8da6dc8e2b7ed46653b9844835babc3a166ae",
+    "U": "https://tukaani.org/xz/"
+  },
+  {
+    "P": "zlib",
+    "V": "1.3.2-r1",
+    "A": "x86",
+    "L": "Zlib",
+    "o": "zlib",
+    "c": "121fc97db0e7c59db704891b6d7ef83ae5df2cc2",
+    "U": "https://zlib.net/"
+  },
+  {
+    "P": "zstd-libs",
+    "V": "1.5.7-r0",
+    "A": "x86",
+    "L": "BSD-3-Clause OR GPL-2.0-or-later",
+    "o": "zstd",
+    "c": "fc7fd35c7bf99156ae31962877c074f679f45b73",
+    "U": "https://facebook.github.io/zstd/"
+  }
+]

@@ -1,0 +1,27 @@
+Daylight Linux — landscape artwork
+Developer: Hamdy Abou El Anein
+Contact: info@daylightlinux.ch
+
+daylight-mountains.jpg, daylight-night.jpg, daylight-terminal.jpg:
+Approved AI-generated photorealistic Alpine-lake sunrise, with the Daylight Linux wordmark.
+This is generated scenery, not a documentary photograph or an identified location.
+Native delivered dimensions: 1672 x 941. It is not advertised as native 4K.
+The dark and terminal editions are exposure-adjusted derivatives.
+Daylight project artwork: GPL-3.0-only to the extent copyright applies.
+Source SHA256: 0e1c47307fa0bd923e8b1bba404f4a53ba3e60356fe53ca9952edce337f46fc9
+
+daylight-sunrise.jpg and daylight-himalaya.jpg:
+Real CC0 photographs cropped to 3840 x 2160, with a rasterized Daylight Linux wordmark.
+System fonts are used during rendering; font files are not distributed.
+All exported JPEGs omit camera EXIF data.
+
+himalaya-sunrise — Ali Sabbagh
+https://commons.wikimedia.org/wiki/File:Himalaya_sunrise.jpg
+Original SHA256: 93af6e06cb6f42ff28c4d016fcfcc641f7c516ee80682914755fb43e43d931da
+License: https://creativecommons.org/publicdomain/zero/1.0/
+
+mountain-sunrise — Alice Donovan Rouse
+https://commons.wikimedia.org/wiki/File:Mountain_sunrise_(Unsplash).jpg
+Original SHA256: 43d4f3dcf9da46eba9b66e5c22e81c9e468249c6ae9c1f4b63fe0a371714b64b
+License: https://creativecommons.org/publicdomain/zero/1.0/
+

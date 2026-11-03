@@ -1,0 +1,18 @@
+[
+  "kernel/drivers/gpu/drm/drm.ko.gz",
+  "kernel/drivers/gpu/drm/drm_kms_helper.ko.gz",
+  "kernel/drivers/gpu/drm/drm_panel_orientation_quirks.ko.gz",
+  "kernel/drivers/gpu/drm/drm_ttm_helper.ko.gz",
+  "kernel/drivers/gpu/drm/drm_vram_helper.ko.gz",
+  "kernel/drivers/gpu/drm/tiny/bochs.ko.gz",
+  "kernel/drivers/gpu/drm/ttm/ttm.ko.gz",
+  "kernel/drivers/i2c/i2c-core.ko.gz",
+  "kernel/drivers/input/evdev.ko.gz",
+  "kernel/drivers/input/mouse/psmouse.ko.gz",
+  "kernel/drivers/video/fbdev/core/fb.ko.gz",
+  "kernel/drivers/video/fbdev/core/fb_sys_fops.ko.gz",
+  "kernel/drivers/video/fbdev/core/syscopyarea.ko.gz",
+  "kernel/drivers/video/fbdev/core/sysfillrect.ko.gz",
+  "kernel/drivers/video/fbdev/core/sysimgblt.ko.gz",
+  "kernel/lib/fonts/font.ko.gz"
+]

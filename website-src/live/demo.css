@@ -1,0 +1,43 @@
+/* Developer: Hamdy Abou El Anein | Contact: info@daylightlinux.ch | SPDX-License-Identifier: GPL-3.0-only */
+:root{color-scheme:dark;font:16px/1.7 system-ui,sans-serif;background:#0b1216;color:#edf2ed}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:1160px;margin:auto;padding:24px}header{display:flex;justify-content:space-between;align-items:center;gap:20px;border-bottom:1px solid #34433f}header>a{font-weight:700;text-decoration:none}nav,.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center}a{color:#f4c77e;text-underline-offset:4px}button,.button{font:inherit;cursor:pointer;min-height:44px;border:1px solid #6d776d;border-radius:8px;background:#1c2b2c;color:#f5f0e5;padding:9px 17px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}#start,.button{background:#f4c77e;color:#101815;font-weight:650;border-color:#f4c77e}button:disabled{opacity:.4;cursor:default}a:focus-visible,button:focus-visible,.display:focus-visible,summary:focus-visible{outline:3px solid #f4c77e;outline-offset:4px}h1{font-size:clamp(36px,4.6vw,62px);line-height:1.12;letter-spacing:-1.2px;margin:15px 0 24px}.eyebrow{font-size:12px;letter-spacing:2px;color:#f4c77e;margin-top:30px}.lead{font-size:20px;max-width:900px;color:#c3d0c7}.notice{border-left:3px solid #f4c77e;padding:18px 24px;background:#172321;margin:25px 0}.notice p{margin:6px 0 0}.toolbar{margin:26px 0 12px}#status{min-height:28px;font-size:14px;color:#c3d0c7}progress{width:100%;height:8px;accent-color:#f4c77e;margin:0 0 15px}.display{position:relative;background:#04090d;min-height:400px;width:100%;overflow:auto;border:1px solid #42514b;border-radius:12px;overscroll-behavior:contain}#screen{min-height:400px;display:flex;justify-content:center;align-items:center;outline:0}#screen .text-screen{font:14px/14px monospace;white-space:pre;color:#dedede;align-self:start}#screen canvas{display:none;max-width:100%;height:auto!important;touch-action:none;outline:0}#placeholder{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;flex-direction:column;background:radial-gradient(ellipse at center,#20382c,#061015);z-index:1}#placeholder span{font-size:clamp(24px,5vw,56px);letter-spacing:7px;color:#f4c77e}#placeholder p{color:#b8c9bb}.help{font-size:14px;color:#b8c9bb;margin-top:18px}.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:40px 0}.facts article{padding:24px;background:#142023;border:1px solid #34433f;border-radius:14px}.facts h2{font-size:21px;line-height:1.3}.facts p{font-size:14px;color:#c4cec5}details{border-top:1px solid #34433f;border-bottom:1px solid #34433f;padding:20px 0}summary{cursor:pointer;font-weight:650}details a{overflow-wrap:anywhere}.cta{margin:30px 0}footer{font-size:14px;border-top:1px solid #34433f}#display:fullscreen{border:0;border-radius:0;background:#000;height:100%;display:flex;align-items:center;justify-content:center}#display:fullscreen #screen{width:100%;height:100%}@media(max-width:720px){header{display:block}nav{margin-top:12px}.facts{grid-template-columns:1fr}.display,#screen{min-height:290px}.lead{font-size:18px}header,main,footer{padding:18px}.toolbar{gap:8px}.toolbar button{font-size:14px;padding:8px 12px}#placeholder span{letter-spacing:4px}}
+[hidden]{display:none!important}
+
+#screen .text-screen{display:none!important}body[data-state=booting] #screen canvas{visibility:hidden}body[data-state=running] #screen canvas{visibility:visible}
+
+/* Homepage embedded preview: only the actual guest controls and wallpaper. */
+body.embedded-preview{background:#0c171a}
+.embedded-preview header,.embedded-preview footer,.embedded-preview .eyebrow,.embedded-preview h1,.embedded-preview .lead,.embedded-preview .notice,.embedded-preview .help,.embedded-preview .facts,.embedded-preview details,.embedded-preview .cta{display:none!important}
+.embedded-preview main{padding:12px;max-width:none}
+.embedded-preview .toolbar{margin:0 0 10px}
+.embedded-preview #display{min-height:680px}
+.embedded-preview #screen{min-height:680px}
+.embedded-preview #placeholder{background:linear-gradient(180deg,#05111c33,#05111c88),url('/media/daylight-mountains-720.webp') center/cover}
+@media(max-width:700px){.embedded-preview #display,.embedded-preview #screen{min-height:560px}}
+
+/* Developer: Hamdy Abou El Anein | Contact: info@daylightlinux.ch */
+/* Keep visitors informed throughout download, verification and guest boot. */
+.loading-overlay{display:none;position:absolute;inset:0;z-index:4;pointer-events:none;
+  flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  gap:12px;padding:clamp(16px,4vw,44px);color:#f5f5ec;
+  background:linear-gradient(155deg,rgba(7,19,22,.94),rgba(12,38,34,.96))}
+body[data-state="loading"] .loading-overlay,
+body[data-state="booting"] .loading-overlay{display:flex}
+.loading-overlay strong{font-size:clamp(19px,3vw,29px);line-height:1.3}
+.loading-overlay p{margin:0;max-width:620px;line-height:1.55}
+#loading-detail{font-size:clamp(14px,2.3vw,17px);color:#e2e9de}
+#loading-hint{font-size:13px;color:#bfcfc4}
+.loading-spinner{width:52px;height:52px;border:5px solid rgba(244,199,126,.25);
+  border-top-color:#f4c77e;border-radius:50%;animation:daylight-spin 1s linear infinite}
+@keyframes daylight-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.loading-spinner{animation:none;border-top-color:#f4c77e}}
+.mobile-warning{display:none;background:#1b2928;border:1px solid #c49c5b;
+  border-left:4px solid #f4c77e;border-radius:10px;padding:13px 16px;margin:18px 0;
+  color:#f4e8d1}
+.mobile-warning strong{font-size:16px;line-height:1.4}
+.mobile-warning p{font-size:14px;line-height:1.55;margin:5px 0 0}
+@media(max-width:760px),(hover:none) and (pointer:coarse){
+  .mobile-warning{display:block}
+  .embedded-preview .mobile-warning{margin:0 0 12px}
+  .loading-overlay{gap:10px;padding:16px}
+  .loading-spinner{width:40px;height:40px}
+}

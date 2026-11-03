@@ -1,0 +1,40 @@
+Daylight Web Preview — experimental browser edition
+Developer: Hamdy Abou El Anein
+Contact: info@daylightlinux.ch
+
+This is an Alpine Linux x86 / Fluxbox preview running on the visitor’s device.
+The actual Daylight installable release remains Debian / Raspberry Pi OS ARM64.
+No guest network relay, shared host disk, persistent storage or telemetry is used.
+
+Daylight glue, build recipes and interface: GPL-3.0-only.
+v86: BSD-2-Clause; unmodified npm release 0.5.473 (source ref 315b2b0).
+SeaBIOS and SeaVGABIOS: upstream rel-1.16.2, LGPL-3.0; original config and source retained.
+Alpine packages retain their original licenses. packages.json records their names,
+versions, SPDX license fields, origin packages and exact aports source commits.
+The image is pruned: unused kernel modules and OpenGL/LLVM payloads are omitted.
+This is not a complete or generally upgradeable Alpine distribution.
+
+The free corresponding-source archive is served at:
+  https://daylightlinux.ch/live/daylight-web-sources.zip
+It contains exact source archives/patches and build recipes for the guest’s
+copyleft-origin packages, checked against the pinned APKBUILD SHA512 values,
+plus the SeaBIOS and v86 upstream sources and the Daylight preview recipe.
+The source archive is NOT downloaded when starting the demo.
+Original permissive package sources are identified by the immutable aports
+commits in packages.json, at https://gitlab.alpinelinux.org/alpine/aports .
+
+Upstream projects:
+  https://github.com/copy/v86
+  https://www.seabios.org/
+  https://alpinelinux.org/
+  https://fluxbox.org/
+Daylight source:
+  https://github.com/hamdyaea/Daylight-GNU-Linux/tree/master/web-live
+Artwork provenance:
+  https://github.com/hamdyaea/Daylight-GNU-Linux/blob/master/docs/ARTWORK.md
+
+No standalone host font files, credentials, signing keys or workbench logs are
+published. Fonts inside the Linux guest come from the original Alpine packages.
+Browser support and measured boot tests are described in the preview README.
+
+Corresponding-source ZIP SHA256: 9fa48fa24004dd3b94f85b3edd40c2e7ebc49ea5e773fb5718ccb04128eaf16f

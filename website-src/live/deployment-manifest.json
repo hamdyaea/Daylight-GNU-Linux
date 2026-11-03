@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "files": {
+    "DAYLIGHT-LICENSE.txt": {
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    },
+    "FIRMWARE-LICENSE.txt": {
+      "bytes": 7639,
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c"
+    },
+    "SOURCES.txt": {
+      "bytes": 2096,
+      "sha256": "41e7347ecf77030c45738d4996acc8352d4a018efa4b6b0cc235d0228a6f6f69"
+    },
+    "V86-LICENSE.txt": {
+      "bytes": 1306,
+      "sha256": "3f61ba65e3215b09ef264ba8d777d73c19644309fbb705967634eb5147e500a0"
+    },
+    "daylight-web-sources.zip": {
+      "bytes": 386117476,
+      "sha256": "9fa48fa24004dd3b94f85b3edd40c2e7ebc49ea5e773fb5718ccb04128eaf16f"
+    },
+    "daylight.svg": {
+      "bytes": 860,
+      "sha256": "9ea22fda1229accbbe099a77550ffc2cc3fa601b9688bf59e7a372b7868bf8e8"
+    },
+    "demo.css": {
+      "bytes": 4278,
+      "sha256": "2638a367b93f52b38e7a06c164609cf64514535bdd4604a2cd5214ed5f121514"
+    },
+    "demo.js": {
+      "bytes": 16430,
+      "sha256": "34beccad810147bc20898dbb6b312521b49bba47330752b16e321687e8d6e1f7"
+    },
+    "index.html": {
+      "bytes": 4840,
+      "sha256": "ae87d3056455349ff9baecffe92db2e3a2c511df16b1039ecf66fa799dedf9f2"
+    },
+    "initrd-aac6deb63a95b559.bin": {
+      "bytes": 36184631,
+      "sha256": "aac6deb63a95b559c07cd5fa104742ba7f202f5c154c053659244322df00c20a"
+    },
+    "kernel-modules.json": {
+      "bytes": 759,
+      "sha256": "0f56d72ea0bb3605593515794bafcaccf800a32ea38b0905ba53e754bf2cfe59"
+    },
+    "libv86-e257912c4a1129e3.js": {
+      "bytes": 359857,
+      "sha256": "e257912c4a1129e36a86c1e2df69904ab969d87bffd24aa6676e84d6ddffc1c6"
+    },
+    "manifest.json": {
+      "bytes": 1277,
+      "sha256": "8f9f91dd3242fcfc24c1ded2919a1c1280e665eff2605478704494c751339b46"
+    },
+    "packages.json": {
+      "bytes": 29738,
+      "sha256": "3ae2908dea7bb622d83ea269ce3ee6e06075693e435804e4853bea35a3f0100a"
+    },
+    "seabios-73e3f359102e3a99.bin": {
+      "bytes": 131072,
+      "sha256": "73e3f359102e3a9982c35fce98eb7cd08f18303ac7f1ba6ebfbe6cdc1c244d98"
+    },
+    "v86-2f0c4150f266415b.wasm": {
+      "bytes": 2007347,
+      "sha256": "2f0c4150f266415b754a84a32e6f8e4c975a1d3abb94c78b047fa30027db1ef1"
+    },
+    "vgabios-a4bc0d80cc3ca028.bin": {
+      "bytes": 36352,
+      "sha256": "a4bc0d80cc3ca028c73dafa8fee396b8d054ce87ebd8abfbd31b06b437607880"
+    },
+    "vmlinuz-2df278c6989043b2.bin": {
+      "bytes": 7700992,
+      "sha256": "2df278c6989043b26a5b90c087682b7585373f8b70711ee25a8b1f93af769dc1"
+    }
+  }
+}
