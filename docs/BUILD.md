@@ -30,6 +30,8 @@ GUI tests inspect window names and process arguments to verify state transitions
 
 ## Live ISO
 
+**To customise and build your own image:** follow the [step-by-step Debian 13 live ISO build guide](BUILD-ISO.md), including prerequisites, source files, command sequence and checksum verification.
+
 `live/` contains a Debian 13 Trixie AMD64 live-build recipe. Build only in a disposable Debian VM/container with live-build, debootstrap, squashfs-tools, xorriso and BIOS/UEFI bootloader tools. `scripts/build-live.sh` assembles an ISO from the AMD64 and architecture-independent .deb files in dist; it never clones a personal system.
 
 The live edition is temporary, has no installer or persistence, and does not enable SSH or telemetry. It is not a hardened kiosk. `scripts/test-live.py` boots the ISO filesystem offline in QEMU with the extracted kernel/initrd, no host disks and no network. That test does not certify BIOS/UEFI bootloaders, Secure Boot or physical hardware.
