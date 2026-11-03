@@ -89,6 +89,16 @@ async function requestBytes(path,label,signal,{limit,expected=null,cache='no-sto
 }
 function checkRecord(name,record){
  if(!record||!Number.isSafeInteger(record.bytes)||record.bytes<1||record.bytes>100000000||!/^[a-f0-9]{64}$/.test(record.sha256))throw Error('Invalid asset manifest: '+name);
+ if(record.parts!==undefined){
+  if(record.file||!Array.isArray(record.parts)||record.parts.length<2||record.parts.length>16||name==='libv86.js')throw Error('Invalid chunk manifest: '+name);
+  let total=0;const files=new Set();
+  for(const part of record.parts){
+   if(!part||part.parts!==undefined||part.bytes>16*1024*1024)throw Error('Invalid asset chunk: '+name);
+   const file=checkRecord(name,part);if(files.has(file))throw Error('Duplicate asset chunk: '+name);files.add(file);total+=part.bytes;
+  }
+  if(total!==record.bytes)throw Error('Invalid chunk total: '+name);
+  return null;
+ }
  const file=record.file||name;
  if(!/^[A-Za-z0-9][A-Za-z0-9_.-]+$/.test(file))throw Error('Invalid asset filename: '+name);
  return file;
@@ -108,13 +118,22 @@ async function loadManifest(signal){
  return manifest;
 }
 async function verified(name,record,signal,onProgress){
- const file=checkRecord(name,record);
- const bytes=await requestBytes(file+'?sha256='+record.sha256,name,signal,{
-  limit:record.bytes,expected:record.bytes,cache:'force-cache',timeoutMs:90000,onProgress
- });
+ const file=checkRecord(name,record);checkCancelled(signal);
+ let bytes;
+ if(record.parts){
+  bytes=new Uint8Array(record.bytes);let offset=0;
+  for(const part of record.parts){
+   const block=new Uint8Array(await verified(name+' part',part,signal,onProgress));
+   checkCancelled(signal);bytes.set(block,offset);offset+=block.length;
+  }
+ }else{
+  bytes=await requestBytes(file+'?sha256='+record.sha256,name,signal,{
+   limit:record.bytes,expected:record.bytes,cache:'force-cache',timeoutMs:90000,onProgress
+  });
+ }
  checkCancelled(signal);
  if(hex(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)))!==record.sha256)throw Error('Asset integrity check failed: '+name);
- return bytes.buffer;
+ checkCancelled(signal);return bytes.buffer;
 }
 async function library(manifest,signal,onProgress){
  const record=manifest.files['libv86.js'],file=checkRecord('libv86.js',record);

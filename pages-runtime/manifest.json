@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "name": "Daylight Web Preview",
+  "base": "Alpine Linux 3.22.7 x86",
+  "emulator": "v86 0.5.473",
+  "memory_mib": 256,
+  "network_relay": false,
+  "persistence": false,
+  "files": {
+    "libv86.js": {
+      "bytes": 359857,
+      "sha256": "e257912c4a1129e36a86c1e2df69904ab969d87bffd24aa6676e84d6ddffc1c6",
+      "file": "libv86-e257912c4a1129e3.js"
+    },
+    "v86.wasm": {
+      "bytes": 2007347,
+      "sha256": "2f0c4150f266415b754a84a32e6f8e4c975a1d3abb94c78b047fa30027db1ef1",
+      "file": "v86-2f0c4150f266415b.wasm"
+    },
+    "seabios.bin": {
+      "bytes": 131072,
+      "sha256": "73e3f359102e3a9982c35fce98eb7cd08f18303ac7f1ba6ebfbe6cdc1c244d98",
+      "file": "seabios-73e3f359102e3a99.bin"
+    },
+    "vgabios.bin": {
+      "bytes": 36352,
+      "sha256": "a4bc0d80cc3ca028c73dafa8fee396b8d054ce87ebd8abfbd31b06b437607880",
+      "file": "vgabios-a4bc0d80cc3ca028.bin"
+    },
+    "vmlinuz.bin": {
+      "bytes": 7700992,
+      "sha256": "2df278c6989043b26a5b90c087682b7585373f8b70711ee25a8b1f93af769dc1",
+      "file": "vmlinuz-2df278c6989043b2.bin"
+    },
+    "initrd.bin": {
+      "bytes": 36184631,
+      "sha256": "aac6deb63a95b559c07cd5fa104742ba7f202f5c154c053659244322df00c20a",
+      "parts": [
+        {
+          "file": "initrd-part-00-cc65c484b6ef072e.bin",
+          "bytes": 16777216,
+          "sha256": "cc65c484b6ef072ebeeffbba19fad6873ac8452861f0503cb81b6637d336f020"
+        },
+        {
+          "file": "initrd-part-01-67de2477d46fa671.bin",
+          "bytes": 16777216,
+          "sha256": "67de2477d46fa6717464ee1faeea824427f68d7c2f59f24b0c8f9d556801b359"
+        },
+        {
+          "file": "initrd-part-02-2b6c85feb74e1fad.bin",
+          "bytes": 2630199,
+          "sha256": "2b6c85feb74e1fadc7e5b38926335776ca74ee8f3759c5487133718e3c47c397"
+        }
+      ]
+    }
+  }
+}

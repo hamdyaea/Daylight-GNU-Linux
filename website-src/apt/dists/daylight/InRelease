@@ -1,0 +1,34 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Origin: Daylight GNU/Linux
+Label: Daylight GNU/Linux
+Suite: daylight
+Codename: daylight
+Architectures: amd64 arm64
+Components: main
+Acquire-By-Hash: yes
+NotAutomatic: yes
+ButAutomaticUpgrades: yes
+Date: Mon, 02 Nov 2026 23:48:56 +0000
+Valid-Until: Wed, 02 Dec 2026 23:48:56 +0000
+Description: Daylight GNU/Linux candidate packages
+SHA256:
+ 688956b93118f71b4655d1306b02908281b759bba4864d43df1d2e18435b990c 9952 main/binary-amd64/Packages
+ 68986f9e0ff72fad2936ca2faa6364d56dd9593b50da2eadb69ea9f4300feb30 2307 main/binary-amd64/Packages.gz
+ 828806e8eb5d61569441135a974d8aff5fb8301c00d57b5ee024f3748dd2d629 9950 main/binary-arm64/Packages
+ b0ee3a09be98f3e9be83f42c481d337bcab0bdc79272ab2b8afeb40ea6ad45b8 2306 main/binary-arm64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAEBCAAdFiEEsFdfghox3SB1PeB8UNISQPS8sC4FAmrpIWgACgkQUNISQPS8
+sC6BHwv+Krh3di2oXLmLUS3fIcxfENwbE26EyqIhkWz+8z0KmlE64sa16fbTm8O3
+ClckLiBe0HnM2c6W1bfawR9b+AVhtlRvKjPP8t+9NI5rMxh6aUDgMojzfxPRY9LA
+bcEaebSBeRvbd/WxIH7TdtDNuYr1IplkBEkMMm9P7Y07oWRd//WAS+53VjuVbXyV
+Wp7Q5aTGgSnpv54xjX4KKNdYlWm5HcFyg+moS7q30a426JPusHnOW/lId8x6hOz+
+CaNkKmnpsQKES3W/h71QKpa+zyQvPL2tfdnXhp4UNlrMYtZ9Zci1c3B81YwiZVxT
+ulEFMQXQxNJ9M0gku8utmIGmwY4txjhCL7cliq8A+9HbKYV31Z2wyY/evJVG/WV8
+i7WNubmjQbiG4hmAk3tT0A8Y3JdhhjU67SplHb+9hQGDTpjQgqSIIuH3w3jx5Qqx
+mNdZWaKfH1UF2Qp3PnIEtCU9AdQFn7cFcZHlD97dPU7I88LK053PSSkTKIW9tmfg
+2yd5BmXP
+=OO4X
+-----END PGP SIGNATURE-----

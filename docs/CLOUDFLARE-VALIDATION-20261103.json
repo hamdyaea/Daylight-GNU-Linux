@@ -1,0 +1,60 @@
+{
+  "result": "PASS",
+  "runtime": {
+    "result": "PASS",
+    "url": "http://127.0.0.1:34413/live/",
+    "manifestSha256": "0e8c6fd5c51d18e8e6a5e8b08e06b6aa26cecadafedc61811a85efa1e53927e7",
+    "interfaceSha256": {
+      "index.html": "4ec73ba087b752e07fa30a1411995af6c1013c4224c6d4a75f592e7f743dd30e",
+      "demo.js": "8f590e14302df6d86ac6539f2a56134818c62bdaaa44abd7bf6ee249311268af",
+      "demo.css": "05ef99c4f4632314da41e8d3b6d7442574f40c65800cae1ff4b4770222121e17"
+    },
+    "bootAndInteractionMilliseconds": 276560,
+    "canvas": {
+      "width": 1024,
+      "height": 768
+    },
+    "realKeyboard": true,
+    "graphicalControls": true,
+    "simpleToolbar": true,
+    "nativeShortcuts": true,
+    "automaticVisibilityResume": true,
+    "restartCleanGuest": true,
+    "terminalOnlyStartup": true,
+    "startupTitle": "Daylight Start",
+    "startupFocused": true,
+    "calculatorOnDemand": true,
+    "nativeCalculator": true,
+    "nativeAboutDialog": true,
+    "twoTerminalWindows": true,
+    "desktopHideRestore": true,
+    "pauseResume": true,
+    "stop": true,
+    "externalRequests": 0,
+    "autostart": false
+  },
+  "chunkFaultCases": [
+    "valid",
+    "retry",
+    "corrupt-part",
+    "corrupt-image",
+    "oversize",
+    "missing-part",
+    "invalid-total",
+    "duplicate-part",
+    "nested-part",
+    "cancel",
+    "mid-download-cancel"
+  ],
+  "staticSites": {
+    "desktop": true,
+    "mobile390px": true,
+    "brokenImages": 0,
+    "pageJavaScriptErrors": 0
+  },
+  "astrometryUnitTests": 5,
+  "notes": [
+    "No live form submission or payment was performed. External service availability is separate.",
+    "DNS/domain attachment and Pages response headers remain to be verified after initial deployment."
+  ]
+}
