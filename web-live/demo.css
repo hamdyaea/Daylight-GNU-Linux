@@ -13,3 +13,16 @@ body.embedded-preview{background:#0c171a}
 .embedded-preview #screen{min-height:680px}
 .embedded-preview #placeholder{background:linear-gradient(180deg,#05111c33,#05111c88),url('/media/daylight-mountains-720.webp') center/cover}
 @media(max-width:700px){.embedded-preview #display,.embedded-preview #screen{min-height:560px}}
+
+/* Developer: Hamdy Abou El Anein | Contact: info@daylightlinux.ch | SPDX-License-Identifier: GPL-3.0-only */
+/* Touch keyboard for phones where the emulated canvas cannot own a mobile IME. */
+.touch-console{display:none;margin:14px 0 22px;padding:14px;background:#142023;border:1px solid #42534c;border-radius:12px}
+.touch-console label{display:block;font-size:13px;font-weight:650;margin-bottom:9px;color:#edf2ed}
+#mobile-command-form{display:flex;gap:8px;align-items:stretch}
+#mobile-command{min-width:0;flex:1;height:48px;border:1px solid #65766b;border-radius:8px;background:#071015;color:#f3f6f1;padding:10px 12px;font:16px ui-monospace,monospace;touch-action:manipulation}
+#mobile-command:focus{outline:3px solid #f4c77e;outline-offset:2px}
+#mobile-send{min-height:48px;touch-action:manipulation}
+.touch-keys{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.touch-keys button{min-height:44px;min-width:48px;padding:8px 12px;touch-action:manipulation}
+#mobile-input-help{font-size:11px;color:#bac8be;margin:8px 0 0}
+@media(max-width:760px),(pointer:coarse){.touch-console{display:block}.display,#screen{min-height:360px}.embedded-preview .display,.embedded-preview #screen{min-height:480px}}

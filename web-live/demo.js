@@ -22,6 +22,11 @@ function labels(){
  $('reset').textContent=text('Redémarrer','Restart');
  $('stop').textContent='Stop';
  $('display').setAttribute('aria-label',text('Bureau Linux interactif','Interactive Linux desktop'));
+ $('mobile-input-label').textContent=text('Clavier tactile · saisissez une commande Linux','Touch keyboard · enter a Linux command');
+ $('mobile-command').placeholder=text('Ex. ls -la','e.g. ls -la');
+ $('mobile-command').setAttribute('aria-label',text('Commande à envoyer au terminal Linux','Command to send to the Linux terminal'));
+ $('mobile-send').textContent=text('Envoyer ↵','Send ↵');
+ $('mobile-input-help').textContent=text('Touchez le champ pour ouvrir le clavier de votre téléphone. « Envoyer » transmet la ligne au véritable terminal. Pour Vim et les raccourcis graphiques, un ordinateur est conseillé.','Tap the field to open your phone keyboard. Send passes the line to the real terminal. A computer is recommended for Vim and graphical keyboard shortcuts.');
  if(state==='idle')status(text('Aucun système lancé. Environ 42 Mo seront téléchargés au premier démarrage.','Nothing is running. The first start downloads about 42 MB.'));
 }
 function status(value){$('status').textContent=value;}
@@ -245,6 +250,28 @@ $('stop').addEventListener('click',()=>void stop());
 $('display').addEventListener('pointerdown',()=>{if(emulator&&state==='running'){$('display').focus();emulator.keyboard_set_enabled(true);}});
 $('display').addEventListener('contextmenu',event=>event.preventDefault());
 $('display').addEventListener('blur',()=>{if(emulator)emulator.keyboard_set_enabled(false);});
+const letterCodes={q:16,w:17,e:18,r:19,t:20,y:21,u:22,i:23,o:24,p:25,a:30,s:31,d:32,f:33,g:34,h:35,j:36,k:37,l:38,z:44,x:45,c:46,v:47,b:48,n:49,m:50};
+const keyCodes={' ':57,'1':2,'2':3,'3':4,'4':5,'5':6,'6':7,'7':8,'8':9,'9':10,'0':11,'-':12,'_':12,'=':13,'+':13,'[':26,'{':26,']':27,'}':27,'\\':43,'|':43,';':39,':':39,"'":40,'"':40,',':51,'<':51,'.':52,'>':52,'/':53,'?':53,'!':2,'@':3,'#':4,'$':5,'%':6,'^':7,'&':8,'*':9,'(':10,')':11};
+const shifted=new Set(['_','+','{','}','|',':','"','<','>','?','!','@','#','$','%','^','&','*','(',')']);
+function sendCodes(codes){if(!emulator||state!=='running'){status(text('Démarrez Linux avant de saisir une commande.','Start Linux before entering a command.'));return false;}emulator.keyboard_send_scancodes(codes);return true;}
+function sendMobileCommand(){
+ const input=$('mobile-command'),value=input.value;if(!value)return;
+ if(value.length>512){status(text('Commande trop longue (512 caractères maximum).','Command too long (512 characters maximum).'));return;}
+ const codes=[];
+ for(const character of value){
+  const key=character.toLowerCase(),scan=letterCodes[key]||keyCodes[key];
+  if(!scan){status(text('Caractère non pris en charge par le clavier tactile : ','Character not supported by touch keyboard: ')+character);return;}
+  if(character!==key||shifted.has(character))codes.push(0x2a);
+  codes.push(scan,scan|0x80);
+  if(character!==key||shifted.has(character))codes.push(0xaa);
+ }
+ codes.push(0x1c,0x9c);
+ if(sendCodes(codes)){input.value='';status(text('Commande envoyée au terminal.','Command sent to the terminal.'));input.focus();}
+}
+$('mobile-command-form').addEventListener('submit',event=>{event.preventDefault();sendMobileCommand();});
+$('mobile-command').addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();$('display').focus();}});
+const specialKeys={TAB:[0x0f,0x8f],UP:[0xe0,0x48,0xe0,0xc8],DOWN:[0xe0,0x50,0xe0,0xd0],LEFT:[0xe0,0x4b,0xe0,0xcb],RIGHT:[0xe0,0x4d,0xe0,0xcd],CTRL_C:[0x1d,0x2e,0xae,0x9d]};
+document.querySelectorAll('.touch-keys [data-key]').forEach(button=>button.addEventListener('click',()=>{if(sendCodes(specialKeys[button.dataset.key]))$('mobile-command').focus();}));
 document.addEventListener('visibilitychange',()=>void syncVisibility());
 window.addEventListener('pagehide',()=>{void stop();});
 labels();setState('idle');
