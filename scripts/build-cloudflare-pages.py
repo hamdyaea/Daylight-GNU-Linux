@@ -18,6 +18,18 @@ def main():
    assert len(content)==part['bytes'] and hashlib.sha256(content).hexdigest()==part['sha256'],part['file']
    data.extend(content)
   assert len(data)==record['bytes'] and hashlib.sha256(data).hexdigest()==record['sha256'],name
+ # Apply canonical redirects to HTML routes only: VM binaries and APT stay static.
+ shutil.copy2(ROOT/'scripts/cloudflare-canonical-worker.js',out/'_worker.js')
+ routes={'/robots.txt','/sitemap.xml'}
+ for page in out.rglob('*.html'):
+  path='/'+str(page.relative_to(out))
+  routes.add(path)
+  if path.endswith('/index.html'):
+   routes.add(path[:-10])
+   if path != '/index.html':routes.add(path[:-11])
+  else:routes.add(path[:-5])
+ assert len(routes)<=100, 'Pages routing rule limit exceeded'
+ (out/'_routes.json').write_text(json.dumps({'version':1,'include':sorted(routes),'exclude':[]},indent=2)+'\n')
  files=[p for p in out.rglob('*') if p.is_file()]
  assert len(files)<=20000
  for p in files:
