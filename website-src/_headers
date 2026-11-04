@@ -32,3 +32,8 @@
 
 /old/*
   X-Robots-Tag: noindex, follow
+
+/old
+  X-Robots-Tag: noindex, follow
+/old/
+  X-Robots-Tag: noindex, follow
