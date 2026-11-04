@@ -7,8 +7,8 @@ Components: main
 Acquire-By-Hash: yes
 NotAutomatic: yes
 ButAutomaticUpgrades: yes
-Date: Wed, 04 Nov 2026 00:56:05 +0000
-Valid-Until: Fri, 04 Dec 2026 00:56:05 +0000
+Date: Wed, 04 Nov 2026 23:26:37 +0000
+Valid-Until: Fri, 04 Dec 2026 23:26:37 +0000
 Description: Daylight GNU/Linux candidate packages
 SHA256:
  688956b93118f71b4655d1306b02908281b759bba4864d43df1d2e18435b990c 9952 main/binary-amd64/Packages
