@@ -29,3 +29,6 @@
 
 /project-source/*
   Cache-Control: public, max-age=0, must-revalidate
+
+/old/*
+  X-Robots-Tag: noindex, follow
