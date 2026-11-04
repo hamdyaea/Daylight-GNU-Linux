@@ -37,3 +37,7 @@
   X-Robots-Tag: noindex, follow
 /old/
   X-Robots-Tag: noindex, follow
+
+# Technical deployment hostname; custom domains remain indexable.
+https://daylight-gnu-linux.pages.dev/*
+  X-Robots-Tag: noindex
