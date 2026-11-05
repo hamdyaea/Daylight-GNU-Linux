@@ -196,17 +196,12 @@ if [ "$mode" = desktop ]; then
         done | sort -u | awk 'NR==1 {name=$0} END {if(NR==1) print name}')
     fi
     if [ -n "$desktop_user" ] && [ "$desktop_user" != root ] && [ -r /etc/X11/default-display-manager ]; then
+        helper=daylight-session-defaults
         if [ -r /proc/device-tree/model ] && grep -aq 'Raspberry Pi' /proc/device-tree/model; then
-            helper_name=daylight-session-defaults_1.1-1+pi3_all.deb
-            helper_hash=63ec52ec7cfb27ddb01e4640fd511954f720e4d70ceb432501e09dee4fc7f8f0
+            apt-get install --no-remove --no-install-recommends -y $packages "$helper" labwc
         else
-            helper_name=daylight-session-defaults_1.1-1_all.deb
-            helper_hash=fbbbae441a0d67d8d7b61384485366c5bff994e9fc838339d448aa40b012eaba
+            apt-get install --no-remove --no-install-recommends -y $packages "$helper"
         fi
-        helper="$temporary/$helper_name"
-        fetch "https://daylightlinux.ch/$helper_name" "$helper"
-        printf '%s  %s\n' "$helper_hash" "$helper" | sha256sum -c -
-        apt-get install --no-remove --no-install-recommends -y $packages "$helper"
     else
         apt-get install --no-remove --no-install-recommends -y $packages
     fi

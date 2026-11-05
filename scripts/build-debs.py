@@ -15,7 +15,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc2"
+VERSION = "5.0.0~rc2-1"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -66,6 +66,7 @@ def main():
             size = sum(p.stat().st_size for p in base.rglob("*") if p.is_file()) // 1024 + 1
             control = f"Package: {package}\nVersion: {VERSION}\nArchitecture: {architecture}\nMaintainer: {MAINTAINER}\nSection: {'x11' if package == 'daylight-desktop' else 'utils'}\nPriority: optional\nInstalled-Size: {size}\nHomepage: https://daylightlinux.ch\n"
             if depends: control += f"Depends: {depends}\n"
+            if package == "daylight-desktop": control += "Breaks: daylight-session-defaults (<< 1.2-1)\n"
             if recommends: control += f"Recommends: {recommends}\n"
             control += f"Description: {description}\n Lightweight, opt-in components of Daylight GNU/Linux.\n Does not replace the base distribution, kernel or existing desktop configuration.\n"
             write(base, "DEBIAN/control", control)

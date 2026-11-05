@@ -12,7 +12,7 @@ import re
 import shutil
 import subprocess
 
-ALLOWED = {'daylight-core', 'daylight-desktop', 'daylight-themes', 'daylight-apps', 'daylight-games', 'daylight-telemetry', 'daylight-linux'}
+ALLOWED = {'daylight-core', 'daylight-desktop', 'daylight-themes', 'daylight-apps', 'daylight-games', 'daylight-telemetry', 'daylight-linux', 'daylight-session-defaults'}
 
 
 def main():

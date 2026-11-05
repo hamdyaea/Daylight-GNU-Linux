@@ -157,7 +157,8 @@ def activate(user):
     else:
         raise ValueError("Unsupported display manager: " + dm)
     choices.extend(autologin(dm, user))
-    if Path("/usr/share/wayland-sessions/daylight-wayland.desktop").exists():
+    model = Path("/proc/device-tree/model")
+    if model.exists() and b"Raspberry Pi" in model.read_bytes() and Path("/usr/bin/labwc").exists():
         wayland = {"daylight": "daylight-wayland", "daylight.desktop": "daylight-wayland.desktop",
                    "/usr/share/xsessions/daylight.desktop": "/usr/share/wayland-sessions/daylight-wayland.desktop",
                    "x11": "wayland"}

@@ -12,6 +12,7 @@ use std::{
 };
 pub const PACKAGES: &[&str] = &[
     "daylight-linux",
+    "daylight-session-defaults",
     "daylight-desktop",
     "daylight-apps",
     "daylight-games",
