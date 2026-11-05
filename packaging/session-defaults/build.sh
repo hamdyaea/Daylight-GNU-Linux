@@ -8,11 +8,12 @@ install -Dm755 prerm "$build/DEBIAN/prerm"
 version=1.1-1
 extra=
 if [ "${1:-}" = pi ]; then
-    version=1.1-1+pi1
-    extra=", labwc, swaybg, waybar, xwayland, dbus-user-session"
+    version=1.1-1+pi2
+    extra=", labwc, swaybg, waybar, wtype, python3-gi, gir1.2-glib-2.0, libglib2.0-bin, xwayland, dbus-user-session"
     install -Dm644 wayland/daylight-wayland.desktop "$build/usr/share/wayland-sessions/daylight-wayland.desktop"
     install -Dm755 wayland/session "$build/usr/lib/daylight/wayland-session"
-    for name in autostart bar.json bar.css monitor.conf rc.xml menu.xml; do
+    install -Dm755 wayland/applications-menu "$build/usr/lib/daylight/applications-menu"
+    for name in autostart bar.json bar.css rc.xml menu.xml; do
         install -Dm644 "wayland/$name" "$build/usr/share/daylight/labwc/$name"
     done
     chmod 755 "$build/usr/share/daylight/labwc/autostart"

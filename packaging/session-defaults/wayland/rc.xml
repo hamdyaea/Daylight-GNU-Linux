@@ -1,4 +1,5 @@
 <labwc_config>
-  <keyboard><default/></keyboard>
+  <desktops number="4"><names><name>Work</name><name>Web</name><name>Code</name><name>Extra</name></names></desktops>
+  <keyboard><default/><keybind key="W-space"><action name="ShowMenu" menu="root-menu"/></keybind></keyboard>
   <mouse><default/></mouse>
 </labwc_config>

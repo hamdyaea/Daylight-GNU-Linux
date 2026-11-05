@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+"""List launchable desktop entries from system and user XDG application directories."""
+import locale
+import sys
+from xml.etree import ElementTree as ET
+from gi.repository import Gio, GLib
+
+locale.setlocale(locale.LC_ALL, "")
+groups = {"Network": "Internet", "Office": "Office", "Development": "Development",
+          "Graphics": "Graphics", "AudioVideo": "Multimedia", "Game": "Games",
+          "Education": "Education", "Science": "Science", "Settings": "Settings",
+          "System": "System", "Utility": "Utilities"}
+root = ET.Element("openbox_pipe_menu")
+entries = {}
+for app in Gio.AppInfo.get_all():
+    if not isinstance(app, Gio.DesktopAppInfo) or not app.should_show():
+        continue
+    daylight = app.get_id().startswith("daylight-")
+    if daylight != (sys.argv[1] == "daylight"):
+        continue
+    categories = (app.get_categories() or "").split(";")
+    group = next((label for key, label in groups.items() if key in categories), "Other")
+    entries.setdefault(group, []).append(app)
+for group in sorted(entries, key=locale.strxfrm):
+    parent = root
+    if sys.argv[1] == "system":
+        parent = ET.SubElement(root, "menu", id="daylight-system-" + group, label=group)
+    for app in sorted(entries[group], key=lambda entry: locale.strxfrm(entry.get_display_name())):
+        item = ET.SubElement(parent, "item", label=app.get_display_name())
+        ET.SubElement(item, "action", name="Execute", command="gio launch " + GLib.shell_quote(app.get_filename()))
+print(ET.tostring(root, encoding="unicode"))

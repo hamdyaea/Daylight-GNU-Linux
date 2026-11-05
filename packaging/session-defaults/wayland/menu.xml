@@ -1,7 +1,20 @@
 <openbox_menu>
   <menu id="root-menu" label="Daylight GNU/Linux">
     <item label="Terminal"><action name="Execute" command="daylight-terminal"/></item>
-    <item label="File manager"><action name="Execute" command="pcmanfm"/></item>
-    <item label="Log out"><action name="Exit"/></item>
+    <item label="Files"><action name="Execute" command="pcmanfm"/></item>
+    <item label="Daylight Control Center"><action name="Execute" command="daylight control-center"/></item>
+    <item label="System information"><action name="Execute" command="daylight app info"/></item>
+    <separator/>
+    <menu id="daylight-apps" label="Daylight applications" execute="/usr/lib/daylight/applications-menu daylight"/>
+    <menu id="system-apps" label="System applications" execute="/usr/lib/daylight/applications-menu system"/>
+    <menu id="workspaces" label="Workspaces">
+      <item label="Work"><action name="GoToDesktop" to="1"/></item>
+      <item label="Web"><action name="GoToDesktop" to="2"/></item>
+      <item label="Code"><action name="GoToDesktop" to="3"/></item>
+      <item label="Extra"><action name="GoToDesktop" to="4"/></item>
+    </menu>
+    <separator/>
+    <item label="Reload desktop settings"><action name="Reconfigure"/></item>
+    <item label="Log out of Daylight"><action name="Exit"/></item>
   </menu>
 </openbox_menu>

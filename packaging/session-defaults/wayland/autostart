@@ -1,6 +1,9 @@
 #!/bin/sh
 wallpaper=$(daylight settings get wallpaper)
 swaybg -m fill -i "/usr/share/backgrounds/daylight/$wallpaper" &
+if [ "$(daylight settings get monitor)" = on ]; then
+    config=$(daylight setup-session) && conky -c "$config/conky.conf" &
+fi
 waybar -c /usr/share/daylight/labwc/bar.json -s /usr/share/daylight/labwc/bar.css &
 if command -v dbus-update-activation-environment >/dev/null; then
     dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
