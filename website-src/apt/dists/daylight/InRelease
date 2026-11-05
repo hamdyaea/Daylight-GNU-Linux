@@ -10,25 +10,25 @@ Components: main
 Acquire-By-Hash: yes
 NotAutomatic: yes
 ButAutomaticUpgrades: yes
-Date: Thu, 05 Nov 2026 08:06:13 +0000
-Valid-Until: Sat, 05 Dec 2026 08:06:13 +0000
+Date: Thu, 05 Nov 2026 10:58:30 +0000
+Valid-Until: Sat, 05 Dec 2026 10:58:30 +0000
 Description: Daylight GNU/Linux candidate packages
 SHA256:
- 81340814a16c63c82249b10ad6b6467e1897dc8914d0f3b4767a5818a3eb1f84 15648 main/binary-amd64/Packages
- 2fd05a5b53ea2679f1059a6502b37ac4a4f74b4f1c471914b3c44b101c054622 3388 main/binary-amd64/Packages.gz
- e42b22cd0df8d1866164bc5cacbbc4e2256aae70e55fcf20419f7eb57f5f3d84 15645 main/binary-arm64/Packages
- b0be3ebe9100591aadb3a5e0b6cc298acd087d5e93cbe61df96e087c5cd8827e 3387 main/binary-arm64/Packages.gz
+ 6611bc5d4c47234518348ed024035e136b4460092e5d58dd5eccde167d677ed5 20736 main/binary-amd64/Packages
+ 8fc905e96a7e3a065b9ca8d806f86f15de83f51a0c18f74b1f1677b292abc62e 4147 main/binary-amd64/Packages.gz
+ e4be0ca0ac7d7106f63b1a80a4fc7a24ee35fde39e1bb7823d5440b448ebd37e 20732 main/binary-arm64/Packages
+ 85835ea79251c0ca9d953e90621c0863d9cc08a71ce6b042948155b98f802e5f 4147 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQGzBAEBCAAdFiEEsFdfghox3SB1PeB8UNISQPS8sC4FAmrsOPUACgkQUNISQPS8
-sC60RAv+MBxzAqLu7XtCb3TQo7XSrUf+jjDw8JpyVKbpy35GUVoZI+mit1LHIftn
-3X1Yr/xP4lZQ9HANInGIR7A4uEoHYdZeGnsxZGbc4715agIf7oYMOjQdq92kP3de
-j2lRZVYAF4eifFt+PFHcKRv2PIMp90VeII0ycG4ijlBAwk/KRK3I6xoEX/C7Vj/t
-M3XND+LKoUw7LSOsHoy+/5XbJUUZNQKzOMG7Ln5EmqkXM4up7GuswuI43Zi5EFWr
-BGsJr2nP6o+3dJvsd1SBytBkLABbmXhij4tnug79nYdZ42ZQ/FuZEG31jdtjI+OE
-fK08aonFTTJikXse1f6Ors5TQJb3EaobDzS49PRAM1PxyaxAer3RctoGTuGMckH4
-E4gZUeTCXsFWtMaoKgtbpxUQYufHq73fLABLkvGYcv62k5xwL/fe0Kmfhie9od0M
-ae9O6uJ1R5lLmO23t63es6kRGFmvbvxaD/Y6ly6y1yI0h3xNkhVJRmc/LMQcDpRa
-tW306Pz8
-=ak45
+iQGzBAEBCAAdFiEEsFdfghox3SB1PeB8UNISQPS8sC4FAmrsYVcACgkQUNISQPS8
+sC6WngwAgwf/C8hbDEMypQDeXJY91dHKBg5W+pep0VXC6RA1nbLHX++kw5sAeAsb
+3tSXtHPKIlJcctlbgKsoAWkggXakAnheJTkv28/7mjnequb3rI/wujr+tGL40kfY
+kQ29Bj0d2d4JAN2ipFGxcM8otrHHmNRjslDQrIteEuifloq3I7HFQ+RLcTNYVeig
+2QYk5gQtd1Mec+sVGzk61td7ZCF2KvHy+dnEH5+am/bpTUTJgJ5KkiZ4gbsxE++z
+45LORshobobdIe1zmwNKTRWgL6mWxv5rMc985ezj6MCkGCArPwPeuzr04ThybXh5
+pMIa31ODyvV7/l01innHjgNOVztT+jQoyXllVJj1NCLi7PIaKwz3Ie+qTl8LMBsC
+VFxIM9LZXyoWjtzNBhxO3jx1Sgguj6ug4J0LU4qFpl9HjREotoLkBOTaxV+EmTW+
+XfzY+X2ES+wpN+B9oW94USig8ZU7ePz+zHbxCLOrabpGV6DldX0xM7H6Bf7x4Q1O
+0bVMqsn4
+=D/Nl
 -----END PGP SIGNATURE-----
