@@ -12,7 +12,7 @@ mode=core
 games=no
 apply=no
 usage() {
-    printf '%s\n' 'Daylight GNU/Linux installer (Debian 12/13 and compatible ARM64 systems)' 'Usage: sh install-daylight.sh [--core|--desktop|--repo-only] [--games] [--yes|--plan]' 'Default: show the core-only installation plan; no changes.' 'Desktop selection never changes or starts your display manager.' 'Telemetry is never installed or enabled by this script.'
+    printf '%s\n' 'Daylight GNU/Linux installer (Debian 12/13 and compatible ARM64 systems)' 'Usage: sh install-daylight.sh [--core|--desktop|--repo-only] [--games] [--yes|--plan]' 'Default: show the core-only installation plan; no changes.' 'Desktop mode selects Daylight for the invoking desktop user and offers a reboot.' 'Telemetry is never installed or enabled by this script.'
 }
 for argument in "$@"; do
     case "$argument" in
@@ -118,10 +118,43 @@ install -m 644 "$temporary/daylight.sources" "$source"
 install -m 644 "$temporary/preferences" "$pin"
 # Authentication and expiry checking remain enabled, including all failures.
 apt-get -o APT::Update::Error-Mode=any update
-if [ -n "$packages" ]; then
+desktop_user=
+helper=
+if [ "$mode" = desktop ]; then
+    desktop_user=${SUDO_USER:-}
+    if [ -z "$desktop_user" ] || [ "$desktop_user" = root ]; then
+        # Only infer the user when exactly one local graphical account is active.
+        desktop_user=$(loginctl list-sessions --no-legend 2>/dev/null | while read -r sid rest; do
+            case "$(loginctl show-session "$sid" -p Type --value 2>/dev/null)" in
+                x11|wayland) loginctl show-session "$sid" -p Name --value ;;
+            esac
+        done | sort -u | awk 'NR==1 {name=$0} END {if(NR==1) print name}')
+    fi
+    if [ -n "$desktop_user" ] && [ "$desktop_user" != root ] && [ -r /etc/X11/default-display-manager ]; then
+        helper="$temporary/daylight-session-defaults_1.0-1_all.deb"
+        fetch "https://daylightlinux.ch/daylight-session-defaults_1.0-1_all.deb" "$helper"
+        printf '%s  %s\n' '51eb647453b50aa9563ba41982c9ea02ce9cf7cd577fab4043f762a80e6edc79' "$helper" | sha256sum -c -
+        apt-get install --no-remove --no-install-recommends -y $packages "$helper"
+    else
+        apt-get install --no-remove --no-install-recommends -y $packages
+    fi
+elif [ -n "$packages" ]; then
     # Word splitting is deliberate: this is a fixed internal package allowlist.
     apt-get install --no-remove --no-install-recommends -y $packages
 fi
 success=yes
 printf 'Daylight installation completed. Configuration backup: %s\n' "$backup"
-printf '%s\n' 'No reboot, display-manager change, telemetry activation or autoremove was performed.' 'For a desktop installation, select Daylight GNU/Linux at your next graphical login.'
+if [ "$mode" = desktop ]; then
+    if [ -n "${helper:-}" ] && /usr/lib/daylight/session-defaults activate "$desktop_user"; then
+        printf 'Daylight is selected for %s. Fluxbox, the wallpaper and Conky start at graphical login.\n' "$desktop_user"
+    else
+        echo 'Automatic selection unavailable. Select Daylight GNU/Linux at graphical login.' >&2
+    fi
+    if [ -t 0 ] && [ -t 1 ] && [ -d /run/systemd/system ]; then
+        printf 'Save your work. Reboot now to start the new desktop? [y/N] '
+        read -r answer || answer=
+        case "$answer" in y|Y|yes|YES|o|O|oui) systemctl reboot ;; esac
+    else
+        echo 'When ready, reboot with: sudo systemctl reboot'
+    fi
+fi

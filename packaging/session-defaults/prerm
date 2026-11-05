@@ -1,0 +1,24 @@
+#!/bin/sh
+set -eu
+if [ "$1" = remove ] && [ -f /var/lib/daylight-session-defaults/original.json ]; then
+    /usr/lib/daylight/session-defaults restore
+    echo 'Daylight login preferences restored. After removal, reboot with: sudo systemctl reboot'
+    if [ -t 0 ] && [ -t 1 ] && [ "${DEBIAN_FRONTEND:-}" != noninteractive ] && [ -d /run/systemd/system ]; then
+        printf 'Reboot after the package transaction finishes? [y/N] '
+        read -r answer || answer=
+        case "$answer" in
+            y|Y|yes|YES|o|O|oui)
+                # Wait for APT and dpkg to release their locks before rebooting.
+                systemd-run --quiet /usr/bin/python3 -c '
+import fcntl, subprocess
+locks = [open(path, "r+") for path in ("/var/lib/dpkg/lock-frontend", "/var/lib/dpkg/lock")]
+for lock in locks:
+    fcntl.lockf(lock, fcntl.LOCK_EX)
+status = subprocess.check_output(["dpkg-query", "-W", "-f=${db:Status-Status}", "daylight-session-defaults"], text=True) if subprocess.run(["dpkg-query", "-W", "daylight-session-defaults"], capture_output=True).returncode == 0 else "not-installed"
+if status in ("config-files", "not-installed"):
+    subprocess.run(["systemctl", "reboot"], check=True)
+' || echo 'Automatic reboot unavailable. Run sudo systemctl reboot after removal.'
+                ;;
+        esac
+    fi
+fi

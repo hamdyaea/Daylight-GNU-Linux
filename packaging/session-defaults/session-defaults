@@ -1,0 +1,209 @@
+#!/usr/bin/python3
+"""Select Daylight for the installing user and restore the saved login choices."""
+import configparser
+import fnmatch
+import json
+import os
+import pwd
+import re
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+STATE = Path("/var/lib/daylight-session-defaults")
+SELF = "/usr/lib/daylight/session-defaults"
+BUS = "org.freedesktop.Accounts"
+IFACE = BUS + ".User"
+
+
+def run(*args):
+    return subprocess.check_output(args, text=True).strip()
+
+
+def save(path, content):
+    with tempfile.NamedTemporaryFile(mode="w", dir=path.parent, delete=False) as tmp:
+        if path.exists():
+            metadata = path.stat()
+            if os.getuid() == 0:
+                os.fchown(tmp.fileno(), metadata.st_uid, metadata.st_gid)
+            os.fchmod(tmp.fileno(), metadata.st_mode & 0o777)
+        tmp.write(content)
+        tmp.flush()
+        os.fsync(tmp.fileno())
+    os.replace(tmp.name, path)
+
+
+def file_setting(action, path, section, key, *values):
+    lines = path.read_text().splitlines(keepends=True) if path.exists() else []
+    inside = False
+    position = None
+    last = None
+    header = None
+    old = None
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("[") and stripped.endswith("]"):
+            inside = stripped == "[" + section + "]"
+            if inside:
+                header = index
+                last = index + 1
+        elif inside:
+            last = index + 1
+            match = re.match(r"^\s*" + re.escape(key) + r"\s*=\s*(.*?)\s*$", line)
+            if match:
+                if position is not None:
+                    raise ValueError("Ambiguous Session keys in " + str(path))
+                position, old = index, match.group(1)
+    if action == "shape":
+        return [path.exists(), header is not None]
+    if action == "prune":
+        had_file, had_section = json.loads(values[0])
+        if not had_section and header is not None and last == header + 1:
+            del lines[header]
+            if not had_file and not lines:
+                path.unlink()
+            else:
+                save(path, "".join(lines))
+        return
+    if action == "get":
+        return old
+    value = json.loads(values[0])
+    if old == value:
+        return
+    if position is not None:
+        lines[position:position+1] = [] if value is None else [key + "=" + value + "\n"]
+    elif last is not None:
+        if last and not lines[last-1].endswith("\n"):
+            lines[last-1] += "\n"
+        lines.insert(last, key + "=" + value + "\n")
+    else:
+        if lines and not lines[-1].endswith("\n"):
+            lines[-1] += "\n"
+        lines.extend(["[" + section + "]\n", key + "=" + value + "\n"])
+    save(path, "".join(lines))
+
+
+
+def ini(action, kind, *values):
+    home = Path(pwd.getpwuid(os.getuid()).pw_dir)
+    path, section = (home / ".dmrc", "Desktop") if kind == "dmrc" else (home / "state.conf", "Last")
+    result = file_setting(action, path, section, "Session", *values)
+    if action in ("get", "shape"):
+        print(json.dumps(result))
+
+
+def autologin(dm, user):
+    # Explicit autologin sessions override the greeter's remembered session.
+    if dm == "lightdm":
+        base = Path("/etc/lightdm/lightdm.conf")
+        dirs = ("/usr/share/lightdm/lightdm.conf.d", "/usr/local/share/lightdm/lightdm.conf.d",
+                "/etc/xdg/lightdm/lightdm.conf.d", "/etc/lightdm/lightdm.conf.d")
+        section, login, session = "Seat:seat0", "autologin-user", "autologin-session"
+        target = "daylight"
+    elif dm == "sddm":
+        base = Path("/etc/sddm.conf")
+        dirs = ("/usr/lib/sddm/sddm.conf.d", "/etc/sddm.conf.d")
+        section, login, session = "Autologin", "User", "Session"
+        target = "daylight.desktop"
+    else:
+        return []
+    cfg = configparser.RawConfigParser(strict=False)
+    cfg.optionxform = str
+    cfg.read([p for folder in dirs for p in sorted(Path(folder).glob("*.conf"))] + [base])
+    settings = {}
+    for group in cfg.sections():
+        if group == section or (dm == "lightdm" and (group == "SeatDefaults" or
+                (group.startswith("Seat:") and fnmatch.fnmatchcase("seat0", group[5:])))):
+            settings.update(cfg[group])
+    if settings.get(login) == user and settings.get(session):
+        return [(["autologin", str(base.resolve()), section], target)]
+    return []
+
+
+def setting(action, item, value=None):
+    kind, owner, key = item
+    if kind == "autologin":
+        field = "Session" if key == "Autologin" else "autologin-session"
+        return file_setting(action, Path(owner), key, field, json.dumps(value))
+    if kind == "accounts":
+        obj = "/org/freedesktop/Accounts/User" + str(pwd.getpwnam(owner).pw_uid)
+        # FindUserByName also loads accounts that AccountsService has not cached.
+        run("busctl", "call", BUS, "/org/freedesktop/Accounts", BUS, "FindUserByName", "s", owner)
+        if action == "get":
+            return json.loads(run("busctl", "--json=short", "get-property", BUS, obj, IFACE, key))["data"]
+        run("busctl", "call", BUS, obj, IFACE, "Set" + key, "s", value)
+    else:
+        args = ["runuser", "-u", owner, "--", SELF, "ini", action, kind]
+        if action in ("get", "shape"):
+            return json.loads(run(*args))
+        run(*args, json.dumps(value))
+
+
+def activate(user):
+    account = pwd.getpwnam(user)
+    if account.pw_uid == 0:
+        raise ValueError("Select a regular desktop user.")
+    dm = Path("/etc/X11/default-display-manager").read_text().strip().split("/")[-1]
+    if dm in ("lightdm", "gdm", "gdm3"):
+        choices = [(["accounts", user, "XSession"], "daylight")]
+        if dm == "lightdm":
+            choices.append((["dmrc", user, "Session"], "daylight"))
+        else:
+            choices += [(["accounts", user, "Session"], "daylight"),
+                        (["accounts", user, "SessionType"], "x11")]
+    elif dm == "sddm":
+        choices = [(["sddm", "sddm", "Session"], "/usr/share/xsessions/daylight.desktop")]
+    else:
+        raise ValueError("Unsupported display manager: " + dm)
+    choices.extend(autologin(dm, user))
+    STATE.mkdir(mode=0o700, exist_ok=True)
+    path = STATE / "original.json"
+    if path.exists():
+        state = json.loads(path.read_text())
+        if state["user"] != user or state["manager"] != dm:
+            raise ValueError("An existing Daylight selection belongs to another user or display manager.")
+    else:
+        entries = []
+        for item, target in choices:
+            try:
+                old = setting("get", item)
+            except subprocess.CalledProcessError:
+                if item[0] == "accounts" and (dm == "lightdm" or item[2] != "XSession"):
+                    continue
+                raise
+            shape = None if item[0] == "accounts" else setting("shape", item)
+            entries.append([item, old, target, shape])
+        state = {"user": user, "manager": dm, "entries": entries}
+        save(path, json.dumps(state))
+    try:
+        for item, old, target, shape in state["entries"]:
+            setting("set", item, target)
+            if setting("get", item) != target:
+                raise ValueError("The login manager did not accept the requested session.")
+        run("runuser", "-u", user, "--", "env", "-u", "XDG_CONFIG_HOME",
+            "HOME=" + account.pw_dir, "/usr/bin/daylight", "settings", "set", "monitor", "on")
+    except Exception:
+        restore()
+        raise
+
+
+def restore():
+    path = STATE / "original.json"
+    if path.exists():
+        for item, old, target, shape in json.loads(path.read_text())["entries"]:
+            if setting("get", item) == target:
+                setting("set", item, old)
+            if shape is not None:
+                setting("prune", item, shape)
+        path.unlink()
+        STATE.rmdir()
+
+
+if __name__ == "__main__":
+    if sys.argv[1] == "ini":
+        ini(*sys.argv[2:])
+    elif sys.argv[1] == "activate":
+        activate(sys.argv[2])
+    elif sys.argv[1] == "restore":
+        restore()
