@@ -12,12 +12,13 @@ mode=core
 games=no
 apply=no
 usage() {
-    printf '%s\n' 'Daylight GNU/Linux installer (Debian 12/13 and compatible ARM64 systems)' 'Usage: sh install-daylight.sh [--core|--desktop|--repo-only] [--games] [--yes|--plan]' 'Default: show the core-only installation plan; no changes.' 'Desktop mode selects Daylight for the invoking desktop user and offers a reboot.' 'Telemetry is never installed or enabled by this script.'
+    printf '%s\n' 'Daylight GNU/Linux installer (Debian 12/13 and compatible ARM64 systems)' 'Usage: sh install-daylight.sh [--core|--desktop|--repo-only|--remove-repo] [--games] [--yes|--plan]' 'Default: show the core-only installation plan; no changes.' 'Desktop mode selects Daylight for the invoking desktop user and offers a reboot.' 'Telemetry is never installed or enabled by this script.'
 }
 for argument in "$@"; do
     case "$argument" in
         --core) mode=core ;;
         --desktop) mode=desktop ;;
+        --remove-repo) mode=remove_repo ;;
         --repo-only) mode=repo ;;
         --games) games=yes ;;
         --yes) apply=yes ;;
@@ -31,6 +32,70 @@ command -v dpkg >/dev/null 2>&1 || { echo 'This installer is only for Debian-bas
 [ -r /etc/debian_version ] || { echo 'No Debian base detected; no changes made.' >&2; exit 2; }
 arch=$(dpkg --print-architecture)
 case "$arch" in amd64|arm64) ;; *) echo 'Supported architectures: amd64 and arm64 only.' >&2; exit 2 ;; esac
+write_repo_cleanup() {
+    cat <<'DAYLIGHT_REPO_CLEANUP'
+#!/bin/sh
+# Managed by Daylight GNU/Linux installer
+set -eu
+state=/var/lib/daylight-apt-lifecycle
+hook=/etc/dpkg/dpkg.cfg.d/90-daylight-repository
+source=/etc/apt/sources.list.d/daylight.sources
+pin=/etc/apt/preferences.d/daylight
+key=/etc/apt/keyrings/daylight-archive-keyring.gpg
+
+# A missing package and a broken dpkg database must be distinguished.
+inventory=$(dpkg-query -W -f='${Package} ${db:Status-Status}\n')
+if printf '%s\n' "$inventory" | awk '$1 ~ /^daylight-/ && $2 != "not-installed" && $2 != "config-files" {found=1} END {exit !found}'; then
+    if [ "$1" = explicit ]; then
+        echo 'Daylight packages are still present. Remove them before cleaning the repository.' >&2
+        exit 1
+    fi
+    : > "$state/armed"
+    exit 0
+fi
+if [ "$1" = hook ]; then
+    [ -f "$state/armed" ] || exit 0
+    case "${DPKG_HOOK_ACTION:-}" in remove|purge) ;; *) exit 0 ;; esac
+fi
+remove_matching() {
+    file=$1
+    shift
+    [ -e "$file" ] || return 0
+    if [ -f "$file" ] && [ ! -L "$file" ]; then
+        digest=$(sha256sum "$file")
+        for expected do
+            if [ "${digest%% *}" = "$expected" ]; then
+                rm -- "$file"
+                echo "Removed $file"
+                return 0
+            fi
+        done
+    fi
+    echo "Preserved modified file: $file" >&2
+}
+remove_matching "$source" afdb6c687f07ad78b86d264749369239e194f104a6e21f45d81186d19003ea3c 5532cb34ba7024a7060e837f3e610f7560c1242480819845acd3a96fea3e39af
+remove_matching "$pin" 60a1e6820ad6d6206b1109f738abed3f22f2fb732b1168b14a304f35798fba59
+if [ ! -e "$source" ]; then
+    shared=no
+    for entry in /etc/apt/sources.list /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources; do
+        [ -f "$entry" ] || continue
+        if grep -Fq "$key" "$entry"; then shared=yes; break; fi
+    done
+    if [ "$shared" = no ]; then remove_matching "$key" f2a244bae188c4f233ad19acdd56f8846486a7d03163c06a29ba644b2d666ef9; fi
+fi
+if [ -f "$hook" ] && grep -Fxq '# Managed by Daylight GNU/Linux installer' "$hook"; then rm -- "$hook"; fi
+if [ -d "$state" ]; then
+    rm -f -- "$state/armed" "$state/cleanup"
+    rmdir -- "$state"
+fi
+DAYLIGHT_REPO_CLEANUP
+}
+if [ "$mode" = remove_repo ]; then
+    if [ "$apply" != yes ]; then echo 'Plan: clean the managed Daylight APT files after package removal. Add --yes to apply.'; exit 0; fi
+    [ "$(id -u)" -eq 0 ] || { echo 'Run with sudo and --yes.' >&2; exit 2; }
+    write_repo_cleanup | sh -s -- explicit
+    exit
+fi
 packages='daylight-core daylight-themes'
 if [ "$mode" = desktop ]; then packages='daylight-linux'; fi
 if [ "$mode" = repo ]; then packages=''; fi
@@ -142,6 +207,15 @@ elif [ -n "$packages" ]; then
     # Word splitting is deliberate: this is a fixed internal package allowlist.
     apt-get install --no-remove --no-install-recommends -y $packages
 fi
+state=/var/lib/daylight-apt-lifecycle
+hook=/etc/dpkg/dpkg.cfg.d/90-daylight-repository
+install -d -m 755 "$state"
+write_repo_cleanup > "$temporary/repo-cleanup"
+install -m 755 "$temporary/repo-cleanup" "$state/cleanup.new"
+mv -f "$state/cleanup.new" "$state/cleanup"
+printf '%s\n' '# Managed by Daylight GNU/Linux installer' 'post-invoke=if [ -x /var/lib/daylight-apt-lifecycle/cleanup ]; then /var/lib/daylight-apt-lifecycle/cleanup hook; fi' > "$temporary/dpkg-hook"
+install -m 644 "$temporary/dpkg-hook" "$hook"
+"$state/cleanup" hook
 success=yes
 printf 'Daylight installation completed. Configuration backup: %s\n' "$backup"
 if [ "$mode" = desktop ]; then

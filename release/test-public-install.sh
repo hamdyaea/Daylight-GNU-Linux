@@ -36,6 +36,9 @@ apt-cache policy daylight-core
 /usr/bin/daylight remove --dry-run
 printf 'y\n' | /usr/bin/daylight remove
 ! command -v daylight
+for path in /etc/apt/sources.list.d/daylight.sources /etc/apt/preferences.d/daylight /etc/apt/keyrings/daylight-archive-keyring.gpg /etc/dpkg/dpkg.cfg.d/90-daylight-repository; do
+    test ! -e "$path"
+done
 # Keep dependencies and the system identity; no autoremove or global upgrade.
 dpkg-query -W curl ca-certificates gnupg
 sha256sum -c /tmp/os-before
