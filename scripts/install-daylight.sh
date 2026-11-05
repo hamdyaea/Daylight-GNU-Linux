@@ -196,9 +196,16 @@ if [ "$mode" = desktop ]; then
         done | sort -u | awk 'NR==1 {name=$0} END {if(NR==1) print name}')
     fi
     if [ -n "$desktop_user" ] && [ "$desktop_user" != root ] && [ -r /etc/X11/default-display-manager ]; then
-        helper="$temporary/daylight-session-defaults_1.0-1_all.deb"
-        fetch "https://daylightlinux.ch/daylight-session-defaults_1.0-1_all.deb" "$helper"
-        printf '%s  %s\n' '51eb647453b50aa9563ba41982c9ea02ce9cf7cd577fab4043f762a80e6edc79' "$helper" | sha256sum -c -
+        if [ -r /proc/device-tree/model ] && grep -aq 'Raspberry Pi' /proc/device-tree/model; then
+            helper_name=daylight-session-defaults_1.1-1+pi1_all.deb
+            helper_hash=fc527a951a218f8f80038aaf8dabfc7dba7b6a868f807be767074690b51661d5
+        else
+            helper_name=daylight-session-defaults_1.1-1_all.deb
+            helper_hash=fbbbae441a0d67d8d7b61384485366c5bff994e9fc838339d448aa40b012eaba
+        fi
+        helper="$temporary/$helper_name"
+        fetch "https://daylightlinux.ch/$helper_name" "$helper"
+        printf '%s  %s\n' "$helper_hash" "$helper" | sha256sum -c -
         apt-get install --no-remove --no-install-recommends -y $packages "$helper"
     else
         apt-get install --no-remove --no-install-recommends -y $packages
@@ -220,7 +227,7 @@ success=yes
 printf 'Daylight installation completed. Configuration backup: %s\n' "$backup"
 if [ "$mode" = desktop ]; then
     if [ -n "${helper:-}" ] && /usr/lib/daylight/session-defaults activate "$desktop_user"; then
-        printf 'Daylight is selected for %s. Fluxbox, the wallpaper and Conky start at graphical login.\n' "$desktop_user"
+        printf 'Daylight is selected for %s. The Daylight desktop, wallpaper and system monitor start at graphical login.\n' "$desktop_user"
     else
         echo 'Automatic selection unavailable. Select Daylight GNU/Linux at graphical login.' >&2
     fi

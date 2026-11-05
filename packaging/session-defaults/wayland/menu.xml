@@ -1,0 +1,7 @@
+<openbox_menu>
+  <menu id="root-menu" label="Daylight GNU/Linux">
+    <item label="Terminal"><action name="Execute" command="daylight-terminal"/></item>
+    <item label="File manager"><action name="Execute" command="pcmanfm"/></item>
+    <item label="Log out"><action name="Exit"/></item>
+  </menu>
+</openbox_menu>

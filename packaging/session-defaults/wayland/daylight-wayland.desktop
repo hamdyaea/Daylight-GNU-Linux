@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Daylight GNU/Linux (Wayland)
+DesktopNames=Daylight;labwc;wlroots
+Exec=/usr/lib/daylight/wayland-session
+TryExec=/usr/bin/labwc

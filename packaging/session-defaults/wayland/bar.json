@@ -1,0 +1,10 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["custom/daylight", "wlr/taskbar"],
+  "modules-right": ["custom/conky", "clock"],
+  "custom/daylight": {"format": "Daylight GNU/Linux", "on-click": "pcmanfm"},
+  "custom/conky": {"exec": "if [ \"$(daylight settings get monitor)\" = on ]; then exec conky -c /usr/share/daylight/labwc/monitor.conf; fi"},
+  "wlr/taskbar": {"format": "{icon}", "on-click": "activate"},
+  "clock": {"format": "{:%H:%M}"}
+}

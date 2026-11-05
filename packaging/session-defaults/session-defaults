@@ -157,12 +157,23 @@ def activate(user):
     else:
         raise ValueError("Unsupported display manager: " + dm)
     choices.extend(autologin(dm, user))
+    if Path("/usr/share/wayland-sessions/daylight-wayland.desktop").exists():
+        wayland = {"daylight": "daylight-wayland", "daylight.desktop": "daylight-wayland.desktop",
+                   "/usr/share/xsessions/daylight.desktop": "/usr/share/wayland-sessions/daylight-wayland.desktop",
+                   "x11": "wayland"}
+        choices = [(item, wayland[target]) for item, target in choices]
+
     STATE.mkdir(mode=0o700, exist_ok=True)
     path = STATE / "original.json"
     if path.exists():
         state = json.loads(path.read_text())
         if state["user"] != user or state["manager"] != dm:
             raise ValueError("An existing Daylight selection belongs to another user or display manager.")
+        # Migrate a previous X11 installation without losing the original login.
+        targets = {tuple(item): target for item, target in choices}
+        for entry in state["entries"]:
+            entry[2] = targets.get(tuple(entry[0]), entry[2])
+        save(path, json.dumps(state))
     else:
         entries = []
         for item, target in choices:

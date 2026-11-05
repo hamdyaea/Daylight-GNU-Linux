@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+export XDG_CURRENT_DESKTOP=Daylight:labwc:wlroots
+export XDG_SESSION_TYPE=wayland
+export DAYLIGHT_SESSION=1
+export LABWC_FALLBACK_OUTPUT=NOOP-1
+if [ -r /etc/default/keyboard ]; then
+    . /etc/default/keyboard
+    export XKB_DEFAULT_LAYOUT="$XKBLAYOUT" XKB_DEFAULT_MODEL="$XKBMODEL"
+    export XKB_DEFAULT_VARIANT="${XKBVARIANT:-}" XKB_DEFAULT_OPTIONS="${XKBOPTIONS:-}"
+fi
+exec /usr/bin/labwc -C /usr/share/daylight/labwc
