@@ -15,7 +15,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc2-1"
+VERSION = "5.0.0~rc2-2"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -108,7 +108,8 @@ def main():
             base = work / package
             for name,title in entries.items():
                 write(base,f"usr/share/applications/daylight-{name}.desktop",HEADER+f"[Desktop Entry]\nName=Daylight {title}\nExec=/usr/bin/daylight app {name}\nIcon=daylight\nTerminal=false\nType=Application\nCategories={category}\n")
-            deps=f"daylight-desktop (= {VERSION})"+(" , espeak-ng, libnotify-bin" if package=="daylight-apps" else "")
+            if package == "daylight-apps": copy(base,"scripts/daylight-speech","usr/lib/daylight/speech",0o755)
+            deps=f"daylight-desktop (= {VERSION})"+(" , espeak-ng, libnotify-bin, python3-gi, gir1.2-gtk-3.0" if package=="daylight-apps" else "")
             finish(package,"all","optional native application launchers" if package=="daylight-apps" else "optional offline games without wagers",deps)
         telemetry=work / "daylight-telemetry"
         copy(telemetry,"packaging/telemetry.conf","etc/daylight/telemetry.conf")

@@ -361,18 +361,18 @@ pub fn application(name: &str) -> Result<()> {
             }
         }
         "speech" => {
-            if let Some(text) = ask("Text to read locally with eSpeak NG", "")? {
-                if text.len() > 4000 {
-                    return Err("Text is limited to 4000 bytes".into());
-                }
-                let mut child = Command::new("/usr/bin/espeak-ng")
-                    .arg("--stdin")
-                    .stdin(Stdio::piped())
-                    .spawn()?;
-                if let Some(mut stdin) = child.stdin.take() {
-                    stdin.write_all(text.as_bytes())?;
-                }
-                child.wait()?;
+            let helper = Path::new("/usr/lib/daylight/speech");
+            if !helper.exists() {
+                return show(
+                    "Daylight Text to Speech",
+                    "Install the daylight-apps package to use Text to Speech.",
+                );
+            }
+            if !Command::new(helper).status()?.success() {
+                show(
+                    "Daylight Text to Speech",
+                    "The speech window could not start.",
+                )?;
             }
         }
         "alarm" => {

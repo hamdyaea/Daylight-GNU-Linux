@@ -1,0 +1,96 @@
+#!/usr/bin/python3
+# Developer: Hamdy Abou El Anein <info@daylightlinux.ch>
+# SPDX-License-Identifier: GPL-3.0-only
+import locale
+
+import gi
+
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gio, GLib, Gtk
+
+
+class SpeechWindow(Gtk.Window):
+    def __init__(self):
+        super().__init__(title="Daylight Text to Speech")
+        self.set_default_size(510, 250)
+        self.set_border_width(12)
+        self.player = None
+        self.stopping = False
+        layout = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        self.add(layout)
+        self.editor = Gtk.TextView(wrap_mode=Gtk.WrapMode.WORD_CHAR)
+        scroll = Gtk.ScrolledWindow()
+        scroll.add(self.editor)
+        layout.pack_start(scroll, True, True, 0)
+        controls = Gtk.Box(spacing=8)
+        layout.pack_start(controls, False, False, 0)
+        self.voice = Gtk.ComboBoxText()
+        for code, label in (("en", "English"), ("fr", "Français"), ("de", "Deutsch")):
+            self.voice.append(code, label)
+        language = (locale.getlocale()[0] or "en").split("_")[0]
+        self.voice.set_active_id(language if language in ("en", "fr", "de") else "en")
+        controls.add(self.voice)
+        self.play = Gtk.Button.new_with_label("Speak")
+        self.stop = Gtk.Button.new_with_label("Stop")
+        controls.add(self.play)
+        controls.add(self.stop)
+        self.stop.set_sensitive(False)
+        self.status = Gtk.Label(label="Audio plays on this device.", xalign=0, wrap=True)
+        layout.pack_start(self.status, False, False, 0)
+        self.play.connect("clicked", self.speak)
+        self.stop.connect("clicked", self.stop_playback)
+        self.connect("destroy", self.close_player)
+
+    def speak(self, _button):
+        buf = self.editor.get_buffer()
+        text = buf.get_text(*buf.get_bounds(), True)
+        if not text.strip():
+            self.status.set_text("Enter some text to read.")
+            return
+        flags = Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDERR_PIPE
+        try:
+            self.player = Gio.Subprocess.new(
+                ["/usr/bin/espeak-ng", "-v", self.voice.get_active_id(), "--stdin"], flags
+            )
+        except GLib.Error as error:
+            self.status.set_text(error.message)
+            return
+        self.stopping = False
+        self.play.set_sensitive(False)
+        self.stop.set_sensitive(True)
+        self.status.set_text("Speaking on this device…")
+        self.player.communicate_utf8_async(text, None, self.finished)
+
+    def finished(self, player, result):
+        try:
+            _, _, errors = player.communicate_utf8_finish(result)
+            if self.stopping:
+                message = "Stopped."
+            elif player.get_successful():
+                message = "Finished. Audio was sent to this device’s sound output."
+            else:
+                message = (errors or "").strip() or "Speech failed. Check the sound output."
+        except GLib.Error as error:
+            message = "Stopped." if self.stopping else error.message
+        if self.player is player:
+            self.player = None
+            self.status.set_text(message)
+            self.play.set_sensitive(True)
+            self.stop.set_sensitive(False)
+
+    def stop_playback(self, _button):
+        if self.player is not None:
+            self.stopping = True
+            self.player.force_exit()
+
+    def close_player(self, _window):
+        self.stop_playback(None)
+        self.player = None
+        Gtk.main_quit()
+
+
+if __name__ == "__main__":
+    window = SpeechWindow()
+    window.show_all()
+    window.editor.grab_focus()
+    Gtk.main()
