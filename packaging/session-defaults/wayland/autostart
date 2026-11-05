@@ -2,7 +2,7 @@
 wallpaper=$(daylight settings get wallpaper)
 swaybg -m fill -i "/usr/share/backgrounds/daylight/$wallpaper" &
 if [ "$(daylight settings get monitor)" = on ]; then
-    config=$(daylight setup-session) && conky -c "$config/conky.conf" &
+    config=$(daylight setup-session) && DAYLIGHT_CONKY_CONFIG="$config/conky.conf" conky -c /usr/share/daylight/labwc/conky.lua &
 fi
 waybar -c /usr/share/daylight/labwc/bar.json -s /usr/share/daylight/labwc/bar.css &
 if command -v dbus-update-activation-environment >/dev/null; then

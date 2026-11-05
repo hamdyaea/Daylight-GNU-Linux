@@ -197,8 +197,8 @@ if [ "$mode" = desktop ]; then
     fi
     if [ -n "$desktop_user" ] && [ "$desktop_user" != root ] && [ -r /etc/X11/default-display-manager ]; then
         if [ -r /proc/device-tree/model ] && grep -aq 'Raspberry Pi' /proc/device-tree/model; then
-            helper_name=daylight-session-defaults_1.1-1+pi2_all.deb
-            helper_hash=4cecdbb6d16dbe5b858431040cdfb84fcb2acbdbbd58eb39c93e68c2a54fcd47
+            helper_name=daylight-session-defaults_1.1-1+pi3_all.deb
+            helper_hash=63ec52ec7cfb27ddb01e4640fd511954f720e4d70ceb432501e09dee4fc7f8f0
         else
             helper_name=daylight-session-defaults_1.1-1_all.deb
             helper_hash=fbbbae441a0d67d8d7b61384485366c5bff994e9fc838339d448aa40b012eaba
