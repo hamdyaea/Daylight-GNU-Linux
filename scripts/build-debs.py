@@ -15,7 +15,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc2-2"
+VERSION = "5.0.0~rc2-3"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -66,7 +66,9 @@ def main():
             size = sum(p.stat().st_size for p in base.rglob("*") if p.is_file()) // 1024 + 1
             control = f"Package: {package}\nVersion: {VERSION}\nArchitecture: {architecture}\nMaintainer: {MAINTAINER}\nSection: {'x11' if package == 'daylight-desktop' else 'utils'}\nPriority: optional\nInstalled-Size: {size}\nHomepage: https://daylightlinux.ch\n"
             if depends: control += f"Depends: {depends}\n"
-            if package == "daylight-desktop": control += "Breaks: daylight-session-defaults (<< 1.2-1)\n"
+            if package == "daylight-desktop":
+                control += "Breaks: daylight-session-defaults (<< 1.2-1), daylight-games (<< 5.0.0~rc2-3)\n"
+                control += "Replaces: daylight-games (<< 5.0.0~rc2-3)\n"
             if recommends: control += f"Recommends: {recommends}\n"
             control += f"Description: {description}\n Lightweight, opt-in components of Daylight GNU/Linux.\n Does not replace the base distribution, kernel or existing desktop configuration.\n"
             write(base, "DEBIAN/control", control)
@@ -95,19 +97,29 @@ def main():
         copy(themes,"assets/branding/daylight.png","usr/share/icons/hicolor/512x512/apps/daylight.png")
         copy(themes,"assets/wallpapers/CREDITS.txt","usr/share/doc/daylight-themes/CREDITS.txt")
         finish("daylight-themes","all","photographic mountain and sunrise identity, backgrounds and icons")
+        def launcher(base, name, title, category):
+            write(base,f"usr/share/applications/daylight-{name}.desktop",HEADER+f"[Desktop Entry]\nName=Daylight {title}\nExec=/usr/bin/daylight app {name}\nIcon=daylight\nTerminal=false\nType=Application\nCategories={category}\n")
+
         desktop = work / "daylight-desktop"
         for name in ("daylight-session","daylight-terminal"): copy(desktop,"scripts/"+name,"usr/bin/"+name,0o755)
         copy(desktop,"scripts/interactive-shell","usr/lib/daylight/interactive-shell",0o755)
+        shutil.copytree(ROOT / "games", desktop / "usr/share/daylight/games",
+                        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
         for folder in ("fluxbox","conky","shell"):
             for p in sorted((ROOT / "config" / folder).glob("*")): copy(desktop,p,f"usr/share/daylight/{folder}/{p.name}")
         for source,dest in [("daylight.desktop","usr/share/xsessions/daylight.desktop"),("control-center.desktop","usr/share/applications/daylight-control-center.desktop"),("terminal.desktop","usr/share/applications/daylight-terminal.desktop")]: copy(desktop,"packaging/"+source,dest)
-        finish("daylight-desktop","all","isolated Fluxbox desktop session",f"daylight-core (= {VERSION}), daylight-themes (= {VERSION}), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils", "")
+        classic_games = {"dice": "Dice Simulator", "coin": "Coin Flip", "memory": "Memory Game",
+                         "rpsls": "Rock Paper Scissors Lizard Spock", "slots": "Slot Simulator",
+                         "basketball": "Basketball Simulator"}
+        for name, title in classic_games.items():
+            launcher(desktop, name, title, "Game;")
+        finish("daylight-desktop","all","isolated Fluxbox desktop session",f"daylight-core (= {VERSION}), daylight-themes (= {VERSION}), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, python3-tk, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils", "")
         applications={"password":"Password Generator","temperature":"Temperature Converter","days":"Days Calculator","connect":"Local Network Information","alarm":"Alarm","speech":"Text to Speech"}
-        games={"dice":"Dice Simulator","coin":"Coin Flip","lottery":"Lottery Simulator","rpsls":"Rock Paper Scissors Lizard Spock","cards":"Battle Cards","tournament":"Tournament Simulator","basketball":"Basketball Simulator","memory":"Memory Game","slots":"Slot Simulator","guess":"Guess the Number"}
+        games={"lottery":"Lottery Simulator", "cards":"Battle Cards", "tournament":"Tournament Simulator", "guess":"Guess the Number"}
         for package,entries,category in [("daylight-apps",applications,"Utility;"),("daylight-games",games,"Game;")]:
             base = work / package
             for name,title in entries.items():
-                write(base,f"usr/share/applications/daylight-{name}.desktop",HEADER+f"[Desktop Entry]\nName=Daylight {title}\nExec=/usr/bin/daylight app {name}\nIcon=daylight\nTerminal=false\nType=Application\nCategories={category}\n")
+                launcher(base, name, title, category)
             if package == "daylight-apps": copy(base,"scripts/daylight-speech","usr/lib/daylight/speech",0o755)
             deps=f"daylight-desktop (= {VERSION})"+(" , espeak-ng, libnotify-bin, python3-gi, gir1.2-gtk-3.0" if package=="daylight-apps" else "")
             finish(package,"all","optional native application launchers" if package=="daylight-apps" else "optional offline games without wagers",deps)

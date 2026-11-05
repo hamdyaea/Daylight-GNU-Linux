@@ -178,26 +178,18 @@ pub fn application(name: &str) -> Result<()> {
             "Daylight Connect - local information",
             &system::local_network(),
         )?,
-        "dice" => {
-            if let Some(input) = ask("Number of sides and rolls, for example: 6 2", "6 2")? {
-                let f: Vec<_> = input.split_whitespace().collect();
-                if f.len() != 2 {
-                    return Err("Enter SIDES COUNT".into());
-                }
-                show(
-                    "Daylight Dice",
-                    &format!("{:?}", apps::dice(f[0].parse()?, f[1].parse()?)?),
-                )?;
+        "dice" | "coin" | "memory" | "slots" | "basketball" | "rpsls" => {
+            let script = Path::new("/usr/share/daylight/games")
+                .join(name)
+                .join("game.py");
+            if !Command::new("/usr/bin/python3")
+                .arg(script)
+                .status()?
+                .success()
+            {
+                show("Daylight Games", "The game could not start.")?;
             }
         }
-        "coin" => show(
-            "Daylight Coin",
-            if entropy::uniform(2)? == 0 {
-                "Heads"
-            } else {
-                "Tails"
-            },
-        )?,
         "lottery" => show(
             "Daylight Lottery Simulator",
             &format!(
@@ -206,11 +198,6 @@ pub fn application(name: &str) -> Result<()> {
                 apps::draw_unique(12, 2)?
             ),
         )?,
-        "rpsls" => {
-            if let Some(choice) = ask("Choose rock, paper, scissors, lizard or spock", "rock")? {
-                show("Daylight RPSLS", &apps::rpsls(&choice)?)?;
-            }
-        }
         "cards" => {
             let mut cards = apps::draw_unique(52, 2)?;
             // draw_unique sorts its result; randomly assign the two cards to players.
@@ -242,37 +229,6 @@ pub fn application(name: &str) -> Result<()> {
                 show("Daylight Tournament", &apps::tournament(&teams)?)?;
             }
         }
-        "basketball" => {
-            let a = 70 + entropy::uniform(71)?;
-            let mut b = 70 + entropy::uniform(71)?;
-            while a == b {
-                b = 70 + entropy::uniform(71)?;
-            }
-            show(
-                "Daylight Basketball",
-                &format!("Fictional match, not a prediction.\nTeam A: {a}\nTeam B: {b}"),
-            )?;
-        }
-        "slots" => {
-            let symbols = ["SUN", "MOUNTAIN", "STAR", "MOON"];
-            let a = entropy::uniform(4)? as usize;
-            let b = entropy::uniform(4)? as usize;
-            let c = entropy::uniform(4)? as usize;
-            show(
-                "Daylight Slot Simulator",
-                &format!(
-                    "No bets, no money.\n\n{} | {} | {}\n\n{}",
-                    symbols[a],
-                    symbols[b],
-                    symbols[c],
-                    if a == b && b == c {
-                        "Three matching symbols!"
-                    } else {
-                        "Try again from the menu."
-                    }
-                ),
-            )?;
-        }
         "guess" => {
             let target = 1 + entropy::uniform(100)?;
             let mut hint = "Guess a number from 1 to 100".to_string();
@@ -289,75 +245,6 @@ pub fn application(name: &str) -> Result<()> {
                     break;
                 }
                 hint = if n < target { "Higher" } else { "Lower" }.into();
-            }
-        }
-        "memory" => {
-            let mut deck = [1u32, 1, 2, 2, 3, 3, 4, 4];
-            for i in (1..deck.len()).rev() {
-                let j = entropy::uniform((i + 1) as u32)? as usize;
-                deck.swap(i, j);
-            }
-            let mut solved = [false; 8];
-            let mut attempts = 0;
-            while solved.iter().any(|s| !*s) {
-                let board = (0..8)
-                    .map(|i| {
-                        format!(
-                            "{}:[{}]",
-                            i + 1,
-                            if solved[i] {
-                                deck[i].to_string()
-                            } else {
-                                "?".into()
-                            }
-                        )
-                    })
-                    .collect::<Vec<_>>()
-                    .join("  ");
-                let Some(input) = ask(
-                    &format!("{board}\nChoose two hidden positions, for example 1 2"),
-                    "1 2",
-                )?
-                else {
-                    break;
-                };
-                let nums: Vec<_> = input
-                    .split_whitespace()
-                    .filter_map(|n| n.parse::<usize>().ok())
-                    .collect();
-                if nums.len() != 2
-                    || nums[0] == nums[1]
-                    || nums.iter().any(|n| !(1..=8).contains(n) || solved[n - 1])
-                {
-                    continue;
-                }
-                let (a, b) = (nums[0] - 1, nums[1] - 1);
-                attempts += 1;
-                if deck[a] == deck[b] {
-                    solved[a] = true;
-                    solved[b] = true;
-                }
-                show(
-                    "Daylight Memory",
-                    &format!(
-                        "Position {}: {}\nPosition {}: {}\n{}",
-                        a + 1,
-                        deck[a],
-                        b + 1,
-                        deck[b],
-                        if deck[a] == deck[b] {
-                            "Match!"
-                        } else {
-                            "Different cards"
-                        }
-                    ),
-                )?;
-            }
-            if solved.iter().all(|s| *s) {
-                show(
-                    "Daylight Memory",
-                    &format!("Completed in {attempts} attempts"),
-                )?;
             }
         }
         "speech" => {
