@@ -15,7 +15,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc2-3"
+VERSION = "5.0.0~rc2-4"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -113,7 +113,8 @@ def main():
                          "basketball": "Basketball Simulator"}
         for name, title in classic_games.items():
             launcher(desktop, name, title, "Game;")
-        finish("daylight-desktop","all","isolated Fluxbox desktop session",f"daylight-core (= {VERSION}), daylight-themes (= {VERSION}), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, python3-tk, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils", "")
+        copy(desktop, "packaging/desktop-postinst", "DEBIAN/postinst", 0o755)
+        finish("daylight-desktop","all","isolated Fluxbox desktop session",f"daylight-core (= {VERSION}), daylight-themes (= {VERSION}), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, python3, python3-tk, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils", "")
         applications={"password":"Password Generator","temperature":"Temperature Converter","days":"Days Calculator","connect":"Local Network Information","alarm":"Alarm","speech":"Text to Speech"}
         games={"lottery":"Lottery Simulator", "cards":"Battle Cards", "tournament":"Tournament Simulator", "guess":"Guess the Number"}
         for package,entries,category in [("daylight-apps",applications,"Utility;"),("daylight-games",games,"Game;")]:

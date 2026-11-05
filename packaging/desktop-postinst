@@ -1,0 +1,55 @@
+#!/usr/bin/python3
+# Developer: Hamdy Abou El Anein <info@daylightlinux.ch>
+# SPDX-License-Identifier: GPL-3.0-only
+"""Refresh running Daylight monitors after a desktop package upgrade."""
+import os
+from pathlib import Path
+import pwd
+import signal
+import subprocess
+import sys
+
+
+def refresh(proc):
+    if (proc / "comm").read_text().strip() != "conky":
+        return
+    fd = os.pidfd_open(int(proc.name))
+    try:
+        if not (proc / "exe").samefile("/usr/bin/conky"):
+            return
+        uid = proc.stat().st_uid
+        if uid == 0:
+            return
+        account = pwd.getpwuid(uid)
+        args = (proc / "cmdline").read_bytes().rstrip(b"\0").split(b"\0")
+        if len(args) != 3 or args[1] != b"-c":
+            return
+        env = dict(item.split(b"=", 1) for item in (proc / "environ").read_bytes().split(b"\0") if b"=" in item)
+        home = os.fsdecode(env.get(b"HOME", os.fsencode(account.pw_dir)))
+        config = Path(os.fsdecode(env.get(b"XDG_CONFIG_HOME", b"")))
+        if not config.is_absolute():
+            config = Path(home) / ".config"
+        profile = os.fsencode(config / "daylight/conky.conf")
+        if args[2] == b"/usr/share/daylight/labwc/conky.lua":
+            if env.get(b"DAYLIGHT_CONKY_CONFIG") != profile:
+                return
+        elif args[2] != profile:
+            return
+        subprocess.run(["/usr/bin/daylight", "setup-session"], check=True, timeout=10,
+                       user=uid, group=account.pw_gid, extra_groups=[],
+                       cwd="/", env={"HOME": home, "XDG_CONFIG_HOME": str(config),
+                                     "PATH": "/usr/bin:/bin"}, stdout=subprocess.DEVNULL)
+        signal.pidfd_send_signal(fd, signal.SIGUSR1)
+    finally:
+        os.close(fd)
+
+
+if sys.argv[1:2] == ["configure"] and len(sys.argv) > 2 and sys.argv[2]:
+    for proc in Path("/proc").glob("[0-9]*"):
+        try:
+            refresh(proc)
+        except (FileNotFoundError, ProcessLookupError):
+            pass
+        except (OSError, KeyError, subprocess.SubprocessError) as error:
+            print(f"Daylight: monitor refresh skipped ({error}); settings apply at next login.",
+                  file=sys.stderr)
