@@ -14,7 +14,7 @@ Never point the download page at a build that has not been published. Never over
 
 ## Signed archive installer
 
-The server installer is `server/install-apt-server.sh`; it requires a full source checkout because its reviewed Python helpers and systemd units are adjacent. It is distinct from the public client bootstrap `scripts/install-daylight.sh`, served as `/install.sh`.
+The server installer is `server/install-apt-server.sh`; it requires a full source checkout because its reviewed Python helpers and systemd units are adjacent. It is distinct from the public client bootstrap `scripts/daylight-install.sh`, served as `/daylight-install.sh`.
 
 Prepare a directory containing only verified release `.deb` files plus `PACKAGE-SHA256SUMS` covering exactly those files. Maintain the dedicated signing key in a private directory outside the web root. Check the script's `--help` and plan before applying:
 

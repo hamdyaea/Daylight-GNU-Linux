@@ -19,8 +19,8 @@ curl --disable --fail --silent --show-error --proto '=https' --max-time 30 https
 test -s /tmp/daylight-apt.css
 curl --disable --fail --silent --show-error --head --proto '=https' --max-time 30 https://daylightlinux.ch/apt -o /tmp/daylight-apt-redirect.headers
 tr -d '\r' < /tmp/daylight-apt-redirect.headers | grep -qi '^location: https://daylightlinux.ch/apt/$'
-curl --disable --fail --silent --show-error --proto '=https' --max-time 60 https://daylightlinux.ch/install.sh -o /tmp/daylight-install.sh
-cmp /tmp/daylight-install.sh /src/scripts/install-daylight.sh
+curl --disable --fail --silent --show-error --proto '=https' --max-time 60 https://daylightlinux.ch/daylight-install.sh -o /tmp/daylight-install.sh
+cmp /tmp/daylight-install.sh /src/scripts/daylight-install.sh
 sh /tmp/daylight-install.sh --plan
 [ ! -e /etc/apt/sources.list.d/daylight.sources ]
 sh /tmp/daylight-install.sh --core --yes

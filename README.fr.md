@@ -26,7 +26,7 @@ Télécharger et inspecter le script, puis afficher son plan :
 
 ```sh
 curl --fail --show-error --silent --proto '=https' \
-  https://daylightlinux.ch/install.sh -o daylight-install.sh
+  https://daylightlinux.ch/daylight-install.sh -o daylight-install.sh
 less daylight-install.sh
 sh daylight-install.sh --plan
 ```

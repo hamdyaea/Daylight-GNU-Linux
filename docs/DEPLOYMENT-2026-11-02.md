@@ -31,7 +31,7 @@ The website remains static. No new web analytics, tracking SDK, persistent appli
 - Each architecture index includes seven RC2 package types and retains the seven RC1 package types. Existing published package files were not overwritten.
 - The archive's full signing-key fingerprint is **B0575F821A31DD20753DE07C50D21240F4BCB02E**.
 - The signature was verified after publication. The restricted daily metadata-renewal timer is active; metadata expiry and APT authentication remain enabled.
-- The public bootstrap is **https://daylightlinux.ch/install.sh**. Its default is a core-only plan; explicit application is required. It does not enable telemetry or start a display manager.
+- The public bootstrap is **https://daylightlinux.ch/daylight-install.sh**. Its default is a core-only plan; explicit application is required. It does not enable telemetry or start a display manager.
 
 A new end-to-end verification against the **actual public HTTPS installer and archive** succeeded on disposable **Debian 12 Bookworm and Debian 13 Trixie** clients: GitHub Actions run **41431802078**. It exercised real installation, repeated repository configuration, update/removal simulation and actual removal without autoremove. Base OS identity remained unchanged.
 

@@ -27,7 +27,7 @@ class Links(HTMLParser):
 
 class ReleaseTools(unittest.TestCase):
     def script(self,*args):
-        return subprocess.run(['sh',str(ROOT/'scripts/install-daylight.sh'),*args],capture_output=True,text=True,timeout=10)
+        return subprocess.run(['sh',str(ROOT/'scripts/daylight-install.sh'),*args],capture_output=True,text=True,timeout=10)
     def test_installer_help(self):
         result=self.script('--help');self.assertEqual(result.returncode,0);self.assertIn('plan',result.stdout)
     def test_installer_rejects_unknown(self):
@@ -41,7 +41,7 @@ class ReleaseTools(unittest.TestCase):
         else:
             self.assertEqual(result.returncode,2);self.assertIn('No Debian base',result.stderr)
     def test_signed_by_is_scoped(self):
-        source=(ROOT/'scripts/install-daylight.sh').read_text()
+        source=(ROOT/'scripts/daylight-install.sh').read_text()
         self.assertIn('Signed-By:',source)
         self.assertIn('Pin-Priority: -1',source)
         self.assertNotIn('--allow-unauthenticated',source)
@@ -80,7 +80,7 @@ class ReleaseTools(unittest.TestCase):
                     for ref in parser.refs:
                         if ref.startswith('/') and not ref.startswith(('/apt/','/old/site/')):
                             self.assertTrue((root/unquote(urlsplit(ref).path).lstrip('/')).exists(),ref)
-            self.assertTrue((root/'install.sh').is_file())
+            self.assertTrue((root/'daylight-install.sh').is_file())
             self.assertIn('https://www.amazon.fr/stores/author/B0BM89T88X',(root/'books.html').read_text())
             self.assertIn('info@daylightlinux.ch',(root/'fr/books.html').read_text())
             self.assertIn('url=/books.html',(root/'linux-book.html').read_text())

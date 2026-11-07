@@ -18,7 +18,7 @@ Metadata expires after 30 days and is renewed by a restricted daily service. `/a
 
 ```sh
 curl --fail --show-error --silent --proto '=https' \
-  https://daylightlinux.ch/install.sh -o daylight-install.sh
+  https://daylightlinux.ch/daylight-install.sh -o daylight-install.sh
 less daylight-install.sh
 sh daylight-install.sh --plan
 ```
