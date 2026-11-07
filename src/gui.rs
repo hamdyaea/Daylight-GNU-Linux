@@ -178,7 +178,7 @@ pub fn application(name: &str) -> Result<()> {
             "Daylight Connect - local information",
             &system::local_network(),
         )?,
-        "dice" | "coin" | "memory" | "slots" | "basketball" | "rpsls" => {
+        "dice" | "coin" | "memory" | "slots" | "basketball" | "rpsls" | "cards" | "tournament" => {
             let script = Path::new("/usr/share/daylight/games")
                 .join(name)
                 .join("game.py");
@@ -198,37 +198,6 @@ pub fn application(name: &str) -> Result<()> {
                 apps::draw_unique(12, 2)?
             ),
         )?,
-        "cards" => {
-            let mut cards = apps::draw_unique(52, 2)?;
-            // draw_unique sorts its result; randomly assign the two cards to players.
-            if entropy::uniform(2)? == 1 {
-                cards.swap(0, 1);
-            }
-            let a = (cards[0] - 1) % 13 + 2;
-            let b = (cards[1] - 1) % 13 + 2;
-            show(
-                "Daylight Battle Cards",
-                &format!(
-                    "Your rank: {a}\nComputer rank: {b}\n{}",
-                    if a > b {
-                        "You win"
-                    } else if a < b {
-                        "Computer wins"
-                    } else {
-                        "Draw"
-                    }
-                ),
-            )?;
-        }
-        "tournament" => {
-            if let Some(input) = ask(
-                "2, 4, 8, 16, 32 or 64 teams separated by commas. Fictional simulation.",
-                "Team A,Team B,Team C,Team D",
-            )? {
-                let teams: Vec<String> = input.split(',').map(|s| s.trim().to_string()).collect();
-                show("Daylight Tournament", &apps::tournament(&teams)?)?;
-            }
-        }
         "guess" => {
             let target = 1 + entropy::uniform(100)?;
             let mut hint = "Guess a number from 1 to 100".to_string();
