@@ -14,6 +14,15 @@
   [exec] (Local network information) {/usr/bin/daylight app connect}
   [exec] (Alarm) {/usr/bin/daylight app alarm}
  [end]
+ [submenu] (Games)
+  [exec] (Dice Simulator) {/usr/bin/daylight app dice}
+  [exec] (Coin Flip) {/usr/bin/daylight app coin}
+  [exec] (Memory Game) {/usr/bin/daylight app memory}
+  [exec] (Rock Paper Scissors Lizard Spock) {/usr/bin/daylight app rpsls}
+  [exec] (Slot Simulator) {/usr/bin/daylight app slots}
+  [exec] (Basketball Simulator) {/usr/bin/daylight app basketball}
+  [include] (/usr/share/daylight/fluxbox/optional-games)
+ [end]
  [submenu] (System applications)
   [include] (/etc/X11/fluxbox/fluxbox-menu)
  [end]

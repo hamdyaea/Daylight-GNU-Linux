@@ -17,3 +17,14 @@ Mod4 1 :Workspace 1
 Mod4 2 :Workspace 2
 Mod4 3 :Workspace 3
 Mod4 4 :Workspace 4
+
+# Standard Fluxbox window movement and resizing.
+OnTitlebar Mouse1 :MacroCmd {Raise} {Focus} {ActivateTab}
+OnTitlebar Move1 :StartMoving
+OnTitlebar Mouse3 :WindowMenu
+OnTitlebar Double Mouse1 :Shade
+OnWindow Mod1 Mouse1 :MacroCmd {Raise} {Focus} {StartMoving}
+OnWindowBorder Move1 :StartMoving
+OnWindow Mod1 Mouse3 :MacroCmd {Raise} {Focus} {StartResizing NearestCorner}
+OnLeftGrip Move1 :StartResizing bottomleft
+OnRightGrip Move1 :StartResizing bottomright

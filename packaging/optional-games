@@ -1,0 +1,4 @@
+ [exec] (Lottery Simulator) {/usr/bin/daylight app lottery}
+ [exec] (Battle Cards) {/usr/bin/daylight app cards}
+ [exec] (Tournament Simulator) {/usr/bin/daylight app tournament}
+ [exec] (Guess the Number) {/usr/bin/daylight app guess}
