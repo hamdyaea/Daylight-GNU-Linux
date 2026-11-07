@@ -12,10 +12,11 @@ mode=core
 games=no
 apply=no
 usage() {
-    printf '%s\n' 'Daylight GNU/Linux installer (Debian 12/13 and compatible ARM64 systems)' 'Usage: sh install-daylight.sh [--core|--desktop|--repo-only|--remove-repo] [--games] [--yes|--plan]' 'Default: show the core-only installation plan; no changes.' 'Desktop mode selects Daylight for the invoking desktop user and offers a reboot.' 'Telemetry is never installed or enabled by this script.'
+    printf '%s\n' 'Daylight GNU/Linux installer (Debian 12/13 and compatible ARM64 systems)' 'Usage: sh install-daylight.sh [--all|--desktop|--core|--repo-only|--remove-repo] [--games] [--yes|--plan]' '--all: install the full desktop, applications and all games (no telemetry).' 'Default: show the core-only installation plan; no changes.' 'Desktop mode selects Daylight for the invoking desktop user and offers a reboot.' 'Telemetry is never installed or enabled by this script.'
 }
 for argument in "$@"; do
     case "$argument" in
+        --all) mode=desktop; games=yes ;;
         --core) mode=core ;;
         --desktop) mode=desktop ;;
         --remove-repo) mode=remove_repo ;;
