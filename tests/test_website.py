@@ -52,7 +52,9 @@ def validate(site):
             assert 'info@daylightlinux.ch' in text, path
             assert '<details class="site-menu">' in text, path
             menu=re.search(r'<nav class="menu-panel".*?</nav>',text,re.S).group(0)
-            for entry,*_ in PAGES:assert 'href="/'+prefix+entry+'"' in menu,(path,entry)
+            for entry,*_ in PAGES:
+                clean = ('/'+prefix+entry).replace('index.html','').removesuffix('.html')
+                assert 'href="'+clean+'"' in menu or 'href="/'+prefix+entry+'"' in menu,(path,entry)
             canonical=[a['href'] for t,a in parsed.tags if t=='link' and a.get('rel')=='canonical']
             assert len(canonical)==1 and canonical[0] not in canonicals,path
             canonicals.add(canonical[0])
@@ -75,7 +77,7 @@ def validate(site):
         download=(site/(prefix+'download.html')).read_text()
         assert 'Raspberry Pi OS' in download and 'id="pc-live"' not in download
         home=(site/(prefix+'index.html')).read_text().split('<main',1)[1]
-        assert re.search(r'class="button" href="/'+prefix+r'raspberry-pi.html"',home)
+        assert re.search(r'class="button" href="/'+prefix+r'raspberry-pi(?:.html)?"',home)
         feed=ET.parse(site/(prefix+'feed.xml')).getroot()
         assert feed.tag=='rss' and len(feed.findall('./channel/item'))>=2
     links=0
@@ -86,6 +88,8 @@ def validate(site):
             if url.path.startswith(('/apt/','/old/site/')):continue
             target=(site/unquote(url.path).lstrip('/')) if url.path.startswith('/') else site/name
             if url.path and not url.path.startswith('/'):target=(site/name).parent/unquote(url.path)
+            if target.is_dir():target=target/'index.html'
+            elif not target.exists() and target.suffix=='':target=target.with_suffix('.html')
             assert target.exists(),(name,ref,'missing local resource')
             if url.fragment:
                 relative=str(target.relative_to(site));other=pages.get(relative)
@@ -93,7 +97,8 @@ def validate(site):
             links+=1
     sitemap=ET.parse(site/'sitemap.xml').getroot()
     listed={node.text for node in sitemap.iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc')}
-    assert listed==canonicals,'Sitemap and canonical page inventory diverge'
+    indexable={url for url in canonicals if '/old/' not in url}
+    assert listed==indexable,'Sitemap and indexable canonical page inventory diverge'
     manifest=json.loads((site/'site-manifest.json').read_text())
     for name,digest in manifest['files'].items():
         assert hashlib.sha256((site/name).read_bytes()).hexdigest()==digest,('Bad manifest',name)

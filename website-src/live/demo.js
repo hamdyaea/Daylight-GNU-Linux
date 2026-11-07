@@ -27,7 +27,7 @@ function labels(){
  $('mobile-command').setAttribute('aria-label',text('Commande à envoyer au terminal Linux','Command to send to the Linux terminal'));
  $('mobile-send').textContent=text('Envoyer ↵','Send ↵');
  $('mobile-input-help').textContent=text('Touchez le champ pour ouvrir le clavier de votre téléphone. « Envoyer » transmet la ligne au véritable terminal. Pour Vim et les raccourcis graphiques, un ordinateur est conseillé.','Tap the field to open your phone keyboard. Send passes the line to the real terminal. A computer is recommended for Vim and graphical keyboard shortcuts.');
- if(state==='idle')status(text('Aucun système lancé. Environ 42 Mo seront téléchargés au premier démarrage.','Nothing is running. The first start downloads about 42 MB.'));
+ if(state==='idle')status(text('Aucun système lancé. Environ 46,4 Mo seront téléchargés au premier démarrage.','Nothing is running. The first start downloads about 46.4 MB.'));
 }
 function status(value){
  $('status').textContent=value;
