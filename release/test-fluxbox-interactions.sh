@@ -3,9 +3,10 @@ set -eu
 [ -e /.dockerenv ] || { echo "Disposable test container required" >&2; exit 2; }
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
-apt-get install -y --no-install-recommends fluxbox xvfb xdotool xterm conky-std >/tmp/deps.log 2>&1
+apt-get install -y --no-install-recommends fluxbox xvfb xdotool xterm conky-std x11-utils >/tmp/deps.log 2>&1
 mkdir -p /tmp/fb
 sed 's|@@CONFIG@@|/tmp/fb|g' /usr/share/daylight/fluxbox/init > /tmp/fb/init
+rm -f /tmp/.X91-lock /tmp/.X11-unix/X91
 Xvfb :91 -screen 0 1024x768x24 >/tmp/xvfb.log 2>&1 &
 export DISPLAY=:91
 sleep 1
@@ -16,13 +17,15 @@ sleep 2
 wid=$(xdotool search --name '^DaylightDragTest$' | head -1)
 eval "$(xdotool getwindowgeometry --shell "$wid")"
 before=$X
-xdotool mousemove $((X+100)) $((Y-10)) mousedown 1 mousemove --sync $((X+250)) $((Y+100)) mouseup 1
+Y=$(xwininfo -id "$wid" | awk '/Absolute upper-left Y:/ {print $4}')
+xdotool mousemove $((X+100)) $((Y-12)) sleep 0.3 mousedown 1 sleep 0.3 mousemove_relative --sync 10 10 sleep 0.3 mousemove --sync $((X+250)) $((Y+100)) sleep 0.3 mouseup 1
 sleep 1
 eval "$(xdotool getwindowgeometry --shell "$wid")"
 test "$X" -gt "$before"
 echo TITLEBAR_DRAG_PASSED
+Y=$(xwininfo -id "$wid" | awk '/Absolute upper-left Y:/ {print $4}')
 before=$WIDTH
-xdotool mousemove $((X+WIDTH-10)) $((Y+HEIGHT-10)) keydown alt mousedown 3 mousemove_relative --sync 50 30 mouseup 3 keyup alt
+xdotool mousemove $((X+WIDTH-10)) $((Y+HEIGHT-10)) keydown alt mousedown 3 sleep 0.3 mousemove_relative --sync 50 30 sleep 0.3 mouseup 3 keyup alt
 sleep 1
 eval "$(xdotool getwindowgeometry --shell "$wid")"
 test "$WIDTH" -gt "$before"
