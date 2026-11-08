@@ -105,6 +105,16 @@ COPY = {
 
 
 def build(out, evidence=None):
+    # Cloudflare Pages publishes the reviewed, complete static snapshot.
+    # Regenerating from source here would require ignored local JPG assets,
+    # overwrite the bilingual trailer pages, and omit the signed APT mirror.
+    # The source builder remains available on the main development branch.
+    snapshot = ROOT / 'website-src'
+    if snapshot.is_dir():
+        if out.resolve() == snapshot.resolve():
+            raise ValueError('Output directory must not be the source snapshot')
+        shutil.copytree(snapshot, out, dirs_exist_ok=True)
+        return
     release = json.loads((ROOT / 'release/current.json').read_text())
     version = release['version']
     release_url = GITHUB + '/releases/tag/' + release['tag']
