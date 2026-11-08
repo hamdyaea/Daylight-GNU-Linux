@@ -188,9 +188,11 @@ https://raw.githubusercontent.com/hamdyaea/Daylight-GNU-Linux/publish/cloudflare
 https://daylight-gnu-linux.pages.dev/apt/	priority=3
 EOF
 changed=yes
-# Reject empty or malformed mirror files before changing the active APT source.
+# Validate the complete mirror list before modifying the active APT source.
 [ -s "$temporary/mirrors" ] || { echo 'Daylight mirror list is empty.' >&2; exit 1; }
-[ "$(grep -Ec '^https://[^[:space:]]+[[:space:]]+priority=[1-3]
+[ "$(grep -Ec '^https://[^[:space:]]+[[:space:]]+priority=[1-3]$' "$temporary/mirrors")" -eq 3 ] || { echo 'Daylight mirror list is incomplete.' >&2; exit 1; }
+install -m 644 "$temporary/mirrors" "$mirrors"
+[ -s "$mirrors" ] || { echo 'Daylight mirror installation failed.' >&2; exit 1; }
 install -m 644 "$temporary/key.gpg" "$key"
 install -m 644 "$temporary/daylight.sources" "$source"
 install -m 644 "$temporary/preferences" "$pin"
