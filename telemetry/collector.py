@@ -38,7 +38,10 @@ def handler(database: Path):
             self.send_header("Cache-Control", "no-store")
             self.end_headers()
         def do_GET(self):
-            self.reply(405)
+            if self.path == "/healthz":
+                self.reply(204)
+            else:
+                self.reply(404)
         def do_POST(self):
             self.connection.settimeout(3)
             if self.path != "/v1/boot":

@@ -4,10 +4,15 @@
 name: Daylight candidate validation
 on:
   push:
-    branches: [master, build/daylight-v5, build/daylight-v5-rc2]
+    branches: [master, telemetry-production, feature/daylight-modern-desktop, build/daylight-v5, build/daylight-v5-rc2]
     paths-ignore: ['docs/**', '*.md', 'release/**', '.github/workflows/daylight-release.yml', '.github/workflows/daylight-prepare-rc2.yml', '.github/workflows/daylight-source-sync.yml', 'website/**', 'tests/test_website*', '.github/ISSUE_TEMPLATE/**', '.github/workflows/daylight-website.yml', 'web-live/**', '.github/workflows/daylight-public-preview.yml']
   pull_request:
   workflow_dispatch:
+    inputs:
+      build_iso:
+        description: Build and boot-test the complete live ISO (long running)
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -25,7 +30,7 @@ jobs:
       - name: Build prerequisites in the disposable runner
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends dpkg-dev imagemagick librsvg2-bin fonts-dejavu-core python3 python3-pil python3-venv curl gnupg qemu-system-x86 xorriso ovmf novnc websockify
+          sudo apt-get install -y --no-install-recommends dpkg-dev imagemagick librsvg2-bin fonts-dejavu-core python3 python3-tk python3-pil python3-venv xvfb xauth curl gnupg qemu-system-x86 xorriso ovmf novnc websockify
           rustup toolchain install 1.88.0 --profile minimal --component rustfmt --component clippy
       - name: Source checks and Rust unit tests
         shell: bash
@@ -35,7 +40,10 @@ jobs:
           cargo +1.88.0 fmt --check
           cargo +1.88.0 clippy --locked --all-targets -- -D warnings
           cargo +1.88.0 test --locked 2>&1 | tee dist/validation/rust-tests.log
-          python3 -m py_compile scripts/*.py tests/*.py telemetry/*.py server/*.py demo/*.py website/*.py
+          /usr/bin/python3 -m compileall -q desktop scripts tests telemetry server demo website
+          for test in test_game_models.py test_sky.py test_diagnostics.py test_launcher.py test_session_refresh.py; do
+            PYTHONPATH=desktop /usr/bin/python3 -m unittest discover -s tests -p "$test" -v
+          done
           for file in scripts/*.sh server/*.sh demo/*.sh; do sh -n "$file"; done
       - name: Build and test the exact AMD64 and ARM64 candidate packages
         shell: bash
@@ -48,6 +56,7 @@ jobs:
           python3 tests/test_repository.py 2>&1 | tee dist/validation/repository-tests.log
           python3 tests/test_release_tools.py 2>&1 | tee dist/validation/release-tools-tests.log
           git rev-parse HEAD > dist/validation/source-commit.txt
+          python3 tests/test_upgrade.py --prepare-fixture dist/previous-rc3
       - name: Debian 12 and 13 installation and removal
         shell: bash
         run: |
@@ -58,9 +67,10 @@ jobs:
               -e DAYLIGHT_DISPOSABLE_TEST=yes -v "$PWD:/src:ro" \
               -v "$PWD/dist/package-tests/$suite:/out" "debian:$suite" \
               /bin/sh /src/scripts/test-packages.sh 2>&1 | tee "dist/package-tests/$suite/lifecycle.log"
+            python3 tests/test_upgrade.py --run-container "$suite" --previous-packages dist/previous-rc3 2>&1 | tee "dist/package-tests/$suite/upgrade.log"
           done
       - name: Build the live ISO only in the disposable runner
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'workflow_dispatch' && inputs.build_iso
         shell: bash
         run: |
           set -euo pipefail
@@ -70,23 +80,27 @@ jobs:
             /bin/sh scripts/build-live.sh' 2>&1 | tee dist/validation/live-build.log
           sudo chown -R "$(id -u):$(id -g)" dist
       - name: Offline live-filesystem boot and screenshot
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'workflow_dispatch' && inputs.build_iso
         shell: bash
         run: |
           set -euo pipefail
-          python3 scripts/test-live.py dist/daylight-live_5.0.0-rc.2_amd64.iso --timeout 600
+          iso=$(find dist -maxdepth 1 -name 'daylight-live_*_amd64.iso' -print -quit)
+          test -n "$iso"
+          python3 scripts/test-live.py "$iso" --timeout 600
           convert dist/live-test/desktop.ppm dist/live-test/desktop.png
       - name: Real BIOS and UEFI ISO bootloader tests
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'workflow_dispatch' && inputs.build_iso
         shell: bash
         run: |
           set -euo pipefail
+          iso=$(find dist -maxdepth 1 -name 'daylight-live_*_amd64.iso' -print -quit)
+          test -n "$iso"
           for firmware in bios uefi; do
-            python3 scripts/test-boot.py dist/daylight-live_5.0.0-rc.2_amd64.iso --firmware "$firmware" --timeout 600
+            python3 scripts/test-boot.py "$iso" --firmware "$firmware" --timeout 600
             convert "dist/boot-$firmware/desktop.ppm" "dist/boot-$firmware/desktop.png"
           done
       - name: Real browser connection to the candidate live guest
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'workflow_dispatch' && inputs.build_iso
         shell: bash
         run: |
           set -euo pipefail
@@ -94,8 +108,10 @@ jobs:
           dist/browser-venv/bin/pip install playwright==1.55.0
           dist/browser-venv/bin/python tests/test_browser_demo.py
       - name: Final candidate integrity manifest
-        if: github.event_name != 'pull_request'
-        run: cd dist && sha256sum ./*.deb ./*.iso > SHA256SUMS
+        shell: bash
+        run: |
+          cd dist
+          find . -maxdepth 1 -type f \( -name '*.deb' -o -name '*.iso' \) -print0 | sort -z | xargs -0 -r sha256sum > SHA256SUMS
       - name: Make disposable-container evidence readable
         if: always()
         run: sudo chown -R "$(id -u):$(id -g)" dist && chmod -R u+rwX dist

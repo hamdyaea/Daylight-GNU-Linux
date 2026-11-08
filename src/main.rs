@@ -19,7 +19,7 @@ fn help() {
   daylight status [--json]              Read-only local status
   daylight doctor                       Read-only checks; no repair/restarts
   daylight monitor [--watch] [--json] [--interval SECONDS] [--count N]
-  daylight control-center               Native desktop applications (YAD)
+  daylight control-center               Native desktop applications (Tk)
   daylight app NAME                     Open an individual graphical application
   daylight password [LENGTH] [COUNT]     Kernel CSPRNG; no storage/network
   daylight temperature VALUE C|F|K       Convert a temperature
@@ -40,7 +40,8 @@ fn help() {
 
 Desktop applications: info, welcome, password, temperature, days, connect,
 dice, coin, lottery, rpsls, cards, tournament, basketball, memory, slots,
-guess, speech, alarm. Changes to APT and telemetry require explicit sudo.
+guess, speech, alarm, shardturn, sky, monitor, doctor, settings, welcome,
+launcher, privacy, telemetry. Changes to APT and telemetry require explicit sudo.
 Licence: GPL-3.0-only. Contact: info@daylightlinux.ch (activation pending).
 "#,
         version = daylight::VERSION

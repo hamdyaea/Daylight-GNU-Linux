@@ -1,0 +1,35 @@
+# Developer: Hamdy Abou El Anein
+# SPDX-License-Identifier: GPL-3.0-only
+[Unit]
+Description=Daylight aggregate boot-event collector
+After=network.target
+[Service]
+Type=simple
+DynamicUser=yes
+StateDirectory=daylight-counter
+StateDirectoryMode=0750
+ExecStart=/usr/bin/python3 /usr/local/lib/daylight-telemetry/collector.py --database /var/lib/daylight-counter/counts.sqlite3 --port 8787
+Restart=on-failure
+RestartSec=5s
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectHostname=yes
+ProtectKernelLogs=yes
+RestrictAddressFamilies=AF_UNIX AF_INET
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+MemoryMax=64M
+CPUQuota=10%
+TasksMax=16
+TimeoutStartSec=10s
+TimeoutStopSec=5s
+[Install]
+WantedBy=multi-user.target

@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 [package]
 name = "daylight"
-version = "5.0.0-rc.2"
+version = "5.0.0-rc.4"
 edition = "2021"
 rust-version = "1.70"
 license = "GPL-3.0-only"

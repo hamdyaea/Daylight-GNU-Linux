@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Shardturn — icon</title>
+  <desc id="desc">Four Coral, Amber, Jade and Iris facets turn around an open center on a night background.</desc>
+  <rect width="512" height="512" fill="#292c49"/>
+  <!-- Same normalized geometry and rotations as Painter.emblem. -->
+  <g transform="translate(256 256) scale(176)">
+    <polygon points="0,-1 .86,-.18 .12,-.09 -.34,-.5" fill="#ce6655"/>
+    <polygon points="0,-1 .86,-.18 .12,-.09 -.34,-.5" transform="rotate(90)" fill="#c79a36"/>
+    <polygon points="0,-1 .86,-.18 .12,-.09 -.34,-.5" transform="rotate(180)" fill="#358d7d"/>
+    <polygon points="0,-1 .86,-.18 .12,-.09 -.34,-.5" transform="rotate(270)" fill="#7c6fbb"/>
+  </g>
+</svg>

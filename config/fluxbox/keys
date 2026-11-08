@@ -17,3 +17,6 @@ Mod4 1 :Workspace 1
 Mod4 2 :Workspace 2
 Mod4 3 :Workspace 3
 Mod4 4 :Workspace 4
+
+Mod4 space :Exec /usr/bin/daylight app launcher
+Mod4 s :Exec /usr/bin/daylight app settings

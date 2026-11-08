@@ -94,7 +94,8 @@ pub fn doctor() -> Result<()> {
         ("Daylight resources", "/usr/share/daylight"),
         ("Fluxbox", "/usr/bin/fluxbox"),
         ("Conky", "/usr/bin/conky"),
-        ("Native dialogs", "/usr/bin/yad"),
+        ("Native desktop", "/usr/share/daylight/ui/daylight_gui.py"),
+        ("Python", "/usr/bin/python3"),
         ("Fastfetch (optional)", "/usr/bin/fastfetch"),
         ("Terminology (optional)", "/usr/bin/terminology"),
     ] {
@@ -222,6 +223,8 @@ pub fn telemetry(action: &str) -> Result<()> {
                     "5",
                     "--max-redirs",
                     "0",
+                    "--write-out",
+                    "%{http_code}",
                     "--user-agent",
                     "Daylight-Boot-Counter",
                     "--header",
@@ -234,14 +237,15 @@ pub fn telemetry(action: &str) -> Result<()> {
                     &endpoint,
                 ])
                 .stdin(Stdio::piped())
-                .stdout(Stdio::null())
+                .stdout(Stdio::piped())
                 .spawn()?;
             if let Some(mut stdin) = child.stdin.take() {
                 stdin.write_all(body.as_bytes())?;
             }
-            if !child.wait()?.success() {
+            let output = child.wait_with_output()?;
+            if !output.status.success() || output.stdout != b"204" {
                 return Err(
-                    "Boot event was not delivered; no persistent queue or retry was created".into(),
+                    "Boot event was not confirmed with HTTP 204; no persistent queue or retry was created".into(),
                 );
             }
         }

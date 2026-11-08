@@ -12,12 +12,13 @@ mode=core
 games=no
 apply=no
 usage() {
-    printf '%s\n' 'Daylight GNU/Linux installer (Debian 12/13 and compatible ARM64 systems)' 'Usage: sh install-daylight.sh [--core|--desktop|--repo-only] [--games] [--yes|--plan]' 'Default: show the core-only installation plan; no changes.' 'Desktop selection never changes or starts your display manager.' 'Telemetry is never installed or enabled by this script.'
+    printf '%s\n' 'Daylight GNU/Linux installer (Debian 12/13 and compatible ARM64 systems)' 'Usage: sh install-daylight.sh [--core|--desktop|--all|--repo-only] [--games] [--yes|--plan]' 'Default: show the core-only installation plan; no changes.' 'Desktop selection never changes or starts your display manager.' '--all installs the optional telemetry package, but leaves it disabled until explicit opt-in.'
 }
 for argument in "$@"; do
     case "$argument" in
         --core) mode=core ;;
         --desktop) mode=desktop ;;
+        --all) mode=all ;;
         --repo-only) mode=repo ;;
         --games) games=yes ;;
         --yes) apply=yes ;;
@@ -26,15 +27,16 @@ for argument in "$@"; do
         *) printf 'Unknown option: %s\n' "$argument" >&2; exit 2 ;;
     esac
 done
-if [ "$games" = yes ] && [ "$mode" != desktop ]; then echo '--games requires --desktop' >&2; exit 2; fi
+if [ "$games" = yes ] && [ "$mode" != desktop ] && [ "$mode" != all ]; then echo '--games requires --desktop or --all' >&2; exit 2; fi
 command -v dpkg >/dev/null 2>&1 || { echo 'This installer is only for Debian-based systems, not Arch/Manjaro.' >&2; exit 2; }
 [ -r /etc/debian_version ] || { echo 'No Debian base detected; no changes made.' >&2; exit 2; }
 arch=$(dpkg --print-architecture)
 case "$arch" in amd64|arm64) ;; *) echo 'Supported architectures: amd64 and arm64 only.' >&2; exit 2 ;; esac
 packages='daylight-core daylight-themes'
 if [ "$mode" = desktop ]; then packages='daylight-linux'; fi
+if [ "$mode" = all ]; then packages='daylight-linux daylight-games daylight-telemetry'; fi
 if [ "$mode" = repo ]; then packages=''; fi
-if [ "$games" = yes ]; then packages="$packages daylight-games"; fi
+if [ "$games" = yes ] && [ "$mode" = desktop ]; then packages="$packages daylight-games"; fi
 printf 'Repository: %s\nSigning fingerprint: %s\nArchitecture: %s\nPackages: %s\n' "$BASE" "$FINGERPRINT" "$arch" "${packages:-repository configuration only}"
 if [ "$apply" != yes ]; then echo 'Plan only. Add --yes to apply. No file, service or package was changed.'; exit 0; fi
 [ "$(id -u)" -eq 0 ] || { echo 'Run the inspected script with sudo and --yes to apply.' >&2; exit 2; }
@@ -124,4 +126,4 @@ if [ -n "$packages" ]; then
 fi
 success=yes
 printf 'Daylight installation completed. Configuration backup: %s\n' "$backup"
-printf '%s\n' 'No reboot, display-manager change, telemetry activation or autoremove was performed.' 'For a desktop installation, select Daylight GNU/Linux at your next graphical login.'
+printf '%s\n' 'No reboot, display-manager change, telemetry activation or autoremove was performed. The --all telemetry package remains disabled until explicit opt-in.' 'For a desktop installation, select Daylight GNU/Linux at your next graphical login.'

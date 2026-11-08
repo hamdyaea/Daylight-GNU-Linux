@@ -19,7 +19,14 @@ printf '# existing shell config\n' > /home/daylight-test/.bashrc
 printf '# existing wallpaper setting\n' > /home/daylight-test/.fehbg
 chown daylight-test:daylight-test /home/daylight-test/.conkyrc /home/daylight-test/.bashrc /home/daylight-test/.fehbg
 sha256sum /home/daylight-test/.conkyrc /home/daylight-test/.bashrc /home/daylight-test/.fehbg > /tmp/daylight-user-before
-apt-get install -y --no-install-recommends "$root/dist/daylight-core_5.0.0~rc2_${arch}.deb" "$root/dist/daylight-themes_5.0.0~rc2_all.deb" "$root/dist/daylight-desktop_5.0.0~rc2_all.deb" "$root/dist/daylight-apps_5.0.0~rc2_all.deb" "$root/dist/daylight-games_5.0.0~rc2_all.deb" "$root/dist/daylight-telemetry_5.0.0~rc2_all.deb" "$root/dist/daylight-linux_5.0.0~rc2_all.deb"
+apt-get install -y --no-install-recommends "$root/dist/daylight-core_5.0.0~rc4_${arch}.deb" "$root/dist/daylight-themes_5.0.0~rc4_all.deb" "$root/dist/daylight-desktop_5.0.0~rc4_all.deb" "$root/dist/daylight-apps_5.0.0~rc4_all.deb" "$root/dist/daylight-games_5.0.0~rc4_all.deb" "$root/dist/daylight-telemetry_5.0.0~rc4_all.deb" "$root/dist/daylight-linux_5.0.0~rc4_all.deb"
+test -f /usr/share/daylight/ui/daylight_gui.py
+test -f /usr/share/daylight/shardturn/Shardturn.py
+test -f /usr/share/daylight/shardturn/LICENSE
+test -f /usr/share/daylight/shardturn/SOURCE.json
+test -f /usr/share/daylight/games.enabled
+/usr/bin/python3 -c 'import tkinter; import sys; sys.path.insert(0, "/usr/share/daylight/ui"); import daylight_ui'
+! grep -q '^enabled=yes' /etc/daylight/telemetry.conf
 for entry in /usr/share/applications/daylight*.desktop /usr/share/xsessions/daylight*.desktop; do desktop-file-validate "$entry"; done
 if apt-cache show fastfetch >/dev/null 2>&1; then
   apt-get install -y --no-install-recommends fastfetch
@@ -60,16 +67,22 @@ wait "$terminal" || :
 runuser -u daylight-test -- env HOME=/home/daylight-test DISPLAY=:99 GTK_THEME=Adwaita:dark /usr/bin/daylight control-center > /tmp/daylight-center.log 2>&1 &
 center=$!
 sleep 2
-pgrep -u daylight-test -x yad
+pgrep -u daylight-test -f "/usr/share/daylight/ui/daylight_gui.py"
 if [ -d /out ]; then
   DISPLAY=:99 xwd -root -silent -out /out/daylight-desktop.xwd
   cp /tmp/daylight-session.log /tmp/daylight-center.log /tmp/daylight-windows.log /out/
   cp /home/daylight-test/.config/daylight/fluxbox/init /out/daylight-fluxbox-init
   convert /out/daylight-desktop.xwd /out/daylight-desktop.png
 fi
-pkill -u daylight-test -x yad || :
+pkill -u daylight-test -f "/usr/share/daylight/ui/daylight_gui.py" || :
 wait "$center" || :
-runuser -u daylight-test -- env HOME=/home/daylight-test DISPLAY=:99 GTK_THEME=Adwaita:dark DAYLIGHT_DISPOSABLE_TEST=yes python3 "$root/tests/test_gui.py"
+runuser -u daylight-test -- env HOME=/home/daylight-test DISPLAY=:99 DAYLIGHT_DISPOSABLE_TEST=yes DAYLIGHT_UI_ROOT=/usr/share/daylight/ui /usr/bin/python3 "$root/tests/test_gui.py"
+# Optional games disappear when their package is removed; the desktop remains.
+apt-get remove -y --no-auto-remove daylight-games
+test ! -e /usr/share/daylight/games.enabled
+test ! -e /usr/share/daylight/shardturn/Shardturn.py
+test -f /usr/share/daylight/ui/daylight_gui.py
+apt-get install -y --no-install-recommends "$root/dist/daylight-games_5.0.0~rc4_all.deb"
 kill "$session" 2>/dev/null || :
 # Check a second user with pre-existing classic Fluxbox files.
 adduser --disabled-password --gecos '' daylight-existing
@@ -87,7 +100,7 @@ pgrep -u daylight-existing -x fluxbox
 DISPLAY=:100 xprop -root _NET_DESKTOP_NAMES | grep '"Work"'
 kill "$existing" 2>/dev/null || :
 # Reinstall the same version to check non-destructive idempotency.
-dpkg -i "$root/dist/daylight-core_5.0.0~rc2_${arch}.deb"
+dpkg -i "$root/dist/daylight-core_5.0.0~rc4_${arch}.deb"
 /usr/bin/daylight remove --dry-run
 apt-get remove -y --no-auto-remove daylight-linux daylight-desktop daylight-apps daylight-games daylight-telemetry daylight-themes daylight-core
 sha256sum -c /tmp/daylight-os-before

@@ -40,7 +40,13 @@ Full optional desktop:
 sudo sh daylight-install.sh --desktop --yes
 ```
 
-Add `--games` only with `--desktop`. Use `--repo-only --yes` to configure the repository without installing Daylight packages. Telemetry is never installed or activated by this bootstrap. It does not perform a global package upgrade or reboot.
+Everything, including games and the optional telemetry package (still disabled):
+
+```sh
+sudo sh daylight-install.sh --all --yes
+```
+
+Use `--desktop --games` for the desktop and games. `--all` installs the desktop, applications, games and optional telemetry package. The telemetry configuration starts with `enabled=no`; installation does not enable its timer or send events. Explicitly opt in later with `sudo daylight telemetry on`. Use `--repo-only --yes` to configure the repository without installing Daylight packages. The installer does not perform a global package upgrade or reboot.
 
 The bootstrap saves any existing managed repository configuration under `/var/backups/daylight-apt.*` and restores those files if installation fails. This is a configuration rollback, not a rollback of every dependency operation. Unmanaged files and symlink configuration targets are not overwritten. Keep an appropriate system backup, especially on a productive server.
 
