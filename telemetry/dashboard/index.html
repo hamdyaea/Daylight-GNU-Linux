@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="description" content="Statistiques agrégées et privées de Daylight GNU/Linux.">
+<title>Télémétrie — Daylight GNU/Linux</title>
+<link rel="stylesheet" href="/style.css">
+<script src="/app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/" aria-label="Daylight GNU/Linux"><span class="sun" aria-hidden="true">☼</span><span>DAYLIGHT <small>GNU/LINUX</small></span></a>
+  <span class="private"><i aria-hidden="true"></i> Accès privé</span>
+</header>
+<main>
+  <section class="hero">
+    <p class="eyebrow">TABLEAU DE BORD · TÉLÉMÉTRIE OPT-IN</p>
+    <h1>Daylight, en chiffres.</h1>
+    <p class="lead">Événements de démarrage reçus par le collecteur. Les compteurs ne représentent pas des appareils ou des personnes uniques.</p>
+  </section>
+  <section class="summary" aria-label="Résumé">
+    <article class="metric"><span>Total reçu</span><strong id="total">—</strong><small>événements agrégés</small></article>
+    <article class="metric"><span>Sur 30 jours</span><strong id="recent">—</strong><small>événements agrégés</small></article>
+    <article class="metric"><span>Versions</span><strong id="versions">—</strong><small>versions observées</small></article>
+  </section>
+  <section class="panel chart-panel">
+    <div class="panel-head">
+      <div><p class="eyebrow">ÉVOLUTION</p><h2>Événements par jour</h2></div>
+      <label for="range">Période
+        <select id="range">
+          <option value="30">30 derniers jours</option>
+          <option value="7">7 derniers jours</option>
+          <option value="90">90 derniers jours</option>
+          <option value="all">Tout l’historique</option>
+        </select>
+      </label>
+    </div>
+    <p id="chart-empty" class="empty" hidden>Aucune donnée pour cette période.</p>
+    <div class="chart-wrap"><svg id="chart" viewBox="0 0 800 280" role="img" aria-label="Graphique des événements de démarrage reçus par jour"></svg></div>
+    <div class="chart-foot"><span><i class="legend"></i> Événements reçus</span><span id="updated">Mise à jour —</span></div>
+  </section>
+  <section class="panel">
+    <div class="panel-head table-head">
+      <div><p class="eyebrow">DÉTAILS</p><h2>Compteurs reçus</h2></div>
+      <span id="row-count" class="badge">— lignes</span>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th scope="col">Jour UTC</th><th scope="col">Version</th><th scope="col">Mode</th><th scope="col" class="numeric">Événements</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="4">Chargement des statistiques…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+  <aside class="privacy">
+    <span class="privacy-mark" aria-hidden="true">✓</span>
+    <div><strong>Données agrégées, sans identifiant.</strong>
+      <p>Le collecteur conserve uniquement le jour, la version, le mode (installé ou live) et le nombre d’événements. Aucun nom d’hôte, compte, numéro de série ou identifiant d’installation. La télémétrie reste facultative et désactivée jusqu’à activation explicite.</p>
+    </div>
+  </aside>
+  <p id="error" class="error" role="status" hidden>Les statistiques ne sont pas disponibles pour le moment.</p>
+</main>
+<footer><span>Daylight GNU/Linux</span><span>Mis à jour automatiquement · accès protégé par Cloudflare</span></footer>
+</body>
+</html>

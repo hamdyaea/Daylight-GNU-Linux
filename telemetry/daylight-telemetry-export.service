@@ -1,0 +1,24 @@
+[Unit]
+Description=Export Daylight telemetry aggregates for dashboard and offsite backup
+After=daylight-telemetry-collector.service
+Wants=daylight-telemetry-collector.service
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+UMask=0077
+ExecStart=/usr/bin/python3 /usr/local/lib/daylight-telemetry/export_snapshot.py
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+PrivateDevices=yes
+RestrictAddressFamilies=AF_UNIX
+ReadOnlyPaths=/var/lib/daylight-counter /usr/local/lib/daylight-telemetry/export_snapshot.py
+ReadWritePaths=/var/backups/daylight-telemetry

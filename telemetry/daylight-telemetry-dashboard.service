@@ -1,0 +1,30 @@
+[Unit]
+Description=Private Daylight telemetry dashboard
+Requires=daylight-telemetry-export.service
+After=daylight-telemetry-export.service
+
+[Service]
+Type=simple
+User=daylight-dashboard
+Group=daylight-dashboard
+ExecStart=/usr/bin/python3 /usr/local/lib/daylight-telemetry/dashboard.py --data /var/backups/daylight-telemetry/counts.json --static-dir /usr/local/share/daylight-telemetry-dashboard --host 127.0.0.1 --port 8788
+Restart=on-failure
+RestartSec=3s
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+ReadOnlyPaths=/var/backups/daylight-telemetry /usr/local/share/daylight-telemetry-dashboard /usr/local/lib/daylight-telemetry/dashboard.py
+
+[Install]
+WantedBy=multi-user.target

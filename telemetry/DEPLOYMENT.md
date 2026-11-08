@@ -26,3 +26,9 @@ aggregate row was removed after the test. The client accepts only HTTP 204, so
 Access redirects are reported as undelivered. Cloudflare processes source IP
 metadata, so this service does not promise network anonymity. Never report boot
 events as unique users.
+
+## Private dashboard and backup
+
+`dashboard/` contains a local-only dashboard and an atomic JSON exporter. Install it on the Pi with `sudo sh telemetry/install-dashboard.sh`. The dashboard binds only to `127.0.0.1:8788`; expose it only through the existing Cloudflare Tunnel after creating a Self-hosted Access application for `telemetry.daylightlinux.ch`, with an Allow policy for the administrator's email and One-time PIN. Do not create a Bypass policy for this host.
+
+The exporter refreshes `/var/backups/daylight-telemetry/counts.json` every five minutes. A dedicated unprivileged dashboard account can read this aggregate snapshot; it cannot access the collector database. The directory is already within the Pi's Restic `--files-from` path `/var/backups`, and the backup validator must require the snapshot path. The encrypted Restic repository is stored on OneDrive, separate from the Pi. The dashboard is a current view; restoring the snapshot from OneDrive recovers the aggregate history if the Pi is lost.

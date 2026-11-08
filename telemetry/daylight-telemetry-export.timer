@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh the Daylight telemetry export every five minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+AccuracySec=30s
+Unit=daylight-telemetry-export.service
+
+[Install]
+WantedBy=timers.target
