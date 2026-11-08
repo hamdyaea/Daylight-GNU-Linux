@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import shutil
 import signal
+import socket
 import subprocess
 import sys
 import time
@@ -118,64 +119,92 @@ def wallpaper_path(values=None):
     return WALLPAPER_ROOT / choice
 
 
-def apply_wallpaper(values=None):
-    path = wallpaper_path(values)
-    if path.is_file() and shutil.which("feh"):
-        subprocess.run(["feh", "--no-fehbg", "--bg-max", str(path)], stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, timeout=5, check=False)
+def display_alive():
+    if state.session_kind() == "wayland":
+        display = Path(os.environ.get("WAYLAND_DISPLAY", ""))
+        if not display.is_absolute():
+            display = Path(os.environ.get("XDG_RUNTIME_DIR", "")) / display
+        try:
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as connection:
+                connection.settimeout(.5)
+                connection.connect(str(display))
+            return True
+        except OSError:
+            return False
+    return state.x11_display_alive()
 
 
 def appearance_session():
-    """Own the Daylight wallpaper and Conky for this graphical session only."""
+    """Own this Daylight display's background and Conky, including RC3 handoff."""
+    if not state.daylight_session():
+        return
+    descriptor = state.acquire_session_lock()
+    if descriptor is None:
+        return
     running = True
     monitor_process = None
+    wallpaper_process = None
+    wayland = state.session_kind() == "wayland"
     def stop(*_):
         nonlocal running
         running = False
-    def stop_monitor():
-        nonlocal monitor_process
-        if monitor_process is not None:
-            if monitor_process.poll() is None:
-                monitor_process.terminate()
-                try:
-                    monitor_process.wait(timeout=3)
-                except subprocess.TimeoutExpired:
-                    monitor_process.kill()
-                    monitor_process.wait(timeout=3)
-            monitor_process = None
+    def stop_owned(process):
+        if process is not None and process.poll() is None:
+            process.terminate()
+            try:
+                process.wait(timeout=3)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait(timeout=3)
     signal.signal(signal.SIGTERM, stop)
     signal.signal(signal.SIGINT, stop)
     last_path, last_monitor, last_keyboard, last_health = None, None, None, 0.0
     try:
+        if not display_alive():
+            return
+        allowed = state.handoff_legacy()
         while running:
-            if time.monotonic() - last_health > 30 and shutil.which("xprop"):
-                check = subprocess.run(["xprop", "-root", "_NET_SUPPORTING_WM_CHECK"],
-                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=3)
-                if check.returncode:
+            if time.monotonic() - last_health > 30:
+                if not display_alive():
                     break
                 last_health = time.monotonic()
             values, core = state.load_ui(), state.read_core()
             keyboard = (values["keyboard_layout"], values["keyboard_variant"])
             if keyboard != last_keyboard:
-                state.apply_keyboard(values)
+                # setxkbmap controls only X11. Never pretend it configures a
+                # Wayland compositor or touch the session-defaults package.
+                if not wayland:
+                    state.apply_keyboard(values)
                 last_keyboard = keyboard
             path = wallpaper_path(values)
-            if path != last_path:
+            if path != last_path and allowed["wallpaper"]:
                 try:
-                    apply_wallpaper(values)
+                    if path.is_file():
+                        if wayland and shutil.which("swaybg"):
+                            stop_owned(wallpaper_process)
+                            wallpaper_process = subprocess.Popen(
+                                ["swaybg", "-m", "fill", "-i", str(path)],
+                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                        elif not wayland and shutil.which("feh"):
+                            subprocess.run(["feh", "--no-fehbg", "--bg-max", str(path)],
+                                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                                           timeout=5, check=False)
                 except (OSError, subprocess.TimeoutExpired):
                     pass
                 last_path = path
             monitor = (core["monitor"], core["profile"])
-            if monitor != last_monitor:
-                stop_monitor()
+            if monitor != last_monitor and allowed["conky"]:
+                stop_owned(monitor_process)
+                monitor_process = None
                 if core["monitor"] == "on" and shutil.which("conky"):
                     try:
-                        result = daylight_call("setup-session")
-                        if result.returncode == 0:
-                            monitor_process = subprocess.Popen(
-                                ["conky", "-c", str(state.directory() / "conky.conf")],
-                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                        # Both renderers consume the generated user profile.
+                        # Wayland's installed wrapper is only the entry point.
+                        ready = daylight_call("setup-session").returncode == 0
+                        if wayland:
+                            ready = ready and Path("/usr/share/daylight/labwc/conky.lua").is_file()
+                        if ready:
+                            monitor_process = state.start_conky(wayland=wayland)
                     except (OSError, subprocess.TimeoutExpired):
                         pass
                 last_monitor = monitor
@@ -184,7 +213,9 @@ def appearance_session():
                     break
                 time.sleep(.5)
     finally:
-        stop_monitor()
+        stop_owned(monitor_process)
+        stop_owned(wallpaper_process)
+        os.close(descriptor)
 
 
 class Desktop(tk.Tk):
@@ -411,12 +442,14 @@ class Desktop(tk.Tk):
         keyboard=ttk.Frame(self.content)
         keyboard.pack(anchor="w")
         for index,(name,layout,variant) in enumerate([("Swiss French","ch","fr"),("Swiss German","ch",""),("French","fr",""),("US English","us","")]):
-            ttk.Button(keyboard,text=name,command=lambda a=layout,b=variant:self.keyboard(a,b)).grid(row=index//2,column=index%2,sticky="ew",padx=(0,6),pady=6)
-        ttk.Label(self.content,text="Remembered for Daylight sessions. Your base system's keyboard settings remain available for other desktops.",wraplength=490,style="Muted.TLabel").pack(anchor="w",pady=(0,18))
+            ttk.Button(keyboard,text=name,command=lambda a=layout,b=variant:self.keyboard(a,b),state="disabled" if state.session_kind()=="wayland" else "normal").grid(row=index//2,column=index%2,sticky="ew",padx=(0,6),pady=6)
+        keyboard_help=("Wayland keeps the keyboard layout from your base desktop. Change it in that desktop’s input settings." if state.session_kind()=="wayland" else "Remembered for Daylight X11 sessions. Your base system’s keyboard settings remain available for other desktops.")
+        ttk.Label(self.content,text=keyboard_help,wraplength=490,style="Muted.TLabel").pack(anchor="w",pady=(0,18))
         card=theme.panel(self.content)
         card.pack(fill="x",pady=10)
         ttk.Label(card,text="A few useful shortcuts",style="Card.TLabel",font=("DejaVu Sans",14,"bold")).pack(anchor="w")
-        for line in ["Super + Enter    Terminal", "Super + Space    Search applications", "Super + P    Daylight library", "Super + E    Files", "Alt + Tab    Switch windows", "Right-click the desktop    Open the Fluxbox menu"]:
+        shortcuts=(["Super + Space    Desktop menu", "Ctrl + F    Search inside Daylight", "Ctrl + Home    Daylight home", "Alt + Tab    Switch windows"] if state.session_kind()=="wayland" else ["Super + Enter    Terminal", "Super + Space    Search applications", "Ctrl + F    Search inside Daylight", "Super + P    Daylight library", "Super + E    Files", "Alt + Tab    Switch windows", "Right-click the desktop    Open the Fluxbox menu"])
+        for line in shortcuts:
             ttk.Label(card,text=line,style="Card.TLabel",wraplength=440).pack(anchor="w",pady=4)
         never=tk.BooleanVar(value=True)
         ttk.Checkbutton(self.content,text=self.word("never"),variable=never).pack(anchor="w",pady=18)
@@ -494,7 +527,7 @@ class Desktop(tk.Tk):
                 state.save_core({**{key:var.get() for key,var in variables.items()},"wallpaper":chosen.get()})
                 if custom.get() and not Path(custom.get()).is_file(): raise ValueError("The selected picture is no longer available")
                 self.save({"appearance":appearance.get(),"wallpaper_mode":wallpaper_mode.get(),"text_scale":float(scale.get()),"language":language.get(),"custom_wallpaper":custom.get()})
-                apply_wallpaper(self.values)
+                state.ensure_session_manager()
                 # The session appearance manager owns and refreshes its Conky process.
                 theme.apply(self,effective_appearance(self.values),self.values["text_scale"])
                 self.sidebar.configure(bg=theme.PALETTE["night"])

@@ -22,6 +22,8 @@ def main():
         if args.session_appearance:
             appearance_session()
             return 0
+        from daylight_ui.state import ensure_session_manager
+        ensure_session_manager(__file__)
         return run(args.application,args.first_run)
     except ImportError as error:
         print(f"Daylight desktop could not start: {error}. Install python3-tk.",file=sys.stderr)
