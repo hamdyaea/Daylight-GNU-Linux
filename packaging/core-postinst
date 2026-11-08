@@ -1,0 +1,43 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# Contact: info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+set -eu
+[ "$1" = configure ] || exit 0
+source=/etc/apt/sources.list.d/daylight.sources
+key=/etc/apt/keyrings/daylight-archive-keyring.gpg
+mirrors=/etc/apt/mirrors/daylight.list
+pin=/etc/apt/preferences.d/daylight
+[ -f "$source" ] && [ ! -L "$source" ] && [ -s "$key" ] || exit 0
+grep -Fxq '# Managed by Daylight GNU/Linux installer' "$source" || exit 0
+grep -Eq '^URIs: https://daylightlinux[.]ch/apt/?$' "$source" || exit 0
+grep -Fxq "Signed-By: $key" "$source" || exit 0
+[ ! -e "$mirrors" ] && [ ! -L "$mirrors" ] || exit 0
+[ ! -L "$pin" ] || exit 0
+if [ -f "$pin" ]; then
+    grep -Fxq '# Managed by Daylight GNU/Linux installer' "$pin" || exit 0
+fi
+backup=/var/backups/daylight-apt
+mkdir -p "$backup" /etc/apt/mirrors
+stamp=$(date -u +%Y%m%dT%H%M%SZ)
+cp -p "$source" "$backup/daylight.sources.$stamp"
+[ ! -f "$pin" ] || cp -p "$pin" "$backup/daylight.preferences.$stamp"
+tmp=$(mktemp -d /etc/apt/mirrors/.daylight-migrate.XXXXXX)
+trap 'rm -rf "$tmp"' EXIT HUP INT TERM
+cat > "$tmp/mirrors" <<'EOF'
+# Managed by Daylight GNU/Linux installer
+https://daylightlinux.ch/apt/	priority=1
+https://raw.githubusercontent.com/hamdyaea/Daylight-GNU-Linux/publish/cloudflare-pages-20261103/website-src/apt/	priority=2
+https://daylight-gnu-linux.pages.dev/apt/	priority=3
+EOF
+sed 's|^URIs: https://daylightlinux[.]ch/apt/*$|URIs: mirror+file:/etc/apt/mirrors/daylight.list|' "$source" > "$tmp/source"
+if [ -f "$pin" ]; then
+    sed 's|^Pin: origin daylightlinux[.]ch$|Pin: release o=Daylight GNU/Linux|' "$pin" > "$tmp/pin"
+fi
+chmod 644 "$tmp/mirrors" "$tmp/source"
+[ ! -f "$pin" ] || chmod 644 "$tmp/pin"
+mv "$tmp/mirrors" "$mirrors"
+mv "$tmp/source" "$source"
+[ ! -f "$pin" ] || mv "$tmp/pin" "$pin"
+echo 'Daylight APT mirror failover enabled (existing signing key retained).'
+exit 0
