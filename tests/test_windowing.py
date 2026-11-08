@@ -117,7 +117,13 @@ class WindowingDialogs(unittest.TestCase):
         self.assertIs(root.grab_current(), app.help_window)
         self.assertTrue(app.help_window.winfo_viewable())
         self.assertFalse(any(isinstance(child, tk.Toplevel) for child in root.winfo_children()))
-        root.event_generate("<Escape>")
+        text = next(widget for widget in app.help_window.winfo_children() if isinstance(widget, tk.Text))
+        # A real WM may still focus this test's other Tk interpreter. Deliver
+        # Escape from the focused help text, as a user would press the key.
+        text.focus_force()
+        root.update()
+        self.assertIs(root.focus_get(), text)
+        text.event_generate("<Escape>", when="tail")
         root.update()
         self.assertIsNone(app.help_window)
         self.assertIsNone(root.grab_current())
