@@ -32,6 +32,12 @@ import unittest
 UI = Path("/usr/share/daylight/ui")
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(UI))
+TEST_CASES = {
+    "test_battle_reveals_tie_continues_and_collects_with_native_pointer": "cards",
+    "test_memory_canvas_card_flips_with_native_pointer": "memory",
+    "test_shardturn_new_match_opens_and_dismisses_modal_with_native_pointer": "shardturn",
+    "test_timer_start_and_cancel_with_native_pointer": "alarm",
+}
 
 
 def stop(process):
@@ -154,7 +160,7 @@ class NativeWaylandInput(unittest.TestCase):
         cls.addClassCleanup(cls.pointer.close)
         # Exercise the installed appearance owner and the exact packaged Conky
         # wrapper, rather than constructing a special test-only Conky window.
-        runtime = Path(os.environ["XDG_RUNTIME_DIR"])
+        runtime = Path(os.environ.get("DAYLIGHT_WAYLAND_CASE_DIR", os.environ["XDG_RUNTIME_DIR"]))
         cls.native_conky_log = runtime / "conky-native.log"
         # Capture protocol diagnostics from Conky only. The shell exec retains
         # its PID and the installed owner's normal child cleanup; the logger
@@ -172,7 +178,7 @@ class NativeWaylandInput(unittest.TestCase):
         shim.chmod(0o700)
         state.save_core({"monitor": "on", "profile": "balanced"})
         subprocess.run(["/usr/bin/daylight", "setup-session"], check=True)
-        cls.manager_log = open(Path(os.environ["XDG_RUNTIME_DIR"]) / "appearance.log", "w")
+        cls.manager_log = (runtime / "appearance.log").open("w")
         cls.manager = subprocess.Popen(
             [sys.executable, str(UI / "daylight_gui.py"), "--session-appearance"],
             env=dict(os.environ, PATH=str(shim_directory) + os.pathsep + os.environ.get("PATH", "")),
@@ -231,11 +237,21 @@ class NativeWaylandInput(unittest.TestCase):
                           "historical_background": cls.background_info}), flush=True)
 
     def setUp(self):
-        from daylight_ui.shell import Desktop
         self.errors = []
         self.press_events = []
-        self.root = Desktop("cards")
-        self.root.geometry("1060x650+10+10")
+        page = TEST_CASES[self._testMethodName]
+        if page == "shardturn":
+            spec = importlib.util.spec_from_file_location("daylight_packaged_shardturn_launcher",
+                                                         UI / "shardturn_launcher.py")
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[spec.name] = module
+            spec.loader.exec_module(module)
+            self.root, self.shardturn = module.create_app(seed=42)
+            self.root.geometry("1200x680+10+0")
+        else:
+            from daylight_ui.shell import Desktop
+            self.root = Desktop(page)
+            self.root.geometry("1060x650+10+10")
         self.watch_root()
         self.addCleanup(self.close_root)
         self.pump(.5)
@@ -308,7 +324,8 @@ class NativeWaylandInput(unittest.TestCase):
                             zip(self.press_events[-1]["screen"], target[:2])), self.press_events[-1])
 
     def page(self, name):
-        self.root.show(name)
+        if self.root.current_page != name:
+            self.root.show(name)
         self.pump(.25)
         return self.root.content.winfo_children()[0]
 
@@ -366,20 +383,9 @@ class NativeWaylandInput(unittest.TestCase):
 
     def test_shardturn_new_match_opens_and_dismisses_modal_with_native_pointer(self):
         import tkinter as tk
-        # Use the shipped factory so this test exercises exactly the same
-        # window initialization as the installed Shardturn desktop launcher.
-        spec = importlib.util.spec_from_file_location("daylight_packaged_shardturn_launcher",
-                                                     UI / "shardturn_launcher.py")
-        module = importlib.util.module_from_spec(spec)
-        sys.modules[spec.name] = module
-        spec.loader.exec_module(module)
-        self.root.destroy()
-        self.root, app = module.create_app(seed=42)
-        self.root.geometry("1200x680+10+0")
-        self.watch_root()
-        self.pump(.5)
-        self.root.lift()
-        self.pump(.2)
+        # setUp used the shipped factory, with one Tk interpreter in this
+        # fresh process just as the installed Shardturn launcher does.
+        app = self.shardturn
         app.cancel_ai()
         original_game = app.game
         def click_region(action):
@@ -408,6 +414,45 @@ class NativeWaylandInput(unittest.TestCase):
         app.cancel_ai()
 
 
+def client_batch(result):
+    """Run each launcher check in a fresh Python process on this compositor."""
+    cases = Path(os.environ["XDG_RUNTIME_DIR"]) / "cases"
+    cases.mkdir(mode=0o700)
+    aggregate = {"success": True, "tests": 0, "failures": 0, "errors": 0, "skipped": 0, "cases": []}
+    for name, application in TEST_CASES.items():
+        directory = cases / application
+        directory.mkdir(mode=0o700)
+        outcome_path = directory / "result.json"
+        environment = dict(os.environ, DAYLIGHT_WAYLAND_CASE_DIR=str(directory),
+                           XDG_CONFIG_HOME=str(directory / "config"))
+        with (directory / "client.log").open("w") as log:
+            child = subprocess.Popen(
+                [sys.executable, str(Path(__file__).resolve()), "--client", "--test-name", name,
+                 "--result", str(outcome_path)], env=environment, stdout=log, stderr=subprocess.STDOUT)
+            try:
+                returncode = child.wait(timeout=60)
+            except subprocess.TimeoutExpired:
+                stop(child)
+                returncode = -1
+        if outcome_path.is_file():
+            outcome = json.loads(outcome_path.read_text())
+        else:
+            outcome = {"success": False, "tests": 0, "failures": 0, "errors": 1, "skipped": 0}
+        outcome.update(application=application, returncode=returncode)
+        if returncode or outcome["tests"] != 1 or outcome["skipped"]:
+            outcome["success"] = False
+        aggregate["cases"].append(outcome)
+        aggregate["success"] = aggregate["success"] and outcome["success"]
+        for key in ("tests", "failures", "errors", "skipped"):
+            aggregate[key] += outcome[key]
+        print(json.dumps({"fresh_process_case": application, "result": outcome}), flush=True)
+        print((directory / "client.log").read_text(errors="replace"), flush=True)
+    if aggregate["tests"] != len(TEST_CASES):
+        aggregate["success"] = False
+    result.write_text(json.dumps(aggregate, indent=2) + "\n")
+    return 0 if aggregate["success"] else 1
+
+
 def compositor_test(output):
     if os.geteuid() == 0:
         raise SystemExit("Run the Wayland compositor as the disposable normal user")
@@ -420,7 +465,7 @@ def compositor_test(output):
         config = runtime / "labwc"
         config.mkdir()
         result = runtime / "result.json"
-        command = [sys.executable, str(Path(__file__).resolve()), "--client", "--result", str(result)]
+        command = [sys.executable, str(Path(__file__).resolve()), "--client-batch", "--result", str(result)]
         autostart = config / "autostart"
         autostart.write_text("#!/bin/sh\nexec " + shlex.join(command) + "\n")
         autostart.chmod(0o700)
@@ -438,7 +483,7 @@ def compositor_test(output):
                                           stdout=log, stderr=subprocess.STDOUT,
                                           start_new_session=True)
             try:
-                deadline = time.monotonic() + 100
+                deadline = time.monotonic() + 260
                 while not result.is_file() and compositor.poll() is None and time.monotonic() < deadline:
                     time.sleep(.1)
                 if not result.is_file():
@@ -452,17 +497,20 @@ def compositor_test(output):
                 if compositor.poll() is None:
                     os.killpg(compositor.pid, signal.SIGTERM)
                 stop(compositor)
-                for name in ("appearance.log", "background.log", "background-ready.json",
-                             "conky-native.log", "native-conky-surface.json"):
-                    source = runtime / name
-                    if source.is_file():
-                        (output / ("wayland-" + name)).write_bytes(source.read_bytes())
+                for directory in (runtime / "cases").glob("*"):
+                    for name in ("client.log", "result.json", "appearance.log", "background.log",
+                                 "background-ready.json", "conky-native.log", "native-conky-surface.json"):
+                        source = directory / name
+                        if source.is_file():
+                            (output / ("wayland-" + directory.name + "-" + name)).write_bytes(source.read_bytes())
     print("DAYLIGHT_NATIVE_WAYLAND_INPUT_OK", flush=True)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--client", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--client-batch", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--test-name", choices=tuple(TEST_CASES), help=argparse.SUPPRESS)
     parser.add_argument("--result", type=Path, help=argparse.SUPPRESS)
     parser.add_argument("--background-ui", type=Path, help=argparse.SUPPRESS)
     parser.add_argument("--background-ready", type=Path, help=argparse.SUPPRESS)
@@ -475,15 +523,19 @@ def main():
     if args.background_ui:
         background_client(args.background_ui, args.background_ready)
         return 0
+    if args.client_batch:
+        return client_batch(args.result)
     if args.client:
-        outcome = {"success": False}
+        if not args.test_name:
+            parser.error("--client requires exactly one --test-name")
+        outcome = {"success": False, "tests": 0, "failures": 0, "errors": 1, "skipped": 0}
         try:
-            suite = unittest.defaultTestLoader.loadTestsFromTestCase(NativeWaylandInput)
+            suite = unittest.TestSuite([NativeWaylandInput(args.test_name)])
             results = unittest.TextTestRunner(verbosity=2).run(suite)
             outcome.update(success=results.wasSuccessful(), tests=results.testsRun,
                            failures=len(results.failures), errors=len(results.errors),
                            skipped=len(results.skipped))
-            if results.skipped or results.testsRun != 4:
+            if results.skipped or results.testsRun != 1:
                 outcome["success"] = False
         except BaseException:
             traceback.print_exc()
