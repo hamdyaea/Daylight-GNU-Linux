@@ -127,6 +127,13 @@ class NativeWaylandInput(unittest.TestCase):
     def setUpClass(cls):
         from daylight_ui import state
         from wayland_pointer import NativePointer
+        # A normal desktop has a pointer before Conky connects. Establish that
+        # seat capability first: Conky 1.22.1 aborts if a previously empty headless
+        # seat gains its first pointer later. NativePointer's constructor waits
+        # for a compositor roundtrip after creating the device. Register this
+        # cleanup first so Conky stops before the pointer disappears again.
+        cls.pointer = NativePointer()
+        cls.addClassCleanup(cls.pointer.close)
         # Exercise the installed appearance owner and the exact packaged Conky
         # wrapper, rather than constructing a special test-only Conky window.
         runtime = Path(os.environ["XDG_RUNTIME_DIR"])
@@ -196,8 +203,6 @@ class NativeWaylandInput(unittest.TestCase):
         if not ready.is_file():
             raise AssertionError("The authentic RC4 background Tk client did not map; see background.log")
         cls.background_info = json.loads(ready.read_text())
-        cls.pointer = NativePointer()
-        cls.addClassCleanup(cls.pointer.close)
         cls.executor = ThreadPoolExecutor(max_workers=1)
         cls.addClassCleanup(cls.executor.shutdown, True)
         print("Native Wayland pointer active; Conky remains running:",

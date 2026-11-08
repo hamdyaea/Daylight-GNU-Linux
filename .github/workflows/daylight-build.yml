@@ -62,7 +62,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for suite in bookworm trixie; do
+          run_suite() {
+            local suite="$1"
             mkdir -p "dist/package-tests/$suite"
             docker run --rm --cpus=2 --memory=1536m --memory-swap=1536m --pids-limit=512 \
               -e DAYLIGHT_DISPOSABLE_TEST=yes -v "$PWD:/src:ro" \
@@ -72,7 +73,20 @@ jobs:
             for conky_case in stock custom; do
               python3 tests/test_upgrade.py --previous-profile rc4 --conky-case "$conky_case" --run-container "$suite" --previous-packages dist/previous-rc4 2>&1 | tee "dist/package-tests/$suite/upgrade-rc4-$conky_case.log"
             done
+          }
+          # Both suites use independent containers and evidence directories.
+          # Keep each suite's install/update sequence ordered, but validate
+          # the two supported Debian releases concurrently.
+          pids=()
+          for suite in trixie bookworm; do
+            run_suite "$suite" &
+            pids+=("$!")
           done
+          failed=0
+          for pid in "${pids[@]}"; do
+            wait "$pid" || failed=1
+          done
+          exit "$failed"
       - name: Build the live ISO only in the disposable runner
         if: github.event_name == 'workflow_dispatch' && inputs.build_iso
         shell: bash
