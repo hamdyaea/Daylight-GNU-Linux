@@ -10,25 +10,25 @@ Components: main
 Acquire-By-Hash: yes
 NotAutomatic: yes
 ButAutomaticUpgrades: yes
-Date: Sun, 08 Nov 2026 11:51:55 +0000
-Valid-Until: Tue, 08 Dec 2026 11:51:55 +0000
+Date: Sun, 08 Nov 2026 15:17:19 +0000
+Valid-Until: Tue, 08 Dec 2026 15:17:19 +0000
 Description: Daylight GNU/Linux candidate packages
 SHA256:
- 60c3945ae35b3c0fffaa0d6706f90510eedaa50f1b52cc86724a031c042813e7 51516 main/binary-amd64/Packages
- a10ba3dd9dbc6db5bd19eedbc619a3e29d1e943ee70d0ffe7525cc6c62322223 8768 main/binary-amd64/Packages.gz
- ccb11953ddbc551a28c5808a0202eef811e3b8c02ac917b7c3a13f0c8f1b057e 51509 main/binary-arm64/Packages
- f056429768a130bbac2009286e1b2a280bfbe963179c55af10e3bd4703c0331e 8759 main/binary-arm64/Packages.gz
+ 25206de8eb7870634a5b701bd4ff8f4b4d8023c6ee220c509cb5d778d94d9041 56602 main/binary-amd64/Packages
+ c816b89b51fbace1a70aa5f8b272b1fa7b7860df923813a00d382a24c39e7526 9546 main/binary-amd64/Packages.gz
+ 08bef2e0247411bff7ce67cb92399ed7ac5aeade4d724443f67fed44197e54ce 56595 main/binary-arm64/Packages
+ c6c4306fdfac8da40694256bd024ce9f0c668ed77724d7c0b30a356dbbcb6546 9541 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQGzBAEBCAAdFiEEsFdfghox3SB1PeB8UNISQPS8sC4FAmrwYlsACgkQUNISQPS8
-sC5bzQwAnE/nMcYH8GdE73HURonQHElwOyQ5bQ05YZsVbRrUV8+/DIPGeEeJ8QLp
-GG4vyyIk4ExnooYCH6XnCgv3U2cC9TIBrs8QcCHbGP2cSk929XYqQK6GWqRKVv+D
-pYmELyB0d8TN/VlGaKVFtgVAVOWu+D6ctrKCz+eonv9B9f+/0B2m0TNkM9GCb+BD
-itKAvQi1rNSWez9N012jVOJh3S7Mk339PqHobLWZgSIVwq33Ygjw8tJJBmlcAyAc
-wSGhrmOELscL0BrSB95dwLlR8bVXjB8Yo/hDsY5dfRWnTaWBTCB5C6nmyAaYhmcp
-ZmyPENTLGoBbD0UPlswpf1mim/DhUTQNhSeascSRaZcRyHeHZbFF8sJ3TzvG0EBz
-upVlIB7ALxVW5WCfbNiuxMYxhnquKHnkAJynhmDa5eoTCXh9mtq5kMyx5Dbwo6oL
-9DOr4HN2jXHHKMMeaKCh2oECqShl/rQDarswPwROiamJclqTdNESOFbNkulzQNby
-Raq4280W
-=awsC
+iQGzBAEBCAAdFiEEsFdfghox3SB1PeB8UNISQPS8sC4FAmrwkn8ACgkQUNISQPS8
+sC5m0gv+NW3MvRrNCfliIVwgWDn38f+mhaOcGF26JCLQ92FTVUeKENas4yleEnJh
+LpDkRo9PvPMfioEMv8B+5HI0XDXQoCT4OA1N5CIrwPlnbf+QT/cog2ydIAl/R96p
+uZwclOuaSYjhRKRX8HUAAluNfxA4W2796K+ykLUY2TYtBgBfVUgM/BwF/rGz+w3l
+qlNTjA9plWY6AH/qSiYQWtq1JRjMx6oiKN3iqIl2rUsEjUUOcxId/z4Zf40/ZK2R
+lr4BNGg1unIifiY4e40owuPsfHFfU1dX6eOz9p+Kjt7LJVTbXMisb0EMvc8SMzeb
+bDlNbdSG3USi9dYMXh84NvODo+T7Zydl2nqjM8FQedWKHXzLYjAM02QYl30EeMXV
+Rn2zYz5tAo4pCSmK1s0F3lRuLr6FDdIqYMe0AD6k1X/ePp3uIy6wizDya2yaaTrf
+9vF1MXUzHtaTusl9wZ2QuzM3bpbc7CUFpL9jFNGzNWdCNH/vOri6pkHBpavbz2Lb
+c2r1LESM
+=SS93
 -----END PGP SIGNATURE-----
