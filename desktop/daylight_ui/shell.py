@@ -672,12 +672,14 @@ class Desktop(tk.Tk):
         enabled=values.get("enabled")=="yes"
         ttk.Label(panel,text="Enabled" if enabled else "Disabled",style="Card.TLabel",font=("DejaVu Sans",24,"bold")).pack(anchor="w")
         ttk.Label(panel,text="Optional package installed" if path.is_file() else "Optional package not installed",style="Card.TLabel").pack(anchor="w",pady=8)
+        if not path.is_file():
+            ttk.Label(panel,text="To install: sudo apt install daylight-telemetry",style="Card.TLabel",wraplength=460).pack(anchor="w",pady=6)
         ttk.Label(self.content,text="The collector counts received boot events, not unique users. It does not receive your name, files, hostname, or a device identifier. The receiving web server can see your IP address.\n\nEnabling or disabling boot statistics is an administrator action. The command opens in a terminal so you can read it and enter your sudo password there.",wraplength=490,justify="left").pack(anchor="w",pady=20)
         command="sudo daylight telemetry off" if enabled else "sudo daylight telemetry on"
         ttk.Label(self.content,text=command,font=("DejaVu Sans Mono",12)).pack(anchor="w",pady=10)
         def change():
             if not path.is_file():
-                messagebox.showinfo("Statistics","Install the optional daylight-telemetry package first.",parent=self); return
+                messagebox.showinfo("Statistics","The optional telemetry package is not installed.\n\nInstall it with:\nsudo apt install daylight-telemetry\n\nInstallation does not enable telemetry automatically.",parent=self); return
             if not messagebox.askyesno("Boot statistics",f"Run this administrator command in a terminal?\n\n{command}",parent=self): return
             terminal=shutil.which("x-terminal-emulator") or shutil.which("xterm")
             if not terminal:
