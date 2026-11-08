@@ -7,11 +7,11 @@ Components: main
 Acquire-By-Hash: yes
 NotAutomatic: yes
 ButAutomaticUpgrades: yes
-Date: Sun, 08 Nov 2026 20:07:31 +0000
-Valid-Until: Tue, 08 Dec 2026 20:07:31 +0000
+Date: Sun, 08 Nov 2026 21:14:09 +0000
+Valid-Until: Tue, 08 Dec 2026 21:14:09 +0000
 Description: Daylight GNU/Linux candidate packages
 SHA256:
- b78c31b8b5a70dc2fa40f49aab1d61b74a035b7fcababd0986cb285e047a2196 71866 main/binary-amd64/Packages
- 93815407b20a58f22d3bbc50110d60d2e52e0d0ae292e296ac5d98169739a563 11778 main/binary-amd64/Packages.gz
- 4fa2d6aabe1438c5738b0525b44984d4a7644406163a53e28b0784ec4b97bb3a 71859 main/binary-arm64/Packages
- 4ff57695bc51fb317824ea74f6b04830f165ab65241b736ea8a3015a248bf764 11779 main/binary-arm64/Packages.gz
+ 9c44fd2aa8b55996059c67ad1c6b15411575a11c623f1fa972d3c5bd73371079 76954 main/binary-amd64/Packages
+ 702f064852daf4152d3abcb3a1f8eeff7d39ec4863c6b5c007b2a4e03649df02 12511 main/binary-amd64/Packages.gz
+ 3362e27b965dcce2decba30c05627a5c44a2cab81e50363fc7161e3520e56718 76947 main/binary-arm64/Packages
+ 97c827eafce79925352009567423c510b5fb81879217368b82d3a67d4deca368 12513 main/binary-arm64/Packages.gz
