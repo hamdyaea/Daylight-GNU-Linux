@@ -35,17 +35,49 @@ def _windowed_game_class(original):
                 self.help_window.lift()
                 return
             self.cancel_ai()
-            top = tk.Toplevel(self.root)
-            top.withdraw()
-            self.help_window = top
+            panel = tk.Frame(self.root, bg=resources.BG)
+            self.help_window = panel
+            escape_binding = None
+
+            def cleanup():
+                nonlocal escape_binding
+                if escape_binding is not None:
+                    self.root.unbind("<Escape>", escape_binding)
+                    escape_binding = None
+                if self.help_window is panel:
+                    self.help_window = None
+                try:
+                    panel.grab_release()
+                except tk.TclError:
+                    pass
+
+            def closed():
+                cleanup()
+                panel.destroy()
+                self.canvas.focus_set()
+                self.refresh()
+
+            def escaped(_event):
+                closed()
+                return "break"
+
+            def destroyed(event):
+                if event.widget is panel:
+                    cleanup()
+
+            panel.bind("<Destroy>", destroyed, add="+")
             try:
-                top.title("Rules and controls · Shardturn")
-                top.geometry("760x690")
-                top.configure(bg=resources.BG)
-                top.transient(self.root)
-                bar = tk.Scrollbar(top)
+                header = tk.Frame(panel, bg=resources.BG)
+                header.pack(fill="x", padx=24, pady=(16, 0))
+                tk.Label(header, text="Rules and controls · Shardturn",
+                         bg=resources.BG, fg=resources.INK,
+                         font=(resources.FONT_FAMILY, 14, "bold")).pack(side="left")
+                tk.Button(header, text="Close  ·  Esc", command=closed,
+                          bg=resources.BG, fg=resources.INK,
+                          font=(resources.FONT_FAMILY, 11), padx=12, pady=6).pack(side="right")
+                bar = tk.Scrollbar(panel)
                 bar.pack(side="right", fill="y")
-                text = tk.Text(top, bg=resources.BG, fg=resources.INK,
+                text = tk.Text(panel, bg=resources.BG, fg=resources.INK,
                                font=(resources.FONT_FAMILY, 11), wrap="word",
                                padx=24, pady=24, relief="flat",
                                yscrollcommand=bar.set, selectbackground="#446c70")
@@ -53,23 +85,17 @@ def _windowed_game_class(original):
                 bar.configure(command=text.yview)
                 text.insert("1.0", resources.RULES)
                 text.configure(state="disabled")
-
-                def closed():
-                    self.help_window = None
-                    top.destroy()
-                    self.refresh()
-
-                top.protocol("WM_DELETE_WINDOW", closed)
-                top.bind("<Escape>", lambda _event: closed())
-                # Settle all content and transient geometry before the first
-                # map; an Xwayland grab must use that final surface origin.
-                top.update_idletasks()
-                top.deiconify()
-                top.wait_visibility()
-                top.grab_set()
+                escape_binding = self.root.bind("<Escape>", escaped, add="+")
+                panel.place(x=0, y=0, relwidth=1, relheight=1)
+                panel.lift()
+                panel.update_idletasks()
+                if not panel.winfo_viewable():
+                    panel.wait_visibility()
+                panel.grab_set()
+                text.focus_set()
             except BaseException:
-                self.help_window = None
-                top.destroy()
+                cleanup()
+                panel.destroy()
                 self.refresh()
                 raise
     return DaylightShardturn

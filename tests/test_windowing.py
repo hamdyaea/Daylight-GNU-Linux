@@ -100,29 +100,34 @@ class WindowingDialogs(unittest.TestCase):
         root, app = shardturn_launcher.create_app(seed=42)
         self.addCleanup(app.close)
         root.update()
-        original = tk.Toplevel.grab_set
+        original = tk.Frame.grab_set
         attempts = []
 
         def visible_grab(dialog):
             attempts.append(dialog)
             self.assertTrue(dialog.winfo_viewable())
-            self.assertEqual(str(dialog.transient()), str(root))
+            self.assertIsInstance(dialog, tk.Frame)
             text = next(widget for widget in dialog.winfo_children() if isinstance(widget, tk.Text))
             self.assertIn("Shardturn", text.get("1.0", "end"))
             return original(dialog)
 
-        with patch.object(tk.Toplevel, "grab_set", visible_grab):
+        with patch.object(tk.Frame, "grab_set", visible_grab):
             app.show_help()
         self.assertEqual(len(attempts), 1)
         self.assertIs(root.grab_current(), app.help_window)
         self.assertTrue(app.help_window.winfo_viewable())
+        self.assertFalse(any(isinstance(child, tk.Toplevel) for child in root.winfo_children()))
+        root.event_generate("<Escape>")
+        root.update()
+        self.assertIsNone(app.help_window)
+        self.assertIsNone(root.grab_current())
 
     def test_shardturn_help_does_not_swallow_other_grab_errors(self):
         import shardturn_launcher
         root, app = shardturn_launcher.create_app(seed=42)
         self.addCleanup(app.close)
         root.update()
-        with patch.object(tk.Toplevel, "grab_set", side_effect=tk.TclError("another grab error")):
+        with patch.object(tk.Frame, "grab_set", side_effect=tk.TclError("another grab error")):
             with self.assertRaisesRegex(tk.TclError, "another grab error"):
                 app.show_help()
         self.assertIsNone(app.help_window)
