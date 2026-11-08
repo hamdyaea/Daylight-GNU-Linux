@@ -196,6 +196,9 @@ class NativePointer:
         self.move(x, y, width, height)
         self.pressed = True
         try:
+            # Keep the requested position and press in the same input frame.
+            # Xwayland may warp the seat after the earlier enter roundtrip.
+            self.connection.send(self.pointer, 1, _words(self._timestamp(), x, y, width, height))
             self._button(1)
             time.sleep(hold_ms / 1000)
         finally:
