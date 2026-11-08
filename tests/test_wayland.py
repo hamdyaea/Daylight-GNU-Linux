@@ -50,6 +50,24 @@ def descendants(widget):
         yield from descendants(child)
 
 
+def bounds(widget):
+    return [widget.winfo_rootx(), widget.winfo_rooty(), widget.winfo_width(), widget.winfo_height()]
+
+
+def visible_rectangle(widget):
+    """Intersect the widget with each ancestor, including a scroll viewport."""
+    left, top, width, height = bounds(widget)
+    right, bottom = left + width, top + height
+    parent = widget.master
+    while parent is not None:
+        x, y, width, height = bounds(parent)
+        left, top, right, bottom = max(left, x), max(top, y), min(right, x+width), min(bottom, y+height)
+        if parent == widget.winfo_toplevel():
+            break
+        parent = parent.master
+    return [left, top, right, bottom]
+
+
 def native_conky_surface(log):
     """Require a Conky layer surface with a real attached, committed buffer."""
     if not log.is_file():
@@ -263,7 +281,14 @@ class NativeWaylandInput(unittest.TestCase):
         y = widget.winfo_height() // 2 if y is None else y
         target = (widget.winfo_rootx() + x, widget.winfo_rooty() + y,
                   self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        clip = visible_rectangle(widget)
+        print(json.dumps({"native_click_target": list(target[:2]), "widget": str(widget),
+                          "widget_bounds": bounds(widget), "root_bounds": bounds(self.root),
+                          "visible_clip": clip, "canvas_bounds": bounds(self.root.canvas) if hasattr(self.root, "canvas") else None}), flush=True)
         self.assertTrue(0 <= target[0] < target[2] and 0 <= target[1] < target[3], target)
+        self.assertTrue(widget.winfo_viewable() and clip[0] <= target[0] < clip[2]
+                        and clip[1] <= target[1] < clip[3],
+                        "Native pointer target is clipped outside its visible ancestor viewport")
         bx, by, bw, bh = self.background_info["bounds"]
         self.assertTrue(bx <= target[0] < bx+bw and by <= target[1] < by+bh,
                         "The click must overlap the historical Tk client: " + str(target))
@@ -321,7 +346,16 @@ class NativeWaylandInput(unittest.TestCase):
         entry = next(widget for widget in descendants(page) if isinstance(widget, ttk.Entry))
         entry.delete(0, "end")
         entry.insert(0, "1")
-        self.click(self.button(page, "Start new timer"))
+        start = self.button(page, "Start new timer")
+        print(json.dumps({"timer_before_scroll": bounds(start),
+                          "visible_clip": visible_rectangle(start),
+                          "canvas_yview": list(self.root.canvas.yview())}), flush=True)
+        self.root.canvas.yview_moveto(1)
+        self.pump(.25)
+        print(json.dumps({"timer_after_scroll": bounds(start),
+                          "visible_clip": visible_rectangle(start),
+                          "canvas_yview": list(self.root.canvas.yview())}), flush=True)
+        self.click(start)
         self.assertTrue(any(isinstance(widget, ttk.Label) and
                             str(widget.cget("text")) == "Timer running."
                             for widget in descendants(page)), "Native pointer did not start the timer")
