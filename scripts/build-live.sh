@@ -6,6 +6,8 @@ set -eu
 if [ "$(id -u)" -ne 0 ]; then echo 'Run inside a disposable Debian live-build VM/container as root; never on a production server.' >&2; exit 2; fi
 command -v lb >/dev/null
 root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+package_version=$(sed -n 's/^VERSION = "\([^"]*\)".*/\1/p' "$root/scripts/build-debs.py")
+[ -n "$package_version" ] || { echo "Cannot determine Daylight package version" >&2; exit 1; }
 work=$(mktemp -d /var/tmp/daylight-live.XXXXXX)
 echo "Disposable live-build work directory: $work"
 cp -a "$root/live/auto" "$work/auto"
@@ -13,7 +15,7 @@ cp -a "$root/live/config" "$work/config"
 mkdir -p "$work/config/packages.chroot" "$root/dist"
 for package in core desktop themes apps games linux; do
   case "$package" in core) arch=amd64 ;; *) arch=all ;; esac
-  source="$root/dist/daylight-${package}_5.0.0~rc4-1_${arch}.deb"
+  source="$root/dist/daylight-${package}_${package_version}_${arch}.deb"
   test -s "$source"
   cp "$source" "$work/config/packages.chroot/"
 done
