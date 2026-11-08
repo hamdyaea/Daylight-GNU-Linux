@@ -42,6 +42,7 @@ state=/var/lib/daylight-apt-lifecycle
 hook=/etc/dpkg/dpkg.cfg.d/90-daylight-repository
 source=/etc/apt/sources.list.d/daylight.sources
 pin=/etc/apt/preferences.d/daylight
+mirrors=/etc/apt/mirrors/daylight.list
 key=/etc/apt/keyrings/daylight-archive-keyring.gpg
 
 # A missing package and a broken dpkg database must be distinguished.
@@ -74,8 +75,9 @@ remove_matching() {
     fi
     echo "Preserved modified file: $file" >&2
 }
-remove_matching "$source" afdb6c687f07ad78b86d264749369239e194f104a6e21f45d81186d19003ea3c 5532cb34ba7024a7060e837f3e610f7560c1242480819845acd3a96fea3e39af
-remove_matching "$pin" 60a1e6820ad6d6206b1109f738abed3f22f2fb732b1168b14a304f35798fba59
+remove_matching "$source" afdb6c687f07ad78b86d264749369239e194f104a6e21f45d81186d19003ea3c 5532cb34ba7024a7060e837f3e610f7560c1242480819845acd3a96fea3e39af b5474d0ac43bcf1241060987c6fb871e8d52a5a50693c249c6e2a8f8d58b5c0a f22b2fea5df6f72f57cdaa92e55a08bfd97e0d5b8d78d075a8abb1686d39e5aa
+remove_matching "$pin" 60a1e6820ad6d6206b1109f738abed3f22f2fb732b1168b14a304f35798fba59 3ee896e2fba2ddabb25ff045b56619d75405f3d99effb77037731d24bf3909c6
+remove_matching "$mirrors" 5e5c8260b35e0cb813ff3ec51055f6625c95b96845129e09ec7d6ee287216486
 if [ ! -e "$source" ]; then
     shared=no
     for entry in /etc/apt/sources.list /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources; do
@@ -118,11 +120,12 @@ success=no
 source=/etc/apt/sources.list.d/daylight.sources
 key=/etc/apt/keyrings/daylight-archive-keyring.gpg
 pin=/etc/apt/preferences.d/daylight
+mirrors=/etc/apt/mirrors/daylight.list
 cleanup() {
     code=$?
     if [ "$changed" = yes ] && [ "$success" != yes ]; then
-        for name in source key pin; do
-            case "$name" in source) destination=$source ;; key) destination=$key ;; pin) destination=$pin ;; esac
+        for name in source key pin mirrors; do
+            case "$name" in source) destination=$source ;; key) destination=$key ;; pin) destination=$pin ;; mirrors) destination=$mirrors ;; esac
             if [ -f "$backup/$name" ]; then cp -p "$backup/$name" "$destination"; else rm -f "$destination"; fi
         done
         echo 'Daylight APT configuration restored after failure. Existing package/dependency changes, if any, are not a disk rollback.' >&2
@@ -144,25 +147,25 @@ fetch "$BASE/dists/daylight/InRelease" "$temporary/InRelease"
 gpgv --homedir "$temporary/gnupg" --keyring "$temporary/key.gpg" --output "$temporary/Release" "$temporary/InRelease"
 grep -qx 'Origin: Daylight GNU/Linux' "$temporary/Release"
 grep -qx 'Codename: daylight' "$temporary/Release"
-for destination in "$source" "$key" "$pin"; do
+for destination in "$source" "$key" "$pin" "$mirrors"; do
     [ ! -L "$destination" ] || { echo 'Refusing to replace a symbolic-link configuration.' >&2; exit 1; }
 done
-for destination in "$source" "$pin"; do
+for destination in "$source" "$pin" "$mirrors"; do
     if [ -e "$destination" ] && ! grep -q '^# Managed by Daylight GNU/Linux installer$' "$destination"; then
         printf 'Refusing to overwrite existing unmanaged file: %s\n' "$destination" >&2; exit 1
     fi
 done
 if [ -e "$key" ] && [ ! -e "$source" ]; then echo 'Unmanaged Daylight key already exists; refusing to replace it.' >&2; exit 1; fi
-mkdir -p /var/backups /etc/apt/keyrings /etc/apt/sources.list.d /etc/apt/preferences.d
+mkdir -p /var/backups /etc/apt/keyrings /etc/apt/sources.list.d /etc/apt/preferences.d /etc/apt/mirrors
 backup=$(mktemp -d /var/backups/daylight-apt.XXXXXX)
-for name in source key pin; do
-    case "$name" in source) destination=$source ;; key) destination=$key ;; pin) destination=$pin ;; esac
+for name in source key pin mirrors; do
+    case "$name" in source) destination=$source ;; key) destination=$key ;; pin) destination=$pin ;; mirrors) destination=$mirrors ;; esac
     if [ -f "$destination" ]; then cp -p "$destination" "$backup/$name"; fi
 done
 cat > "$temporary/daylight.sources" <<EOF
 # Managed by Daylight GNU/Linux installer
 Types: deb
-URIs: $BASE
+URIs: mirror+file:/etc/apt/mirrors/daylight.list
 Suites: daylight
 Components: main
 Architectures: $arch
@@ -171,14 +174,21 @@ EOF
 cat > "$temporary/preferences" <<'EOF'
 # Managed by Daylight GNU/Linux installer
 Package: daylight-*
-Pin: origin daylightlinux.ch
+Pin: release o=Daylight GNU/Linux
 Pin-Priority: 500
 
 Package: *
-Pin: origin daylightlinux.ch
+Pin: release o=Daylight GNU/Linux
 Pin-Priority: -1
 EOF
+cat > "$temporary/mirrors" <<'EOF'
+# Managed by Daylight GNU/Linux installer
+https://daylightlinux.ch/apt/	priority=1
+https://raw.githubusercontent.com/hamdyaea/Daylight-GNU-Linux/publish/cloudflare-pages-20261103/website-src/apt/	priority=2
+https://daylight-gnu-linux.pages.dev/apt/	priority=3
+EOF
 changed=yes
+install -m 644 "$temporary/mirrors" "$mirrors"
 install -m 644 "$temporary/key.gpg" "$key"
 install -m 644 "$temporary/daylight.sources" "$source"
 install -m 644 "$temporary/preferences" "$pin"
