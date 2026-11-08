@@ -115,8 +115,15 @@ class GamePage(tk.Frame):
         self.footer = tk.Frame(self, bg=BG)
         self.footer.pack(fill="x", pady=(0, 10))
         self.sports_page = name in ("basketball", "tournament")
-        self.cv = tk.Canvas(self, bg=BG, height=520 if self.sports_page else 390, highlightthickness=0, takefocus=True)
-        self.cv.pack(fill="x" if self.sports_page else "both", expand=not self.sports_page)
+        # Keep the scrollbar OUTSIDE the Canvas. Packing it as a child of the
+        # Canvas makes Tk propagate its tiny requested size to the game board.
+        self.board = tk.Frame(self, bg=BG) if self.sports_page else self
+        if self.sports_page:
+            self.board.pack(fill="x", expand=False)
+        self.cv = tk.Canvas(self.board, bg=BG, height=520 if self.sports_page else 390,
+                            highlightthickness=0, takefocus=True)
+        self.cv.pack(side="left" if self.sports_page else "top",
+                     fill="both", expand=True)
         self.cv.bind("<Configure>", lambda _e: self.redraw())
         self.cv.bind("<Button-1>", lambda _e: self.cv.focus_set(), add="+")
         self.status = tk.StringVar()
@@ -489,7 +496,7 @@ class GamePage(tk.Frame):
         self.tournament_index = 0
         self.button("New 2018 World Cup", self.new_tournament)
         self.tournament_next = self.button("Next stage", self.advance_tournament, True)
-        self.tournament_scroll = ttk.Scrollbar(self.cv, orient="vertical", command=self.cv.yview)
+        self.tournament_scroll = ttk.Scrollbar(self.board, orient="vertical", command=self.cv.yview)
         self.tournament_scroll.pack(side="right", fill="y")
         self.cv.configure(yscrollcommand=self.tournament_scroll.set)
         self.scene = self.draw_tournament
@@ -553,7 +560,7 @@ class GamePage(tk.Frame):
         self.nba_index = 0
         self.button("New NBA championship", self.reset_basketball)
         self.nba_next = self.button("Next round", self.advance_basketball, True)
-        self.nba_scroll = ttk.Scrollbar(self.cv, orient="vertical", command=self.cv.yview)
+        self.nba_scroll = ttk.Scrollbar(self.board, orient="vertical", command=self.cv.yview)
         self.nba_scroll.pack(side="right", fill="y")
         self.cv.configure(yscrollcommand=self.nba_scroll.set)
         self.scene = self.draw_basketball
