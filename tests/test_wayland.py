@@ -24,6 +24,7 @@ import signal
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import traceback
 import unittest
@@ -239,6 +240,8 @@ class NativeWaylandInput(unittest.TestCase):
     def setUp(self):
         self.errors = []
         self.press_events = []
+        self.widget_press_events = []
+        self.diagnostic_sequence = 0
         page = TEST_CASES[self._testMethodName]
         if page == "shardturn":
             spec = importlib.util.spec_from_file_location("daylight_packaged_shardturn_launcher",
@@ -290,6 +293,56 @@ class NativeWaylandInput(unittest.TestCase):
         self.assertIsNone(self.manager.poll(), "The appearance owner must remain alive")
         self.assertIsNone(self.background.poll(), "The old overlapping RC4 client must remain alive")
 
+    def timer_diagnostics(self, stage, widget, target):
+        """Observe native routing and bindings without changing any X11 state."""
+        from tkinter import ttk
+        from x11_input_snapshot import snapshot
+        self.diagnostic_sequence += 1
+        directory = Path(os.environ.get("DAYLIGHT_WAYLAND_CASE_DIR", os.environ["XDG_RUNTIME_DIR"]))
+        stem = directory / ("timer-" + str(self.diagnostic_sequence) + "-" + stage)
+        def read(function):
+            try:
+                return function()
+            except Exception as error:
+                return {"error": str(error)}
+        data = {"stage": stage, "target": list(target[:2]), "widget": str(widget),
+                "widget_id": hex(widget.winfo_id()), "widget_class": widget.winfo_class(),
+                "widget_bounds": bounds(widget), "bindtags": list(widget.bindtags()),
+                "widget_state": read(lambda:list(widget.state())),
+                "containing": read(lambda:str(self.root.winfo_containing(*target[:2]))),
+                "focus": read(lambda:str(self.root.focus_get())),
+                "grab": read(lambda:str(self.root.grab_current())),
+                "root_inner": hex(self.root.winfo_id()),
+                "root_frame": str(self.root.tk.call("wm", "frame", str(self.root))),
+                "global_press_events": list(self.press_events),
+                "widget_press_events": list(self.widget_press_events),
+                "timer_labels": [str(child.cget("text")) for child in descendants(self.root.content)
+                                 if isinstance(child, ttk.Label)],
+                "widget_button1_binding": widget.bind("<ButtonPress-1>"),
+                "class_button1_binding": self.root.bind_class(widget.winfo_class(), "<ButtonPress-1>"),
+                "ttk_clickToFocus_body": read(lambda:str(self.root.tk.call("info", "body", "::ttk::clickToFocus"))),
+                "ttk_button_Press_body": read(lambda:str(self.root.tk.call("info", "body", "::ttk::button::Press"))),
+                "ttk_button_Release_body": read(lambda:str(self.root.tk.call("info", "body", "::ttk::button::Release")))}
+        ids = [self.root.winfo_id(), widget.winfo_id(), int(data["root_frame"], 0)]
+        data["x11"] = read(lambda:snapshot(ids))
+        for name, command in (
+                ("tree", ["xwininfo", "-root", "-tree"]),
+                ("properties", ["xprop", "-root", "_NET_CLIENT_LIST_STACKING", "_NET_CLIENT_LIST", "_NET_ACTIVE_WINDOW"])):
+            try:
+                result = subprocess.run(command, capture_output=True, text=True, timeout=3)
+                stem.with_name(stem.name + "-" + name + ".txt").write_text(result.stdout + result.stderr)
+            except (OSError, subprocess.TimeoutExpired) as error:
+                data[name + "_error"] = str(error)
+        try:
+            capture = subprocess.run(["xwd", "-root", "-silent", "-out", str(stem.with_suffix(".xwd"))],
+                                     capture_output=True, text=True, timeout=3)
+            data["xwd_returncode"] = capture.returncode
+            data["xwd_stderr"] = capture.stderr
+        except (OSError, subprocess.TimeoutExpired) as error:
+            data["xwd_error"] = str(error)
+        stem.with_suffix(".json").write_text(json.dumps(data, indent=2) + "\n")
+        print(json.dumps({"timer_diagnostics": data}), flush=True)
+
     def click(self, widget, x=None, y=None):
         self.assert_conky_alive()
         self.root.update()
@@ -311,12 +364,36 @@ class NativeWaylandInput(unittest.TestCase):
         # Keep Tk's event loop alive while the compositor delivers pointer enter,
         # focus, button press and release through Xwayland.
         before = len(self.press_events)
-        future = self.executor.submit(self.pointer.click, *target)
-        deadline = time.monotonic() + 8
-        while not future.done() and time.monotonic() < deadline:
-            self.pump(.02)
-        future.result(timeout=1)
-        self.pump(.15)
+        timer = TEST_CASES[self._testMethodName] == "alarm"
+        requested, proceed = threading.Event(), threading.Event()
+        original_button = self.pointer._button
+        if timer:
+            def observe_button(state):
+                if state == 1:
+                    requested.set()
+                    if not proceed.wait(20):
+                        raise RuntimeError("Timed out waiting for read-only before-press diagnostics")
+                original_button(state)
+            self.pointer._button = observe_button
+        try:
+            future = self.executor.submit(self.pointer.click, *target)
+            deadline = time.monotonic() + (35 if timer else 8)
+            recorded = False
+            while not future.done() and time.monotonic() < deadline:
+                self.pump(.02)
+                if timer and requested.is_set() and not recorded:
+                    try:
+                        self.timer_diagnostics("before-press", widget, target)
+                    finally:
+                        recorded = True
+                        proceed.set()
+            future.result(timeout=1)
+            self.pump(.15)
+            if timer:
+                self.timer_diagnostics("after-click", widget, target)
+        finally:
+            proceed.set()
+            self.pointer._button = original_button
         self.assert_conky_alive()
         self.assertGreater(len(self.press_events), before,
                            "The native Wayland click went to another overlapping Tk client")
@@ -372,7 +449,17 @@ class NativeWaylandInput(unittest.TestCase):
         print(json.dumps({"timer_after_scroll": bounds(start),
                           "visible_clip": visible_rectangle(start),
                           "canvas_yview": list(self.root.canvas.yview())}), flush=True)
-        self.click(start)
+        start.bind("<ButtonPress-1>", lambda event: self.widget_press_events.append({
+            "widget": str(event.widget), "class": event.widget.winfo_class(),
+            "screen": [event.x_root, event.y_root], "send_event": bool(event.send_event),
+            "time": event.time}), add="+")
+        try:
+            self.click(start)
+        finally:
+            print(json.dumps({"timer_status_after_start_click": [str(widget.cget("text"))
+                              for widget in descendants(page) if isinstance(widget, ttk.Label)],
+                              "widget_press_events": self.widget_press_events,
+                              "global_press_events": self.press_events}), flush=True)
         self.assertTrue(any(isinstance(widget, ttk.Label) and
                             str(widget.cget("text")) == "Timer running."
                             for widget in descendants(page)), "Native pointer did not start the timer")
@@ -498,9 +585,11 @@ def compositor_test(output):
                     os.killpg(compositor.pid, signal.SIGTERM)
                 stop(compositor)
                 for directory in (runtime / "cases").glob("*"):
-                    for name in ("client.log", "result.json", "appearance.log", "background.log",
-                                 "background-ready.json", "conky-native.log", "native-conky-surface.json"):
-                        source = directory / name
+                    for source in directory.iterdir():
+                        name = source.name
+                        if name not in ("client.log", "result.json", "appearance.log", "background.log",
+                                        "background-ready.json", "conky-native.log", "native-conky-surface.json") and not name.startswith("timer-"):
+                            continue
                         if source.is_file():
                             (output / ("wayland-" + directory.name + "-" + name)).write_bytes(source.read_bytes())
     print("DAYLIGHT_NATIVE_WAYLAND_INPUT_OK", flush=True)
