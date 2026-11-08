@@ -16,7 +16,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc4-4"
+VERSION = "5.0.0~rc4-5"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -100,6 +100,7 @@ def main():
         if (ROOT / "packaging/daylight.1").exists():
             path=core / "usr/share/man/man1/daylight.1.gz";path.parent.mkdir(parents=True,exist_ok=True)
             path.write_bytes(gzip.compress((ROOT / "packaging/daylight.1").read_bytes(),mtime=0))
+        copy(core,"packaging/core-postinst","DEBIAN/postinst",0o755)
         finish("daylight-core",args.arch,"local management and privacy-respecting Rust utilities")
         themes = work / "daylight-themes"
         for p in sorted((ROOT / "assets/wallpapers").glob("*")):
