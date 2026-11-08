@@ -153,7 +153,7 @@ def main():
                 copy(base, "desktop/shardturn/assets/shardturn-icon.svg", "usr/share/icons/hicolor/scalable/apps/shardturn.svg")
                 # A distinct original icon makes Shardturn easy to locate.
                 launcher = base / "usr/share/applications/daylight-shardturn.desktop"
-                launcher.write_text(launcher.read_text().replace("Name=Daylight Shardturn", "Name=Shardturn").replace("Icon=daylight", "Icon=shardturn"))
+                launcher.write_text(launcher.read_text().replace("Icon=daylight", "Icon=shardturn"))
             deps=f"daylight-desktop (= {VERSION})"+(" , espeak-ng, libnotify-bin" if package=="daylight-apps" else "")
             finish(package,"all","optional native application launchers" if package=="daylight-apps" else "optional offline games without wagers",deps)
         telemetry=work / "daylight-telemetry"
