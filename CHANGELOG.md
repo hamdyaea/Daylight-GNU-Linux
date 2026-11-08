@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.0.0~rc4-2 — 2026-11-08
+
+- Restore fixed NBA conferences and the original 2018 World Cup groups and knockout paths.
+- Restore photographs of both sides of the Swiss coin.
+- Name the Linux launcher Daylight Shardturn.
+- Offer explicit, optional telemetry consent from Welcome.
+
 ## 5.0.0~rc4-1 — 2026-11-08
 
 - Restore the full balanced Conky dashboard and preserve custom monitor configurations through updates and profile changes.

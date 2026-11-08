@@ -37,7 +37,7 @@ DESCRIPTIONS = {
     "cards": "A full deck, face-down battles and a prize to collect.",
     "memory": "Turn the illustrated tiles. Find every matching pair.",
     "tournament": "Build a tournament and follow each round to the final.",
-    "basketball": "Follow a fictional basketball match on the court.",
+    "basketball": "Simulate the NBA conferences, playoffs and championship.",
     "rpsls": "Five choices, ten winning combinations. Make your move.",
     "dice": "Roll illustrated dice, choose the sides and roll again.",
     "coin": "A quick toss, drawn on your screen.", "slots": "Match colourful symbols. No wagers or money.",
@@ -453,6 +453,14 @@ class Desktop(tk.Tk):
         shortcuts=(["Super + Space    Desktop menu", "Ctrl + F    Search inside Daylight", "Ctrl + Home    Daylight home", "Alt + Tab    Switch windows"] if state.session_kind()=="wayland" else ["Super + Enter    Terminal", "Super + Space    Search applications", "Ctrl + F    Search inside Daylight", "Super + P    Daylight library", "Super + E    Files", "Alt + Tab    Switch windows", "Right-click the desktop    Open the Fluxbox menu"])
         for line in shortcuts:
             ttk.Label(card,text=line,style="Card.TLabel",wraplength=440).pack(anchor="w",pady=4)
+        telemetry_card=theme.panel(self.content)
+        telemetry_card.pack(fill="x",pady=12)
+        ttk.Label(telemetry_card,text="Optional boot statistics",style="Card.TLabel",
+                  font=("DejaVu Sans",14,"bold")).pack(anchor="w")
+        ttk.Label(telemetry_card,text="Help improve Daylight with optional boot statistics. Disabled by default; nothing is enabled by finishing this welcome page. Review the data and destination before choosing to enable it.",
+                  style="Card.TLabel",wraplength=440).pack(anchor="w",pady=8)
+        ttk.Button(telemetry_card,text="Review and enable telemetry…",
+                   command=lambda:self.show("telemetry")).pack(anchor="w",pady=6)
         never=tk.BooleanVar(value=True)
         ttk.Checkbutton(self.content,text=self.word("never"),variable=never).pack(anchor="w",pady=18)
         def finish():

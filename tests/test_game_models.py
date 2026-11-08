@@ -230,8 +230,8 @@ class NativeGamePages(unittest.TestCase):
         actions = {
             "dice": lambda p: p.roll_dice(), "coin": lambda p: p.flip_coin(),
             "lottery": lambda p: p.draw_lottery_values(), "rpsls": lambda p: p.play_rps(4),
-            "cards": lambda p: p.advance_battle(), "tournament": lambda p: p.advance_tournament(),
-            "basketball": lambda p: p.play_quarter(), "memory": lambda p: p.reveal_memory(0),
+            "cards": lambda p: p.advance_battle(), "tournament": lambda p: p.advance_competition(),
+            "basketball": lambda p: p.advance_competition(), "memory": lambda p: p.reveal_memory(0),
             "slots": lambda p: p.spin(), "guess": lambda p: p.make_guess(),
         }
         try:
@@ -241,7 +241,20 @@ class NativeGamePages(unittest.TestCase):
                     root.update()
                     actions[name](page)
                     root.update()
-                    self.assertGreater(len(page.cv.find_all()), 2)
+                    if name == "coin":
+                        self.assertTrue(any(page.cv.type(item) == "image" for item in page.cv.find_all()))
+                        self.assertEqual(len(page.coin_images), 2)
+                    else:
+                        self.assertGreater(len(page.cv.find_all()), 2)
+                    if name in ("basketball", "tournament"):
+                        self.assertFalse(any(child.winfo_class() == "TEntry" for child in page.controls.winfo_children()))
+                        for _ in range(4):
+                            page.advance_competition()
+                            root.update()
+                        self.assertIsNotNone(page.competition.champion)
+                        page.reset_competition()
+                        root.update()
+                        self.assertIsNone(page.competition.champion)
                     self.assertFalse(errors, errors)
                     page.destroy()
                     root.update()
@@ -358,6 +371,38 @@ class NativeGamePages(unittest.TestCase):
         finally:
             root.destroy()
 
+
+
+class OriginalCompetitions(unittest.TestCase):
+    def test_fixed_rosters_and_full_progression(self):
+        from daylight_ui.competitions import Competition, NBA, WORLD_CUP_2018
+        self.assertEqual([len(v) for v in NBA.values()], [15, 15])
+        self.assertEqual(len({t for v in NBA.values() for t in v}), 30)
+        self.assertEqual([len(v) for v in WORLD_CUP_2018.values()], [4]*8)
+        self.assertEqual(len({t for v in WORLD_CUP_2018.values() for t in v}), 32)
+        for sport in ("nba", "worldcup"):
+            for seed in range(30):
+                import random
+                c = Competition(sport, random.Random(seed))
+                c.advance()
+                self.assertEqual(sum(map(len,c.matches.values())), 8)
+                initial = {team for pairs in c.matches.values() for pair in pairs for team in pair}
+                for count in (4, 2, 1, 0):
+                    c.advance()
+                    self.assertEqual(sum(map(len,c.matches.values())), count)
+                self.assertIn(c.champion, initial)
+                self.assertEqual(len(c.history), 4)
+                if sport == "nba":
+                    final = c.history[-1][1]["NBA Finals"][0]
+                    self.assertIn(final[0], NBA["Eastern Conference"])
+                    self.assertIn(final[1], NBA["Western Conference"])
+                else:
+                    first = c.history[0][1]["World Cup"]
+                    self.assertEqual(first[0][:2], (c.groups["A"][0],c.groups["B"][1]))
+                    self.assertEqual(first[4][:2], (c.groups["B"][0],c.groups["A"][1]))
+                champion=c.champion
+                c.advance()
+                self.assertEqual(c.champion, champion)
 
 if __name__ == "__main__":
     unittest.main()

@@ -16,7 +16,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc4-1"
+VERSION = "5.0.0~rc4-2"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -121,6 +121,9 @@ def main():
         for source in sorted((ROOT / "desktop/daylight_ui").rglob("*.py")):
             relative = source.relative_to(ROOT / "desktop")
             copy(desktop, source, "usr/share/daylight/ui/" + str(relative))
+        for source in sorted((ROOT / "desktop/daylight_ui/assets").glob("*")):
+            if source.is_file():
+                copy(desktop, source, "usr/share/daylight/ui/daylight_ui/assets/" + source.name)
         # Tk reads PNG natively: generate small previews while building, so the
         # installed desktop does not require Pillow or load full-size photos.
         from PIL import Image, ImageOps
@@ -153,7 +156,7 @@ def main():
                 copy(base, "desktop/shardturn/assets/shardturn-icon.svg", "usr/share/icons/hicolor/scalable/apps/shardturn.svg")
                 # A distinct original icon makes Shardturn easy to locate.
                 launcher = base / "usr/share/applications/daylight-shardturn.desktop"
-                launcher.write_text(launcher.read_text().replace("Name=Daylight Shardturn", "Name=Shardturn").replace("Icon=daylight", "Icon=shardturn"))
+                launcher.write_text(launcher.read_text().replace("Icon=daylight", "Icon=shardturn"))
             deps=f"daylight-desktop (= {VERSION})"+(" , espeak-ng, libnotify-bin" if package=="daylight-apps" else "")
             finish(package,"all","optional native application launchers" if package=="daylight-apps" else "optional offline games without wagers",deps)
         telemetry=work / "daylight-telemetry"

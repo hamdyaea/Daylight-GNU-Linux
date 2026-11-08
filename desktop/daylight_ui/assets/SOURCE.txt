@@ -1,0 +1,1 @@
+Coin photographs restored unchanged from Daylight Version4/usr/share/daylight/Coin-Flipping/images/face.gif and pile.gif. Original Coin-Flipping project by Hamdy Abou El Anein; GPL license retained in the Daylight source distribution.

@@ -4,7 +4,7 @@
 name: Daylight candidate validation
 on:
   push:
-    branches: [master, telemetry-production, feature/daylight-modern-desktop, build/daylight-v5, build/daylight-v5-rc2]
+    branches: [fix/original-competitions, master, telemetry-production, feature/daylight-modern-desktop, build/daylight-v5, build/daylight-v5-rc2]
     paths-ignore: ['docs/**', '*.md', 'release/**', '.github/workflows/daylight-release.yml', '.github/workflows/daylight-prepare-rc2.yml', '.github/workflows/daylight-source-sync.yml', 'website/**', 'tests/test_website*', '.github/ISSUE_TEMPLATE/**', '.github/workflows/daylight-website.yml', 'web-live/**', '.github/workflows/daylight-public-preview.yml']
   pull_request:
   workflow_dispatch:
