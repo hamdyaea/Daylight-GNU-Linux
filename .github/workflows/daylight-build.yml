@@ -17,7 +17,7 @@ permissions:
   contents: read
 concurrency:
   group: daylight-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   candidate:
     runs-on: ubuntu-24.04

@@ -360,8 +360,12 @@ class NativeWaylandInput(unittest.TestCase):
         self.click(help_text)
         self.assertEqual(self.press_events[-1]["class"], "Text")
         self.assertEqual(self.press_events[-1]["widget"], str(help_text))
-        app.help_window.destroy()
-        app.help_window = None
+        close_button = next(widget for widget in descendants(app.help_window)
+                            if isinstance(widget, tk.Button) and
+                            str(widget.cget("text")) == "Close  ·  Esc")
+        self.click(close_button)
+        self.assertIsNone(app.help_window, "The native Close button did not dismiss the help panel")
+        self.assertIsNone(self.root.grab_current())
         app.cancel_ai()
 
 
