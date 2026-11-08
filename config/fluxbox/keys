@@ -4,6 +4,10 @@
 OnDesktop Mouse1 :HideMenus
 OnDesktop Mouse2 :WorkspaceMenu
 OnDesktop Mouse3 :RootMenu
+# Restore standard Fluxbox window dragging and resizing.
+OnTitlebar Mouse1 :StartMoving
+OnWindow Mod1 Mouse1 :StartMoving
+OnWindow Mod1 Mouse3 :StartResizing NearestCorner
 Mod4 Return :Exec /usr/bin/daylight-terminal
 Mod4 p :Exec /usr/bin/daylight control-center
 Mod4 e :Exec /usr/bin/pcmanfm
