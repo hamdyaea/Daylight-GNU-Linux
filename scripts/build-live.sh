@@ -13,7 +13,7 @@ cp -a "$root/live/config" "$work/config"
 mkdir -p "$work/config/packages.chroot" "$root/dist"
 for package in core desktop themes apps games linux; do
   case "$package" in core) arch=amd64 ;; *) arch=all ;; esac
-  source="$root/dist/daylight-${package}_5.0.0~rc2_${arch}.deb"
+  source="$root/dist/daylight-${package}_5.0.0~rc4_${arch}.deb"
   test -s "$source"
   cp "$source" "$work/config/packages.chroot/"
 done
@@ -23,7 +23,7 @@ python3 "$root/scripts/configure-boot-menu.py" "$work/config/bootloaders" "$root
 cd "$work"
 lb config
 lb build
-cp live-image-amd64.hybrid.iso "$root/dist/daylight-live_5.0.0-rc.2_amd64.iso"
+cp live-image-amd64.hybrid.iso "$root/dist/daylight-live_5.0.0-rc.4_amd64.iso"
 cd "$root/dist"
-sha256sum daylight-live_5.0.0-rc.2_amd64.iso > daylight-live_5.0.0-rc.2_amd64.iso.sha256
+sha256sum daylight-live_5.0.0-rc.4_amd64.iso > daylight-live_5.0.0-rc.4_amd64.iso.sha256
 printf 'ISO created. Build directory retained for inspection: %s\n' "$work"

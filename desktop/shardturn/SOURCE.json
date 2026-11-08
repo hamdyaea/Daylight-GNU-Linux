@@ -1,0 +1,16 @@
+{
+  "project": "Shardturn",
+  "repository": "https://github.com/hamdyaea/Shardturn",
+  "commit": "658a57e7c7e9e1743d99a8c6a59b68c03b8f7963",
+  "license": "GPL-3.0-or-later",
+  "developer": "Hamdy Abou El Anein",
+  "vendored_on": "2026-11-08",
+  "files": {
+    "Shardturn.py": "ff0d0ea3579d612b2d87ea7d6f71b438506411203ed072cfc6fda5e377327b5c",
+    "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "README.md": "4f5c136a24a3fc49da7405878f67808debc0074ecf486f21f4dafe40bd5b45d9",
+    "VISUAL_IDENTITY.md": "a62303b441742fcd2381929176f80219e2e4027456813381622e40288b699d6d",
+    "assets/shardturn-icon.svg": "80e0db1876a7f543c77b11f8dadc1dce83538f567baede6ddd944d3ce7028a84",
+    "assets/shardturn-logo.svg": "0d4a2ca0d9a7b14084dd3dac0589fdbbc37d33977ce2effebfbd1de70efe59f0"
+  }
+}

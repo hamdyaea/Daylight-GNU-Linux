@@ -52,9 +52,11 @@ Les installations Daylight ne déclenchent ni mise à niveau globale du système
 
 ## Bureau, terminal et applications
 
-Fluxbox conserve une session séparée ; Conky propose des profils sobres ; le terminal affiche le logo ASCII et les informations du système avec Fastfetch, ou avec son affichage de secours. Aucun appel Internet n'est effectué à l'ouverture du terminal. Les fenêtres natives utilisent YAD uniquement pendant leur utilisation : pas d'Electron ni de service permanent de réglages.
+La refonte du 8 novembre prépare les paquets **5.0.0~rc4** : bibliothèque graphique, recherche d’applications, accueil FR/DE/EN, personnalisation et jeux illustrés. Les textes de plusieurs outils et jeux restent en anglais. Consulter [le détail de la refonte](docs/DESKTOP-2026-11-08.md) pour sa validation et son état de publication ; elle ne change pas la version de l’ISO déjà publiée.
 
-Les utilitaires et jeux partagent un programme Rust : mots de passe, températures, différences entre dates, état réseau local, alarme, intégration de synthèse vocale et jeux facultatifs. **Conky est configuré et optimisé, pas réécrit en Rust.**
+Fluxbox conserve une session séparée ; Conky propose des profils sobres ; le terminal affiche le logo ASCII et les informations du système avec Fastfetch, ou avec son affichage de secours. Aucun appel Internet n'est effectué à l'ouverture du terminal. La nouvelle interface native utilise Tkinter et des dessins vectoriels, avec la palette ivoire et graphite de Shardturn. Un petit processus de session applique les préférences Conky et les fonds jour/nuit ; aucun service système supplémentaire n’est activé.
+
+Le cœur des commandes reste en Rust. Le bureau rassemble des outils et jeux graphiques en Python standard : mots de passe, températures, dates, réseau local, minuterie, lecture vocale, suivi du Raspberry Pi et Soleil et Lune. Shardturn rejoint les jeux facultatifs, avec sa licence et ses règles d’origine. **Conky est configuré et optimisé, pas réécrit en Rust.**
 
 ```sh
 daylight control-center

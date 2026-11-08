@@ -94,7 +94,8 @@ pub fn doctor() -> Result<()> {
         ("Daylight resources", "/usr/share/daylight"),
         ("Fluxbox", "/usr/bin/fluxbox"),
         ("Conky", "/usr/bin/conky"),
-        ("Native dialogs", "/usr/bin/yad"),
+        ("Native desktop", "/usr/share/daylight/ui/daylight_gui.py"),
+        ("Python", "/usr/bin/python3"),
         ("Fastfetch (optional)", "/usr/bin/fastfetch"),
         ("Terminology (optional)", "/usr/bin/terminology"),
     ] {

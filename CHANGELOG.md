@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Prepare the RC4 native desktop refresh: Shardturn, ten illustrated games, redesigned utilities, application search, first steps, live settings, Sun & Moon and Raspberry Pi health.
+- Preserve the RC3 telemetry integration and explicit opt-in; the full install includes its disabled package.
+
 - Add the optional telemetry package to the public installer’s `--all` plan while keeping it disabled until explicit opt-in.
 
 ## 5.0.0-rc.3

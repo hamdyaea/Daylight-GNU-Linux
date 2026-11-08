@@ -2,7 +2,7 @@
 
 ## Rust and Debian packages
 
-Prerequisites: Rust/rustup, Python 3, Git, dpkg-deb, ImageMagick, an SVG renderer and DejaVu fonts. On a disposable Debian/Ubuntu build machine the relevant packages include `dpkg-dev imagemagick librsvg2-bin fonts-dejavu-core python3 curl gnupg`. Do not run build dependency installation on a productive server.
+Prerequisites: Rust/rustup, Python 3 with Pillow, Git, dpkg-deb, ImageMagick, an SVG renderer and DejaVu fonts. On a disposable Debian/Ubuntu build machine the relevant packages include `dpkg-dev imagemagick librsvg2-bin fonts-dejavu-core python3 python3-pil python3-tk xvfb xauth curl gnupg`. Do not run build dependency installation on a productive server.
 
 ```sh
 rustup toolchain install 1.88.0 --profile minimal --component rustfmt --component clippy
@@ -45,3 +45,5 @@ The release workflow accepts only an exact source commit whose full validation w
 ## Development paths
 
 The clean release worktree is separate from the earlier development checkout, which is preserved. Private infrastructure inventory stays outside the public source tree. Read `VALIDATION.md` and the actual release evidence rather than treating a script's presence as proof it was executed.
+
+For the modern desktop, run `python3 -m unittest discover -s tests -p test_game_models.py` and the launcher, sky and diagnostics suites. Run `xvfb-run -a python3 tests/test_gui.py` for real Tk interactions. The original Shardturn upstream tests are run against the exact vendored revision. Runtime needs only the standard library and Debian python3-tk; Pillow is used during packaging, not by desktop applications.

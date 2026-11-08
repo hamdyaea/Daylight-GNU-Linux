@@ -10,10 +10,15 @@ config=$(/usr/bin/daylight setup-session)
 # Fluxbox would overwrite the supplied -rc file on first use if this is absent.
 # Existing classic Fluxbox configuration files are never replaced.
 (umask 077; mkdir -p "$HOME/.fluxbox")
-conky_pid=
+appearance_pid=
+welcome_pid=
 wm_pid=
 cleanup() {
-    if [ -n "$conky_pid" ]; then kill "$conky_pid" 2>/dev/null || :; fi
+    if [ -n "$welcome_pid" ]; then kill "$welcome_pid" 2>/dev/null || :; fi
+    if [ -n "$appearance_pid" ]; then
+        kill "$appearance_pid" 2>/dev/null || :
+        wait "$appearance_pid" 2>/dev/null || :
+    fi
     if [ -n "$wm_pid" ]; then kill "$wm_pid" 2>/dev/null || :; fi
 }
 trap cleanup EXIT HUP INT TERM
@@ -30,8 +35,10 @@ until /usr/bin/xprop -root _NET_SUPPORTING_WM_CHECK 2>/dev/null | grep -q 'windo
 done
 wallpaper=$(/usr/bin/daylight settings get wallpaper)
 /usr/bin/feh --no-fehbg --bg-max "/usr/share/backgrounds/daylight/$wallpaper"
-if [ "$(/usr/bin/daylight settings get monitor)" = on ]; then
-    /usr/bin/conky -c "$config/conky.conf" &
-    conky_pid=$!
-fi
+# This session owns its appearance helper and Conky child. Changes to the
+# Daylight user's preferences are applied without touching other desktops.
+/usr/bin/python3 /usr/share/daylight/ui/daylight_gui.py --session-appearance &
+appearance_pid=$!
+/usr/bin/python3 /usr/share/daylight/ui/daylight_gui.py welcome --first-run &
+welcome_pid=$!
 wait "$wm_pid"

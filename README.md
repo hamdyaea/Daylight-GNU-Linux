@@ -46,9 +46,11 @@ The installer does not perform a global distribution upgrade, reboot or enable t
 
 ## Desktop, terminal and applications
 
-Fluxbox runs as a separate session; Conky provides lightweight profiles; the terminal displays the ASCII logo and system information through Fastfetch or its built-in fallback. Opening a terminal makes no external request. Native dialogs use YAD only while needed: no Electron and no permanent settings daemon.
+The 8 November desktop refresh prepares **5.0.0~rc4** packages: a graphical library, application search, EN/FR/DE first steps, personalisation and illustrated games. Many utility and game texts remain English. See [the refresh record](docs/DESKTOP-2026-11-08.md) for validation and publication status; the existing published ISO keeps its version.
 
-Utilities and optional games share a small Rust executable: passwords, temperatures, date differences, local network information, alarms, speech integration and offline games. **Conky is configured and optimized, not rewritten in Rust.**
+Fluxbox runs as a separate session; Conky provides lightweight profiles; the terminal displays the ASCII logo and system information through Fastfetch or its built-in fallback. Opening a terminal makes no external request. The new native interface uses Tkinter and vector drawings with Shardturn’s warm ivory and graphite palette. A small user-session helper applies Conky preferences and day/night backgrounds; no additional system service is enabled.
+
+The command-line core remains Rust. The graphical desktop combines standard-library Python tools and games: passwords, temperatures, dates, local networks, timers, speech, Raspberry Pi health and Sun & Moon. Shardturn joins the optional games with its original rules and license. **Conky is configured and optimized, not rewritten in Rust.**
 
 ```sh
 daylight control-center
