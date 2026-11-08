@@ -14,7 +14,9 @@ export DEBIAN_FRONTEND=noninteractive
 printf '#!/bin/sh\nexit 101\n' > /usr/sbin/policy-rc.d
 chmod 755 /usr/sbin/policy-rc.d
 apt-get -o Acquire::Retries=3 update -qq
-apt-get -o Acquire::Retries=3 install -y --no-install-recommends adduser util-linux gnupg dpkg-dev xvfb xauth x11-utils procps python3
+# The signed test-repository builder invokes gpgv directly; do not rely on
+# a distribution-specific transitive dependency from gnupg.
+apt-get -o Acquire::Retries=3 install -y --no-install-recommends adduser util-linux gnupg gpgv dpkg-dev xvfb xauth x11-utils procps python3
 # Install the old real packages first. In particular do not install python3-tk
 # here: pulling this new dependency is the behaviour under test.
 apt-get install -y --no-install-recommends \
