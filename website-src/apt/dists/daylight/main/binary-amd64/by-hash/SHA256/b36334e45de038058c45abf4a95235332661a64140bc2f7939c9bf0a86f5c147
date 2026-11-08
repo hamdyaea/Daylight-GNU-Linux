@@ -1,0 +1,2130 @@
+Package: daylight-apps
+Version: 5.0.0~rc1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <contact@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-desktop (= 5.0.0~rc1) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0.rc1_all.deb
+Size: 1620
+MD5sum: 32a96226a9e4a24fc0c3b08162cd9eb0
+SHA1: 86924d4c9ab7dfe31a95e9e5f8d590bac6f85bc4
+SHA256: 5dbe0c182656a28e4b3d34acd015fe6e150b69b6791a87c2221f0e8416585980
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-desktop (= 5.0.0~rc2) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0.rc2_all.deb
+Size: 1616
+MD5sum: fbc8fa36839c2f84aaeab9915684bfc8
+SHA1: cb56fbd43e9b34a1fedcf4bdc75042455a0247e0
+SHA256: bd596ec4d303e9cd3619312a22ddc97b42eecc2fbfc4882bc724790641f56ff1
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc2-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-desktop (= 5.0.0~rc2-1) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0.rc2-1_all.deb
+Size: 1868
+MD5sum: 25b9af249091461ee4a0866bfce32728
+SHA1: 24533f8f52f859383d21f18ba6a0f597fda76660
+SHA256: e3c9f8526bb6aecf6eab3207c3f778dea0d8060a4c1ef26f89a5749ac2c10795
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc2-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 6
+Depends: daylight-desktop (= 5.0.0~rc2-2) , espeak-ng, libnotify-bin, python3-gi, gir1.2-gtk-3.0
+Filename: pool/main/d/daylight/daylight-apps_5.0.0.rc2-2_all.deb
+Size: 3168
+MD5sum: 6dd708f75c962c761419dc4dcf6abb65
+SHA1: b32cf869bb18ce4dab829e8297c373138957feea
+SHA256: c15ad8dcd6d6aba0849fe1bddc6471e2641324be55e9dc2e42f6b67bd185e357
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc2-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 6
+Depends: daylight-desktop (= 5.0.0~rc2-3) , espeak-ng, libnotify-bin, python3-gi, gir1.2-gtk-3.0
+Filename: pool/main/d/daylight/daylight-apps_5.0.0.rc2-3_all.deb
+Size: 3168
+MD5sum: 7aa92782ea334f7c6951698352aaa2d6
+SHA1: 753c392ec2796bd9ccc1c964c924edf2f40e95fc
+SHA256: b20ff9e4b20fe7721aa3209ebd5c1431c06c1c39d16aee608002fefddc4b91b7
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc2-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 6
+Depends: daylight-desktop (= 5.0.0~rc2-4) , espeak-ng, libnotify-bin, python3-gi, gir1.2-gtk-3.0
+Filename: pool/main/d/daylight/daylight-apps_5.0.0.rc2-4_all.deb
+Size: 3168
+MD5sum: 99907b23502d679e1c7ed946ec7f9d2e
+SHA1: 5e7789f013b4da5233bfdea01224a83319529c5d
+SHA256: f4d822d6bbc898258d382211d9ea17a64e2d4bfa90f0fb52bbbfa71baab9d057
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc2-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 6
+Depends: daylight-desktop (= 5.0.0~rc2-5) , espeak-ng, libnotify-bin, python3-gi, gir1.2-gtk-3.0
+Filename: pool/main/d/daylight/daylight-apps_5.0.0.rc2-5_all.deb
+Size: 3180
+MD5sum: aed740da962745f4f443c1461924db40
+SHA1: 4e64580b3c98f9069e287ea080865ded75ce3ebc
+SHA256: a4184a384f9e56d857ffd3204f9dc876516d7e23b132f1a3d0d804a563c234f8
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc2-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 6
+Depends: daylight-desktop (= 5.0.0~rc2-6) , espeak-ng, libnotify-bin, python3-gi, gir1.2-gtk-3.0
+Filename: pool/main/d/daylight/daylight-apps_5.0.0.rc2-6_all.deb
+Size: 3176
+MD5sum: fd538b0e90f1e5fd82ece47c3957c0d4
+SHA1: c3d469f2e2e16f0909120ad83e017475a97ef754
+SHA256: 17dc861c0cc560a0206959df51798ca9b3a06a44410566790f19f2b76353edf6
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-desktop (= 5.0.0~rc3) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0~rc3_all.deb
+Size: 1852
+MD5sum: d1a29953801e2b37c61fc59ec01a722d
+SHA1: d6f6d477221502f1fc95a75494e2460b3d6bffe1
+SHA256: 5b221791f9069d56933a1fa0f2ba06475552d577b99c4c163fe7f224133e96c1
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc4) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0~rc4_all.deb
+Size: 1794
+MD5sum: fe997189d344dcae155e1eecf79f1275
+SHA1: dcb9ccbc4ce59cacc80c0b8afbe8c997c2591dea
+SHA256: 3e0e59db4f7a0481d1eef24bde068bf241ff035fc7b4e693278c3e8ba2e46904
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc4-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc4-1) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0~rc4-1_all.deb
+Size: 1798
+MD5sum: c855bec9e87ff4fd48344c22cb69d41e
+SHA1: d86c8ef36effa40d97470c87ee6f00a5a875d870
+SHA256: 2cc7b8f154e082cf222f25460abb015596702e003cea60805eec858c6341984e
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc4-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc4-2) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0~rc4-2_all.deb
+Size: 2020
+MD5sum: 36894f5f36838dd93fdfe0315a456369
+SHA1: 6dd3c25c657ca4c5e497b88deb32382702d72e56
+SHA256: abd600ea11126cec8357937ab2599ccfd9763de70321869efcbcde06e04f1fa5
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc4-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc4-3) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0~rc4-3_all.deb
+Size: 1796
+MD5sum: bb8afb62b5d41c5054bdc868712e4905
+SHA1: db3adc25a03f386481a23add339a6f38de0e0d01
+SHA256: 8f9108e2ba3bb43c728781ab4afd11a0652a666a6e769aa254afd07f52d085ae
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc4-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc4-4) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0~rc4-4_all.deb
+Size: 1798
+MD5sum: ecd7c170350be88c863e102763a11cfb
+SHA1: 6c8fd91727989bb56509840ad653b62812a795e6
+SHA256: e14b821c6e33480387cda52c1bcc771239e9cdcdecd76469b848010c2361d710
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc4-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc4-5) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0~rc4-5_all.deb
+Size: 2020
+MD5sum: 686f096936341c170839a09244cc4632
+SHA1: b4fa68912c2d2e738fbafc10caae6ca536a3cf17
+SHA256: 2342b3205c02f43d3601f5d1c8ba7b7c43ebd9fd4ffc3f6f54257549b3a7ef54
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc4-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc4-6) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0~rc4-6_all.deb
+Size: 2020
+MD5sum: b7172e5611cbb94369d8bd5db84224b3
+SHA1: 917347bbcbeb84521cc2b7432e588ec19ead0cbe
+SHA256: 04a91776767ea8ffe4d2c60e4eeeeea6ab0a37c86c5ca5a79d58626ac382c6b4
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-apps
+Version: 5.0.0~rc4-7
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc4-7) , espeak-ng, libnotify-bin
+Filename: pool/main/d/daylight/daylight-apps_5.0.0~rc4-7_all.deb
+Size: 2020
+MD5sum: 1f3318691d7c03ff4582266c0e125939
+SHA1: b8252b05da0707e616ae72bb80fab236f6bc9041
+SHA256: 165f641acab2e3e658700a647da40d202f39db4ba3208bc6522c912a7f4c074e
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional native application launchers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc1
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <contact@daylightlinux.ch>
+Installed-Size: 1007
+Filename: pool/main/d/daylight/daylight-core_5.0.0.rc1_amd64.deb
+Size: 300528
+MD5sum: d5fd9fab6b6b5bfcc73542e3b0b9629e
+SHA1: f48b4a388e1806eb338c0ef4683a36f1e07d78d4
+SHA256: 45fb3d7666206beadd3a23f2c043f1edd6d7d3322a6724b098b3fb4249eee63d
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc2
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1007
+Filename: pool/main/d/daylight/daylight-core_5.0.0.rc2_amd64.deb
+Size: 300538
+MD5sum: f9815b3afcf157bfc4ab56e58af5fd83
+SHA1: 20893d882269cbdc14f48f52db24c210d21281c4
+SHA256: 91ebb59c4b27e7363a66186f2c6a98a9326f90c92c2be1f3fe2444a20cd038a8
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc2-1
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1007
+Filename: pool/main/d/daylight/daylight-core_5.0.0.rc2-1_amd64.deb
+Size: 281404
+MD5sum: fe8a75d6e3f6a37aedab3433dc9b7fb1
+SHA1: 9706eaecd67df0931d5937163cbaa964826f9ed6
+SHA256: 397619efbef1c295f20bd6b1755600c630358f99ef6de85d0b570de2bc9714dd
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc2-2
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1007
+Filename: pool/main/d/daylight/daylight-core_5.0.0.rc2-2_amd64.deb
+Size: 281356
+MD5sum: c3d4ccf0c70caccd95cf6daa9b803c1f
+SHA1: f54abf9b3699684b4ee7a5b8d6691ac232515016
+SHA256: 066db74cd0dcac9addea68639a1f8176043fb1f18ef0ad04864b9094925fe5f4
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc2-3
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1001
+Filename: pool/main/d/daylight/daylight-core_5.0.0.rc2-3_amd64.deb
+Size: 278920
+MD5sum: d38fc4a59139362814403efe200102c5
+SHA1: 7c2fc8d4d53992bf1b396c70b9536267fbd197a9
+SHA256: f1faca316cd979d1fbbbe9cf2c455276b87de1382a4adf3284b56b34cb640a95
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc2-4
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1001
+Filename: pool/main/d/daylight/daylight-core_5.0.0.rc2-4_amd64.deb
+Size: 278920
+MD5sum: af4b5f42670b50bc677d374756375f25
+SHA1: 763730475971fb304117cef4db1779011ad20e2e
+SHA256: e3f16d2ee97e17d4738683edb19fb62f85b03df8a7dbd4d88f076911de7f358a
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc2-5
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1001
+Filename: pool/main/d/daylight/daylight-core_5.0.0.rc2-5_amd64.deb
+Size: 278944
+MD5sum: 552616571f53aabc0fc275672c0b833e
+SHA1: ea85480ce5eb2ce11c3a43de0036a80487e0886a
+SHA256: aae424fadb2407c89fba87e1ce4fef763c400bc4d8cb085403cdce30cc213619
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc2-6
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 999
+Filename: pool/main/d/daylight/daylight-core_5.0.0.rc2-6_amd64.deb
+Size: 278084
+MD5sum: ffc13dcfc1a6d14183aca38f797cb3b1
+SHA1: f4fc6d6edd901bd2c474b21f5c4017d3cbf199e0
+SHA256: 2bbb825b87a3a5728a3929dedaad1e938beb563f33837960cfef8483375b1603
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc3
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 645
+Filename: pool/main/d/daylight/daylight-core_5.0.0~rc3_amd64.deb
+Size: 277788
+MD5sum: 7ce1852846ec3509d9d5b0a795f823be
+SHA1: 7dd97c481d588149cb409bb99301c815cf6b1010
+SHA256: 8db7960d453ecce19628b874d522e0c11101a17ac900304b1bbaebdce254dc8f
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc4
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 987
+Filename: pool/main/d/daylight/daylight-core_5.0.0~rc4_amd64.deb
+Size: 292830
+MD5sum: 84159262275ab71515784768605930a7
+SHA1: 4f7ac80d85629d8da5a5070b2a9d4839efd23153
+SHA256: 81febb44de12d5fd1ff2cdba8a97e2d810e375b770cc497f136a2b4e6652809b
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc4-1
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 993
+Filename: pool/main/d/daylight/daylight-core_5.0.0~rc4-1_amd64.deb
+Size: 295284
+MD5sum: ff33986b97169eb0712f5bea428d31c8
+SHA1: ca713dbd61a7afda71dbab54384720b14fc6ecd6
+SHA256: 78924cc4b3cb822e6d8e235849e3391f88d92a64bfd78b6b13d73c3df1e13893
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc4-2
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 625
+Filename: pool/main/d/daylight/daylight-core_5.0.0~rc4-2_amd64.deb
+Size: 270420
+MD5sum: c1824e7ad177f5879f56370ce5c9afd9
+SHA1: aaaaa67d3c2e0f9c103485565a3d375a7a52d715
+SHA256: d072e926cd4cfc5219c0ef98f58dfa31648fb82cec738094876441128b399407
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc4-3
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 993
+Filename: pool/main/d/daylight/daylight-core_5.0.0~rc4-3_amd64.deb
+Size: 295284
+MD5sum: 62aa738d19db1b7c254408dfe0ba3178
+SHA1: a5d6e08b59273015552961be65d9a5b987ef1a09
+SHA256: 749ceb42d94671167bb05133808d1e977a6089311780fe84ad6e96363664a452
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc4-4
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 993
+Filename: pool/main/d/daylight/daylight-core_5.0.0~rc4-4_amd64.deb
+Size: 294854
+MD5sum: 66632e6bc6e2c3a851777aceb718b181
+SHA1: 6360114569c1b34f62f69c1e6e18287167f6a446
+SHA256: 243c0c83fb1b8ddf9f85f538e2c92e80d2cdbda2444434cd885fb0058b3c18ba
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc4-5
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 995
+Filename: pool/main/d/daylight/daylight-core_5.0.0~rc4-5_amd64.deb
+Size: 276788
+MD5sum: 74c075bc86717ff1cd5c1409948360f1
+SHA1: 536e876418f856a58b383bfefc0096cc44ea9d25
+SHA256: 60beae43921eb1546c2211fad40c2c1af99a1ec5447dc379334b554c8a2ee753
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc4-6
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 995
+Filename: pool/main/d/daylight/daylight-core_5.0.0~rc4-6_amd64.deb
+Size: 276804
+MD5sum: 4eef12fc539d5a73b99a1f00026ad0f2
+SHA1: f5a1e632912b775697ff0195b10e6bb191bc60a0
+SHA256: 402e41c94b6adb479ff46786c8791ff83a0f25fa2ad0cd9898d1689d9727a132
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-core
+Version: 5.0.0~rc4-7
+Architecture: amd64
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 995
+Filename: pool/main/d/daylight/daylight-core_5.0.0~rc4-7_amd64.deb
+Size: 276824
+MD5sum: 7d9b02af12622599e5ea4d9e9cd65314
+SHA1: 5abd99bc5f0aaa78f22bc394b7e73221ef80b033
+SHA256: 2315f063e6455319887959a5237b37668e4a30a20a3c294d7de4456718881aee
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: local management and privacy-respecting Rust utilities
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <contact@daylightlinux.ch>
+Installed-Size: 11
+Depends: daylight-core (= 5.0.0~rc1), daylight-themes (= 5.0.0~rc1), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0.rc1_all.deb
+Size: 5064
+MD5sum: d0eddf5b4c57c43753ba441e1b9fc490
+SHA1: e83539d610619e86bff1d02fa4a3024abcd35d92
+SHA256: 702c79dd818b50a9116417d550ad32057693755d8c276cb7ddc16f58c7c3c0a4
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop session
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 11
+Depends: daylight-core (= 5.0.0~rc2), daylight-themes (= 5.0.0~rc2), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0.rc2_all.deb
+Size: 5050
+MD5sum: c94c41a594efe5d720003a61eea07909
+SHA1: 79304b4871d741fc893c628cc2d288b01113c364
+SHA256: ace43a85e88f4fd9343d098b01e4ad8fa330dfa418a5435084c2f2bccddf0a97
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop session
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc2-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 11
+Depends: daylight-core (= 5.0.0~rc2-1), daylight-themes (= 5.0.0~rc2-1), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils
+Breaks: daylight-session-defaults (<< 1.2-1)
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0.rc2-1_all.deb
+Size: 5216
+MD5sum: 6211128b6f21422e7def9594b87d21a9
+SHA1: 86c7a8583fdb8a201dac1391392dee507883a9fc
+SHA256: 7e3a467bd2aae87b5ef8d5bb76c0822b321e1045d5410fdb70ef06dcc21921f6
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop session
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc2-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 11
+Depends: daylight-core (= 5.0.0~rc2-2), daylight-themes (= 5.0.0~rc2-2), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils
+Breaks: daylight-session-defaults (<< 1.2-1)
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0.rc2-2_all.deb
+Size: 5212
+MD5sum: 8f9fb5f98a51ffeee06639441c4ad6c3
+SHA1: 2535e2dce05d757c0690914ff2d292da1e1d0244
+SHA256: 538aadfa5d58ca9e6c598e3cbfdf13f0e0eb6f74879b1147230ce7b471e1dcf7
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop session
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc2-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1066
+Depends: daylight-core (= 5.0.0~rc2-3), daylight-themes (= 5.0.0~rc2-3), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, python3-tk, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils
+Breaks: daylight-session-defaults (<< 1.2-1), daylight-games (<< 5.0.0~rc2-3)
+Replaces: daylight-games (<< 5.0.0~rc2-3)
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0.rc2-3_all.deb
+Size: 673644
+MD5sum: 8358c785ccd29d8fb286c408215b9fc8
+SHA1: 861351828f25db4d5b82b5b89f44404754cb704d
+SHA256: 51d6445da8cab24dbcb0b70bb1a7507d17e8bf56a0fdad548b67fefdf2b43267
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop session
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc2-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1068
+Depends: daylight-core (= 5.0.0~rc2-4), daylight-themes (= 5.0.0~rc2-4), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, python3, python3-tk, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils
+Breaks: daylight-session-defaults (<< 1.2-1), daylight-games (<< 5.0.0~rc2-3)
+Replaces: daylight-games (<< 5.0.0~rc2-3)
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0.rc2-4_all.deb
+Size: 674292
+MD5sum: ccd1f5eab2a39e6a14987016c0719db4
+SHA1: e004ba2ff65862094661e749d784f80bfd357b9d
+SHA256: 59c85427b6864289bc8ea9ca148f86de0a4b71238dcff887ddef73b8a8da7053
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop session
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc2-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1069
+Depends: daylight-core (= 5.0.0~rc2-5), daylight-themes (= 5.0.0~rc2-5), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, python3, python3-tk, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils
+Breaks: daylight-session-defaults (<< 1.2-1), daylight-games (<< 5.0.0~rc2-3)
+Replaces: daylight-games (<< 5.0.0~rc2-3)
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0.rc2-5_all.deb
+Size: 674624
+MD5sum: 3c6ffea5f8cfa3dd229fcae186356695
+SHA1: 2f27972d4e4a57bdcc9a7094111ac892ca9e6cc8
+SHA256: fa2e3da89d40a111af3cb7d4e18eaf3ee9b6c6d3f8980be36837cd4be71a64ec
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop session
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc2-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2997
+Depends: daylight-core (= 5.0.0~rc2-6), daylight-themes (= 5.0.0~rc2-6), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, python3, python3-tk, python3-pil.imagetk, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils
+Breaks: daylight-session-defaults (<< 1.2-1), daylight-games (<< 5.0.0~rc2-3)
+Replaces: daylight-games (<< 5.0.0~rc2-3)
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0.rc2-6_all.deb
+Size: 2456776
+MD5sum: 559149896d5082d08f1b317095e24bbe
+SHA1: 9a19d26572a67f097c0de5685fa0871d9e884f26
+SHA256: bb2e4f5ab29aced310038027aece010b98f1c962f4ae45d65fae52e97435d1b8
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop session
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 11
+Depends: daylight-core (= 5.0.0~rc3), daylight-themes (= 5.0.0~rc3), fluxbox, conky-std | conky-all, xterm, feh, yad, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0~rc3_all.deb
+Size: 5196
+MD5sum: 99f6badf9e14e79ef3769e2744a9bb9f
+SHA1: da782cc0c71d6ac5947b3e457811d46cea564d0a
+SHA256: 74d9246c982e140bf4d216a090e32e02c5f4f9a0e58c2dd7b864b31a21a58f44
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop session
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 414
+Depends: daylight-core (= 5.0.0~rc4), daylight-themes (= 5.0.0~rc4), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0~rc4_all.deb
+Size: 298050
+MD5sum: 99ef0b88bc796b433dede4799be95215
+SHA1: 759d8daafedb415de7141d988530c1c196dae372
+SHA256: 398788476b4b5c7b2640dd6daecc5e783668a1b40abacc710dad15aa23a497af
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop with native graphical applications
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc4-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 426
+Depends: daylight-core (= 5.0.0~rc4-1), daylight-themes (= 5.0.0~rc4-1), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0~rc4-1_all.deb
+Size: 301374
+MD5sum: 2b4cea783a43443e4365c65210d42dc8
+SHA1: 3e8103721691a7acf8fbb4676f12d99b35500774
+SHA256: 1f464918a2ea36a110fbd8f62c9e981c8a1bf615fce0b42bf2ab0671b0780819
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop with native graphical applications
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc4-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 432
+Depends: daylight-core (= 5.0.0~rc4-2), daylight-themes (= 5.0.0~rc4-2), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0~rc4-2_all.deb
+Size: 302412
+MD5sum: b715b44ebb04a42049fc8e7c5970a769
+SHA1: eb4cc4c9ee527ea957be4e2563cf2de7e101baa7
+SHA256: 2a8f55fcc1215172ca5ce00ff25503a25b39c5f2090e720f58e611abc6cb1402
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop with native graphical applications
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc4-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 435
+Depends: daylight-core (= 5.0.0~rc4-3), daylight-themes (= 5.0.0~rc4-3), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0~rc4-3_all.deb
+Size: 303812
+MD5sum: cc428b088aae3dade668479fe536f82b
+SHA1: 367b04f9c6262d46c31b98d14a05bc36d62cfc6c
+SHA256: 397ce4af7c2c36118d7c5cbc290d684f5cf679f28b83a65920fb4537d4252b7c
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop with native graphical applications
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc4-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 435
+Depends: daylight-core (= 5.0.0~rc4-4), daylight-themes (= 5.0.0~rc4-4), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0~rc4-4_all.deb
+Size: 303918
+MD5sum: a00ce70dd3cb4f88052cd4e140cf79c6
+SHA1: 5e804f726136d17154852b3110b65e897d6321b2
+SHA256: a64177cafa9a8288676a149fab8ef7052ffaa82bc22aaaa5892e4728c8d432b8
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop with native graphical applications
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc4-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 435
+Depends: daylight-core (= 5.0.0~rc4-5), daylight-themes (= 5.0.0~rc4-5), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0~rc4-5_all.deb
+Size: 303216
+MD5sum: d4f2b284e1fcffd4a383b22fb358cf11
+SHA1: 961de0aa7b967b94aa6a340118edc442289604e8
+SHA256: bb238a8581a6dfad90d97cdcf1a59acf1a71a5cb513f874cc91158f844cbfefe
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop with native graphical applications
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc4-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 438
+Depends: daylight-core (= 5.0.0~rc4-6), daylight-themes (= 5.0.0~rc4-6), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils, libnotify-bin
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0~rc4-6_all.deb
+Size: 303944
+MD5sum: 2f973081fd3d766b8434b1b548a05ee3
+SHA1: 0356e06248a8524197a68a4d68d2846fe468309e
+SHA256: 0d25168a4dab1a671aca08270acf5cad64cdb3fa1774212502d19eb913dec19e
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop with native graphical applications
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-desktop
+Version: 5.0.0~rc4-7
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 438
+Depends: daylight-core (= 5.0.0~rc4-7), daylight-themes (= 5.0.0~rc4-7), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils, libnotify-bin
+Filename: pool/main/d/daylight/daylight-desktop_5.0.0~rc4-7_all.deb
+Size: 303988
+MD5sum: d842b3f734afdc685f857d2e783211f6
+SHA1: 7dfc6790e929129fe646f83b8ee3fc6932768886
+SHA256: 988c75ec0ab9da91666f7fc3fa0d1c27cea098bf1bf78c661912e49603c0d683
+Section: x11
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: isolated Fluxbox desktop with native graphical applications
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <contact@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc1)
+Filename: pool/main/d/daylight/daylight-games_5.0.0.rc1_all.deb
+Size: 1814
+MD5sum: dde3b19c88123f7b6686aa2df76ee2a4
+SHA1: 49208b105aad2e017d53caa432b8c856051d4f32
+SHA256: ecd34db6166fe41e7443895df9aac542b2078939473c8c520f93c74cee2635e2
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc2)
+Filename: pool/main/d/daylight/daylight-games_5.0.0.rc2_all.deb
+Size: 1804
+MD5sum: 6b331b3dd20663fba71449c15bf5e252
+SHA1: ef0906c3c9662a38c3f2be80fe93ba3deced017e
+SHA256: 727707f9c2769cb845d6c509e59b276a3d3cdac5a9315dac77f26d5ae276a1ab
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc2-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc2-1)
+Filename: pool/main/d/daylight/daylight-games_5.0.0.rc2-1_all.deb
+Size: 2028
+MD5sum: 4105e3eb3f3a2535d7a10ccee5d5f55e
+SHA1: 936fe2ece66b4f6c894b78133c54b37499ef3760
+SHA256: 33965b23b5d89eaefac3bc01bcf040d632e8304bfca4299cec80ed7e146fe700
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc2-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc2-2)
+Filename: pool/main/d/daylight/daylight-games_5.0.0.rc2-2_all.deb
+Size: 2024
+MD5sum: da485e250c5a7e391bcb9ff34df42cd3
+SHA1: 3c5898de4fc6108e7e1d8cc694fa69ce7c2f577b
+SHA256: 3605474b602325fe66108fead8c01ea11acfd4b6a0ccc1017cefd37ef7d2a812
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc2-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-desktop (= 5.0.0~rc2-3)
+Filename: pool/main/d/daylight/daylight-games_5.0.0.rc2-3_all.deb
+Size: 1660
+MD5sum: ac93c2fe6fe760c379e7dbd2df655ece
+SHA1: fcee9f1a810cf23eaf637fc9c5c1b0827c4647da
+SHA256: 0e0c1b1e10fc4e1c8a839eca728bc7c605f35fcfe2e2fc4e1e10815f94b51b34
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc2-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-desktop (= 5.0.0~rc2-4)
+Filename: pool/main/d/daylight/daylight-games_5.0.0.rc2-4_all.deb
+Size: 1660
+MD5sum: 69749faf3c505ca0e7c5472d66cf3baa
+SHA1: 55580bbcf5ad418a1a95b1faa79bb1edb35bc512
+SHA256: d5a874140d067d241a52eecfb169e8cc1ed2bf52f61699e44854e5da953e1f86
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc2-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-desktop (= 5.0.0~rc2-5)
+Filename: pool/main/d/daylight/daylight-games_5.0.0.rc2-5_all.deb
+Size: 1840
+MD5sum: ccf9331d387c7c3b1b6c475ad8b06e09
+SHA1: 75ee3ef6a8a26140e43452eaa17c4f03d838b2e4
+SHA256: cfbf6dcde51d9a6875c2ee07729dd8c248237b383951ddc3b740e8366f209ee1
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc2-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-desktop (= 5.0.0~rc2-6)
+Filename: pool/main/d/daylight/daylight-games_5.0.0.rc2-6_all.deb
+Size: 1844
+MD5sum: 321ae6fc26b44538f2942bd883a3559a
+SHA1: fdb820c34efbeea3f66d96853bc653a1c1331c80
+SHA256: aff172b8506e218ec1876234ff4d458eb4f86ce0b2ffd7a32b36d26a9a9e213f
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3
+Depends: daylight-desktop (= 5.0.0~rc3)
+Filename: pool/main/d/daylight/daylight-games_5.0.0~rc3_all.deb
+Size: 2016
+MD5sum: 3fdb7b1d44c3171326b7626ab7302bba
+SHA1: ef8edd8c5111bbc00c57746026178382321cd519
+SHA256: 8f15ec910750274a8beff37a00559912fd8c9ee8008df27c9ef31e66d78180ac
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 97
+Depends: daylight-desktop (= 5.0.0~rc4)
+Filename: pool/main/d/daylight/daylight-games_5.0.0~rc4_all.deb
+Size: 30398
+MD5sum: 162ad9a3e2de75df8a97267eb4932718
+SHA1: 9f4287a096ae510edb49503cdfd9df05369fee32
+SHA256: 82f4d0aec3cb0f1e8d025dd7f12087cb869bcc418821b5216e62f89098fe2599
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc4-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 97
+Depends: daylight-desktop (= 5.0.0~rc4-1)
+Filename: pool/main/d/daylight/daylight-games_5.0.0~rc4-1_all.deb
+Size: 30402
+MD5sum: 84dd16dcb406a616c48189316d415e49
+SHA1: a5b28a01e9e95b1bb0dd2f3e828c0977ce42233e
+SHA256: 82c4fc8466ec94e97abd2cd90c93adcb4e15544d2492f4870d71590fc463b323
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc4-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 274
+Depends: daylight-desktop (= 5.0.0~rc4-2)
+Filename: pool/main/d/daylight/daylight-games_5.0.0~rc4-2_all.deb
+Size: 201124
+MD5sum: 7a8d0f0cf3a3924006b35b7171009fbe
+SHA1: 872c925566a4d11a1fcf42f1cd1fb4fb606e74c6
+SHA256: 03a8058b20a34e3d1565743ba4be0b36ba407809b48a49dabdb726225b8d0247
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc4-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 274
+Depends: daylight-desktop (= 5.0.0~rc4-3)
+Filename: pool/main/d/daylight/daylight-games_5.0.0~rc4-3_all.deb
+Size: 201764
+MD5sum: ea40d75d989912fabe5a64500f420dff
+SHA1: 613d9d8084c74b74fc0c5555fc38e492838a31a8
+SHA256: 3481b1c94968704628f49234147cb07d5d85ccb7eb3954c645f13dd4288d8184
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc4-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 274
+Depends: daylight-desktop (= 5.0.0~rc4-4)
+Filename: pool/main/d/daylight/daylight-games_5.0.0~rc4-4_all.deb
+Size: 201766
+MD5sum: 6aea8cf517a1d1c3fb5c9b6c3e9b0d00
+SHA1: 6ba16ceeba2577f498607160c369f29afffe6c38
+SHA256: ca9bd7d50e1ebb859a9d6041e543ae7025a620dfbcc7b3472b0f0ac868fd9814
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc4-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 274
+Depends: daylight-desktop (= 5.0.0~rc4-5)
+Filename: pool/main/d/daylight/daylight-games_5.0.0~rc4-5_all.deb
+Size: 201120
+MD5sum: fdc532241625b3558b7329f76f79213a
+SHA1: f9eacae406d216080a670ad2f7f1c31f12e31408
+SHA256: 22ef5270a8bbfb8667c3bd03212f72b8367ed602a333de2f4e82ded1a935de20
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc4-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 274
+Depends: daylight-desktop (= 5.0.0~rc4-6)
+Filename: pool/main/d/daylight/daylight-games_5.0.0~rc4-6_all.deb
+Size: 201124
+MD5sum: f81e32bdb1613bab129d22a001977dad
+SHA1: 80f572829adc171d5c394b0443b900619399d97f
+SHA256: eb048dc04609d13855ebd41d08e74e5263b6f6c1d028c20aa021aaac70eda956
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-games
+Version: 5.0.0~rc4-7
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 274
+Depends: daylight-desktop (= 5.0.0~rc4-7)
+Filename: pool/main/d/daylight/daylight-games_5.0.0~rc4-7_all.deb
+Size: 201104
+MD5sum: cb16f2e9c562a443b86b75db5392ba60
+SHA1: f5d557692a77a6d710659dee602c1d31544857de
+SHA256: 153a9a33028e6e8b0062db590c4fb14dc726fb719fb676797a8a36c3cb013ee9
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional offline games without wagers
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <contact@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc1), daylight-apps (= 5.0.0~rc1)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0.rc1_all.deb
+Size: 1016
+MD5sum: 7c4f1b96f9c4e2aa0c1ed435d4ecf253
+SHA1: 0544b9cd93aa0a0095df130ecaf77013be5d4942
+SHA256: f6c4e251009939d0759eb8ca3d86306462c278479c01605ea88b9e554364fa0c
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc2), daylight-apps (= 5.0.0~rc2)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0.rc2_all.deb
+Size: 1016
+MD5sum: 53d7de8c65ca09093a701d18cc4c3ff0
+SHA1: f7689a183d00ec22f1ca53f77f937afa42ac895b
+SHA256: ac93201f0741a345b16f1cea44efbe47ce7b6a698e0b414051d944de06b856d8
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc2-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc2-1), daylight-apps (= 5.0.0~rc2-1)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0.rc2-1_all.deb
+Size: 1236
+MD5sum: c56f5e4e4e3e286b6af0265d411223a7
+SHA1: 357c447a1085525af432a8bb7747a03afea0275c
+SHA256: 686d05185f4bf482e0be5f701155dacc580446746bc5c747357ea90b6da23f95
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc2-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc2-2), daylight-apps (= 5.0.0~rc2-2)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0.rc2-2_all.deb
+Size: 1232
+MD5sum: 6686c9d17598383f5c19f7c631122538
+SHA1: 9637b47f496430a43fda9a85755cfee5ae80ef19
+SHA256: e83822d243d59117aaf3adaec63f51236f1a93bca9a1954c006e4c9d07c1a872
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc2-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc2-3), daylight-apps (= 5.0.0~rc2-3)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0.rc2-3_all.deb
+Size: 1232
+MD5sum: 359ff5eee7e50b1105a36039c75afb84
+SHA1: 94ebcfa69a93a131176ee21a3a9e8052c73ac54a
+SHA256: ae336a8345c6cd8b6dc7bdb06b9d306c0fe1d9153b245d676dabe195f369704b
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc2-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc2-4), daylight-apps (= 5.0.0~rc2-4)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0.rc2-4_all.deb
+Size: 1232
+MD5sum: 87bbd432373def789743478559a07baf
+SHA1: f24225953226891575a6fd30af5d8559376e4b71
+SHA256: f1ce2d86864890338664d44e165ba9f38a73b7f69fc3d6a2e36a82fcda0d8bfa
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc2-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc2-5), daylight-apps (= 5.0.0~rc2-5)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0.rc2-5_all.deb
+Size: 1236
+MD5sum: 283b75c4a51eba6e29e9675981e869e0
+SHA1: bc757d3b1db6e7813a0c204e181f48150b4f2880
+SHA256: 9505d9244a4cd3ac879d0d560473b6e12b0051270cfaf4fbbabc65b2cb644676
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc2-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc2-6), daylight-apps (= 5.0.0~rc2-6)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0.rc2-6_all.deb
+Size: 1240
+MD5sum: e22e7a86295ca6bcf2da5fbd6e1e3253
+SHA1: cfa9bf9b44cf79583abfbf04003e02edc40839d6
+SHA256: 557dfaec0fe7b77d96cdc9334095a85f02411d76e5388d88c22363b8f0559d5b
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc3), daylight-apps (= 5.0.0~rc3)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0~rc3_all.deb
+Size: 1228
+MD5sum: 2ef7a91d06235426a4bb6d0f38b56c42
+SHA1: a3ddff517f176d957ac7111226379793b300398c
+SHA256: 16d623705e6a857594b73437f72ce40f6f149400b45ba698cce2ad09d171b726
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc4), daylight-apps (= 5.0.0~rc4)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0~rc4_all.deb
+Size: 1020
+MD5sum: 1a32402bf437550cbe26dd87f37edb59
+SHA1: 55f428d7e2b695575d0fa91bd73e7402820bbfc2
+SHA256: b2f30742d8e8afa733a625a42115ac10fb4895e33c4b77f54a7562cb39e39392
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc4-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc4-1), daylight-apps (= 5.0.0~rc4-1)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0~rc4-1_all.deb
+Size: 1022
+MD5sum: 060c2d8702bcc452ddd192d7c8a50c44
+SHA1: 2fee3a26be729bfd294f0b5bb5764a346d269717
+SHA256: cd792302037b390d33029dcebca3250d0d2e7a155afa1b283b03a181de0439c0
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc4-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc4-2), daylight-apps (= 5.0.0~rc4-2)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0~rc4-2_all.deb
+Size: 1228
+MD5sum: 7f13a061d3178348d905b30e03144bac
+SHA1: f81c5767f9d564ee65b2ace1d0fddba73da3eafd
+SHA256: ca2b3fab427017be05daeff63e9818716d6567410f24b0b38a3a7aebae72944e
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc4-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc4-3), daylight-apps (= 5.0.0~rc4-3)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0~rc4-3_all.deb
+Size: 1016
+MD5sum: 09884389c87ee60cc573b2910dce4820
+SHA1: 5933956dc340fd3a81a315e22ae2528fd82b08dc
+SHA256: 69369d9833b92594573069c70af71524799df4c78c03603eb14172cfa348029f
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc4-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc4-4), daylight-apps (= 5.0.0~rc4-4)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0~rc4-4_all.deb
+Size: 1018
+MD5sum: adb8c28c973065d5440227dbc46c0ae6
+SHA1: ca772e934ce78a4b016c960a26ab985362ef0f2d
+SHA256: 8952881660df37226c063ac611c21c81928cc97bfff1bf813631159c727a4917
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc4-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc4-5), daylight-apps (= 5.0.0~rc4-5)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0~rc4-5_all.deb
+Size: 1232
+MD5sum: 270ac91d6bfc935fcd558baabd417af4
+SHA1: 3f9445a6ebfdce3b80acfe671ae91d392613b4d5
+SHA256: 18fa9c54eaf7e95c0e482333edddcf74262a20a93d4add482177b8ea5cdf95c5
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc4-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc4-6), daylight-apps (= 5.0.0~rc4-6)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0~rc4-6_all.deb
+Size: 1228
+MD5sum: fc4cb960a3367dc522449f9dbcfca440
+SHA1: 50a732a5520ba3e0e8de6e5f9262e4f9beb85def
+SHA256: 6edf41af219673e11a19461136e3ab316318f564ffce01d54743f7a8022bc4b1
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-linux
+Version: 5.0.0~rc4-7
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 1
+Depends: daylight-desktop (= 5.0.0~rc4-7), daylight-apps (= 5.0.0~rc4-7)
+Filename: pool/main/d/daylight/daylight-linux_5.0.0~rc4-7_all.deb
+Size: 1232
+MD5sum: 551ccbc476fdaf75d94c61ce8e990fbb
+SHA1: c9a7529df013fe25252bc9fdc97c71d48ea410af
+SHA256: d0da59d98c0421244ffe946a402d3533f45515e9df4fdfd13ea1bc40260988fb
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: lightweight Daylight environment metapackage
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-session-defaults
+Version: 1.2-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Depends: daylight-linux, python3, util-linux, polkitd, systemd, labwc | fluxbox, swaybg, waybar, wtype, python3-gi, gir1.2-glib-2.0, libglib2.0-bin, xwayland, dbus-user-session
+Filename: pool/main/d/daylight/daylight-session-defaults_1.2-1_all.deb
+Size: 6644
+MD5sum: ad581503cad3310759aff7a9e4f070b6
+SHA1: 53c7437295338dd2a81b254cae8137ff98880882
+SHA256: 443b17315393ad65b14e0efa35f21df0adb1f17b1ffbaa1b85507ffe565af86e
+Description: Select the Daylight login session and restore previous preferences on removal
+
+Package: daylight-telemetry
+Version: 5.0.0~rc1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <contact@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc1), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0.rc1_all.deb
+Size: 2174
+MD5sum: 2addba710e2088afae07113e87594f97
+SHA1: 892e6e0b62836c9d6b7253727973f59f5e90e696
+SHA256: ee6f882572c9db9f46290d7abce2f8fc1ce7b3e3a469f0cb6ae79ce9a37a03b0
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc2), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0.rc2_all.deb
+Size: 2170
+MD5sum: 4960fa0bc3fff383b8fad7f173a3b329
+SHA1: 30eb3b1a0071a93af3719da64b4ddf5d0e816f61
+SHA256: 91f0b101df6c024faefdd3f299fab85f8ef78ff5b0f2461ef4f3f7deef8db8a3
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc2-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc2-1), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0.rc2-1_all.deb
+Size: 2412
+MD5sum: c3cdca8ce96faaebd83e1d8c992c4077
+SHA1: 6e347c0fc751d7ffa68731d84135fac095d4a2e7
+SHA256: 351d40e2a43a059d4c2c41e0f2f77d8930c7a563c6ae1207ecab7770871978c1
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc2-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc2-2), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0.rc2-2_all.deb
+Size: 2412
+MD5sum: cec18e554c50b8b52a46eb259fabacc4
+SHA1: 5f64d3b7e9372d34eed0aa67f304ea84f62ee431
+SHA256: 097a38733abd37b6ef65ce4aeb3594d65b17aae297284af5a9b604dffa9babb6
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc2-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc2-3), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0.rc2-3_all.deb
+Size: 2412
+MD5sum: cadd6f1435855e6f61fd5bb3bcb137c1
+SHA1: 4a01edf47329d014d68fca140f02646cda0aafe6
+SHA256: c6432254703b9d364003233c0154236cfaae82265559471f43ad7a96e37543c6
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc2-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc2-4), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0.rc2-4_all.deb
+Size: 2412
+MD5sum: be1a913c8db06ba87b7661a59c93f3e0
+SHA1: d3baa2335a9fe18e6d055d90a32d77d3aad3688e
+SHA256: 2b2dfdbc71726d3fecc42d1f67997c64e9b90a34d546194eafb4a8466a996272
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc2-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc2-5), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0.rc2-5_all.deb
+Size: 2416
+MD5sum: 0358ecf254fba3c01f9adfdf2cd66d90
+SHA1: 5d54bd7e8f35dd63e7de61bd7cd84208d24908d6
+SHA256: 7d728d34b53e5f5cd76b3d92d222c025e883cfb3086dfb6882be86a9678ef557
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc2-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc2-6), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0.rc2-6_all.deb
+Size: 2412
+MD5sum: 7aa7c9cfca4dd1009bf3697b0bd9cca0
+SHA1: 840fb277fc165421d084f3c9ca3e445ba919a69b
+SHA256: b3047333259b7ab378106a4bdeb533ce59088f90b1159b9b03533132eb5efb3a
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc3), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0~rc3_all.deb
+Size: 2424
+MD5sum: b52851f50c0720da283d1526ec295a62
+SHA1: 3a352027e0453f59016c4bd8da5a9e79f4b1a9d3
+SHA256: a3219a439fea1d610795e11ec98892a5afe07756467019e7e91e8dcc82239e07
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc4), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0~rc4_all.deb
+Size: 2194
+MD5sum: e6344ec50c8a23bce5d6a9ae0a357527
+SHA1: d10b8b6bb1b5bd5e37f0fb8bea1911a2ef0e35ec
+SHA256: a328fc5ea97526ef39138bb7cde635f3deb788c0ac3e5cb29b2b25329442902d
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc4-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc4-1), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0~rc4-1_all.deb
+Size: 2192
+MD5sum: d070fb87e30b4823924910027333137e
+SHA1: c219c004a8fd52f1cd463cd10f56e61b3202a176
+SHA256: 2ea4b676d2a4ba5483637b0c5d30c334b127c9394011256189e471016edfe229
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc4-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc4-2), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0~rc4-2_all.deb
+Size: 2428
+MD5sum: 20d31072b587fafedabec5ed19a0011b
+SHA1: f77394d433caf8becc9641d907cba1c6a1cca8e0
+SHA256: 2549f7a1f2b6d5a9bb54f29b704ed15299cf8fbac4160e652896c177b4c205d0
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc4-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc4-3), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0~rc4-3_all.deb
+Size: 2190
+MD5sum: ae0a832ca71053c65294e2777a98d01e
+SHA1: bfed4d50b50a5735fbfb27114c16b6af82d524c1
+SHA256: 242fb957bc11dd818cd3880aa874b9567333d499c0978be0e35cfa584259c90f
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc4-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc4-4), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0~rc4-4_all.deb
+Size: 2194
+MD5sum: 797acdae1517dfc32a9e4d6467a94a91
+SHA1: 9e3938a8b2db29bf566d38838977390b27d83e03
+SHA256: deff8f70dafe06c1a9d2fb25974a25cfec0164f5dee9dd13126bcdc525b9232a
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc4-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc4-5), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0~rc4-5_all.deb
+Size: 2428
+MD5sum: 56fc65dd3f10a5be3334b1b506b4440a
+SHA1: 956318e06eddea57fc83d834db02f74542d19ff5
+SHA256: a7d9b3da240bc3685e4e4a6bf7fbddb6cfe1e0527ab3914b6f973b062c0547a3
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc4-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc4-6), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0~rc4-6_all.deb
+Size: 2424
+MD5sum: b5c73c072ee5cdc30a2fb5243e4e0409
+SHA1: 8529029c1c8270d3a683b3ff8a507b3a1192d3c7
+SHA256: 5bfa7b2443f134807c3506492f0ac330d854139918ac39c8da8bb6aeecb87057
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-telemetry
+Version: 5.0.0~rc4-7
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 2
+Depends: daylight-core (= 5.0.0~rc4-7), curl, ca-certificates, systemd
+Filename: pool/main/d/daylight/daylight-telemetry_5.0.0~rc4-7_all.deb
+Size: 2424
+MD5sum: b0ef07c7e96ee956c01a20b1c4a0ef9a
+SHA1: aaf105a7b53a2a3f33dfd2ad564cff1eb6e82f8e
+SHA256: efe3fadaed7f0933f8564101458245df6cc0001b5c5ed0f8a8aee12e110656aa
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: optional boot counter, disabled until explicit consent
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <contact@daylightlinux.ch>
+Installed-Size: 573
+Filename: pool/main/d/daylight/daylight-themes_5.0.0.rc1_all.deb
+Size: 533896
+MD5sum: 962f54719a37192637645a4e7cd93470
+SHA1: 68dd94feacfd76f76a938df42390a297c0b0caf3
+SHA256: 85d104b52fb512ea0b8974761681ddc92521d2d9b517fa7f7ef43e0ec7aed9c1
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0.rc2_all.deb
+Size: 3098726
+MD5sum: 030087bfd05be358d3d094c117c1b333
+SHA1: 9f64580ba62d0e649617fdfa387c70a6b0ad95bb
+SHA256: 1f62044d4829932111ceb679c4dd46459afec70393dd8c6cad5e0f124666e757
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc2-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0.rc2-1_all.deb
+Size: 3102620
+MD5sum: 0e2eb8570c9761dcd7beb3f12a4a7d03
+SHA1: 717a1951e2576a8b6ec8ffb338c3d24447cd0a4e
+SHA256: dc3bcdd9ff8f914304cef433d794d6398b36488b3461ca8f79b1c11b0f16e069
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc2-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0.rc2-2_all.deb
+Size: 3102620
+MD5sum: 883c2393cad7f7d306ae1e7bb97c7f5f
+SHA1: 2c0fe54eade3594faacc60f8ebb3ac8b88749233
+SHA256: 82941ac7d25f813463da186f3eec9ad2e49c3031ff833cf481c358adbfbd753f
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc2-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0.rc2-3_all.deb
+Size: 3102620
+MD5sum: a4f0b46ab87fa0214e7aa446c8015cd8
+SHA1: 3c8db8c5f06f1144d01ad6fa822d28443073b022
+SHA256: 1df13edad709c115ab9215114f719e42514de2f375df3f829997744095c1caab
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc2-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0.rc2-4_all.deb
+Size: 3102620
+MD5sum: d96f51d8894323ff9b67616fcc25cfe8
+SHA1: ab18ca9740403af1b4a8caad8c1b752253e7c011
+SHA256: 88c9457c24a098cbfbc70e2ace1ab488bffc743d3c03dcbbf4b7f50061c0bc06
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc2-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0.rc2-5_all.deb
+Size: 3102636
+MD5sum: 18453a46b2a68ca11e501e8d01a6068f
+SHA1: 3702a21cd65e5518a18ce39e5d9dc9ac4d75bca3
+SHA256: ccfbc25d3028c8b75bd761e270a7056cdb774339f645836c9b21d918a1ff05bc
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc2-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0.rc2-6_all.deb
+Size: 3102616
+MD5sum: 4a15a236c8ca83dc29de194a6cff6ca4
+SHA1: 48311effa698a444337cb3221108cfbad9eab4c4
+SHA256: 9ba0061bb51b107a5ab3f73a2ffba03a20fbeab3bfee58882fe8a392e3b0de11
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3109
+Filename: pool/main/d/daylight/daylight-themes_5.0.0~rc3_all.deb
+Size: 3129284
+MD5sum: 3885468e66e6b250ec6cd9b41ce2f1c1
+SHA1: 181c121fd94532bcd9b641d0671a2051e879fe42
+SHA256: c651864a87921728ae870c6fcff1a73cec0cfe8f55c3745d3614e5084a6c3cf2
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0~rc4_all.deb
+Size: 3098720
+MD5sum: cd3afc47ff9e71b48337a64a7b4de7d8
+SHA1: 8a8b0a1e69a678a2099230b1dab3e2b8c609a278
+SHA256: 38e8afdd52557442025748f44b4765f208b1b4b0b09b1ab38816b13212a80f99
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc4-1
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0~rc4-1_all.deb
+Size: 3098724
+MD5sum: 5892885d04f152330e3e2131c776f8d5
+SHA1: ff0f27f3b4ca5f145e317894d537d3af4b96b820
+SHA256: fd34982dcfe9a47f1da0d451d8887e9ef331e9baba2cbbbc56c24a6fef167e54
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc4-2
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0~rc4-2_all.deb
+Size: 3103028
+MD5sum: 32faeabc4d6d9f82b03b6d7fd2160fb5
+SHA1: 51a35dcbccfa381d8ebc78c72e93e5c3383c1dab
+SHA256: db9f794b678fa3b02f29941908f86dac8a56680addf5bd0138cabe4d9fb827c7
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc4-3
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0~rc4-3_all.deb
+Size: 3098724
+MD5sum: 364124bfe66ce603cef5c01114263156
+SHA1: 6d013f3fc9220a5b75ceed1b01e95d801492b026
+SHA256: c609baad5871520442a30e9428397556f36d9fdda533f94793c37e67b03e5cc8
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc4-4
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3080
+Filename: pool/main/d/daylight/daylight-themes_5.0.0~rc4-4_all.deb
+Size: 3098714
+MD5sum: 329f2c8f607281b2290ee873399f0b87
+SHA1: f0012f601f6d86bbf8560294f69ea8a1d5406a66
+SHA256: 58dcedfaaf454c955a27fe1d61b4c89371157a6e029f385e842b48e4d6f3b42c
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc4-5
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3109
+Filename: pool/main/d/daylight/daylight-themes_5.0.0~rc4-5_all.deb
+Size: 3129280
+MD5sum: 7382bb38b77599c77843365f1a4bb007
+SHA1: cfa4f2cf9b068a52803254a4958ad056e34585b4
+SHA256: 8524b7892a519bbc8dac265c9f2897a65110545278473b52e73bb97204c84e7c
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc4-6
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3109
+Filename: pool/main/d/daylight/daylight-themes_5.0.0~rc4-6_all.deb
+Size: 3129288
+MD5sum: f7a80fdc209483d68f8065d0b70655d8
+SHA1: f9e565469e668bbbdba178963680b9f661adf676
+SHA256: ce734c5ca445aa3c4cdbf417a0cdd13375b1b0f1b405244c8718a93fafa75bac
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
+Package: daylight-themes
+Version: 5.0.0~rc4-7
+Architecture: all
+Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+Installed-Size: 3109
+Filename: pool/main/d/daylight/daylight-themes_5.0.0~rc4-7_all.deb
+Size: 3129288
+MD5sum: 7209b7132adda5b8651573d19c26b6db
+SHA1: d80cb2c355a690e55fe849f2e1daa36bb0d12d67
+SHA256: 3770f8b1c3aac4a1baaa22d0c925583ba80dd286979670a255c7328e59365068
+Section: utils
+Priority: optional
+Homepage: https://daylightlinux.ch
+Description: photographic mountain and sunrise identity, backgrounds and icons
+ Lightweight, opt-in components of Daylight GNU/Linux.
+ Does not replace the base distribution, kernel or existing desktop configuration.
+
