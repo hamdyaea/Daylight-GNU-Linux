@@ -7,6 +7,8 @@ set -eu
 if [ "${DAYLIGHT_DISPOSABLE_TEST:-}" != yes ]; then echo 'Set DAYLIGHT_DISPOSABLE_TEST=yes only in a disposable test container.' >&2; exit 2; fi
 export DEBIAN_FRONTEND=noninteractive
 root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+package_version=$(sed -n 's/^VERSION = "\([^"]*\)".*/\1/p' "$root/scripts/build-debs.py")
+[ -n "$package_version" ] || { echo "Cannot determine Daylight package version" >&2; exit 1; }
 arch=$(dpkg --print-architecture)
 printf '#!/bin/sh\nexit 101\n' > /usr/sbin/policy-rc.d
 chmod 755 /usr/sbin/policy-rc.d
@@ -27,7 +29,7 @@ printf '# existing shell config\n' > /home/daylight-test/.bashrc
 printf '# existing wallpaper setting\n' > /home/daylight-test/.fehbg
 chown daylight-test:daylight-test /home/daylight-test/.conkyrc /home/daylight-test/.bashrc /home/daylight-test/.fehbg
 sha256sum /home/daylight-test/.conkyrc /home/daylight-test/.bashrc /home/daylight-test/.fehbg > /tmp/daylight-user-before
-apt-get install -y --no-install-recommends "$root/dist/daylight-core_5.0.0~rc4-1_${arch}.deb" "$root/dist/daylight-themes_5.0.0~rc4-1_all.deb" "$root/dist/daylight-desktop_5.0.0~rc4-1_all.deb" "$root/dist/daylight-apps_5.0.0~rc4-1_all.deb" "$root/dist/daylight-games_5.0.0~rc4-1_all.deb" "$root/dist/daylight-telemetry_5.0.0~rc4-1_all.deb" "$root/dist/daylight-linux_5.0.0~rc4-1_all.deb"
+apt-get install -y --no-install-recommends "$root/dist/daylight-core_${package_version}_${arch}.deb" "$root/dist/daylight-themes_${package_version}_all.deb" "$root/dist/daylight-desktop_${package_version}_all.deb" "$root/dist/daylight-apps_${package_version}_all.deb" "$root/dist/daylight-games_${package_version}_all.deb" "$root/dist/daylight-telemetry_${package_version}_all.deb" "$root/dist/daylight-linux_${package_version}_all.deb"
 test -f /usr/share/daylight/ui/daylight_gui.py
 test -f /usr/share/daylight/shardturn/Shardturn.py
 test -f /usr/share/daylight/shardturn/LICENSE
@@ -106,7 +108,7 @@ apt-get remove -y --no-auto-remove daylight-games
 test ! -e /usr/share/daylight/games.enabled
 test ! -e /usr/share/daylight/shardturn/Shardturn.py
 test -f /usr/share/daylight/ui/daylight_gui.py
-apt-get install -y --no-install-recommends "$root/dist/daylight-games_5.0.0~rc4-1_all.deb"
+apt-get install -y --no-install-recommends "$root/dist/daylight-games_${package_version}_all.deb"
 kill "$session" 2>/dev/null || :
 # Check a second user with pre-existing classic Fluxbox files.
 adduser --disabled-password --gecos '' daylight-existing
@@ -124,7 +126,7 @@ pgrep -u daylight-existing -x fluxbox
 DISPLAY=:100 xprop -root _NET_DESKTOP_NAMES | grep '"Work"'
 kill "$existing" 2>/dev/null || :
 # Reinstall the same version to check non-destructive idempotency.
-dpkg -i "$root/dist/daylight-core_5.0.0~rc4-1_${arch}.deb"
+dpkg -i "$root/dist/daylight-core_${package_version}_${arch}.deb"
 /usr/bin/daylight remove --dry-run
 apt-get remove -y --no-auto-remove daylight-linux daylight-desktop daylight-apps daylight-games daylight-telemetry daylight-themes daylight-core
 sha256sum -c /tmp/daylight-os-before
