@@ -184,10 +184,17 @@ class NativePointer:
             raise ValueError("Pointer coordinates and extent must be integers")
         if width <= 0 or height <= 0 or not 0 <= x <= width or not 0 <= y <= height:
             raise ValueError("Position must be inside the positive coordinate extents")
+        # Model a short physical movement, not a teleport followed by a click.
+        # Crossing from another surface can produce enter without motion;
+        # Xwayland needs the subsequent motion to update its button position.
+        approach_x = x - 1 if x > 0 else min(1, width)
+        self.connection.send(self.pointer, 1, _words(self._timestamp(), approach_x, y, width, height))
+        self.connection.send(self.pointer, 4)
+        self.connection.roundtrip()
+        time.sleep(.02)
         self.connection.send(self.pointer, 1, _words(self._timestamp(), x, y, width, height))
         self.connection.send(self.pointer, 4)
         self.connection.roundtrip()
-        # Let Xwayland process pointer enter before the first button event.
         time.sleep(.15)
 
     def click(self, x, y, width, height, hold_ms=80):
