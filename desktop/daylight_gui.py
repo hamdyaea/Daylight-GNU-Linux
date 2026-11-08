@@ -20,6 +20,8 @@ def main():
     try:
         from daylight_ui.shell import main as run,appearance_session
         if args.session_appearance:
+            from daylight_ui.state import mark_manager_revision
+            mark_manager_revision(__file__)
             appearance_session()
             return 0
         from daylight_ui.state import ensure_session_manager

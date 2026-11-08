@@ -16,7 +16,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc4"
+VERSION = "5.0.0~rc4-1"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -27,7 +27,7 @@ def main():
     parser.add_argument("--output", type=Path, default=ROOT / "dist")
     args = parser.parse_args()
     required_ui = ("__init__.py", "shell.py", "theme.py", "games.py", "game_models.py",
-                   "tools.py", "sky.py", "diagnostics.py", "state.py", "launcher.py")
+                   "tools.py", "sky.py", "diagnostics.py", "state.py", "launcher.py", "windowing.py")
     missing_ui = [name for name in required_ui if not (ROOT / "desktop/daylight_ui" / name).is_file()]
     if missing_ui or not (ROOT / "desktop/daylight_gui.py").is_file():
         raise SystemExit("Graphical source tree incomplete: " + ", ".join(missing_ui or ["daylight_gui.py"]))
@@ -116,6 +116,8 @@ def main():
         for source,dest in [("daylight.desktop","usr/share/xsessions/daylight.desktop"),("control-center.desktop","usr/share/applications/daylight-control-center.desktop"),("terminal.desktop","usr/share/applications/daylight-terminal.desktop")]: copy(desktop,"packaging/"+source,dest)
         # Keep GUI sources importable without pip or runtime image libraries.
         copy(desktop, "desktop/daylight_gui.py", "usr/share/daylight/ui/daylight_gui.py", 0o755)
+        copy(desktop, "desktop/shardturn_launcher.py", "usr/share/daylight/ui/shardturn_launcher.py", 0o755)
+        copy(desktop, "desktop/conky-wayland.lua", "usr/share/daylight/ui/conky-wayland.lua")
         for source in sorted((ROOT / "desktop/daylight_ui").rglob("*.py")):
             relative = source.relative_to(ROOT / "desktop")
             copy(desktop, source, "usr/share/daylight/ui/" + str(relative))

@@ -18,7 +18,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from zoneinfo import ZoneInfo
 
-from . import launcher, state, theme
+from . import launcher, state, theme, windowing
 
 ROOT = Path(__file__).resolve().parent.parent
 RESOURCE_ROOT = Path("/usr/share/daylight")
@@ -202,7 +202,7 @@ def appearance_session():
                         # Wayland's installed wrapper is only the entry point.
                         ready = daylight_call("setup-session").returncode == 0
                         if wayland:
-                            ready = ready and Path("/usr/share/daylight/labwc/conky.lua").is_file()
+                            ready = ready and Path("/usr/share/daylight/ui/conky-wayland.lua").is_file()
                         if ready:
                             monitor_process = state.start_conky(wayland=wayland)
                     except (OSError, subprocess.TimeoutExpired):
@@ -221,6 +221,7 @@ def appearance_session():
 class Desktop(tk.Tk):
     def __init__(self, page="home"):
         super().__init__()
+        windowing.prepare(self)
         self.values = state.load_ui()
         self.title("Daylight GNU/Linux")
         self.geometry("1060x760")
@@ -259,6 +260,7 @@ class Desktop(tk.Tk):
         self.show(page)
         self.last_appearance=effective_appearance(self.values)
         self.appearance_job=self.after(60000,self.appearance_tick)
+        windowing.finish(self)
 
     def destroy(self):
         if hasattr(self,"appearance_job"):
@@ -485,11 +487,12 @@ class Desktop(tk.Tk):
         for row,(key,title,options) in enumerate([("monitor","Desktop monitor",("on","off")),("fetch","Terminal system information",("on","off")),("profile","Conky profile",("balanced","minimal"))]):
             ttk.Label(controls,text=title,wraplength=480).grid(row=row*2,column=0,sticky="w",pady=(8,3))
             ttk.Combobox(controls,textvariable=variables[key],values=options,state="readonly",width=20).grid(row=row*2+1,column=0,sticky="w",pady=(0,8))
+        ttk.Label(controls,text="Profiles update Daylight's standard monitor. Your custom conky.conf is preserved, including when you change profile.",style="Muted.TLabel",wraplength=480).grid(row=6,column=0,sticky="w",pady=(0,10))
         appearance=tk.StringVar(value=self.values["appearance"])
         wallpaper_mode=tk.StringVar(value=self.values["wallpaper_mode"])
         scale=tk.StringVar(value=str(self.values["text_scale"]))
         language=tk.StringVar(value=self.values["language"])
-        for row,(title,var,options) in enumerate([("Appearance",appearance,("light","dark","automatic")),("Wallpaper mode",wallpaper_mode,("fixed","daylight")),("Text scale",scale,("0.9","1.0","1.15","1.3","1.5")),(self.word("language"),language,("en","fr","de"))],start=3):
+        for row,(title,var,options) in enumerate([("Appearance",appearance,("light","dark","automatic")),("Wallpaper mode",wallpaper_mode,("fixed","daylight")),("Text scale",scale,("0.9","1.0","1.15","1.3","1.5")),(self.word("language"),language,("en","fr","de"))],start=4):
             ttk.Label(controls,text=title,wraplength=480).grid(row=row*2,column=0,sticky="w",pady=(8,3))
             ttk.Combobox(controls,textvariable=var,values=options,state="readonly",width=20).grid(row=row*2+1,column=0,sticky="w",pady=(0,8))
         ttk.Label(self.content,text="Automatic appearance and daylight wallpaper follow the location saved in Sun & Moon. The default location is Fribourg, Switzerland.",style="Muted.TLabel",wraplength=490).pack(anchor="w",pady=(0,20))
@@ -643,7 +646,9 @@ class Desktop(tk.Tk):
         if not path: raise FileNotFoundError("Shardturn is not installed. Install daylight-games to add it.")
         ttk.Label(self.content,text="Shardturn",style="Title.TLabel",wraplength=500).pack(anchor="w",pady=12)
         ttk.Label(self.content,text=DESCRIPTIONS["shardturn"],wraplength=600).pack(anchor="w",pady=12)
-        def play(): subprocess.Popen([sys.executable,str(path)],start_new_session=True)
+        launch = ROOT / "shardturn_launcher.py"
+        if not launch.is_file(): raise FileNotFoundError("The Daylight Shardturn launcher is not installed.")
+        def play(): subprocess.Popen([sys.executable,str(launch)],start_new_session=True)
         ttk.Button(self.content,text="Play Shardturn",style="Accent.TButton",command=play).pack(anchor="w",pady=12)
         play()
 

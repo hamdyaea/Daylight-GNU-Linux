@@ -30,6 +30,9 @@ CORE_DEFAULTS = {"monitor": "on", "fetch": "on", "profile": "balanced",
 WALLPAPERS = ("daylight-mountains.jpg", "daylight-night.jpg", "daylight-sunrise.jpg",
               "daylight-himalaya.jpg", "daylight-original.png")
 KEYBOARDS = (("", ""), ("ch", "fr"), ("ch", ""), ("fr", ""), ("us", ""))
+MANAGER_REVISION = "2026-11-conky-preservation-1"
+MANAGER_REVISION_KEY = "DAYLIGHT_APPEARANCE_REVISION"
+INSTALLED_GUI = "/usr/share/daylight/ui/daylight_gui.py"
 
 
 def valid_keyboard(layout, variant) -> bool:
@@ -109,18 +112,32 @@ def ensure_session_manager(entry=None) -> bool:
     try:
         descriptor = acquire_session_lock()
         if descriptor is None:
-            return False
+            # RC4's already-running helper cannot load the fixed source on
+            # disk. Retire only a pinned, obsolete helper from this display.
+            if not retire_stale_managers():
+                return False
+            descriptor = acquire_session_lock()
+            if descriptor is None:
+                return False
         # The child takes the authoritative lock before touching any process.
         # Concurrent UI launches can create short-lived candidates; only one
         # candidate can own the session, its Conky, or its background process.
         os.close(descriptor)
         entry = Path(entry) if entry is not None else Path(__file__).resolve().parent.parent / "daylight_gui.py"
         subprocess.Popen([sys.executable, str(entry), "--session-appearance"],
+                         env=dict(os.environ, **{MANAGER_REVISION_KEY: MANAGER_REVISION}),
                          stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                          stderr=subprocess.DEVNULL, start_new_session=True, close_fds=True)
         return True
     except OSError:
         return False
+
+
+def mark_manager_revision(entry):
+    """An exec makes the revision visible in /proc's initial environment."""
+    if daylight_session() and os.environ.get(MANAGER_REVISION_KEY) != MANAGER_REVISION:
+        environment = dict(os.environ, **{MANAGER_REVISION_KEY: MANAGER_REVISION})
+        os.execve(sys.executable, [sys.executable, str(entry), "--session-appearance"], environment)
 
 
 def start_conky(wayland=False):
@@ -130,7 +147,7 @@ def start_conky(wayland=False):
     Pointing that variable at the wrapper itself would recurse indefinitely.
     """
     main_config = directory() / "conky.conf"
-    launch_config = Path("/usr/share/daylight/labwc/conky.lua") if wayland else main_config
+    launch_config = Path("/usr/share/daylight/ui/conky-wayland.lua") if wayland else main_config
     environment = dict(os.environ, DAYLIGHT_CONKY_CONFIG=str(main_config))
     return subprocess.Popen(["conky", "-c", str(launch_config)], env=environment,
                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -180,23 +197,65 @@ def process_snapshot(path: Path, uid=None):
         return None
 
 
-def legacy_process_kind(snapshot, environ=None, uid=None):
-    """Recognise only exact old Daylight Conky/background commands in this session."""
+def same_daylight_session(snapshot, environ=None, uid=None) -> bool:
     environ = os.environ if environ is None else environ
     uid = os.getuid() if uid is None else uid
     if not snapshot or snapshot.get("uid") != uid:
-        return None
+        return False
     previous = snapshot.get("environment", {})
-    if previous.get("DAYLIGHT_SESSION") != "1":
-        return None
+    if previous.get("DAYLIGHT_SESSION") != "1" or session_kind(previous) != session_kind(environ):
+        return False
     kind = session_kind(environ)
     display_key = "WAYLAND_DISPLAY" if kind == "wayland" else "DISPLAY"
     if not environ.get(display_key) or previous.get(display_key) != environ.get(display_key):
-        return None
+        return False
     if kind == "wayland" and previous.get("XDG_RUNTIME_DIR") != environ.get("XDG_RUNTIME_DIR"):
-        return None
+        return False
     if environ.get("XDG_SESSION_ID") and previous.get("XDG_SESSION_ID") != environ.get("XDG_SESSION_ID"):
+        return False
+    return True
+
+
+def stale_manager(snapshot, environ=None, uid=None) -> bool:
+    """Only the exact installed helper is eligible for an upgrade handoff."""
+    if not same_daylight_session(snapshot, environ, uid):
+        return False
+    args = snapshot.get("args", [])
+    if (len(args) != 3 or args[0] not in (sys.executable, "/usr/bin/python3")
+            or args[1:] != [INSTALLED_GUI, "--session-appearance"]):
+        return False
+    # Published RC4 helpers had no revision marker. Unknown markers may belong
+    # to a newer release; an older UI must never retire that newer manager.
+    return MANAGER_REVISION_KEY not in snapshot.get("environment", {})
+
+
+def retire_stale_managers(environ=None, proc_root=Path("/proc")) -> bool:
+    """Release an obsolete owner's lock without touching any application."""
+    if not daylight_session(environ):
+        return False
+    retired = False
+    try:
+        for path in proc_root.iterdir():
+            if not path.name.isdigit() or int(path.name) == os.getpid():
+                continue
+            snapshot = process_snapshot(path)
+            if stale_manager(snapshot, environ):
+                # The helper gracefully stops two owned children (up to three
+                # seconds each), then releases its display lock.
+                if not terminate_legacy(snapshot, proc_root, timeout=8):
+                    return False
+                retired = True
+    except OSError:
+        return False
+    return retired
+
+
+def legacy_process_kind(snapshot, environ=None, uid=None):
+    """Recognise only exact old Daylight Conky/background commands in this session."""
+    environ = os.environ if environ is None else environ
+    if not same_daylight_session(snapshot, environ, uid):
         return None
+    kind = session_kind(environ)
     args = snapshot.get("args", [])
     if not args:
         return None
@@ -205,7 +264,8 @@ def legacy_process_kind(snapshot, environ=None, uid=None):
         if args.count("-c") != 1 or any(arg.startswith("--config") or (arg.startswith("-c") and arg != "-c") for arg in args[1:]):
             return None
         index = args.index("-c") + 1
-        allowed = {str(directory() / "conky.conf"), "/usr/share/daylight/labwc/conky.lua"}
+        allowed = {str(directory() / "conky.conf"), "/usr/share/daylight/labwc/conky.lua",
+                   "/usr/share/daylight/ui/conky-wayland.lua"}
         if index < len(args) and args[index] in allowed:
             return "conky"
     if executable == "swaybg" and kind == "wayland":
@@ -218,7 +278,7 @@ def legacy_process_kind(snapshot, environ=None, uid=None):
     return None
 
 
-def terminate_legacy(snapshot, proc_root=Path("/proc")) -> bool:
+def terminate_legacy(snapshot, proc_root=Path("/proc"), timeout=2) -> bool:
     """SIGTERM a pinned, rechecked legacy process. Never kill an ambiguous PID."""
     if not hasattr(os, "pidfd_open") or not hasattr(signal, "pidfd_send_signal"):
         return False
@@ -231,7 +291,7 @@ def terminate_legacy(snapshot, proc_root=Path("/proc")) -> bool:
                 or current["environment"] != snapshot["environment"]):
             return False
         signal.pidfd_send_signal(descriptor, signal.SIGTERM)
-        ready, _, _ = select.select([descriptor], [], [], 2)
+        ready, _, _ = select.select([descriptor], [], [], timeout)
         return bool(ready)
     except ProcessLookupError:
         return True

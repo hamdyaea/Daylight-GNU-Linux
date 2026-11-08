@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Prepare authentic RC3-source packages and run the update-only integration test.
+"""Prepare historical packages and run the update-only integration test.
 
 This helper creates an isolated historical source checkout and compiles the RC3
-Rust executable. It does not alter the working tree, install packages, or use the
+Rust executable, or downloads the immutable, hash-verified public RC4 packages.
+It does not alter the working tree, install packages, or use the
 production signing key. The actual upgrade runs only inside a disposable Docker
 container through scripts/test-upgrade.sh.
 
@@ -17,9 +18,13 @@ import shutil
 import subprocess
 import tarfile
 import tempfile
+import time
+import urllib.error
+import urllib.request
 
 ROOT = Path(__file__).resolve().parent.parent
 RC3_SOURCE = "017360374eb60773be2c98ccff1c09b65557aac7"
+RC4_SOURCE = "f7d1e02f8eb326cadeb8368ead5cc64d2d2c1050"
 TRIPLES = {"amd64": "x86_64-unknown-linux-musl", "arm64": "aarch64-unknown-linux-musl"}
 
 
@@ -27,11 +32,48 @@ def run(*arguments, **kwargs):
     return subprocess.run(arguments, check=True, **kwargs)
 
 
-def prepare_previous(output, arch):
+def prepare_public_rc4(output, arch):
+    """Exercise the bits existing users received, never rebuild or replace them."""
+    manifest = json.loads((ROOT / "release/rc4-packages.json").read_text())
+    if manifest["source_commit"] != RC4_SOURCE or manifest["package_version"] != "5.0.0~rc4":
+        raise RuntimeError("The immutable public RC4 manifest changed")
+    packages = {name: checksum for name, checksum in manifest["packages"].items()
+                if name.endswith((f"_{arch}.deb", "_all.deb"))}
+    if len(packages) != 7:
+        raise RuntimeError("Expected one public RC4 core plus six data packages")
+    for name, checksum in sorted(packages.items()):
+        url = manifest["apt_url"].rstrip("/") + "/pool/main/d/daylight/" + name
+        request = urllib.request.Request(url, headers={"User-Agent": "DaylightLinux-upgrade-integration/1.0"})
+        for attempt in range(3):
+            try:
+                with urllib.request.urlopen(request, timeout=60) as response:
+                    data = response.read()
+                break
+            except (OSError, urllib.error.URLError):
+                if attempt == 2:
+                    raise
+                time.sleep(2)
+        if hashlib.sha256(data).hexdigest() != checksum:
+            raise RuntimeError("Published RC4 checksum mismatch: " + name)
+        (output / name).write_bytes(data)
+        print("RC4_PUBLIC_PACKAGE_SHA256", checksum, name, flush=True)
+    (output / "SOURCE.json").write_text(json.dumps({
+        "purpose": "Unmodified public RC4 packages for disposable upgrade tests",
+        "source_commit": RC4_SOURCE,
+        "reconstructed_from_source": False,
+        "files": packages,
+    }, indent=2) + "\n")
+    print("Hash-verified public RC4 upgrade fixture:", output)
+
+
+def prepare_previous(output, arch, profile="rc3"):
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     if any(output.glob("*.deb")):
-        raise RuntimeError("Use a new empty directory for the reconstructed historical test fixture")
+        raise RuntimeError("Use a new empty directory for the historical test fixture")
+    if profile == "rc4":
+        prepare_public_rc4(output, arch)
+        return
     # Reject a wrong source ref instead of silently testing the current code.
     revision = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", RC3_SOURCE + "^{commit}"], text=True).strip()
     if revision != RC3_SOURCE:
@@ -94,15 +136,19 @@ def main():
     parser.add_argument("--arch", choices=TRIPLES, default="amd64")
     parser.add_argument("--run-container", choices=("bookworm", "trixie"))
     parser.add_argument("--previous-packages", type=Path)
+    parser.add_argument("--previous-profile", choices=("rc3", "rc4"), default="rc3")
+    parser.add_argument("--conky-case", choices=("stock", "custom"), default="stock")
     args = parser.parse_args()
     if args.prepare_fixture:
-        prepare_previous(args.prepare_fixture, args.arch)
+        prepare_previous(args.prepare_fixture, args.arch, args.previous_profile)
     if args.run_container:
         previous = (args.previous_packages or args.prepare_fixture)
         if previous is None or not previous.is_dir():
             parser.error("--previous-packages must identify a prepared historical fixture")
         run("docker", "run", "--rm", "--cpus=2", "--memory=1536m", "--memory-swap=1536m", "--pids-limit=512",
-            "-e", "DAYLIGHT_DISPOSABLE_TEST=yes", "-v", str(ROOT) + ":/src:ro",
+            "-e", "DAYLIGHT_DISPOSABLE_TEST=yes",
+            "-e", "DAYLIGHT_PREVIOUS_PROFILE=" + args.previous_profile,
+            "-e", "DAYLIGHT_CONKY_CASE=" + args.conky_case, "-v", str(ROOT) + ":/src:ro",
             "-v", str(previous.resolve()) + ":/previous:ro", "debian:" + args.run_container,
             "/bin/sh", "/src/scripts/test-upgrade.sh")
     if not args.prepare_fixture and not args.run_container:
