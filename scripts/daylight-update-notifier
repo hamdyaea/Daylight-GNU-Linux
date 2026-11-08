@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+# Developer: Hamdy Abou El Anein | info@daylightlinux.ch
+# SPDX-License-Identifier: GPL-3.0-only
+"""Desktop-only, opt-out Daylight package update notification."""
+import os
+from pathlib import Path
+import subprocess
+import time
+
+def check():
+    if os.environ.get('DAYLIGHT_UPDATE_NOTIFICATIONS', '1') == '0':
+        return
+    if not (os.environ.get('DISPLAY') or os.environ.get('WAYLAND_DISPLAY')):
+        return
+    try:
+        raw = subprocess.check_output(
+            ['/usr/bin/apt-cache', 'policy', 'daylight-core'],
+            text=True, timeout=15)
+        installed = next(line.split(':',1)[1].strip() for line in raw.splitlines()
+                         if line.strip().startswith('Installed:'))
+        candidate = next(line.split(':',1)[1].strip() for line in raw.splitlines()
+                         if line.strip().startswith('Candidate:'))
+        if not installed or candidate in ('(none)', installed):
+            return
+        if subprocess.run(['/usr/bin/dpkg', '--compare-versions', candidate, 'gt', installed],
+                          timeout=10).returncode:
+            return
+        state = Path.home()/'.cache/daylight/update-notification'
+        if state.exists() and state.read_text().strip() == candidate:
+            return
+        if subprocess.run(['/usr/bin/notify-send', '-a', 'Daylight GNU/Linux',
+                           '-i', 'software-update-available',
+                           'Daylight update available',
+                           'Version '+candidate+' is available. Run: sudo daylight update'],
+                          timeout=10).returncode == 0:
+            state.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+            state.write_text(candidate+'\n')
+    except (OSError, ValueError, StopIteration, subprocess.SubprocessError):
+        return
+
+if __name__ == '__main__':
+    time.sleep(15)
+    while True:
+        check()
+        time.sleep(6*3600)
