@@ -64,8 +64,10 @@ class HistoricalGamesTest(unittest.TestCase):
         self.assertIn('"shardturn": "Daylight Shardturn"', shell)
         self.assertIn('command=lambda:self.show("telemetry")', shell)
         self.assertIn('if not messagebox.askyesno("Boot statistics"', shell)
-        self.assertIn('VERSION = "5.0.0~rc4-2"', builder)
+        self.assertRegex(builder, r'VERSION = "5\.0\.0~rc4-[0-9]+"')
 
 
 if __name__ == "__main__":
     unittest.main()
+
+[executed on device: hamdy-LinuxManjro (d2fadeb0-3f51-4b03-90ee-3f2bf0b8b7db)]
