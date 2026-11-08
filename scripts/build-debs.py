@@ -16,7 +16,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc4-2"
+VERSION = "5.0.0~rc4-3"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -172,3 +172,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+[executed on device: hamdy-LinuxManjro (d2fadeb0-3f51-4b03-90ee-3f2bf0b8b7db)]
