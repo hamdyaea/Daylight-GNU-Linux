@@ -1,3 +1,3 @@
-https://daylightlinux.ch/apt/	https://daylightlinux.ch/apt/
-https://daylight-gnu-linux.pages.dev/apt/	https://daylight-gnu-linux.pages.dev/apt/
-https://raw.githubusercontent.com/hamdyaea/Daylight-GNU-Linux/publish/cloudflare-pages-20261103/website-src/apt/	https://raw.githubusercontent.com/hamdyaea/Daylight-GNU-Linux/publish/cloudflare-pages-20261103/website-src/apt/
+https://daylightlinux.ch/apt/
+https://daylight-gnu-linux.pages.dev/apt/
+https://raw.githubusercontent.com/hamdyaea/Daylight-GNU-Linux/publish/cloudflare-pages-20261103/website-src/apt/
