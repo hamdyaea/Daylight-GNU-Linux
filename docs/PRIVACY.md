@@ -1,17 +1,25 @@
 # Privacy and boot statistics
 
-Developer: Hamdy Abou El Anein. Project contact: info@daylightlinux.ch (activation pending).
+Developer: Hamdy Abou El Anein. Project contact: info@daylightlinux.ch.
 
-The default environment works offline. The terminal banner, Conky and local tools make no automatic Internet request. A network check requires an explicit `daylight connect --check HOST` action.
+Daylight's default environment works offline. The optional `daylight-telemetry`
+package is not installed by the desktop metapackage. Its timer is disabled and
+its configuration has `enabled=no`; installation does not activate it. Only
+`sudo daylight telemetry on` enables the timer, after explicit administrator
+action. Use `sudo daylight telemetry off` to opt out.
 
-`daylight-telemetry` is an optional package, not a dependency of the desktop metapackage. Its timer is disabled and its configuration has `enabled=no` with no endpoint. Installation does not enable or start it. Activation refuses to proceed until a valid HTTPS endpoint has been configured.
+An enabled timer makes one best-effort attempt after boot. The HTTPS POST body
+contains only `event=boot`, the Daylight version and `mode=live|installed`.
+There is no installation ID, hostname, username, serial number, MAC address or
+IP field. There is no polling, persistent queue or automatic retry.
 
-An enabled timer makes one best-effort attempt after boot, outside the critical startup path. The JSON has only `event=boot`, the Daylight version and `mode=live|installed`. There is no installation ID, hostname, username, serial number, MAC address or IP field. There is no permanent polling, persistent queue or automatic retry.
+The collector binds to loopback on the Raspberry Pi. It stores daily aggregate
+counts by version and mode, not individual requests or headers; HTTP request
+and exception logging are disabled. Cloudflare handles public HTTPS and
+necessarily processes transport metadata, including source IP. Daylight cannot
+promise that the provider never processes or retains that metadata.
 
-**Network anonymity is not promised.** The receiving server and transport providers necessarily process a source IP. Before public deployment, audit access logs, error logs, TLS termination, CDN analytics and provider retention. Suppressing application logs alone does not make the entire connection anonymous.
-
-The reference collector binds to loopback only and stores daily aggregate counts by version and mode. It does not persist individual requests or headers. Default per-client HTTP and exception logging are disabled. Its global rate limiter uses no client identifier; it does not prevent fraudulent counts.
-
-**Boot events are not unique users.** Reboots, opt-outs, offline machines, copied images and shared devices prevent a reliable user count with this protocol. Never label the resulting metric "users".
-
-The counter is disabled with `sudo daylight telemetry off`. No public endpoint is assumed to exist merely because the client and collector source code exist. Collector deployment and complete proxy/provider privacy review remain release gates.
+The endpoint is `https://miner.daylightlinux.ch/v1/boot`. The public
+`/healthz` route returns only an empty HTTP 204 response. Counts are boot
+events, not unique users; they can be affected by reboots, offline machines,
+shared devices, copied images and spoofed requests.

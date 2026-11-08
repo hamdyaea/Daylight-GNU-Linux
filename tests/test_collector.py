@@ -27,6 +27,13 @@ class Collector(unittest.TestCase):
         connection = http.client.HTTPConnection("127.0.0.1", self.server.server_port, timeout=3)
         connection.request("POST", path, body=json.dumps(obj), headers={"Content-Type": "application/json"})
         status = connection.getresponse().status; connection.close(); return status
+    def get(self, path):
+        connection = http.client.HTTPConnection("127.0.0.1", self.server.server_port, timeout=3)
+        connection.request("GET", path)
+        status = connection.getresponse().status; connection.close(); return status
+    def test_healthcheck(self):
+        self.assertEqual(self.get("/healthz"),204)
+        self.assertEqual(self.get("/"),404)
     def test_aggregate_only(self):
         event={"event":"boot", "version":"5.0.0-rc.1", "mode":"installed"}
         self.assertEqual(self.post(event),204); self.assertEqual(self.post(event),204)
