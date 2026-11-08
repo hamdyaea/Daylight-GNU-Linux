@@ -16,7 +16,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc4-7"
+VERSION = "5.0.0~rc4-8"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
