@@ -4,15 +4,17 @@ Developer: Hamdy Abou El Anein — GPL-3.0-only.
 """
 import math
 import random
+from pathlib import Path
 import tkinter as tk
 from tkinter import ttk
 
 from .game_models import Battle, Card, Memory, RPS_NAMES, ScoreLedger, Tournament, rps_result
+from .historical_sports import nba_stages, world_cup_stages
 
 PAGE_NAMES = {
     "dice": "Dice", "coin": "Coin flip", "lottery": "Lottery simulator",
     "rpsls": "Rock · Paper · Scissors · Lizard · Spock", "cards": "Battle cards",
-    "tournament": "Tournament", "basketball": "Basketball", "memory": "Memory",
+    "tournament": "2018 World Cup", "basketball": "NBA Playoffs", "memory": "Memory",
     "slots": "Slot simulator", "guess": "Guess the number",
 }
 BG, PAPER, INK = "#e9e6df", "#fcfaf5", "#292a43"
@@ -278,13 +280,27 @@ class GamePage(tk.Frame):
                 self.text(x+size/2, y+size/2, str(value), 25 if value < 1000 else 16, ACCENT, "bold")
 
     def setup_coin(self):
-        self.description.configure(text="A Daylight sun on one side, an alpine peak on the other. Flip with the button or Space.")
-        self.coin = 0
+        self.description.configure(text="Flip a real coin image: the original heads and tails artwork, preserved from the classic game.")
+        self.coin = "Ready"
         self.flips = [0, 0]
+        assets = Path("/usr/share/daylight/game_assets/coin")
+        if not assets.is_dir():
+            assets = Path(__file__).resolve().parents[1] / "game_assets/coin"
+        self.coin_faces = {
+            side: tk.PhotoImage(file=str(assets / filename))
+            for side, filename in (("Ready", "full.png"), (0, "face.png"), (1, "pile.png"))
+        }
         self.button("Flip coin", self.flip_coin, True)
+        self.button("Reset", self.reset_coin)
         self.cv.bind("<space>", lambda _e: self.flip_coin())
         self.scene = self.draw_coin
+        self.status.set("Heads or tails? Ready to flip.")
+
+    def reset_coin(self):
+        self.coin = "Ready"
+        self.flips = [0, 0]
         self.status.set("Ready to flip.")
+        self.redraw()
 
     def flip_coin(self):
         self.coin = RNG.randrange(2)
@@ -293,11 +309,11 @@ class GamePage(tk.Frame):
         self.redraw()
 
     def draw_coin(self):
-        for radius, color in [(133, LINE), (128, AMBER), (117, "#e9c774"), (107, AMBER), (103, "#ead394")]:
-            self.cv.create_oval(450-radius, 200-radius, 450+radius, 200+radius, fill=color, outline="")
-        emblem(self.cv, "sun" if self.coin == 0 else "mountain", 450, 190, 62, ENGRAVING, "#ead394")
-        self.text(450, 275, "DAYLIGHT", 12, ENGRAVING, "bold")
-        self.text(450, 369, "HEADS" if self.coin == 0 else "TAILS", 25, INK, "bold")
+        art = self.coin_faces[self.coin]
+        rounded(self.cv, 275, 40, 350, 295, fill=PAPER, radius=23)
+        self.cv.create_image(450, 192, image=art)
+        label = "FLIP THE COIN" if self.coin == "Ready" else "HEADS" if self.coin == 0 else "TAILS"
+        self.text(450, 367, label, 26, INK, "bold")
 
     def setup_lottery(self):
         self.description.configure(text="Five different numbers from 1–50 and two stars from 1–12. An offline entertainment simulation.")
@@ -455,120 +471,129 @@ class GamePage(tk.Frame):
             self.text(450,377,f"{b.card_count()} cards accounted for · Space reveals the next pair",12,MUTED)
 
     def setup_tournament(self):
-        self.description.configure(text="A fictional knockout cup with visible scores and a complete bracket. Enter 2, 4, 8, 16, 32 or 64 teams.")
-        tk.Label(self.controls, text="Teams separated by commas", bg=BG, fg=MUTED,
-                 font=("DejaVu Sans", 10)).grid(row=0, column=0, sticky="w", pady=(0, 5))
-        self.teams = tk.StringVar(value="Alps, Lakes, Comets, Falcons, Pines, Owls, Ravens, Stars")
-        self.teams_entry = ttk.Entry(self.controls, textvariable=self.teams, width=30)
-        self.teams_entry.grid(row=1, column=0, sticky="ew", padx=(0, 8), ipady=4)
-        ttk.Button(self.controls, text="Create cup", command=self.new_tournament).grid(row=1, column=1, sticky="e")
-        self.controls.columnconfigure(0, weight=1)
-        self.tournament = None
-        self.next_round = self.button("Play next round",self.advance_tournament,True)
-        self.hscroll = ttk.Scrollbar(self,orient="horizontal",command=self.cv.xview)
-        self.hscroll.pack(fill="x", after=self.cv)
-        self.vscroll = ttk.Scrollbar(self.cv,orient="vertical",command=self.cv.yview)
-        self.vscroll.pack(side="right",fill="y")
-        self.cv.configure(xscrollcommand=self.hscroll.set,yscrollcommand=self.vscroll.set)
+        self.description.configure(text="FIFA World Cup 2018: the real 32 national teams in their original eight groups, followed by the original knockout bracket. Match results are simulated.")
+        self.tournament_stages = []
+        self.tournament_index = 0
+        self.button("New 2018 World Cup", self.new_tournament)
+        self.tournament_next = self.button("Next stage", self.advance_tournament, True)
+        self.tournament_scroll = ttk.Scrollbar(self.cv, orient="vertical", command=self.cv.yview)
+        self.tournament_scroll.pack(side="right", fill="y")
+        self.cv.configure(yscrollcommand=self.tournament_scroll.set)
         self.scene = self.draw_tournament
         self.new_tournament()
 
     def new_tournament(self):
-        try:
-            self.tournament = Tournament(self.teams.get().split(','))
-        except ValueError as error:
-            self.status.set(str(error))
-            return
-        self.next_round.configure(state="normal",text="Play next round")
-        self.status.set("Cup ready · Results are randomly simulated, not predictions.")
-        self.cv.xview_moveto(0)
+        self.tournament_stages = world_cup_stages()
+        self.tournament_index = 0
+        self.tournament_next.configure(state="normal", text="Play round of 16")
+        self.status.set("World Cup 2018 · Eight real groups of four teams · Top two in each group advance. Simulated results.")
         self.cv.yview_moveto(0)
         self.redraw()
 
     def advance_tournament(self):
-        if not self.tournament:
+        if self.tournament_index >= len(self.tournament_stages) - 1:
             return
-        self.tournament.advance()
-        if self.tournament.champion:
-            self.status.set(f"Champion: {self.tournament.champion} · Create a cup to play again.")
-            self.next_round.configure(state="disabled",text="Cup complete")
+        self.tournament_index += 1
+        stage = self.tournament_stages[self.tournament_index]
+        self.status.set("2018 World Cup · " + stage["title"] + " · Fictional simulation, not historical results.")
+        if stage["kind"] == "champion":
+            self.tournament_next.configure(text="Tournament complete", state="disabled")
         else:
-            self.status.set(f"Round {len(self.tournament.rounds)} finished · {len(self.tournament.current)} teams remain.")
+            upcoming = self.tournament_stages[self.tournament_index + 1]["title"]
+            self.tournament_next.configure(text="Show " + upcoming, state="normal")
+        self.cv.yview_moveto(0)
         self.redraw()
 
     def draw_tournament(self):
-        t = self.tournament
-        if not t:
+        if not self.tournament_stages:
             return
-        rounds_count = int(math.log2(len(t.initial)))
-        w, h = max(900, (rounds_count+1)*238), max(400, len(t.initial)*47+70)
-        self.cv.configure(scrollregion=(0,0,w,h))
-        columns = [t.initial]
-        for games in t.rounds:
-            columns.append([m.winner for m in games])
-        for col in range(rounds_count+1):
-            left = 16+col*238
-            remaining = len(t.initial)//(2**col)
-            label = "CHAMPION" if remaining == 1 else "FINAL" if remaining == 2 else "SEMIFINALS" if remaining == 4 else f"ROUND OF {remaining}"
-            self.text(left,20,label,11,MUTED,"bold",anchor="w")
-            names = columns[col] if col<len(columns) else ["—"]*remaining
-            stride = 47*(2**col)
-            for j in range(remaining):
-                y = 46+stride*j+(stride-39)/2
-                rounded(self.cv,left,y,205,39,fill=PAPER if names[j]!="—" else BG,outline=JADE if remaining==1 and names[j]!="—" else LINE,radius=8)
-                label_name = names[j] if len(names[j])<20 else names[j][:18]+"…"
-                self.text(left+12,y+20,label_name,11,INK,"bold" if remaining==1 else "normal",anchor="w")
-                if col<len(t.rounds):
-                    match = t.rounds[col][j//2]
-                    score = match.home_score if j%2==0 else match.away_score
-                    self.text(left+185,y+20,str(score),12,ACCENT,"bold")
-                if col<rounds_count:
-                    mid = y+20
-                    target = 46+(47*(2**(col+1)))*(j//2)+(47*(2**(col+1))-39)/2+20
-                    self.cv.create_line(left+205,mid,left+220,mid,left+220,target,left+238,target,fill=LINE,width=2)
+        stage = self.tournament_stages[self.tournament_index]
+        self.text(24, 25, stage["title"].upper(), 19, ACCENT, "bold", anchor="w")
+        if stage["kind"] == "world_groups":
+            self.cv.configure(scrollregion=(0, 0, 900, 885))
+            for i, (group, names) in enumerate(stage["groups"]):
+                x, y = 22 + i % 2 * 448, 55 + i // 2 * 204
+                rounded(self.cv, x, y, 421, 189, fill=PAPER, radius=14)
+                self.text(x+17, y+25, "GROUP " + group, 14, ACCENT, "bold", anchor="w")
+                for j, name in enumerate(names):
+                    self.text(x+19, y+59+j*31, name, 13, INK if j < 2 else MUTED,
+                              "bold" if j < 2 else "normal", anchor="w")
+                    if j < 2:
+                        self.text(x+395, y+59+j*31, "Q", 11, JADE, "bold", anchor="e")
+        elif stage["kind"] == "champion":
+            self.cv.configure(scrollregion=(0, 0, 900, 420))
+            emblem(self.cv, "star", 450, 165, 68, AMBER)
+            self.text(450, 280, stage["winner"], 27, INK, "bold")
+            self.text(450, 332, "2018 WORLD CUP WINNER · SIMULATION", 12, MUTED)
+        else:
+            matches = stage["matches"]
+            self.cv.configure(scrollregion=(0, 0, 900, max(420, 74 + len(matches)*87)))
+            for i, (a, b, winner) in enumerate(matches):
+                x, y = 45, 64 + i*87
+                rounded(self.cv, x, y, 805, 74, fill=PAPER, radius=12)
+                self.text(x+16, y+20, f"Match {i+1}: {a}  vs  {b}", 14, INK, "bold", anchor="w")
+                self.text(x+16, y+52, "Winner: " + winner, 12, JADE, "bold", anchor="w")
 
     def setup_basketball(self):
-        self.description.configure(text="A fictional match played quarter by quarter. Choose your team names and follow the scoreboard.")
-        self.team_a,_ = self.field("Home", "Alpine Suns",18)
-        self.team_b,_ = self.field("Away", "Lake Owls",18)
-        self.quarters = []
-        self.button("Play quarter",self.play_quarter,True)
-        self.button("New match",self.reset_basketball)
+        self.description.configure(text="NBA historical 30-team roster · 15 East and 15 West · Eight playoff teams per conference, three elimination rounds, NBA Final and champion. Results are fictional.")
+        self.nba_stages = []
+        self.nba_index = 0
+        self.button("New NBA championship", self.reset_basketball)
+        self.nba_next = self.button("Next round", self.advance_basketball, True)
+        self.nba_scroll = ttk.Scrollbar(self.cv, orient="vertical", command=self.cv.yview)
+        self.nba_scroll.pack(side="right", fill="y")
+        self.cv.configure(yscrollcommand=self.nba_scroll.set)
         self.scene = self.draw_basketball
-        self.status.set("Tip-off · Quarter 1 is ready.")
+        self.reset_basketball()
 
     def reset_basketball(self):
-        self.quarters.clear()
-        self.status.set("Tip-off · Quarter 1 is ready.")
+        self.nba_stages = nba_stages()
+        self.nba_index = 0
+        self.nba_next.configure(state="normal", text="Play first round")
+        self.status.set("NBA playoff field · 8 Eastern and 8 Western teams qualified from the 30-team historical roster.")
+        self.cv.yview_moveto(0)
         self.redraw()
 
-    def play_quarter(self):
-        if len(self.quarters)>=4 and sum(a for a,b in self.quarters)!=sum(b for a,b in self.quarters):
-            self.status.set("Match finished. Start a new match to play again.")
+    def advance_basketball(self):
+        if self.nba_index >= len(self.nba_stages)-1:
             return
-        overtime = len(self.quarters)>=4
-        self.quarters.append((RNG.randrange(6 if overtime else 15,20 if overtime else 36), RNG.randrange(6 if overtime else 15,20 if overtime else 36)))
-        a,b = (sum(q[i] for q in self.quarters) for i in (0,1))
-        if len(self.quarters)>=4:
-            self.status.set("Tied at full time · Play overtime." if a==b else f"Full time · {(self.team_a.get() if a>b else self.team_b.get())[:40]} wins {max(a,b)}–{min(a,b)}.")
+        self.nba_index += 1
+        stage = self.nba_stages[self.nba_index]
+        self.status.set("NBA · " + stage["title"] + " · Simulated competition.")
+        if stage["kind"] == "champion":
+            self.nba_next.configure(state="disabled", text="Championship complete")
         else:
-            self.status.set(f"Quarter {len(self.quarters)} finished · Play the next quarter.")
+            self.nba_next.configure(state="normal", text="Show " + self.nba_stages[self.nba_index+1]["title"])
+        self.cv.yview_moveto(0)
         self.redraw()
 
     def draw_basketball(self):
-        rounded(self.cv,65,40,770,230,fill=NIGHT,outline="")
-        for i,name,color in [(0,self.team_a.get()[:24],AMBER),(1,self.team_b.get()[:24],CORAL)]:
-            x = 260 if i==0 else 640
-            self.text(x,91,name,18,ON_NIGHT,"bold")
-            self.text(x,173,str(sum(q[i] for q in self.quarters)),75,color,"bold")
-        self.text(450,179,":",52,IRIS)
-        self.text(450,244,f"QUARTER {min(len(self.quarters)+1,4)}" if len(self.quarters)<4 else "FULL TIME / OVERTIME",11,"#bcb5cc","bold")
-        self.cv.create_line(110,325,790,325,fill=LINE,width=2)
-        self.cv.create_oval(408,283,492,367,outline=AMBER,width=3)
-        self.cv.create_line(450,283,450,367,fill=AMBER,width=2)
-        for j,(a,b) in enumerate(self.quarters):
-            x = 120+j*100
-            self.text(x,390,(f"Q{j+1}" if j<4 else f"OT{j-3}")+f"  {a}:{b}",11,MUTED)
+        if not self.nba_stages:
+            return
+        stage = self.nba_stages[self.nba_index]
+        self.text(24, 25, stage["title"].upper(), 19, ACCENT, "bold", anchor="w")
+        if stage["kind"] == "nba_field":
+            self.cv.configure(scrollregion=(0, 0, 900, 525))
+            for i, (label, names) in enumerate((("EASTERN CONFERENCE", stage["east"]), ("WESTERN CONFERENCE", stage["west"]))):
+                x = 18 + 445*i
+                rounded(self.cv, x, 54, 426, 455, fill=PAPER, radius=15)
+                self.text(x+19, 84, label, 15, ACCENT, "bold", anchor="w")
+                for n, name in enumerate(names):
+                    self.text(x+22, 130+n*43, f"{n+1}. {name}", 12, INK, anchor="w")
+        elif stage["kind"] == "champion":
+            self.cv.configure(scrollregion=(0, 0, 900, 420))
+            emblem(self.cv, "star", 450, 155, 70, AMBER)
+            self.text(450, 277, stage["winner"], 25, INK, "bold")
+            self.text(450, 335, "NBA CHAMPION · SIMULATION", 12, MUTED)
+        else:
+            matches = stage["matches"]
+            self.cv.configure(scrollregion=(0, 0, 900, max(420, 75 + len(matches)*80)))
+            for i, (conference, a, b, winner) in enumerate(matches):
+                x, y = 35, 53 + i*80
+                rounded(self.cv, x, y, 830, 73, fill=PAPER, radius=10)
+                self.text(x+14, y+15, conference, 10, ACCENT, "bold", anchor="w")
+                self.text(x+14, y+37, f"{a}  vs  {b}", 13, INK, "bold", anchor="w")
+                self.text(x+14, y+60, "Winner: " + winner, 11, JADE, "bold", anchor="w")
 
     def setup_memory(self):
         self.description.configure(text="Find eight pairs of original Daylight pictures. Click a card, or focus the board with Tab and use the arrow keys and Enter.")

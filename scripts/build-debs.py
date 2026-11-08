@@ -16,7 +16,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc4-1"
+VERSION = "5.0.0~rc4-2"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -150,10 +150,13 @@ def main():
                     if source.is_file() and "__pycache__" not in source.parts:
                         relative = source.relative_to(ROOT / "desktop/shardturn")
                         copy(base, source, "usr/share/daylight/shardturn/" + str(relative))
+                for art in ("face.png", "pile.png", "full.png"):
+                    copy(base, "desktop/game_assets/coin/" + art,
+                         "usr/share/daylight/game_assets/coin/" + art)
                 copy(base, "desktop/shardturn/assets/shardturn-icon.svg", "usr/share/icons/hicolor/scalable/apps/shardturn.svg")
                 # A distinct original icon makes Shardturn easy to locate.
                 launcher = base / "usr/share/applications/daylight-shardturn.desktop"
-                launcher.write_text(launcher.read_text().replace("Name=Daylight Shardturn", "Name=Shardturn").replace("Icon=daylight", "Icon=shardturn"))
+                launcher.write_text(launcher.read_text().replace("Icon=daylight", "Icon=shardturn"))
             deps=f"daylight-desktop (= {VERSION})"+(" , espeak-ng, libnotify-bin" if package=="daylight-apps" else "")
             finish(package,"all","optional native application launchers" if package=="daylight-apps" else "optional offline games without wagers",deps)
         telemetry=work / "daylight-telemetry"

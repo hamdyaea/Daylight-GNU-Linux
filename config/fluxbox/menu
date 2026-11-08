@@ -19,6 +19,19 @@
   [exec] (Text to speech) {/usr/bin/daylight app speech}
   [exec] (Alarm) {/usr/bin/daylight app alarm}
  [end]
+ [submenu] (Games)
+  [exec] (Daylight Shardturn) {/usr/bin/daylight app shardturn}
+  [exec] (Daylight Battle Cards) {/usr/bin/daylight app cards}
+  [exec] (Daylight Memory Game) {/usr/bin/daylight app memory}
+  [exec] (Daylight Tournament) {/usr/bin/daylight app tournament}
+  [exec] (Daylight Dice) {/usr/bin/daylight app dice}
+  [exec] (Daylight Coin Flip) {/usr/bin/daylight app coin}
+  [exec] (Daylight Slots) {/usr/bin/daylight app slots}
+  [exec] (Daylight Basketball) {/usr/bin/daylight app basketball}
+  [exec] (Daylight Rock Paper Scissors Lizard Spock) {/usr/bin/daylight app rpsls}
+  [exec] (Daylight Lottery) {/usr/bin/daylight app lottery}
+  [exec] (Daylight Guess the Number) {/usr/bin/daylight app guess}
+ [end]
  [submenu] (System applications)
   [include] (/etc/X11/fluxbox/fluxbox-menu)
  [end]

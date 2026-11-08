@@ -26,8 +26,8 @@ WALLPAPER_ROOT = Path("/usr/share/backgrounds/daylight")
 if not WALLPAPER_ROOT.is_dir():
     WALLPAPER_ROOT = ROOT.parent / "assets/wallpapers"
 
-GAME_NAMES = {"shardturn": "Shardturn", "cards": "Battle Cards", "memory": "Memory",
-              "tournament": "Tournament", "basketball": "Basketball", "rpsls": "Rock · Paper · Spock",
+GAME_NAMES = {"shardturn": "Daylight Shardturn", "cards": "Battle Cards", "memory": "Memory",
+              "tournament": "2018 World Cup", "basketball": "NBA Playoffs", "rpsls": "Rock · Paper · Spock",
               "dice": "Dice", "coin": "Coin Flip", "slots": "Symbols", "lottery": "Lottery", "guess": "Guess the Number"}
 TOOL_NAMES = {"monitor": "System Monitor", "sky": "Sun & Moon", "password": "Passwords",
               "temperature": "Temperature", "days": "Date Calculator", "connect": "Connections",
@@ -36,11 +36,11 @@ DESCRIPTIONS = {
     "shardturn": "The colour card duel. Original geometric cards and thoughtful play.",
     "cards": "A full deck, face-down battles and a prize to collect.",
     "memory": "Turn the illustrated tiles. Find every matching pair.",
-    "tournament": "Build a tournament and follow each round to the final.",
-    "basketball": "Follow a fictional basketball match on the court.",
+    "tournament": "Simulate the FIFA 2018 World Cup from its eight historical groups to the trophy.",
+    "basketball": "Simulate the historical NBA playoff conferences to the champion.",
     "rpsls": "Five choices, ten winning combinations. Make your move.",
     "dice": "Roll illustrated dice, choose the sides and roll again.",
-    "coin": "A quick toss, drawn on your screen.", "slots": "Match colourful symbols. No wagers or money.",
+    "coin": "Flip the original photographic coin artwork.", "slots": "Match colourful symbols. No wagers or money.",
     "lottery": "A playful number draw. A simulation, never a prediction.",
     "guess": "Use the clues to find the hidden number.",
     "monitor": "Live CPU, memory, temperature, storage and Raspberry Pi health.",
@@ -447,6 +447,16 @@ class Desktop(tk.Tk):
             ttk.Button(keyboard,text=name,command=lambda a=layout,b=variant:self.keyboard(a,b),state="disabled" if state.session_kind()=="wayland" else "normal").grid(row=index//2,column=index%2,sticky="ew",padx=(0,6),pady=6)
         keyboard_help=("Wayland keeps the keyboard layout from your base desktop. Change it in that desktop’s input settings." if state.session_kind()=="wayland" else "Remembered for Daylight X11 sessions. Your base system’s keyboard settings remain available for other desktops.")
         ttk.Label(self.content,text=keyboard_help,wraplength=490,style="Muted.TLabel").pack(anchor="w",pady=(0,18))
+        privacy=theme.panel(self.content)
+        privacy.pack(fill="x",pady=(0,12))
+        ttk.Label(privacy,text=self.word("telemetry"),style="Card.TLabel",
+                  font=("DejaVu Sans",14,"bold")).pack(anchor="w",pady=(0,6))
+        ttk.Label(privacy,text=self.word("privacy"),style="Card.TLabel",
+                  wraplength=450).pack(anchor="w",pady=5)
+        ttk.Button(privacy,text={"en":"Review optional activation…",
+                                 "fr":"Activer les statistiques (facultatif)…",
+                                 "de":"Optionale Statistik aktivieren…"}[self.values["language"]],
+                   command=lambda:self.show("telemetry")).pack(anchor="w",pady=9)
         card=theme.panel(self.content)
         card.pack(fill="x",pady=10)
         ttk.Label(card,text="A few useful shortcuts",style="Card.TLabel",font=("DejaVu Sans",14,"bold")).pack(anchor="w")

@@ -231,7 +231,7 @@ class NativeGamePages(unittest.TestCase):
             "dice": lambda p: p.roll_dice(), "coin": lambda p: p.flip_coin(),
             "lottery": lambda p: p.draw_lottery_values(), "rpsls": lambda p: p.play_rps(4),
             "cards": lambda p: p.advance_battle(), "tournament": lambda p: p.advance_tournament(),
-            "basketball": lambda p: p.play_quarter(), "memory": lambda p: p.reveal_memory(0),
+            "basketball": lambda p: p.advance_basketball(), "memory": lambda p: p.reveal_memory(0),
             "slots": lambda p: p.spin(), "guess": lambda p: p.make_guess(),
         }
         try:
