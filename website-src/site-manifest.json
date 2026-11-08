@@ -32,7 +32,7 @@
     "fr/index.html": "5419b73f87eefd737737aaa74e9a317dadc0c5d4a20a3b5292dc50597d22a47d",
     "fr/information.html": "dc5d06ede3b58a5014d617189128e61d91a3db5474c32105732db855cc4497df",
     "fr/install.html": "b5cc206c2a3da87af2d9296710db0e5a71b13e5f2aa3114a96db4301c1a6b828",
-    "fr/news.html": "16d87f528431917352202fe7dc0ffb73604aa67529c28aa120fe5aba5318d32d",
+    "fr/news.html": "528a37c611cf068880517f7a3ede7f1324a4bbd2f5a4b8b2d15e6144c06b39c9",
     "fr/old/index.html": "ace52cbfc37b1b9b90f843d6c9ba1a7d1bd38a0d4989c070a620aa49a735db25",
     "fr/press.html": "127dce55d78333117fb5559a420cc50945360b928f378bc959cf6b589aba713d",
     "fr/privacy.html": "1c1314d86e29b76611b9504d7442e8d6467f99f5ad4a559e308903e65a58ac20",
@@ -67,7 +67,7 @@
     "media/wallpapers/daylight-sunrise.jpg": "5f6a6cd13442cd4d55f149b3c4a3686eff2496dcdc5426c2d5c5080024ef3123",
     "media/web-live-preview-d6c2c04c8310.webp": "d6c2c04c8310b6a8b44efffdcda6dde7e124e824d5a20a768c2f1bea5aac1110",
     "merchandise.html": "6350b5485d627af9099055bb7bc2099b704eed44b19af4eaba6098ff952b3ee6",
-    "news.html": "20d38377ee0b63c1c9b05f310407bba07c14b12da373bb6606ab7539eac13193",
+    "news.html": "929f2b164ab0a3b9f4bce7e67e87e86293038440fa6c96b8dd2ac2825443fa33",
     "old/index.html": "6722aeccf25057caafa2a05f81a8f64b9f12cc6fb6eee1d89fd1aaaad592aed5",
     "press.html": "2bdc8372a1f252607cb5a388ef4b0992475bba6ba33b08df2c2dfa093bddd877",
     "privacy.html": "9f98d33c5dc9340abbca1b2530d4b4da630041b27778fbd7cb3e4b66352b916a",
@@ -80,5 +80,5 @@
     "apt/index.html": "e2cfbc9601187b51a85a2acf31ca4551647f9da2a3a09db84920be8aaf0dfc46",
     "daylight-install.sh": "d8e485679443a292b8215ed3db621d15f86fb565435715be31fc57b35938fc62"
   },
-  "apt_package_version": "5.0.0~rc4-5"
+  "apt_package_version": "5.0.0~rc4-6"
 }
