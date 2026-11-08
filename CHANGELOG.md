@@ -1,10 +1,11 @@
 # Changelog
 
-## Unreleased
+## 5.0.0-rc.4 — 2026-11-08
 
-- Prepare the RC4 native desktop refresh: Shardturn, ten illustrated games, redesigned utilities, application search, first steps, live settings, Sun & Moon and Raspberry Pi health.
+- Publish the RC4 native desktop refresh: Shardturn, ten illustrated games, redesigned utilities, application search, first steps, live settings, Sun & Moon and Raspberry Pi health.
 - Preserve the RC3 telemetry integration and explicit opt-in; the full install includes its disabled package.
 
+- Upgrade existing RC3 installations through `sudo daylight update`, with automatic GUI dependencies and first-open session handoff.
 - Add the optional telemetry package to the public installer’s `--all` plan while keeping it disabled until explicit opt-in.
 
 ## 5.0.0-rc.3

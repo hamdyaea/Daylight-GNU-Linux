@@ -1,0 +1,64 @@
+{
+  "package_version": "5.0.0~rc4",
+  "candidate": "5.0.0-rc.4",
+  "source_commit": "f7d1e02f8eb326cadeb8368ead5cc64d2d2c1050",
+  "merged_pull_request": "https://github.com/hamdyaea/Daylight-GNU-Linux/pull/3",
+  "validated_push_run": "https://github.com/hamdyaea/Daylight-GNU-Linux/actions/runs/42476944191",
+  "architecture": [
+    "amd64",
+    "arm64"
+  ],
+  "apt_published": "2026-11-08",
+  "apt_url": "https://daylightlinux.ch/apt",
+  "archive_generation": "20261108T115156884455Z",
+  "public_pages_commit": "01a9d3e378a078360fe41b1122ecf19264da6553",
+  "signing_key_fingerprint": "B0575F821A31DD20753DE07C50D21240F4BCB02E",
+  "live_iso": "unchanged; 5.0.0-rc.2",
+  "telemetry": "disabled on fresh installation; existing explicit opt-in preserved",
+  "update_command": "sudo daylight update",
+  "corresponding_source": {
+    "url": "https://daylightlinux.ch/apt/media/daylight-5.0.0-rc.4-source-f7d1e02f8eb3.zip",
+    "sha256": "fa470a24979b0c6dabcabbbc33e8f790c7ef8b76bf3b2ae942eff1d298dab8eb",
+    "scope": "Complete Daylight package sources, build scripts, pinned Shardturn sources, licenses, tests and configuration at the exact tested commit."
+  },
+  "validation_evidence": {
+    "url": "https://daylightlinux.ch/apt/media/daylight-5.0.0-rc.4-validation-f7d1e02f8eb3.zip",
+    "sha256": "dcdb8fcfe6a57ff032c98743eef5c01df75f85b093ac04939be9238cb70716e1",
+    "artifacts": [
+      {
+        "kind": "candidate",
+        "filename": "rc4-final-packages.zip",
+        "id": 13615743704,
+        "sha256": "46cb2d08be9b9e592f89ac0e062f40cde404c1515f76448c306a759d0209656f"
+      },
+      {
+        "kind": "validation",
+        "filename": "rc4-final-validation.zip",
+        "id": 13615519528,
+        "sha256": "dcdb8fcfe6a57ff032c98743eef5c01df75f85b093ac04939be9238cb70716e1"
+      }
+    ]
+  },
+  "tests": {
+    "rust_unit": "28 passed",
+    "cli_integration_ci": "11 passed",
+    "shardturn_upstream": "35 passed at pinned upstream revision",
+    "debian_12": "fresh installation/removal and live RC3-source-fixture update passed",
+    "debian_13": "fresh installation/removal and live RC3-source-fixture update passed",
+    "live_upgrade": "old daylight update executable only; new UI starts in the existing Fluxbox session; settings and existing telemetry opt-in preserved",
+    "public_apt": "archive fingerprint, signatures, both architecture indexes and all eight package hashes verified over public HTTPS",
+    "raspberry_pi_arm64": "production RC3 upgraded through daylight update; 10 non-root CLI tests and installed Tk/GUI/Shardturn imports passed; telemetry-default test excluded to preserve existing opt-in and avoid sending a test event",
+    "preservation": "13 configuration files, 7 tracked services and Docker containers unchanged",
+    "limits": "Physical Raspberry Pi Wayland graphics, audio and power-supply behaviour not validated by headless tests."
+  },
+  "packages": {
+    "daylight-apps_5.0.0~rc4_all.deb": "3e0e59db4f7a0481d1eef24bde068bf241ff035fc7b4e693278c3e8ba2e46904",
+    "daylight-core_5.0.0~rc4_amd64.deb": "81febb44de12d5fd1ff2cdba8a97e2d810e375b770cc497f136a2b4e6652809b",
+    "daylight-core_5.0.0~rc4_arm64.deb": "086c417c366bcd6eb05e62e9fa75f9d8560ac4ce503d47eb03858955bdf08ddd",
+    "daylight-desktop_5.0.0~rc4_all.deb": "398788476b4b5c7b2640dd6daecc5e783668a1b40abacc710dad15aa23a497af",
+    "daylight-games_5.0.0~rc4_all.deb": "82f4d0aec3cb0f1e8d025dd7f12087cb869bcc418821b5216e62f89098fe2599",
+    "daylight-linux_5.0.0~rc4_all.deb": "b2f30742d8e8afa733a625a42115ac10fb4895e33c4b77f54a7562cb39e39392",
+    "daylight-telemetry_5.0.0~rc4_all.deb": "a328fc5ea97526ef39138bb7cde635f3deb788c0ac3e5cb29b2b25329442902d",
+    "daylight-themes_5.0.0~rc4_all.deb": "38e8afdd52557442025748f44b4765f208b1b4b0b09b1ab38816b13212a80f99"
+  }
+}
