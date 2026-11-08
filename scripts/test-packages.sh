@@ -11,7 +11,15 @@ arch=$(dpkg --print-architecture)
 printf '#!/bin/sh\nexit 101\n' > /usr/sbin/policy-rc.d
 chmod 755 /usr/sbin/policy-rc.d
 apt-get -o Acquire::Retries=3 update -qq
-apt-get -o Acquire::Retries=3 install -y --no-install-recommends adduser util-linux xvfb xauth x11-utils x11-apps xdotool procps python3 imagemagick desktop-file-utils labwc xwayland
+apt-get -o Acquire::Retries=3 install -y --no-install-recommends adduser util-linux xvfb xauth x11-utils x11-apps xdotool procps python3 imagemagick desktop-file-utils
+# Debian 12 main has no labwc package. Use only the current suite's candidate;
+# its X11/windowing and upgrade checks still run without a native compositor.
+native_wayland=no
+labwc_candidate=$(apt-cache policy labwc 2>/dev/null | sed -n 's/^[[:space:]]*Candidate:[[:space:]]*//p' | head -n 1)
+if [ -n "$labwc_candidate" ] && [ "$labwc_candidate" != '(none)' ]; then
+  apt-get -o Acquire::Retries=3 install -y --no-install-recommends labwc xwayland
+  native_wayland=yes
+fi
 adduser --disabled-password --gecos '' daylight-test
 sha256sum /etc/os-release > /tmp/daylight-os-before
 printf 'existing user config\n' > /home/daylight-test/.conkyrc
@@ -81,12 +89,18 @@ runuser -u daylight-test -- env HOME=/home/daylight-test DISPLAY=:99 DAYLIGHT_DI
 # Test overlapping Tk clients: an application alone can pass while labwc's
 # Xwayland stack routes native clicks to an older client behind it. Keep an
 # authentic RC4 Tk process and the packaged Conky running throughout this test.
-mkdir -p /tmp/daylight-wayland-evidence
-chown daylight-test:daylight-test /tmp/daylight-wayland-evidence
-wayland_status=0
-runuser -u daylight-test -- env HOME=/home/daylight-test DAYLIGHT_DISPOSABLE_TEST=yes /usr/bin/python3 "$root/tests/test_wayland.py" --output /tmp/daylight-wayland-evidence || wayland_status=$?
-if [ -d /out ]; then cp /tmp/daylight-wayland-evidence/* /out/; fi
-test "$wayland_status" -eq 0
+if [ "$native_wayland" = yes ]; then
+  mkdir -p /tmp/daylight-wayland-evidence
+  chown daylight-test:daylight-test /tmp/daylight-wayland-evidence
+  wayland_status=0
+  runuser -u daylight-test -- env HOME=/home/daylight-test DAYLIGHT_DISPOSABLE_TEST=yes /usr/bin/python3 "$root/tests/test_wayland.py" --output /tmp/daylight-wayland-evidence || wayland_status=$?
+  if [ -d /out ]; then cp /tmp/daylight-wayland-evidence/* /out/; fi
+  test "$wayland_status" -eq 0
+else
+  printf '%s\n' 'DAYLIGHT_NATIVE_WAYLAND_INPUT_NOT_RUN: no labwc APT candidate in this Debian suite; X11/windowing and upgrade checks remain enabled.' > /tmp/daylight-wayland-not-run.txt
+  cat /tmp/daylight-wayland-not-run.txt
+  if [ -d /out ]; then cp /tmp/daylight-wayland-not-run.txt /out/; fi
+fi
 # Optional games disappear when their package is removed; the desktop remains.
 apt-get remove -y --no-auto-remove daylight-games
 test ! -e /usr/share/daylight/games.enabled

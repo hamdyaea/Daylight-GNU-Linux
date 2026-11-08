@@ -17,7 +17,9 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import shlex
+import shutil
 import signal
 import subprocess
 import sys
@@ -46,6 +48,42 @@ def descendants(widget):
     for child in widget.winfo_children():
         yield child
         yield from descendants(child)
+
+
+def native_conky_surface(log):
+    """Require a Conky layer surface with a real attached, committed buffer."""
+    if not log.is_file():
+        return None
+    trace = log.read_text(errors="replace")
+    layer = re.search(r'get_layer_surface\([^\n]*\bwl_surface[@#](\d+)[^\n]*"(?:conky|conky_namespace)"[^\n]*\)',
+                      trace, re.IGNORECASE)
+    if layer is None:
+        return None
+    surface = r'\bwl_surface[@#]' + layer.group(1) + r'\.'
+    tail = trace[layer.end():]
+    attach = re.search(surface + r'attach\(\s*wl_buffer[@#]\d+[^\n]*\)', tail)
+    if attach is None:
+        return None
+    commit = re.search(surface + r'commit\(\)', tail[attach.end():])
+    if commit is None:
+        return None
+    return {"surface": "wl_surface@" + layer.group(1), "layer_request": layer.group(0),
+            "buffer_attach": attach.group(0), "buffer_commit": commit.group(0)}
+
+
+def bounded_wayland_log(path, limit=1024 * 1024):
+    """Keep the initial protocol proof, then drain without growing the log."""
+    remaining = limit
+    with path.open("wb") as output:
+        while True:
+            chunk = os.read(sys.stdin.fileno(), 8192)
+            if not chunk:
+                return
+            if remaining:
+                selected = chunk[:remaining]
+                output.write(selected)
+                output.flush()
+                remaining -= len(selected)
 
 
 def historical_background_ui(runtime):
@@ -91,11 +129,28 @@ class NativeWaylandInput(unittest.TestCase):
         from wayland_pointer import NativePointer
         # Exercise the installed appearance owner and the exact packaged Conky
         # wrapper, rather than constructing a special test-only Conky window.
+        runtime = Path(os.environ["XDG_RUNTIME_DIR"])
+        cls.native_conky_log = runtime / "conky-native.log"
+        # Capture protocol diagnostics from Conky only. The shell exec retains
+        # its PID and the installed owner's normal child cleanup; the logger
+        # drains stderr to EOF while retaining at most 1 MiB of evidence.
+        executable = shutil.which("conky")
+        if executable is None:
+            raise AssertionError("The installed desktop must provide Conky")
+        shim_directory = runtime / "test-bin"
+        shim_directory.mkdir()
+        logger = shlex.join([sys.executable, str(Path(__file__).resolve()),
+                             "--bounded-wayland-log", str(cls.native_conky_log)])
+        shim = shim_directory / "conky"
+        shim.write_text("#!/bin/bash\nexport WAYLAND_DEBUG=client\nexec " + shlex.quote(executable) +
+                        ' "$@" 2> >(' + logger + ")\n")
+        shim.chmod(0o700)
         state.save_core({"monitor": "on", "profile": "balanced"})
         subprocess.run(["/usr/bin/daylight", "setup-session"], check=True)
         cls.manager_log = open(Path(os.environ["XDG_RUNTIME_DIR"]) / "appearance.log", "w")
         cls.manager = subprocess.Popen(
             [sys.executable, str(UI / "daylight_gui.py"), "--session-appearance"],
+            env=dict(os.environ, PATH=str(shim_directory) + os.pathsep + os.environ.get("PATH", "")),
             stdout=cls.manager_log, stderr=subprocess.STDOUT)
         cls.addClassCleanup(cls.manager_log.close)
         cls.addClassCleanup(stop, cls.manager)
@@ -112,16 +167,15 @@ class NativeWaylandInput(unittest.TestCase):
                         and record["args"] and Path(record["args"][0]).name == "conky"):
                     cls.conky = record
                     break
-            windows = subprocess.run(["xwininfo", "-root", "-tree"],
-                                     capture_output=True, text=True, check=True).stdout
-            if cls.conky and "conky" in windows.casefold():
+            cls.native_protocol = native_conky_surface(cls.native_conky_log)
+            if cls.conky and cls.native_protocol:
                 break
             time.sleep(.1)
         else:
-            raise AssertionError("The installed Wayland appearance owner did not map Conky")
+            raise AssertionError("Conky did not attach and commit a native Wayland layer buffer; see conky-native.log")
+        (runtime / "native-conky-surface.json").write_text(json.dumps(cls.native_protocol, indent=2) + "\n")
         # Keep an unmodified old client open throughout every foreground test.
         # Closing it before clicking would hide the actual stacking regression.
-        runtime = Path(os.environ["XDG_RUNTIME_DIR"])
         source = historical_background_ui(runtime)
         ready = runtime / "background-ready.json"
         cls.background_log = (runtime / "background.log").open("w")
@@ -150,6 +204,7 @@ class NativeWaylandInput(unittest.TestCase):
               json.dumps({"pid": cls.conky["pid"], "args": cls.conky["args"],
                           "display": os.environ["DISPLAY"],
                           "wayland": os.environ["WAYLAND_DISPLAY"],
+                          "native_conky_surface": cls.native_protocol,
                           "historical_background": cls.background_info}), flush=True)
 
     def setUp(self):
@@ -304,6 +359,7 @@ class NativeWaylandInput(unittest.TestCase):
                          if isinstance(widget, tk.Text))
         self.click(help_text)
         self.assertEqual(self.press_events[-1]["class"], "Text")
+        self.assertEqual(self.press_events[-1]["widget"], str(help_text))
         app.help_window.destroy()
         app.help_window = None
         app.cancel_ai()
@@ -353,7 +409,8 @@ def compositor_test(output):
                 if compositor.poll() is None:
                     os.killpg(compositor.pid, signal.SIGTERM)
                 stop(compositor)
-                for name in ("appearance.log", "background.log", "background-ready.json"):
+                for name in ("appearance.log", "background.log", "background-ready.json",
+                             "conky-native.log", "native-conky-surface.json"):
                     source = runtime / name
                     if source.is_file():
                         (output / ("wayland-" + name)).write_bytes(source.read_bytes())
@@ -366,8 +423,12 @@ def main():
     parser.add_argument("--result", type=Path, help=argparse.SUPPRESS)
     parser.add_argument("--background-ui", type=Path, help=argparse.SUPPRESS)
     parser.add_argument("--background-ready", type=Path, help=argparse.SUPPRESS)
+    parser.add_argument("--bounded-wayland-log", type=Path, help=argparse.SUPPRESS)
     parser.add_argument("--output", type=Path, default=Path("/tmp/daylight-wayland-evidence"))
     args = parser.parse_args()
+    if args.bounded_wayland_log:
+        bounded_wayland_log(args.bounded_wayland_log)
+        return 0
     if args.background_ui:
         background_client(args.background_ui, args.background_ready)
         return 0

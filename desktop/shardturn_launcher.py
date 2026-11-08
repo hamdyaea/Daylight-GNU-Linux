@@ -26,12 +26,61 @@ def _game_module():
     return module
 
 
+def _windowed_game_class(original):
+    resources = sys.modules[original.__module__]
+
+    class DaylightShardturn(original):
+        def show_help(self):
+            if self.help_window:
+                self.help_window.lift()
+                return
+            self.cancel_ai()
+            top = tk.Toplevel(self.root)
+            top.withdraw()
+            self.help_window = top
+            try:
+                top.title("Rules and controls · Shardturn")
+                top.geometry("760x690")
+                top.configure(bg=resources.BG)
+                top.transient(self.root)
+                bar = tk.Scrollbar(top)
+                bar.pack(side="right", fill="y")
+                text = tk.Text(top, bg=resources.BG, fg=resources.INK,
+                               font=(resources.FONT_FAMILY, 11), wrap="word",
+                               padx=24, pady=24, relief="flat",
+                               yscrollcommand=bar.set, selectbackground="#446c70")
+                text.pack(fill="both", expand=True)
+                bar.configure(command=text.yview)
+                text.insert("1.0", resources.RULES)
+                text.configure(state="disabled")
+
+                def closed():
+                    self.help_window = None
+                    top.destroy()
+                    self.refresh()
+
+                top.protocol("WM_DELETE_WINDOW", closed)
+                top.bind("<Escape>", lambda _event: closed())
+                # Settle all content and transient geometry before the first
+                # map; an Xwayland grab must use that final surface origin.
+                top.update_idletasks()
+                top.deiconify()
+                top.wait_visibility()
+                top.grab_set()
+            except BaseException:
+                self.help_window = None
+                top.destroy()
+                self.refresh()
+                raise
+    return DaylightShardturn
+
+
 def create_app(seed=None):
     module = _game_module()
     root = tk.Tk()
     windowing.prepare(root)
     try:
-        app = module.ShardturnApp(root, seed=seed)
+        app = _windowed_game_class(module.ShardturnApp)(root, seed=seed)
         windowing.finish(root)
         return root, app
     except BaseException:
@@ -43,6 +92,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seed", type=int)
     args = parser.parse_args()
+    from daylight_ui.state import ensure_session_manager
+    ensure_session_manager()
     root, _app = create_app(seed=args.seed)
     root.mainloop()
 
