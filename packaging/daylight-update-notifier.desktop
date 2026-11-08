@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Daylight Update Notifications
+Comment=Notify when a Daylight package update is available
+Exec=/usr/bin/python3 /usr/lib/daylight/update-notifier
+TryExec=/usr/bin/python3
+Terminal=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
