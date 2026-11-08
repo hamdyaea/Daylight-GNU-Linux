@@ -69,5 +69,3 @@ class HistoricalGamesTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-[executed on device: hamdy-LinuxManjro (d2fadeb0-3f51-4b03-90ee-3f2bf0b8b7db)]
