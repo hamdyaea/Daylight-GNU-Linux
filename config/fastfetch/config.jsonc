@@ -4,7 +4,7 @@
 {
   "logo": {"type": "file", "source": "/usr/share/daylight/fastfetch/logo.txt", "color": {"1": "yellow", "2": "white"}},
   "modules": [
-    {"type":"custom", "key":"Environment", "format":"Daylight GNU/Linux 5.0.0-rc.1"},
+    {"type":"custom", "key":"Environment", "format":"Daylight GNU/Linux 5.0.0-rc.3"},
     {"type":"os", "key":"Base"}, "host", "kernel", "uptime", "cpu", "memory", "wm", "shell", "terminal"
   ]
 }

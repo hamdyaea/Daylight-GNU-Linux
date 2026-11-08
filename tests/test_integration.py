@@ -17,7 +17,7 @@ class CLI(unittest.TestCase):
         self.assertEqual(result.returncode == 0, ok, result.stderr)
         return result.stdout
     def test_version(self):
-        self.assertIn("5.0.0-rc.2", self.run_cli("--version"))
+        self.assertIn("5.0.0-rc.3", self.run_cli("--version"))
     def test_status_is_valid_json(self):
         data = json.loads(self.run_cli("status", "--json"))
         self.assertGreater(data["memory_total_kib"], 0)
