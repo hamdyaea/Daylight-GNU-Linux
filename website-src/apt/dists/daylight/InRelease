@@ -10,25 +10,25 @@ Components: main
 Acquire-By-Hash: yes
 NotAutomatic: yes
 ButAutomaticUpgrades: yes
-Date: Sat, 07 Nov 2026 23:04:17 +0000
-Valid-Until: Mon, 07 Dec 2026 23:04:17 +0000
+Date: Sun, 08 Nov 2026 09:54:56 +0000
+Valid-Until: Tue, 08 Dec 2026 09:54:56 +0000
 Description: Daylight GNU/Linux candidate packages
 SHA256:
- 0b78c2b7024c99525537f67138e852fe1c81476f894da5443091ff1142b135da 41500 main/binary-amd64/Packages
- 81ecb820dfd2f1c5c62771671c373e25525268571ef83d91c4ffd6aed0210cf1 7208 main/binary-amd64/Packages.gz
- 6fb61afee9966f6756370567e3f4929a65739a25ca188eb02b801c13b79edd70 41493 main/binary-arm64/Packages
- a1b8c26d62924c31f0c1262d044b80724ae030d42c1c593a9bcc5ae0946de600 7198 main/binary-arm64/Packages.gz
+ bce33b00b38b03df2decf318ef806f56eed50cf22aedd5b5eef5a478c4a5d825 46472 main/binary-amd64/Packages
+ e0b38a7e232cbd75f8b0723c08130edd7372808c9dd2cd84a4033608001331ce 7975 main/binary-amd64/Packages.gz
+ 86e088f1d28ffd91d82585a242bfe543f27fd61e0eb963a9a3f2ab86b0123b9c 46465 main/binary-arm64/Packages
+ b7356a5b4c83e0abb17063bf5dba0726c082ec8e9d368c339b5c6dac88c66e9c 7957 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQGzBAEBCAAdFiEEsFdfghox3SB1PeB8UNISQPS8sC4FAmrvrnEACgkQUNISQPS8
-sC6rSQv6A5YBzFc7nHBtgGB+H2BQiKid98GDTBYKvfnfgTEvzu+Ahc/+7M1mt2r4
-uJ9iPrcGGKCcHQEq4TO5MUoeZZ2K/YJLSKTMQFbyrPS7ue6bl9OgpYk37elPBtxT
-Es4fvge0Zhqw6oZrbKgwuMX30Eis04QBQgEJcnVK+iFt5WmCsPWm6PSdnq2gBdCP
-FkkeHcN/V89fkm3W99sqTcIjyNGlCc4lAxzPUCfNRkjfG0kMGstOX/bmJha31ztX
-q5atjtVsIczoHX/9QZ9JBjz++ml1smlVZ/3Fhyuu89s+Q2RakjPkXFssTOQM9nny
-ECh97J4M0iQnCxOoWbgGIXtUNhUQlBum3rViyOi/ly9pvxEBDnTH6mmK2uWpFAi+
-Cns0r8ayLeZwHtjbbCVAcQyR/hxKvVhV3Ijesdm4DsEv7Sn2s5NfUSFbqFNZSCSI
-d9p6Ia5p/QNBmLZ68/IHho+bXKT0Yg7fpmLGWGSqXgIu5o//SyNhKf42TiwtYv3J
-DyBeI/EQ
-=aB5g
+iQGzBAEBCAAdFiEEsFdfghox3SB1PeB8UNISQPS8sC4FAmrwRvAACgkQUNISQPS8
+sC7D2wv/bi7se9/XT1DFl7Kxyj8vcQj73kUv/r8MNrpNNSF1GbS83u4Z724Dn0bG
+bvUphvnDbZecHuM2gWaxFRx8uYfJxNAUyw8Z+Wy5mb04Gc+43TppIp+2I2uoE9lu
+KDtn4q6lsp02atnfcoBzhOyoK5z2/l656Wc9aeJfBcS6I8rQL0NbqblI8I2/Ouec
+D7DpPyQ5cVONc4rKpO/S6jLpDoLKrr3pOmcZJF/sg5GR9NEJ8EB0ULW2MGy87kWJ
+NkfVSUxkqc0N2OOjlWOIkuziZGkHXOa70NYR+Ahp46dGHKkOF9OUvCBeNHYzWRqi
+Em7N2LsQiKf1LNJ19hEiInY/xS1qTWem2ua8snDjmRi+IhWxwWFI/zxpwaXFUt4A
+3BFE7vls2q2Yvm5gxoYS7E/ym0JyJPSAZJPhdd2Q3Qu4zkC8xsAzUaLI1hAJDOwh
+TmVA4r7xbkGHGFwPfdHuQAHFtFxjrjbulKcY56a/MRpTNG7leKOae185z3WzJa/r
+FhcGiNE8
+=Tqvm
 -----END PGP SIGNATURE-----
