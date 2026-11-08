@@ -114,8 +114,9 @@ class GamePage(tk.Frame):
         self.controls.pack(fill="x", pady=(0, 12))
         self.footer = tk.Frame(self, bg=BG)
         self.footer.pack(fill="x", pady=(0, 10))
-        self.cv = tk.Canvas(self, bg=BG, height=390, highlightthickness=0, takefocus=True)
-        self.cv.pack(fill="both", expand=True)
+        self.sports_page = name in ("basketball", "tournament")
+        self.cv = tk.Canvas(self, bg=BG, height=520 if self.sports_page else 390, highlightthickness=0, takefocus=True)
+        self.cv.pack(fill="x" if self.sports_page else "both", expand=not self.sports_page)
         self.cv.bind("<Configure>", lambda _e: self.redraw())
         self.cv.bind("<Button-1>", lambda _e: self.cv.focus_set(), add="+")
         self.status = tk.StringVar()
@@ -202,7 +203,19 @@ class GamePage(tk.Frame):
         self.cv.delete("all")
         self.fonts.clear()
         self.scene()
-        if self.name == "tournament":
+        if self.sports_page:
+            # This game lives inside the shell's scrollable frame: expanding a
+            # canvas there can collapse it to the height of a single line.
+            # Give the board its own stable viewport and scale horizontally.
+            width = max(self.cv.winfo_width(), 200)
+            scale = min(1.0, width / 900)
+            if scale != 1.0:
+                self.cv.scale("all", 0, 0, scale, scale)
+                for item, size, weight in self.fonts:
+                    self.cv.itemconfigure(item, font=("DejaVu Sans", max(9, round(size * scale)), weight))
+            bounds = self.cv.bbox("all")
+            if bounds:
+                self.cv.configure(scrollregion=(0, 0, max(width, bounds[2] + 16), max(520, bounds[3] + 20)))
             return
         w, h = max(self.cv.winfo_width(), 200), max(self.cv.winfo_height(), 200)
         desired_height = max(240, min(390, round(w*440/900)))
@@ -779,3 +792,5 @@ def build(parent, name, context=None):
     if name not in PAGE_NAMES:
         raise ValueError("Unknown game: "+name)
     return GamePage(parent,name,context)
+
+[executed on device: hamdy-LinuxManjro (d2fadeb0-3f51-4b03-90ee-3f2bf0b8b7db)]
