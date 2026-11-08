@@ -453,6 +453,42 @@ class Desktop(tk.Tk):
                   font=("DejaVu Sans",14,"bold")).pack(anchor="w",pady=(0,6))
         ttk.Label(privacy,text=self.word("privacy"),style="Card.TLabel",
                   wraplength=450).pack(anchor="w",pady=5)
+        # Present the actual opt-in state on the first-run page. No command is
+        # executed without an explicit click and administrator confirmation.
+        telemetry_path = Path("/etc/daylight/telemetry.conf")
+        telemetry_installed = telemetry_path.is_file()
+        try:
+            telemetry_enabled = any(line.strip().lower() == "enabled=yes" for line in telemetry_path.read_text().splitlines())
+        except OSError:
+            telemetry_enabled = False
+        status_text = {
+            "en": "Boot statistics: {}", "fr": "Statistiques de démarrage : {}",
+            "de": "Startstatistik: {}",
+        }[self.values["language"]]
+        state_text = ({"en": "Enabled", "fr": "Activées", "de": "Aktiviert"}
+                      if telemetry_enabled else {"en": "Disabled", "fr": "Désactivées", "de": "Deaktiviert"})
+        ttk.Label(privacy, text=status_text.format(state_text[self.values["language"]]),
+                  style="Card.TLabel").pack(anchor="w", pady=(8, 5))
+        if telemetry_installed:
+            action = "off" if telemetry_enabled else "on"
+            button_text = ({"en": "Disable boot statistics…", "fr": "Désactiver les statistiques…", "de": "Startstatistik deaktivieren…"}
+                           if telemetry_enabled else {"en": "Enable boot statistics…", "fr": "Activer les statistiques…", "de": "Startstatistik aktivieren…"})
+            def toggle_telemetry():
+                command = "sudo daylight telemetry " + action
+                if not messagebox.askyesno("Daylight telemetry", "Run this administrator command?\n\n" + command, parent=self):
+                    return
+                terminal = shutil.which("x-terminal-emulator") or shutil.which("xterm")
+                if terminal:
+                    subprocess.Popen([terminal, "-e", "sudo", daylight_binary(), "telemetry", action], start_new_session=True)
+                else:
+                    messagebox.showinfo("Daylight telemetry", "Run in a terminal:\n" + command, parent=self)
+            ttk.Button(privacy, text=button_text[self.values["language"]],
+                       command=toggle_telemetry).pack(anchor="w", pady=5)
+        else:
+            ttk.Label(privacy, text={"en": "Optional telemetry package is not installed.",
+                                      "fr": "Le paquet facultatif de télémétrie n'est pas installé.",
+                                      "de": "Das optionale Telemetriepaket ist nicht installiert."}[self.values["language"]],
+                      style="Card.TLabel").pack(anchor="w", pady=5)
         ttk.Button(privacy,text={"en":"Review optional activation…",
                                  "fr":"Activer les statistiques (facultatif)…",
                                  "de":"Optionale Statistik aktivieren…"}[self.values["language"]],
@@ -669,3 +705,5 @@ def main(page="home",first_run=False):
     application=Desktop("welcome" if first_run else page)
     application.mainloop()
     return 0
+
+[executed on device: hamdy-LinuxManjro (d2fadeb0-3f51-4b03-90ee-3f2bf0b8b7db)]
