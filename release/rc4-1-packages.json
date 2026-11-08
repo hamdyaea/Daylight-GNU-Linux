@@ -1,0 +1,115 @@
+{
+  "package_version": "5.0.0~rc4-1",
+  "candidate": "5.0.0-rc.4",
+  "source_commit": "91ff22bcefe6750dbc54e38910576798f2a907a1",
+  "merged_pull_request": "https://github.com/hamdyaea/Daylight-GNU-Linux/pull/4",
+  "validated_push_run": "https://github.com/hamdyaea/Daylight-GNU-Linux/actions/runs/42493395226",
+  "architecture": [
+    "amd64",
+    "arm64"
+  ],
+  "apt_published": "2026-11-08",
+  "apt_url": "https://daylightlinux.ch/apt",
+  "archive_generation": "20261108T151720973708Z",
+  "public_pages_commit": "7560dc36bb4143489f72cf9a1f732761b8751b19",
+  "signing_key_fingerprint": "B0575F821A31DD20753DE07C50D21240F4BCB02E",
+  "live_iso": "unchanged; 5.0.0-rc.2",
+  "telemetry": "disabled on fresh installation; existing explicit opt-in preserved",
+  "update_command": "sudo daylight update",
+  "after_update": "Close and reopen applications already running to load the updated UI. The appearance helper hands over without restarting the compositor.",
+  "corresponding_source": {
+    "url": "https://daylightlinux.ch/apt/media/daylight-5.0.0-rc.4-1-source-91ff22bcefe6-run42493395226.zip",
+    "sha256": "a60b970fdfc4c09d1aa03ceb223ed41873ad747a04e7d402454f6fe2d6b58940"
+  },
+  "validation_evidence": {
+    "url": "https://daylightlinux.ch/apt/media/daylight-5.0.0-rc.4-1-validation-91ff22bcefe6-run42493395226.zip",
+    "sha256": "a7b6d1db469d90c2b617898e370b31f0ae6a3af7e798e4e9a7e866975ef8390c",
+    "artifacts": [
+      {
+        "kind": "candidate",
+        "filename": "candidate-42493395226.zip",
+        "id": 13622682287,
+        "name": "daylight-candidate-50",
+        "sha256": "ade612c445528f971f72ae4c275a8662156bdd5ee2f8b38ee1d040a69a2a8748"
+      },
+      {
+        "kind": "validation",
+        "filename": "validation-42493395226.zip",
+        "id": 13622840983,
+        "name": "daylight-validation-50",
+        "sha256": "a7b6d1db469d90c2b617898e370b31f0ae6a3af7e798e4e9a7e866975ef8390c"
+      }
+    ]
+  },
+  "tests": {
+    "debian_12": "fresh installation/removal and RC3/RC4 stock/custom update passed; native compositor test explicitly unavailable",
+    "debian_13": "fresh installation/removal and RC3/RC4 stock/custom update passed; four native pointer cases passed with authentic RC4 client behind and native Conky running",
+    "native_wayland": {
+      "bookworm": {
+        "status": "NOT RUN",
+        "reason": "no labwc APT candidate"
+      },
+      "trixie": {
+        "success": true,
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "cases": [
+          {
+            "success": true,
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "application": "cards",
+            "returncode": 0
+          },
+          {
+            "success": true,
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "application": "memory",
+            "returncode": 0
+          },
+          {
+            "success": true,
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "application": "shardturn",
+            "returncode": 0
+          },
+          {
+            "success": true,
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "application": "alarm",
+            "returncode": 0
+          }
+        ],
+        "status": "passed"
+      }
+    },
+    "public_apt": "signing fingerprint, signed indexes for both architectures, all eight package hashes and corresponding source/evidence verified over public HTTPS",
+    "raspberry_pi_arm64": "upgraded only through installed daylight update; all seven packages at 5.0.0~rc4-1; 10 non-root CLI tests and installed GUI imports passed",
+    "live_desktop": "native Conky singleton with complete balanced configuration; existing labwc PID unchanged",
+    "preservation": "tracked configuration hashes, seven services and four pre-existing Docker containers unchanged; session-defaults remains 1.2-1",
+    "limits": "Physical audio and power behaviour not tested. Bookworm native input additionally exercised in a disposable compositor on the Raspberry Pi."
+  },
+  "packages": {
+    "daylight-apps_5.0.0~rc4-1_all.deb": "2cc7b8f154e082cf222f25460abb015596702e003cea60805eec858c6341984e",
+    "daylight-core_5.0.0~rc4-1_amd64.deb": "78924cc4b3cb822e6d8e235849e3391f88d92a64bfd78b6b13d73c3df1e13893",
+    "daylight-core_5.0.0~rc4-1_arm64.deb": "4f487fef134a8a353c6524a4269cb59295a31cbfaabacf4ed1b73764cdd273c7",
+    "daylight-desktop_5.0.0~rc4-1_all.deb": "1f464918a2ea36a110fbd8f62c9e981c8a1bf615fce0b42bf2ab0671b0780819",
+    "daylight-games_5.0.0~rc4-1_all.deb": "82c4fc8466ec94e97abd2cd90c93adcb4e15544d2492f4870d71590fc463b323",
+    "daylight-linux_5.0.0~rc4-1_all.deb": "cd792302037b390d33029dcebca3250d0d2e7a155afa1b283b03a181de0439c0",
+    "daylight-telemetry_5.0.0~rc4-1_all.deb": "2ea4b676d2a4ba5483637b0c5d30c334b127c9394011256189e471016edfe229",
+    "daylight-themes_5.0.0~rc4-1_all.deb": "fd34982dcfe9a47f1da0d451d8887e9ef331e9baba2cbbbc56c24a6fef167e54"
+  }
+}
