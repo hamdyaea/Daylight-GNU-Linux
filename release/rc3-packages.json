@@ -1,0 +1,30 @@
+{
+  "package_version": "5.0.0~rc3",
+  "candidate": "5.0.0-rc.3",
+  "source_branch": "telemetry-production",
+  "source_commit": "a6eeef8fc8a503f72885d66b0e16af51c47df7fb",
+  "architecture": "amd64 and arm64",
+  "apt_published": "2026-11-08",
+  "archive_generation": "20261108T095459946669Z",
+  "signing_key_fingerprint": "B0575F821A31DD20753DE07C50D21240F4BCB02E",
+  "live_iso": "unchanged; 5.0.0-rc.2",
+  "telemetry": "disabled by default; explicit opt-in required",
+  "tests": {
+    "rust_unit": "27 passed",
+    "cli_integration_amd64": "11 passed",
+    "cli_integration_raspberry_pi_arm64": "11 passed",
+    "collector": "5 passed",
+    "apt_signature_and_tamper": "passed",
+    "debian_package_lifecycle_gui": "not run for rc3"
+  },
+  "packages": {
+    "daylight-apps_5.0.0~rc3_all.deb": "5b221791f9069d56933a1fa0f2ba06475552d577b99c4c163fe7f224133e96c1",
+    "daylight-core_5.0.0~rc3_amd64.deb": "8db7960d453ecce19628b874d522e0c11101a17ac900304b1bbaebdce254dc8f",
+    "daylight-core_5.0.0~rc3_arm64.deb": "1187e84198a044fda7fc5daf94e6ac5da60ee2afc229e7e61160971b9bb629ec",
+    "daylight-desktop_5.0.0~rc3_all.deb": "74d9246c982e140bf4d216a090e32e02c5f4f9a0e58c2dd7b864b31a21a58f44",
+    "daylight-games_5.0.0~rc3_all.deb": "8f15ec910750274a8beff37a00559912fd8c9ee8008df27c9ef31e66d78180ac",
+    "daylight-linux_5.0.0~rc3_all.deb": "16d623705e6a857594b73437f72ce40f6f149400b45ba698cce2ad09d171b726",
+    "daylight-telemetry_5.0.0~rc3_all.deb": "a3219a439fea1d610795e11ec98892a5afe07756467019e7e91e8dcc82239e07",
+    "daylight-themes_5.0.0~rc3_all.deb": "c651864a87921728ae870c6fcff1a73cec0cfe8f55c3745d3614e5084a6c3cf2"
+  }
+}
