@@ -69,3 +69,9 @@ class HistoricalGamesTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    def test_sports_scrollbars_are_outside_canvas(self):
+        from pathlib import Path
+        source = (Path(__file__).resolve().parents[1] / "desktop/daylight_ui/games.py").read_text()
+        self.assertIn("ttk.Scrollbar(self.board, orient=\"vertical\"", source)
+        self.assertNotIn("ttk.Scrollbar(self.cv, orient=\"vertical\"", source)
