@@ -246,13 +246,22 @@ class Desktop(tk.Tk):
             # Future canvas redraws must use the same palette without rebuilding
             # a page: a game, timer or partially entered form keeps its state.
             palette_names={"INK":"ink","MUTED":"muted","PAPER":"panel",
-                           "BACKGROUND":"bg","HAIR":"line","LINE":"line",
+                           "BACKGROUND":"bg","BG":"bg","PANEL":"panel",
+                           "HAIR":"line","LINE":"line","NIGHT":"night",
                            "PURPLE":"accent","ACCENT":"accent"}
             for module_name in ("daylight_ui.games","daylight_ui.tools"):
                 module=sys.modules.get(module_name)
                 if module is not None:
                     for variable,key in palette_names.items():
+                        if module_name=="daylight_ui.games" and variable=="PAPER":key="card"
                         if hasattr(module,variable):setattr(module,variable,theme.PALETTE[key])
+                    if module_name=="daylight_ui.games":
+                        # A game's canvas also has fixed light engravings on
+                        # night/amber artwork. Repaint those semantic colours
+                        # after generic widget recolouring, without resetting
+                        # its model, timer, selections or pending animation.
+                        for widget in self.content.winfo_children():
+                            if isinstance(widget,module.GamePage):widget.redraw()
             self.last_appearance=appearance
         self.appearance_job=self.after(60000,self.appearance_tick)
 

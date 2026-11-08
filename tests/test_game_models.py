@@ -311,6 +311,53 @@ class NativeGamePages(unittest.TestCase):
         finally:
             root.destroy()
 
+    def test_live_appearance_preserves_game_state_and_readable_artwork(self):
+        from daylight_ui import games, state, theme
+        from daylight_ui.shell import Desktop
+        state.save_ui({"appearance": "light"})
+        root = Desktop("cards")
+        try:
+            for name in ("cards", "memory", "guess"):
+                with self.subTest(game=name):
+                    state.save_ui({"appearance": "light"})
+                    root.appearance_tick()
+                    root.show(name)
+                    root.update()
+                    page = root.content.winfo_children()[0]
+                    if name == "cards":
+                        page.advance_battle()
+                        model, saved = page.battle, page.battle.rounds
+                    elif name == "memory":
+                        page.reveal_memory(0)
+                        model, saved = page.memory, list(page.memory.open)
+                    else:
+                        page.guess_value.set("37")
+                        model, saved = page.target, page.guess_value.get()
+                    state.save_ui({"appearance": "dark"})
+                    root.appearance_tick()
+                    root.update()
+                    self.assertIs(root.content.winfo_children()[0], page)
+                    self.assertEqual((games.BG, games.PANEL, games.PAPER, games.INK, games.NIGHT),
+                                     tuple(theme.DARK[key] for key in ("bg", "panel", "card", "ink", "night")))
+                    # A later gameplay redraw must keep the dark palette too.
+                    page.redraw()
+                    if name == "cards":
+                        self.assertIs(page.battle, model)
+                        self.assertEqual(page.battle.rounds, saved)
+                        self.assertIn(theme.DARK["panel"], [page.cv.itemcget(i, "fill")
+                                      for i in page.cv.find_all() if page.cv.type(i) == "polygon"])
+                    elif name == "memory":
+                        self.assertIs(page.memory, model)
+                        self.assertEqual(page.memory.open, saved)
+                        hidden_labels = [page.cv.itemcget(i, "fill") for i in page.cv.find_all()
+                                         if page.cv.type(i) == "text" and page.cv.itemcget(i, "text") == "2"]
+                        self.assertIn(games.ON_NIGHT, hidden_labels)
+                    else:
+                        self.assertEqual(page.target, model)
+                        self.assertEqual(page.guess_value.get(), saved)
+        finally:
+            root.destroy()
+
 
 if __name__ == "__main__":
     unittest.main()
