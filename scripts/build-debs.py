@@ -16,7 +16,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "5.0.0~rc4-5"
+VERSION = "5.0.0~rc4-6"
 MAINTAINER = "Hamdy Abou El Anein <info@daylightlinux.ch>"
 HEADER = "# Developer: Hamdy Abou El Anein\n# Contact: info@daylightlinux.ch\n# SPDX-License-Identifier: GPL-3.0-only\n"
 
@@ -116,6 +116,8 @@ def main():
             for p in sorted((ROOT / "config" / folder).glob("*")): copy(desktop,p,f"usr/share/daylight/{folder}/{p.name}")
         for source,dest in [("daylight.desktop","usr/share/xsessions/daylight.desktop"),("control-center.desktop","usr/share/applications/daylight-control-center.desktop"),("terminal.desktop","usr/share/applications/daylight-terminal.desktop")]: copy(desktop,"packaging/"+source,dest)
         # Keep GUI sources importable without pip or runtime image libraries.
+        copy(desktop, "scripts/daylight-update-notifier", "usr/lib/daylight/update-notifier", 0o755)
+        copy(desktop, "packaging/daylight-update-notifier.desktop", "etc/xdg/autostart/daylight-update-notifier.desktop")
         copy(desktop, "desktop/daylight_gui.py", "usr/share/daylight/ui/daylight_gui.py", 0o755)
         copy(desktop, "desktop/shardturn_launcher.py", "usr/share/daylight/ui/shardturn_launcher.py", 0o755)
         copy(desktop, "desktop/conky-wayland.lua", "usr/share/daylight/ui/conky-wayland.lua")
@@ -138,7 +140,7 @@ def main():
             ("settings", "Desktop Settings", "Settings;DesktopSettings;"),
             ("launcher", "Application Search", "Utility;")]:
             write(desktop, f"usr/share/applications/daylight-{name}.desktop", HEADER + f"[Desktop Entry]\nName=Daylight {title}\nExec=/usr/bin/daylight app {name}\nIcon=daylight\nTerminal=false\nType=Application\nCategories={category}\n")
-        finish("daylight-desktop","all","isolated Fluxbox desktop with native graphical applications",f"daylight-core (= {VERSION}), daylight-themes (= {VERSION}), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils", "")
+        finish("daylight-desktop","all","isolated Fluxbox desktop with native graphical applications",f"daylight-core (= {VERSION}), daylight-themes (= {VERSION}), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils, libnotify-bin", "")
         applications={"password":"Password Generator","temperature":"Temperature Converter","days":"Days Calculator","connect":"Local Network Information","alarm":"Alarm","speech":"Text to Speech","sky":"Sun and Moon","monitor":"System Monitor","doctor":"Diagnostics"}
         games={"dice":"Dice Simulator","coin":"Coin Flip","lottery":"Lottery Simulator","rpsls":"Rock Paper Scissors Lizard Spock","cards":"Battle Cards","tournament":"Tournament Simulator","basketball":"Basketball Simulator","memory":"Memory Game","slots":"Slot Simulator","guess":"Guess the Number","shardturn":"Shardturn"}
         for package,entries,category in [("daylight-apps",applications,"Utility;"),("daylight-games",games,"Game;")]:
