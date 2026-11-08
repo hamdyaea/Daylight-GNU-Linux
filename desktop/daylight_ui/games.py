@@ -792,5 +792,3 @@ def build(parent, name, context=None):
     if name not in PAGE_NAMES:
         raise ValueError("Unknown game: "+name)
     return GamePage(parent,name,context)
-
-[executed on device: hamdy-LinuxManjro (d2fadeb0-3f51-4b03-90ee-3f2bf0b8b7db)]
