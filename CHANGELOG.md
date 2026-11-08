@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Restore the full balanced Conky dashboard and preserve custom monitor configurations through updates and profile changes.
+- Prepare Tk wrappers before mapping on Wayland, fixing native clicks sent to an older overlapping Tk application; keep Shardturn source unchanged.
+- Upgrade a running RC4 appearance helper when an ordinary updated application opens, without restarting the desktop session.
+- Validate actual native Wayland input with Conky and an authentic old RC4 window, including Shardturn help dialogs.
+
 ## 5.0.0-rc.4 — 2026-11-08
 
 - Publish the RC4 native desktop refresh: Shardturn, ten illustrated games, redesigned utilities, application search, first steps, live settings, Sun & Moon and Raspberry Pi health.

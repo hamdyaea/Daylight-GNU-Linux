@@ -41,7 +41,7 @@ jobs:
           cargo +1.88.0 clippy --locked --all-targets -- -D warnings
           cargo +1.88.0 test --locked 2>&1 | tee dist/validation/rust-tests.log
           /usr/bin/python3 -m compileall -q desktop scripts tests telemetry server demo website
-          for test in test_game_models.py test_sky.py test_diagnostics.py test_launcher.py test_session_refresh.py; do
+          for test in test_game_models.py test_sky.py test_diagnostics.py test_launcher.py test_session_refresh.py test_windowing.py; do
             PYTHONPATH=desktop /usr/bin/python3 -m unittest discover -s tests -p "$test" -v
           done
           for file in scripts/*.sh server/*.sh demo/*.sh; do sh -n "$file"; done
@@ -57,6 +57,7 @@ jobs:
           python3 tests/test_release_tools.py 2>&1 | tee dist/validation/release-tools-tests.log
           git rev-parse HEAD > dist/validation/source-commit.txt
           python3 tests/test_upgrade.py --prepare-fixture dist/previous-rc3
+          python3 tests/test_upgrade.py --previous-profile rc4 --prepare-fixture dist/previous-rc4
       - name: Debian 12 and 13 installation and removal
         shell: bash
         run: |
@@ -68,6 +69,9 @@ jobs:
               -v "$PWD/dist/package-tests/$suite:/out" "debian:$suite" \
               /bin/sh /src/scripts/test-packages.sh 2>&1 | tee "dist/package-tests/$suite/lifecycle.log"
             python3 tests/test_upgrade.py --run-container "$suite" --previous-packages dist/previous-rc3 2>&1 | tee "dist/package-tests/$suite/upgrade.log"
+            for conky_case in stock custom; do
+              python3 tests/test_upgrade.py --previous-profile rc4 --conky-case "$conky_case" --run-container "$suite" --previous-packages dist/previous-rc4 2>&1 | tee "dist/package-tests/$suite/upgrade-rc4-$conky_case.log"
+            done
           done
       - name: Build the live ISO only in the disposable runner
         if: github.event_name == 'workflow_dispatch' && inputs.build_iso

@@ -13,7 +13,7 @@ cp -a "$root/live/config" "$work/config"
 mkdir -p "$work/config/packages.chroot" "$root/dist"
 for package in core desktop themes apps games linux; do
   case "$package" in core) arch=amd64 ;; *) arch=all ;; esac
-  source="$root/dist/daylight-${package}_5.0.0~rc4_${arch}.deb"
+  source="$root/dist/daylight-${package}_5.0.0~rc4-1_${arch}.deb"
   test -s "$source"
   cp "$source" "$work/config/packages.chroot/"
 done

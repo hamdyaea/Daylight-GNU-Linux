@@ -55,6 +55,79 @@ class SessionRefresh(unittest.TestCase):
                 os.close(descriptor)
             self.assertTrue(state.ensure_session_manager())
             self.assertEqual(spawn.call_args.args[0][-1],"--session-appearance")
+            self.assertEqual(spawn.call_args.kwargs["env"][state.MANAGER_REVISION_KEY],state.MANAGER_REVISION)
+
+    def test_only_exact_obsolete_installed_managers_qualify(self):
+        environment=self.environment()
+        args=["/usr/bin/python3",state.INSTALLED_GUI,"--session-appearance"]
+        old=self.snapshot(args=args)
+        self.assertTrue(state.stale_manager(old,environment))
+        for change in ({"uid":os.getuid()+1},
+                       {"environment":self.environment(DAYLIGHT_SESSION="0")},
+                       {"environment":self.environment(DISPLAY=":56")},
+                       {"environment":self.environment(XDG_SESSION_ID="other")},
+                       {"environment":dict(environment,**{state.MANAGER_REVISION_KEY:state.MANAGER_REVISION})},
+                       {"environment":dict(environment,**{state.MANAGER_REVISION_KEY:"future-release"})},
+                       {"args":["/usr/bin/python3",state.INSTALLED_GUI,"cards"]},
+                       {"args":["/usr/bin/python3","/tmp/daylight_gui.py","--session-appearance"]},
+                       {"args":args+["--extra"]}, {"args":["waybar"]}):
+            with self.subTest(change=change):
+                self.assertFalse(state.stale_manager(self.snapshot(args=args,**change) if "args" not in change else self.snapshot(**change),environment))
+        wayland=self.environment(XDG_SESSION_TYPE="wayland",WAYLAND_DISPLAY="wayland-0",XDG_RUNTIME_DIR="/run/user/1000")
+        self.assertTrue(state.stale_manager(self.snapshot(args=args,environment=wayland),wayland))
+        self.assertFalse(state.stale_manager(self.snapshot(args=args,environment=dict(wayland,XDG_RUNTIME_DIR="/another/runtime")),wayland))
+
+    def test_obsolete_manager_releases_lock_before_new_revision_starts(self):
+        descriptor=os.open(os.devnull,os.O_RDONLY)
+        with patch.dict(os.environ,self.environment(),clear=True), \
+                patch.object(state.os,"geteuid",return_value=1000), \
+                patch.object(state,"acquire_session_lock",side_effect=[None,descriptor]) as acquire, \
+                patch.object(state,"retire_stale_managers",return_value=True) as retire, \
+                patch.object(state.subprocess,"Popen") as spawn:
+            self.assertTrue(state.ensure_session_manager(state.INSTALLED_GUI))
+            self.assertEqual(acquire.call_count,2)
+            retire.assert_called_once_with()
+            self.assertEqual(spawn.call_args.kwargs["env"][state.MANAGER_REVISION_KEY],state.MANAGER_REVISION)
+        with patch.dict(os.environ,self.environment(),clear=True), \
+                patch.object(state.os,"geteuid",return_value=1000), \
+                patch.object(state,"acquire_session_lock",return_value=None), \
+                patch.object(state,"retire_stale_managers",return_value=False), \
+                patch.object(state.subprocess,"Popen") as spawn:
+            self.assertFalse(state.ensure_session_manager(state.INSTALLED_GUI))
+            spawn.assert_not_called()
+
+    def test_manager_retirement_never_targets_applications_or_current_manager(self):
+        environment=self.environment()
+        args=["/usr/bin/python3",state.INSTALLED_GUI,"--session-appearance"]
+        with tempfile.TemporaryDirectory() as temporary:
+            proc=Path(temporary)
+            for pid in (100,101,102,103): (proc/str(pid)).mkdir()
+            records={100:self.snapshot(pid=100,args=args),
+                     101:self.snapshot(pid=101,args=["/usr/bin/python3",state.INSTALLED_GUI,"cards"]),
+                     102:self.snapshot(pid=102,args=args,environment=dict(environment,**{state.MANAGER_REVISION_KEY:state.MANAGER_REVISION})),
+                     103:self.snapshot(pid=103,args=args,environment=self.environment(DISPLAY=":56"))}
+            with patch.object(state.os,"geteuid",return_value=1000), \
+                    patch.object(state,"process_snapshot",side_effect=lambda path:records[int(path.name)]), \
+                    patch.object(state,"terminate_legacy",return_value=True) as retire:
+                self.assertTrue(state.retire_stale_managers(environment,proc))
+                retire.assert_called_once_with(records[100],proc,timeout=8)
+            with patch.object(state,"terminate_legacy") as retire:
+                self.assertFalse(state.retire_stale_managers({"DISPLAY":":55"},proc))
+                retire.assert_not_called()
+
+    def test_revision_is_in_exec_environment_only_inside_daylight(self):
+        with patch.dict(os.environ,self.environment(),clear=True), \
+                patch.object(state.os,"geteuid",return_value=1000), \
+                patch.object(state.os,"execve") as execute:
+            state.mark_manager_revision(state.INSTALLED_GUI)
+            self.assertEqual(execute.call_args.args[1],[sys.executable,state.INSTALLED_GUI,"--session-appearance"])
+            self.assertEqual(execute.call_args.args[2][state.MANAGER_REVISION_KEY],state.MANAGER_REVISION)
+        for environment in ({"DISPLAY":":55"},dict(self.environment(),**{state.MANAGER_REVISION_KEY:state.MANAGER_REVISION})):
+            with patch.dict(os.environ,environment,clear=True), \
+                    patch.object(state.os,"geteuid",return_value=1000), \
+                    patch.object(state.os,"execve") as execute:
+                state.mark_manager_revision(state.INSTALLED_GUI)
+                execute.assert_not_called()
 
     def test_only_exact_same_user_same_display_daylight_children_qualify(self):
         environment=self.environment()
@@ -73,8 +146,10 @@ class SessionRefresh(unittest.TestCase):
     def test_wayland_exact_legacy_paths_and_runtime(self):
         environment=self.environment(XDG_SESSION_TYPE="wayland",WAYLAND_DISPLAY="wayland-0",XDG_RUNTIME_DIR="/run/user/1000")
         conky=self.snapshot(args=["conky","-c","/usr/share/daylight/labwc/conky.lua"],environment=environment)
+        owned=self.snapshot(args=["conky","-c","/usr/share/daylight/ui/conky-wayland.lua"],environment=environment)
         background=self.snapshot(args=["swaybg","-m","fill","-i","/usr/share/backgrounds/daylight/daylight-mountains.jpg"],environment=environment)
         self.assertEqual(state.legacy_process_kind(conky,environment),"conky")
+        self.assertEqual(state.legacy_process_kind(owned,environment),"conky")
         self.assertEqual(state.legacy_process_kind(background,environment),"wallpaper")
         foreign=self.snapshot(args=background["args"],environment=dict(environment,WAYLAND_DISPLAY="wayland-1"))
         self.assertIsNone(state.legacy_process_kind(foreign,environment))
@@ -119,7 +194,7 @@ class SessionRefresh(unittest.TestCase):
                 patch.dict(os.environ,{"XDG_CONFIG_HOME":temporary}), \
                 patch.object(state.subprocess,"Popen") as launch:
             state.start_conky(wayland=True)
-            self.assertEqual(launch.call_args.args[0],["conky","-c","/usr/share/daylight/labwc/conky.lua"])
+            self.assertEqual(launch.call_args.args[0],["conky","-c","/usr/share/daylight/ui/conky-wayland.lua"])
             main=str(Path(temporary)/"daylight/conky.conf")
             self.assertEqual(launch.call_args.kwargs["env"]["DAYLIGHT_CONKY_CONFIG"],main)
             self.assertNotEqual(launch.call_args.args[0][-1],main)
