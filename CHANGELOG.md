@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add the optional telemetry package to the public installer’s `--all` plan while keeping it disabled until explicit opt-in.
+
 ## 5.0.0-rc.3
 
 Publishes the opt-in boot telemetry endpoint and privacy description. Telemetry remains disabled by default; users must install the optional package and explicitly enable it. This package-only candidate updates the APT packages; the validated RC2 live ISO is unchanged.

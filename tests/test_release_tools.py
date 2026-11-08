@@ -34,6 +34,15 @@ class ReleaseTools(unittest.TestCase):
         self.assertEqual(self.script('--unsafe').returncode,2)
     def test_games_require_desktop(self):
         self.assertEqual(self.script('--games').returncode,2)
+    def test_all_includes_telemetry_but_leaves_it_off(self):
+        installer=(ROOT/'scripts/install-daylight.sh').read_text()
+        config=(ROOT/'packaging/telemetry.conf').read_text()
+        postinst=(ROOT/'packaging/postinst').read_text()
+        self.assertIn('--all',installer)
+        self.assertIn("daylight-linux daylight-games daylight-telemetry",installer)
+        self.assertIn('enabled=no',config)
+        self.assertIn('No service is enabled, started, or restarted',postinst)
+        self.assertNotIn('systemctl enable --now daylight-telemetry.timer',installer+postinst)
     def test_default_does_not_apply(self):
         result=self.script()
         if Path('/etc/debian_version').exists():
