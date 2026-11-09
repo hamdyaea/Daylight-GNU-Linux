@@ -10,8 +10,8 @@ Components: main
 Acquire-By-Hash: yes
 NotAutomatic: yes
 ButAutomaticUpgrades: yes
-Date: Mon, 09 Nov 2026 00:42:35 +0000
-Valid-Until: Wed, 09 Dec 2026 00:42:35 +0000
+Date: Mon, 09 Nov 2026 23:53:11 +0000
+Valid-Until: Wed, 09 Dec 2026 23:53:11 +0000
 Description: Daylight GNU/Linux candidate packages
 SHA256:
  5a3ba6fa7a99dec9652bbe59f6f5c8e188b0f7849345f62e7664d12162309cf8 92263 main/binary-amd64/Packages
@@ -20,15 +20,15 @@ SHA256:
  2664f20b4e1f6b934db94c532fba8a0ecc2e79d5cb2031c3d1c7f91a22cad538 14704 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQGzBAEBCAAdFiEEsFdfghox3SB1PeB8UNISQPS8sC4FAmrxFvsACgkQUNISQPS8
-sC6WKQwAnNSTejEHq0WU7tqCUj5NrVJTDqWIE2uK4BGUa0Xqdfsry/P3mSrWFdU9
-E9ripm55Xm/hGsTg3EKNAR9jVheDnS+F+YOCWuo26Rz/a2nVA0UW2LhMDbyw7eyq
-nooTDtzMC5S/PY4fWHtIdeUg2utDBHoUxuZM/Sm3/kuE/YVTpxZj+ZmGwMYThLe9
-poC3LRsUzcDwgT+WUHaIU679iCeTPUjpBLdshYstbIsDbpXdpp2mOEt5ymyg6+GF
-r9nvwvxhPiDEkJxq9i9hwaquFsVZjW8ZfGvJ3xYlC9OH9zSsl7gkZrNwhVfJL1WD
-KL4GzYvZxj1VHctRWitcrGXBVSF4oXLL5bNxxLGV8ds6xgL92LUAIN3ZNUBfpmMQ
-25WdLE5wGcwsCVNfdM7zE85UMsFCDdybWnKxzBvRRXSL+JEh6hsAnwXQIcWYCsaH
-5zfy/E5O7kVYpwl8w6V/yK3css+ocZe1ZRmHgo9MUwwmwpkWhMsbKNbvpGiklutz
-7sVxSZ/F
-=39rH
+iQGzBAEBCAAdFiEEsFdfghox3SB1PeB8UNISQPS8sC4FAmryXOcACgkQUNISQPS8
+sC5mxgwAg1+oCG06x65/jCBbNzyhWUSya91c8VGjMpJXMJPqMkewbbkZT2ik5VZk
++Wvbtt8e5M0QjL4GrTFafLooQ+h2YwXDRQyrLeodP3v2d3GlE1lOD53F33jthkQ5
+o0jvyv4xntBpxHZ9/c0Vv/S1hPd4i+NwS7OAT29VGZezCHIlPQrInzOvmxMujb2x
+hQ8mUuOhRGyFOmmj6FlfRZnA7lJr0KnFLSBL/Js9bTX4MYqov/3OzNy8odzr69fs
+/PLXNnv1eSDnTMk6n2F76lCUYAtg9yFucKRXV7Chk8H2tynZS5OBAXu3BUBAWEC4
+666W7jt0rh09OQsbuz/3lAnvnn/EPEnIN2/n/fojbXi66vJVSTRjvKM7POCFuvLT
+sZKareE4Lhpc3NS1b687D5Iysqf72Vf0W4vd0Ux6sVl51M4dhseBVC+hL5fERsc8
+Y9z3O7YRcn5H+wlvDAnHDvsH7FfIZzvBFXykm4PSFPenYJyETSbrqo+C/aXrqu6x
+Qkuooxh2
+=Hro9
 -----END PGP SIGNATURE-----
