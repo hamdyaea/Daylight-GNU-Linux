@@ -1,0 +1,36 @@
+name: Register a Daylight APT mirror
+description: Apply to list a community-hosted signed APT mirror
+title: "[Mirror] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: "Your server must provide HTTPS and the original signed Daylight APT repository. Approval and 24 hours of healthy checks are required before listing. Do not publish personal contact details in this public issue."
+  - type: input
+    id: url
+    attributes:
+      label: Public mirror HTTPS URL
+      placeholder: https://mirror.example.org/daylight/
+    validations:
+      required: true
+  - type: input
+    id: country
+    attributes:
+      label: Country (two-letter code)
+      placeholder: CH
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Public mirror name (optional)
+      placeholder: Example University Mirror
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Consent and eligibility
+      options:
+        - label: I operate this HTTPS host and agree to publication of its URL and public name.
+          required: true
+        - label: I will serve the unmodified signed Daylight APT repository and permit periodic health checks.
+          required: true
