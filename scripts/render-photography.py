@@ -42,14 +42,23 @@ def obtain(item, cache):
     raise RuntimeError('Cannot obtain the exact licensed photograph: ' + '; '.join(errors))
 
 
+def system_font(name, size):
+    """Prefer installed DejaVu; fall back to Pillow's embedded scalable font."""
+    for directory in ('/usr/share/fonts/truetype/dejavu', '/usr/share/fonts/TTF'):
+        candidate = Path(directory) / name
+        if candidate.is_file():
+            try:
+                return ImageFont.truetype(str(candidate), size)
+            except OSError:
+                pass
+    return ImageFont.load_default(size=size)
+
+
 def wordmark(image):
     """Use system fonts only for rasterization; no font files are redistributed."""
     result = image.copy().convert('RGBA')
-    fontroot = Path('/usr/share/fonts/truetype/dejavu')
-    if not fontroot.exists():
-        fontroot = Path('/usr/share/fonts/TTF')
-    font = ImageFont.truetype(str(fontroot / 'DejaVuSans-ExtraLight.ttf'), 78)
-    small = ImageFont.truetype(str(fontroot / 'DejaVuSans.ttf'), 26)
+    font = system_font('DejaVuSans-ExtraLight.ttf', 78)
+    small = system_font('DejaVuSans.ttf', 26)
     x, y = 430, image.height - 300
     shade = Image.new('RGBA', image.size)
     draw = ImageDraw.Draw(shade)
@@ -95,10 +104,8 @@ def main():
     overlay = Image.new('RGBA', boot.size, (7, 14, 23, 135))
     boot = Image.alpha_composite(boot, overlay)
     draw = ImageDraw.Draw(boot)
-    fontpath = Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
-    if not fontpath.exists(): fontpath = Path('/usr/share/fonts/TTF/DejaVuSans.ttf')
-    draw.text((48, 42), 'Daylight Linux', font=ImageFont.truetype(str(fontpath), 38), fill=(247,244,236))
-    draw.text((50, 96), 'Debian 13  /  Live session  /  GNU GPL v3', font=ImageFont.truetype(str(fontpath), 14), fill=(242,184,71))
+    draw.text((48, 42), 'Daylight Linux', font=system_font('DejaVuSans.ttf', 38), fill=(247,244,236))
+    draw.text((50, 96), 'Debian 13  /  Live session  /  GNU GPL v3', font=system_font('DejaVuSans.ttf', 14), fill=(242,184,71))
     boot.convert('RGB').save(ROOT / 'assets/branding/boot-splash.png')
     credits = ['Daylight Linux — landscape artwork', 'Developer: Hamdy Abou El Anein', 'Contact: info@daylightlinux.ch', '', 'daylight-mountains.jpg, daylight-night.jpg, daylight-terminal.jpg:', 'Approved AI-generated photorealistic Alpine-lake sunrise, with the Daylight Linux wordmark.', 'This is generated scenery, not a documentary photograph or an identified location.', 'Native delivered dimensions: 1672 x 941. It is not advertised as native 4K.', 'The dark and terminal editions are exposure-adjusted derivatives.', 'Daylight project artwork: GPL-3.0-only to the extent copyright applies.', 'Source SHA256: ' + art['sha256'], '', 'daylight-sunrise.jpg and daylight-himalaya.jpg:', 'Real CC0 photographs cropped to 3840 x 2160, with a rasterized Daylight Linux wordmark.', 'System fonts are used during rendering; font files are not distributed.', 'All exported JPEGs omit camera EXIF data.', '']
     for item in items:
