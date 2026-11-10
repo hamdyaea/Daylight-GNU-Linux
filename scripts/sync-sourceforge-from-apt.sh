@@ -10,7 +10,7 @@ export LC_ALL=C
 : "${SF_USER:=daylight-linux}"
 : "${SF_KEY:=$HOME/.ssh/id_ed25519}"
 : "${SF_PROJECT:=daylight-linux}"
-: "${SF_RELEASE:=Daylight-GNU-Linux-5}"
+: "${SF_RELEASE:=Daylight-GNU-Linux-5/APT-archive}"
 : "${STATE_DIR:=$HOME/.local/state/daylight-sourceforge}"
 for bin in rsync dpkg-deb flock sha256sum; do command -v "$bin" >/dev/null; done
 mkdir -p "$STATE_DIR"
