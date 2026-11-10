@@ -16,6 +16,6 @@ files=("$DEB_DIR"/*.deb)
 command -v rsync >/dev/null || { echo "rsync is required" >&2; exit 1; }
 for f in "${files[@]}"; do dpkg-deb --info "$f" >/dev/null; done
 # Do not overwrite already published files. Requires SourceForge SSH access.
-remote="$SF_USER,$SF_PROJECT@frs.sourceforge.net:/home/frs/project/$SF_PROJECT/$SF_RELEASE/"
+remote="$SF_USER@frs.sourceforge.net:/home/frs/project/$SF_PROJECT/$SF_RELEASE/"
 echo "SourceForge destination: $remote"
 rsync -av --ignore-existing --checksum --progress -e 'ssh -o BatchMode=yes' "${files[@]}" "$remote"
