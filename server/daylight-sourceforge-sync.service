@@ -1,0 +1,8 @@
+[Unit]
+Description=Sync signed Daylight APT packages to free SourceForge file hosting
+Wants=network-online.target
+After=network-online.target
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/daylight-sync-sourceforge
+TimeoutStartSec=3600

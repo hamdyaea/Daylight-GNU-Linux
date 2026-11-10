@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Community mirrors — Daylight GNU/Linux</title><meta name="description" content="Host a Daylight GNU/Linux APT mirror and register your server for the community directory.">
+<link rel="canonical" href="https://daylightlinux.ch/mirrors.html"><link rel="stylesheet" href="/assets/v5/style.css"><meta name="referrer" content="no-referrer"></head>
+<body><main class="wrap"><section class="pagehead"><p class="eyebrow">DAYLIGHT / COMMUNITY</p><h1>Become a Daylight GNU/Linux mirror</h1><p class="lead">Help distribute signed free software using your own HTTPS server. Registration is free.</p></section>
+<section class="section"><div class="wrap prose"><h2>Set up your mirror</h2><ol>
+<li>Prepare a public HTTPS web server with enough space for the APT repository.</li>
+<li>Follow the <a href="https://github.com/hamdyaea/Daylight-GNU-Linux/blob/feature/community-apt-mirrors-20261110/docs/community-mirrors.md">installation guide</a> and verify the official signing key fingerprint.</li>
+<li>Sync the signed repository and check that your <code>/dists/daylight/InRelease</code> file is reachable.</li>
+<li><a href="https://github.com/hamdyaea/Daylight-GNU-Linux/issues/new?template=community_mirror.yml">Request registration on GitHub</a>, or email <a href="mailto:info@daylightlinux.ch?subject=Daylight%20mirror%20registration">info@daylightlinux.ch</a>.</li>
+<li>After approval, the health monitor checks every 15 minutes. Your mirror is listed after 24 consecutive hours of success, and hidden automatically if it fails a check.</li>
+</ol><h2>Active community mirrors</h2><p>The public registry is available at <a href="/apt/community-mirrors.json">community-mirrors.json</a>. Only validated active mirrors appear there. No community mirrors have been registered yet.</p><p>Mirror registration is separate from Daylight telemetry. No client is automatically redirected to an unverified community mirror.</p><p><a href="/download.html">Downloads</a> · <a href="/index.html">Home</a></p></div></section></main></body></html>

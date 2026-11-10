@@ -205,6 +205,8 @@ def build(out, evidence=None):
             filename = ('fr/' if lang == 'fr' else '') + page
             write(filename, document)
             urls.append(canonical)
+    copy(ROOT / "website-src/mirrors.html", "mirrors.html")
+    urls.append("https://daylightlinux.ch/mirrors.html")
     # Keep historical inbound URLs useful without server rewrite changes.
     for old,new in [('information.html','install.html'),('screenshots.html','wallpapers.html'),('news.html','download.html'),('linux-book.html','books.html'),('merchandise.html','old/site/merchandise.html')]:
         write(old, '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0; url=/' + new + '"><title>Daylight GNU/Linux</title><p><a href="/' + new + '">Continue to Daylight GNU/Linux</a></p></html>')
