@@ -9,6 +9,8 @@ from html import escape as e
 import json
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 import zipfile
 from PIL import Image
 from discovery import enhance
@@ -120,6 +122,16 @@ def build(out, evidence=None):
         target = out / destination
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, target)
+    # Cloudflare Pages checks out source files only. Generated JPEG wallpapers and
+    # checksum-verified source photographs are intentionally not committed.
+    # Prepare them when building directly, as well as in GitHub's CI pipeline.
+    required = [ROOT / 'assets/wallpapers' / (name + '.jpg')
+                for name in ('daylight-mountains', 'daylight-sunrise', 'daylight-night', 'daylight-himalaya')]
+    sources = [ROOT / 'dist/photography-source' / (item['name'] + '.jpg')
+               for item in json.loads((ROOT / 'assets/photography.json').read_text())]
+    if any(not path.is_file() for path in required + sources):
+        subprocess.run([sys.executable, str(ROOT / 'scripts/render-photography.py')],
+                       cwd=ROOT, check=True)
     for name in ('style.css', 'main.js'):
         copy(ROOT / 'website' / name, 'assets/v5/' + name)
     copy(ROOT / 'assets/branding/daylight.svg', 'assets/v5/daylight.svg')
