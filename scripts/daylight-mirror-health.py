@@ -4,15 +4,33 @@
 import argparse
 import datetime as dt
 import json
+import ipaddress
+import socket
 from pathlib import Path
 import urllib.request
+import urllib.error
 from urllib.parse import urlparse
 
 UTC = dt.timezone.utc
 
+def validate_target(url):
+    parsed = urlparse(url)
+    if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password or parsed.port or parsed.fragment or parsed.query:
+        raise ValueError('Only plain HTTPS mirror URLs are allowed')
+    if parsed.hostname.lower() == 'localhost' or not '.' in parsed.hostname:
+        raise ValueError('Invalid hostname')
+    addresses = socket.getaddrinfo(parsed.hostname, 443, type=socket.SOCK_STREAM)
+    if not addresses or any(not ipaddress.ip_address(item[4][0]).is_global for item in addresses):
+        raise ValueError('Non-public mirror address')
+
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, request, fp, code, msg, headers, newurl):
+        raise ValueError('Mirror redirects are not allowed')
+
 def fetch(url):
+    validate_target(url)
     request = urllib.request.Request(url, headers={"User-Agent": "curl/8.0 DaylightMirrorHealth/1"})
-    with urllib.request.urlopen(request, timeout=12) as response:
+    with urllib.request.build_opener(NoRedirect).open(request, timeout=12) as response:
         return response.read(2_000_000)
 
 def run(source, state_path, public_path, now):
@@ -27,7 +45,7 @@ def run(source, state_path, public_path, now):
         healthy = False
         try:
             healthy = fetch(url + "/dists/daylight/InRelease") == source_release
-        except (OSError, ValueError):
+        except (OSError, ValueError, urllib.error.URLError):
             pass
         if healthy:
             entry["last_seen"] = now.isoformat()
