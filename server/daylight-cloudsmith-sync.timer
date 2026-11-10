@@ -1,0 +1,8 @@
+[Unit]
+Description=Synchronize Daylight packages to Cloudsmith every hour
+[Timer]
+OnCalendar=hourly
+Persistent=true
+RandomizedDelaySec=10m
+[Install]
+WantedBy=timers.target
