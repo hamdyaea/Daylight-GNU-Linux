@@ -1,0 +1,11 @@
+[Unit]
+Description=Publish Daylight Debian packages to Cloudsmith
+Wants=network-online.target
+After=network-online.target
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/local/sbin/daylight-cloudsmith-sync
+TimeoutStartSec=6h
+NoNewPrivileges=true
+PrivateTmp=true
