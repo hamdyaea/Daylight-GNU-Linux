@@ -46,3 +46,7 @@ The 15-minute health timer automatically publishes the mirror after 24 consecuti
 ## SourceForge publishing policy
 
 The Manjaro maintainer's daily `daylight-sourceforge-sync.timer` copies the official Pi APT pool to the free SourceForge `Daylight-GNU-Linux-5/APT-archive` folder. It checks the remote file hashes with rsync `--checksum`. The historical release assets in `Daylight-GNU-Linux-5/` are preserved, even when a filename is reused for different bytes. For each new release, also run `~/.local/bin/daylight-sync-sourceforge` manually and confirm successful verification.
+
+## Email notifications for new applications
+
+The Raspberry Pi runs `daylight-mirror-notify.timer` every five minutes. The notifier reads public GitHub issues titled `[Mirror] ...` and sends one email per new issue to `info@daylightlinux.ch` using the Pi's local Exim transport. A local state file `/var/lib/daylight-mirrors/notified-issues.json` prevents duplicates. An operator must still verify domain ownership before registering a mirror. Check mail delivery separately from successful submission to Exim; the notifier records a request when the local mail transport accepts it.
