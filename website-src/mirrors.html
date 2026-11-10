@@ -1,15 +1,11 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Become a community mirror — Daylight GNU/Linux</title><meta name="description" content="Volunteer to host a signed Daylight GNU/Linux APT repository mirror. Free registration and setup instructions.">
-<link rel="canonical" href="https://daylightlinux.ch/mirrors.html"><link rel="stylesheet" href="/assets/v5/style.6cb8916b4cc2.css"><meta name="referrer" content="no-referrer"></head>
-<body><main class="wrap"><section class="section"><p class="eyebrow">DAYLIGHT / COMMUNITY</p><h1>Become a Daylight GNU/Linux mirror</h1><p class="lead">Help Raspberry Pi and Debian users download Daylight faster and more reliably. Volunteer your HTTPS server as a community APT mirror. Registration is free.</p>
-<p><a class="button" href="https://github.com/hamdyaea/Daylight-GNU-Linux/issues/new?template=community_mirror.yml">Register your mirror on GitHub</a></p>
-<h2>How to join</h2><ol>
-<li>Prepare a publicly accessible HTTPS server with enough disk space and bandwidth for the signed APT repository.</li>
-<li>Read the <a href="https://github.com/hamdyaea/Daylight-GNU-Linux/blob/master/docs/community-mirrors.md">community mirror setup guide</a>.</li>
-<li>Synchronize the official signed repository without modifying its files, and verify that <code>dists/daylight/InRelease</code> is publicly accessible.</li>
-<li>Use the registration form above to provide your mirror URL, two-letter country code and optional public name. You can also contact <a href="mailto:info@daylightlinux.ch?subject=Daylight%20mirror%20registration">info@daylightlinux.ch</a>.</li>
-<li>Once approved, the mirror is monitored. It becomes eligible for public listing after 24 consecutive hours of successful checks.</li>
-</ol><h2>Community mirror directory</h2><p>Approved, healthy mirrors are published in the <a href="/apt/community-mirrors.json">public mirror registry</a>. A community mirror does not replace the official repository automatically.</p>
-<p>Mirror registration is independent of optional Daylight telemetry. Never post private credentials or personal contact details in a public GitHub issue.</p>
-<p><a href="/">Home</a> · <a href="/download.html">Downloads</a> · <a href="/community.html">Community</a></p></section></main></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Downloads and APT mirrors — Daylight GNU/Linux</title><meta name="description" content="Official Daylight GNU/Linux APT repository, GitHub Releases, SourceForge, Cloudsmith, and community mirrors."><link rel="canonical" href="https://daylightlinux.ch/mirrors.html"><link rel="alternate" hreflang="fr" href="https://daylightlinux.ch/fr/mirrors.html"><link rel="stylesheet" href="/assets/v5/style.css"></head><body><main class="wrap"><section class="section"><p class="eyebrow">DAYLIGHT / DISTRIBUTION</p><h1>Downloads, package hosts &amp; APT mirrors</h1><p class="lead">Find the official signed repository, alternative download channels, and verified community mirrors. Not every download host is an APT mirror.</p>
+<h2>Official APT repository</h2><p><strong>Daylight GNU/Linux — primary APT source</strong> · <a href="https://daylightlinux.ch/apt/">daylightlinux.ch/apt/</a> · Official signed repository used by Daylight installers and updates.</p>
+<h2>Other distribution channels</h2><ul>
+<li><strong>GitHub Releases</strong> · <a href="https://github.com/hamdyaea/Daylight-GNU-Linux/releases">Browse releases</a> · Release archives and downloadable assets where published; not an APT mirror.</li>
+<li><strong>SourceForge</strong> · <a href="https://sourceforge.net/projects/daylight-linux/files/">Browse files</a> · Alternative download hosting; not automatically an APT mirror.</li>
+<li><strong>Cloudsmith</strong> · <a href="https://app.cloudsmith.com/daylightlinux/r/daylight_linux">Browse Debian packages</a> · Public package hosting. Initial synchronization is underway; package availability and APT setup should be verified before use.</li>
+</ul>
+<h2>Community APT mirrors</h2><p>Only approved, healthy mirrors are listed in the <a href="/apt/community-mirrors.json">live community mirror registry</a>. New volunteers are welcome; candidates are not listed as active before verification. Mirror status may change as health checks run.</p>
+<h2>Become a mirror host</h2><p>Can you provide an HTTPS server and keep a complete, unmodified copy of the signed Daylight APT repository? Help make downloads more resilient.</p><p><a class="button" href="https://github.com/hamdyaea/Daylight-GNU-Linux/issues/new?template=community_mirror.yml">Register your mirror</a> · <a href="https://github.com/hamdyaea/Daylight-GNU-Linux/blob/master/docs/community-mirrors.md">Setup guide</a></p>
+<p>Applications are reviewed. After approval, a candidate must pass 24 hours of health checks before listing. No automatic client redirection to unverified hosts.</p>
+<p><a href="/">Home</a> · <a href="/download.html">Downloads</a> · <a href="/fr/mirrors.html" lang="fr">Français</a></p></section></main></body></html>
