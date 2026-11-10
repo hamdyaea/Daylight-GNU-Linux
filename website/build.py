@@ -219,6 +219,9 @@ def build(out, evidence=None):
     write('robots.txt','User-agent: *\nAllow: /\nSitemap: https://daylightlinux.ch/sitemap.xml\n')
     write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + ''.join('<url><loc>' + e(url) + '</loc></url>' for url in urls) + '</urlset>')
     enhance(out, release, evidence)
+    copy(ROOT / "website-src/mirrors.html", "mirrors.html")
+    copy(ROOT / "website-src/fr/mirrors.html", "fr/mirrors.html")
+    urls.extend(["https://daylightlinux.ch/mirrors.html", "https://daylightlinux.ch/fr/mirrors.html"])
     manifest = {str(p.relative_to(out)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.rglob('*')) if p.is_file() and p.name != 'site-manifest.json' and p.relative_to(out).parts[0] != 'live'}
     write('site-manifest.json',json.dumps({'release':release,'files':manifest},indent=2)+'\n')
     print('Bilingual static site built:',out,'files:',len(manifest))
