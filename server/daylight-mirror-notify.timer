@@ -1,0 +1,11 @@
+[Unit]
+Description=Check for new Daylight mirror requests every five minutes
+
+[Timer]
+OnCalendar=*:0/5
+Persistent=true
+RandomizedDelaySec=30
+Unit=daylight-mirror-notify.service
+
+[Install]
+WantedBy=timers.target
