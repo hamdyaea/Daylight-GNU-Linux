@@ -1,0 +1,13 @@
+[Unit]
+Description=Check registered Daylight GNU/Linux community mirrors
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/bin/daylight-mirror-health --registry /var/lib/daylight-mirrors/registry.json --public /var/www/daylightlinux/apt/community-mirrors.json
+User=root
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/daylight-mirrors /var/www/daylightlinux/apt
+PrivateTmp=true
