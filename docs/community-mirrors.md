@@ -33,3 +33,16 @@ The central checker `scripts/daylight-mirror-health.py` uses a private JSON regi
 ## Free binary distribution
 
 GitHub Releases can host release assets. SourceForge file hosting is another free open-source option subject to project approval and service terms. Do not introduce paid object storage or require a paid subscription.
+## Operator approval on the Daylight Raspberry Pi
+
+After checking that the applicant controls the proposed domain and explicitly opted in, a maintainer registers the URL using:
+
+```bash
+sudo daylight-mirror-register --url https://mirror.example.org/daylight --country CH --name 'Example Mirror'
+```
+
+The 15-minute health timer automatically publishes the mirror after 24 consecutive hours of checks matching the official signed `InRelease` and hides it immediately after a failed check. The operator's email is not included in the public JSON. Domain ownership proof and approval remain manual; do not treat a public GitHub issue alone as proof of ownership.
+
+## SourceForge publishing policy
+
+The Manjaro maintainer's daily `daylight-sourceforge-sync.timer` copies the official Pi APT pool to the free SourceForge `Daylight-GNU-Linux-5/APT-archive` folder. It checks the remote file hashes with rsync `--checksum`. The historical release assets in `Daylight-GNU-Linux-5/` are preserved, even when a filename is reused for different bytes. For each new release, also run `~/.local/bin/daylight-sync-sourceforge` manually and confirm successful verification.
