@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+umask 077
+source /etc/daylight/cloudsmith.env
+export CLOUDSMITH_API_KEY
+ROOT=/var/www/daylightlinux/apt/pool
+STATE=/var/lib/daylight-cloudsmith
+mkdir -p "$STATE"
+touch "$STATE/published.tsv"
+exec 9>"$STATE/lock"
+flock -n 9 || exit 0
+MODE="${1:-incremental}"
+if [[ "$MODE" == test ]]; then
+  FILE="$ROOT/main/d/daylight/daylight-apps_5.0.0~rc4-3_all.deb"
+  [[ -f "$FILE" ]] || exit 2
+  FILES=("$FILE")
+else
+  mapfile -d '' FILES < <(find "$ROOT" -type f -name '*.deb' -print0 | sort -z)
+fi
+for FILE in "${FILES[@]}"; do
+  SHA=$(sha256sum "$FILE" | cut -d' ' -f1)
+  if grep -q "^$SHA"$'\t' "$STATE/published.tsv"; then continue; fi
+  echo "Uploading $(basename "$FILE")"
+  if timeout 420 /opt/daylight-cloudsmith/bin/cloudsmith push deb daylightlinux/daylight_linux/debian/bookworm "$FILE" --component main --no-republish --no-wait-for-sync; then
+    printf '%s\t%s\t%s\n' "$SHA" "$(date -Is)" "$FILE" >> "$STATE/published.tsv"
+  else
+    echo "Upload failed: $FILE" >&2
+    exit 1
+  fi
+done
