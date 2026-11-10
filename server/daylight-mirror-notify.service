@@ -1,0 +1,13 @@
+[Unit]
+Description=Notify maintainer by email about new Daylight mirror requests
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/bin/python3 /usr/local/bin/daylight-mirror-notify --state /var/lib/daylight-mirrors/notified-issues.json --to info@daylightlinux.ch
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/daylight-mirrors
+PrivateTmp=true
