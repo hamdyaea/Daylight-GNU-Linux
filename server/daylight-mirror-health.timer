@@ -1,0 +1,11 @@
+[Unit]
+Description=Check Daylight community mirrors every 15 minutes
+
+[Timer]
+OnCalendar=*:0/15
+Persistent=true
+RandomizedDelaySec=120
+Unit=daylight-mirror-health.service
+
+[Install]
+WantedBy=timers.target
