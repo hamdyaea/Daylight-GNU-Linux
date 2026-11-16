@@ -6,6 +6,18 @@ Founder and developer: **Hamdy Abou El Anein** · Contact: **info@daylightlinux.
 
 [Website](https://daylightlinux.ch/) · [Raspberry Pi](https://daylightlinux.ch/raspberry-pi.html) · [Downloads](https://daylightlinux.ch/download.html) · [Community](https://daylightlinux.ch/community.html) · [Install](https://daylightlinux.ch/install.html) · [Try in your browser](https://daylightlinux.ch/try-online.html) · [Books](https://daylightlinux.ch/books.html) · [Old](https://daylightlinux.ch/old/) · [Français](README.fr.md)
 
+## Engineering highlights
+
+For engineers and hiring teams evaluating this project:
+
+- **Linux distribution engineering:** Debian/Raspberry Pi OS integration, desktop sessions and system tooling.
+- **Packaging and release operations:** APT packages, signed repository installation, versioned release candidates and documented upgrade paths.
+- **Platform automation:** installation scripts, reproducible deployment workflows and diagnostics.
+- **Security and transparency:** opt-in telemetry design, explicit installer previews and documented release status.
+
+The project distinguishes development work from published releases; consult the release information below before installing.
+
+
 ## Raspberry Pi first; PC live for discovery
 
 **Debian packages:** a Rust core for ARM64 or AMD64, themes, an independent Fluxbox session and optional native applications, for Debian 12/13 and compatible 64-bit Raspberry Pi OS installations.
