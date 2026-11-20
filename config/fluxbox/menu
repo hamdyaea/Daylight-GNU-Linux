@@ -8,6 +8,7 @@
  [exec] (Files) {/usr/bin/pcmanfm}
  [exec] (Daylight Control Center) {/usr/bin/daylight control-center}
  [exec] (Desktop settings) {/usr/bin/daylight app settings}
+ [exec] (Diagnostics (WhyDown)) {/usr/bin/daylight-whydown}
  [exec] (System monitor) {/usr/bin/daylight app monitor}
  [exec] (System information) {/usr/bin/daylight app info}
  [separator]
