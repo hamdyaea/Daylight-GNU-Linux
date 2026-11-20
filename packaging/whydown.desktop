@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Diagnostics (WhyDown)
+Comment=Read-only Linux diagnostics; installation guidance when absent
+Exec=/usr/bin/daylight-whydown
+Icon=utilities-system-monitor
+Terminal=false
+Type=Application
+Categories=System;Utility;
