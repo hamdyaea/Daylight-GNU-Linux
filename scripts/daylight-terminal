@@ -9,7 +9,7 @@ if [ -x /usr/bin/terminator ]; then
     if [ "$#" -gt 0 ]; then
         exec /usr/bin/terminator -g /usr/share/daylight/terminator/config -x "$@"
     fi
-    exec /usr/bin/terminator -x /usr/lib/daylight/interactive-shell
+    exec /usr/bin/terminator -g /usr/share/daylight/terminator/config -x /usr/lib/daylight/interactive-shell
 fi
 if [ "$#" -gt 0 ]; then
     exec /usr/bin/xterm -fa 'DejaVu Sans Mono' -fs 11 -bg '#101721' -fg '#f0e9d9' -e "$@"
