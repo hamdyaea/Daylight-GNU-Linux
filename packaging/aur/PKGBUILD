@@ -1,7 +1,7 @@
 # Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
 # Daylight GNU/Linux command-line utilities for Arch Linux / Manjaro / CachyOS.
 # The Fluxbox desktop, Debian APT integration and Debian live image are NOT included.
-pkgname=daylight-linux-git
+pkgname=daylight-linux-cli-git
 pkgver=5.0.0.r0.g0000000
 pkgrel=1
 pkgdesc='Daylight GNU/Linux privacy-friendly Rust CLI utilities (Arch port)'
