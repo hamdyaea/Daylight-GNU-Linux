@@ -110,11 +110,11 @@ def main():
         copy(themes,"assets/wallpapers/CREDITS.txt","usr/share/doc/daylight-themes/CREDITS.txt")
         finish("daylight-themes","all","photographic mountain and sunrise identity, backgrounds and icons")
         desktop = work / "daylight-desktop"
-        for name in ("daylight-session","daylight-terminal","daylight-browser","daylight-power"): copy(desktop,"scripts/"+name,"usr/bin/"+name,0o755)
+        for name in ("daylight-session","daylight-terminal","daylight-browser","daylight-power","daylight-whydown"): copy(desktop,"scripts/"+name,"usr/bin/"+name,0o755)
         copy(desktop,"scripts/interactive-shell","usr/lib/daylight/interactive-shell",0o755)
         for folder in ("fluxbox","conky","shell"):
             for p in sorted((ROOT / "config" / folder).glob("*")): copy(desktop,p,f"usr/share/daylight/{folder}/{p.name}")
-        for source,dest in [("daylight.desktop","usr/share/xsessions/daylight.desktop"),("control-center.desktop","usr/share/applications/daylight-control-center.desktop"),("terminal.desktop","usr/share/applications/daylight-terminal.desktop"),("browser.desktop","usr/share/applications/daylight-browser.desktop")]: copy(desktop,"packaging/"+source,dest)
+        for source,dest in [("daylight.desktop","usr/share/xsessions/daylight.desktop"),("control-center.desktop","usr/share/applications/daylight-control-center.desktop"),("terminal.desktop","usr/share/applications/daylight-terminal.desktop"),("browser.desktop","usr/share/applications/daylight-browser.desktop"),("whydown.desktop","usr/share/applications/daylight-whydown.desktop")]: copy(desktop,"packaging/"+source,dest)
         # Keep GUI sources importable without pip or runtime image libraries.
         copy(desktop, "scripts/daylight-update-notifier", "usr/lib/daylight/update-notifier", 0o755)
         copy(desktop, "packaging/daylight-update-notifier.desktop", "etc/xdg/autostart/daylight-update-notifier.desktop")
