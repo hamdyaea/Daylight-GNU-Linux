@@ -3,10 +3,15 @@
 # Contact: info@daylightlinux.ch
 # SPDX-License-Identifier: GPL-3.0-only
 set -eu
+# Prefer Terminator for its native copy/paste shortcuts and context menu.
+# Fall back to xterm when running on a minimal existing installation.
+if [ -x /usr/bin/terminator ]; then
+    if [ "$#" -gt 0 ]; then
+        exec /usr/bin/terminator -x "$@"
+    fi
+    exec /usr/bin/terminator -x /usr/lib/daylight/interactive-shell
+fi
 if [ "$#" -gt 0 ]; then
     exec /usr/bin/xterm -fa 'DejaVu Sans Mono' -fs 11 -bg '#101721' -fg '#f0e9d9' -e "$@"
-fi
-if [ -x /usr/bin/terminology ]; then
-    exec /usr/bin/terminology -b /usr/share/backgrounds/daylight/daylight-terminal.jpg -e /usr/lib/daylight/interactive-shell
 fi
 exec /usr/bin/xterm -fa 'DejaVu Sans Mono' -fs 11 -bg '#101721' -fg '#f0e9d9' -e /usr/lib/daylight/interactive-shell
