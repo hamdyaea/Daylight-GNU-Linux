@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 [begin] (Daylight GNU/Linux)
  [exec] (Terminal) {/usr/bin/daylight-terminal}
+ [exec] (Web browser) {/usr/bin/daylight-browser}
  [exec] (Search applications) {/usr/bin/daylight app launcher}
  [exec] (Files) {/usr/bin/pcmanfm}
  [exec] (Daylight Control Center) {/usr/bin/daylight control-center}
@@ -40,5 +41,7 @@
  [end]
  [separator]
  [reconfig] (Reload window manager settings)
+ [exec] (Restart computer) {/usr/bin/daylight-power restart}
+ [exec] (Shut down computer) {/usr/bin/daylight-power shutdown}
  [exit] (Log out of Daylight)
 [end]
