@@ -7,7 +7,7 @@ set -eu
 # Fall back to xterm when running on a minimal existing installation.
 if [ -x /usr/bin/terminator ]; then
     if [ "$#" -gt 0 ]; then
-        exec /usr/bin/terminator -x "$@"
+        exec /usr/bin/terminator -g /usr/share/daylight/terminator/config -x "$@"
     fi
     exec /usr/bin/terminator -x /usr/lib/daylight/interactive-shell
 fi
