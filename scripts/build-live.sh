@@ -25,7 +25,7 @@ python3 "$root/scripts/configure-boot-menu.py" "$work/config/bootloaders" "$root
 cd "$work"
 lb config
 lb build
-cp live-image-amd64.hybrid.iso "$root/dist/daylight-live_5.0.0-rc.4_amd64.iso"
+cp live-image-amd64.hybrid.iso "$root/dist/daylight-live_5.0.0-rc.5_amd64.iso"
 cd "$root/dist"
-sha256sum daylight-live_5.0.0-rc.4_amd64.iso > daylight-live_5.0.0-rc.4_amd64.iso.sha256
+sha256sum daylight-live_5.0.0-rc.5_amd64.iso > daylight-live_5.0.0-rc.5_amd64.iso.sha256
 printf 'ISO created. Build directory retained for inspection: %s\n' "$work"
