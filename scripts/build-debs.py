@@ -112,7 +112,7 @@ def main():
         desktop = work / "daylight-desktop"
         for name in ("daylight-session","daylight-terminal","daylight-browser","daylight-power","daylight-whydown"): copy(desktop,"scripts/"+name,"usr/bin/"+name,0o755)
         copy(desktop,"scripts/interactive-shell","usr/lib/daylight/interactive-shell",0o755)
-        for folder in ("fluxbox","conky","shell"):
+        for folder in ("fluxbox","conky","shell","terminator"):
             for p in sorted((ROOT / "config" / folder).glob("*")): copy(desktop,p,f"usr/share/daylight/{folder}/{p.name}")
         for source,dest in [("daylight.desktop","usr/share/xsessions/daylight.desktop"),("control-center.desktop","usr/share/applications/daylight-control-center.desktop"),("terminal.desktop","usr/share/applications/daylight-terminal.desktop"),("browser.desktop","usr/share/applications/daylight-browser.desktop"),("whydown.desktop","usr/share/applications/daylight-whydown.desktop")]: copy(desktop,"packaging/"+source,dest)
         # Keep GUI sources importable without pip or runtime image libraries.
