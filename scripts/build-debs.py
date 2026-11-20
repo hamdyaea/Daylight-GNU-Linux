@@ -110,7 +110,7 @@ def main():
         copy(themes,"assets/wallpapers/CREDITS.txt","usr/share/doc/daylight-themes/CREDITS.txt")
         finish("daylight-themes","all","photographic mountain and sunrise identity, backgrounds and icons")
         desktop = work / "daylight-desktop"
-        for name in ("daylight-session","daylight-terminal"): copy(desktop,"scripts/"+name,"usr/bin/"+name,0o755)
+        for name in ("daylight-session","daylight-terminal","daylight-browser","daylight-power"): copy(desktop,"scripts/"+name,"usr/bin/"+name,0o755)
         copy(desktop,"scripts/interactive-shell","usr/lib/daylight/interactive-shell",0o755)
         for folder in ("fluxbox","conky","shell"):
             for p in sorted((ROOT / "config" / folder).glob("*")): copy(desktop,p,f"usr/share/daylight/{folder}/{p.name}")
@@ -140,7 +140,7 @@ def main():
             ("settings", "Desktop Settings", "Settings;DesktopSettings;"),
             ("launcher", "Application Search", "Utility;")]:
             write(desktop, f"usr/share/applications/daylight-{name}.desktop", HEADER + f"[Desktop Entry]\nName=Daylight {title}\nExec=/usr/bin/daylight app {name}\nIcon=daylight\nTerminal=false\nType=Application\nCategories={category}\n")
-        finish("daylight-desktop","all","isolated Fluxbox desktop with native graphical applications",f"daylight-core (= {VERSION}), daylight-themes (= {VERSION}), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils, libnotify-bin", "")
+        finish("daylight-desktop","all","isolated Fluxbox desktop with native graphical applications",f"daylight-core (= {VERSION}), daylight-themes (= {VERSION}), python3 (>= 3.9), python3-tk, fluxbox, conky-std | conky-all, xterm, terminator, fortune-mod, firefox-esr | firefox, systemd-sysv, feh, pcmanfm, fonts-dejavu-core, xserver-xorg-core, xserver-xorg-input-libinput, xinit, x11-xserver-utils, x11-utils, x11-xkb-utils, libnotify-bin", "")
         applications={"password":"Password Generator","temperature":"Temperature Converter","days":"Days Calculator","connect":"Local Network Information","alarm":"Alarm","speech":"Text to Speech","sky":"Sun and Moon","monitor":"System Monitor","doctor":"Diagnostics"}
         games={"dice":"Dice Simulator","coin":"Coin Flip","lottery":"Lottery Simulator","rpsls":"Rock Paper Scissors Lizard Spock","cards":"Battle Cards","tournament":"Tournament Simulator","basketball":"Basketball Simulator","memory":"Memory Game","slots":"Slot Simulator","guess":"Guess the Number","shardturn":"Shardturn"}
         for package,entries,category in [("daylight-apps",applications,"Utility;"),("daylight-games",games,"Game;")]:
