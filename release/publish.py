@@ -71,7 +71,7 @@ def main():
         raise SystemExit('Release is already published; immutable published bytes will not be overwritten')
     if existing and existing['target_commitish']!=sha:raise SystemExit('Existing draft targets another source revision')
     if not existing:
-        notes=(ROOT/'docs/RELEASE-RC2.md').read_text()
+        notes=(ROOT/'docs/RELEASE-RC5.md').read_text()
         existing=api(prefix+'/releases',{'tag_name':tag,'target_commitish':sha,'name':'Daylight GNU/Linux '+version,'body':notes,'draft':True,'prerelease':'-rc.' in version})
     subprocess.run(['gh','release','upload',tag,*map(str,assets),'--clobber'],check=True)
     uploaded=api(prefix+'/releases/'+str(existing['id']))
