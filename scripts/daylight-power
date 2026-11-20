@@ -1,0 +1,21 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# SPDX-License-Identifier: GPL-3.0-only
+set -eu
+case "${1:-}" in
+    restart) action=reboot; label='Restart the computer now?' ;;
+    shutdown) action=poweroff; label='Shut down the computer now?' ;;
+    *) echo 'Usage: daylight-power {restart|shutdown}' >&2; exit 2 ;;
+esac
+# Never trigger a destructive action without a positive confirmation.
+if command -v zenity >/dev/null 2>&1 && [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]; then
+    zenity --question --title='Daylight GNU/Linux' --text="$label" --ok-label='Continue' --cancel-label='Cancel' || exit 0
+elif [ -t 0 ]; then
+    printf '%s [y/N] ' "$label"
+    read -r answer || exit 0
+    case "$answer" in y|Y|yes|YES) : ;; *) exit 0 ;; esac
+else
+    echo 'Graphical confirmation unavailable; power action cancelled.' >&2
+    exit 1
+fi
+exec /usr/bin/systemctl "$action"
