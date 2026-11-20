@@ -9,3 +9,9 @@ case $- in
         if [ "$(/usr/bin/daylight settings get fetch)" = on ]; then /usr/bin/daylight info; fi
       fi ;;
 esac
+
+# One random quotation per new Daylight Terminal (never touch global shell rc).
+if [ -t 1 ] && [ "${DAYLIGHT_FORTUNE_SHOWN:-0}" != 1 ]; then
+    export DAYLIGHT_FORTUNE_SHOWN=1
+    if command -v fortune >/dev/null 2>&1; then fortune -s 2>/dev/null || :; fi
+fi

@@ -1,0 +1,26 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# SPDX-License-Identifier: GPL-3.0-only
+set -eu
+if command -v whydown >/dev/null 2>&1; then
+    exec whydown "${@:-gui}"
+fi
+if [ -x "$HOME/.local/bin/whydown" ]; then
+    exec "$HOME/.local/bin/whydown" "${@:-gui}"
+fi
+message='WhyDown is an optional, read-only Linux diagnostic tool by the Daylight author. It is not installed yet.
+
+To install it, open Daylight Terminal and run:
+
+git clone https://github.com/hamdyaea/WhyDown.git
+cd WhyDown
+sh scripts/install.sh --desktop
+
+The installer verifies release checksums and does not require sudo. For the graphical interface, install python3-pyqt6 on Debian first.
+
+After installation, choose Diagnostics (WhyDown) again.'
+if command -v zenity >/dev/null 2>&1 && [ -n "${DISPLAY:-}" ]; then
+    zenity --info --title='Daylight Diagnostics — WhyDown' --width=520 --text="$message" || :
+else
+    printf '%s\n' "$message"
+fi

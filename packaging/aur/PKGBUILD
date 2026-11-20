@@ -1,0 +1,44 @@
+# Maintainer: Hamdy Abou El Anein <info@daylightlinux.ch>
+# Daylight GNU/Linux command-line utilities for Arch Linux / Manjaro / CachyOS.
+# The Fluxbox desktop, Debian APT integration and Debian live image are NOT included.
+pkgname=daylight-linux-cli-git
+pkgver=5.0.0.r0.g0000000
+pkgrel=1
+pkgdesc='Daylight GNU/Linux privacy-friendly Rust CLI utilities (Arch port)'
+arch=('x86_64' 'aarch64')
+url='https://github.com/hamdyaea/Daylight-GNU-Linux'
+license=('GPL-3.0-only')
+depends=('glibc')
+makedepends=('cargo' 'git')
+source=('daylight-linux::git+https://github.com/hamdyaea/Daylight-GNU-Linux.git')
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir/daylight-linux"
+  local version
+  version=$(sed -n 's/^version = "\([^"]*\)".*/\1/p' Cargo.toml | head -1 | tr - .)
+  printf '%s.r%s.g%s' "$version" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+  cd "$srcdir/daylight-linux"
+  # Avoid rustup toolchain auto-download in the package build sandbox.
+  :
+}
+
+build() {
+  cd "$srcdir/daylight-linux"
+  RUSTUP_TOOLCHAIN=stable cargo build --release --locked
+}
+
+check() {
+  cd "$srcdir/daylight-linux"
+  RUSTUP_TOOLCHAIN=stable cargo test --locked
+}
+
+package() {
+  cd "$srcdir/daylight-linux"
+  install -Dm755 target/release/daylight "$pkgdir/usr/bin/daylight"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+}

@@ -4,6 +4,11 @@
 # SPDX-License-Identifier: GPL-3.0-only
 set -eu
 unset DAYLIGHT_FETCH_SHOWN
+# Show one short random quotation on every Daylight Terminal launch, for any shell.
+if [ -t 1 ] && command -v fortune >/dev/null 2>&1; then
+    fortune -s 2>/dev/null || :
+fi
+export DAYLIGHT_FORTUNE_SHOWN=1
 shell=${SHELL:-/bin/bash}
 case "$shell" in
  */bash) exec /bin/bash --rcfile /usr/share/daylight/shell/bashrc -i ;;

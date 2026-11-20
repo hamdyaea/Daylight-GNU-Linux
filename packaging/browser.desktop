@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Web Browser
+Comment=Open Firefox or the installed browser
+Exec=/usr/bin/daylight-browser
+Icon=web-browser
+Terminal=false
+Type=Application
+Categories=Network;WebBrowser;

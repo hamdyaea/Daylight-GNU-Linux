@@ -1,0 +1,14 @@
+#!/bin/sh
+# Developer: Hamdy Abou El Anein
+# SPDX-License-Identifier: GPL-3.0-only
+set -eu
+for browser in firefox-esr firefox chromium chromium-browser; do
+    if command -v "$browser" >/dev/null 2>&1; then
+        exec "$browser" "$@"
+    fi
+done
+if command -v xdg-open >/dev/null 2>&1; then
+    exec xdg-open "${1:-https://daylightlinux.ch}"
+fi
+printf '%s\n' 'No web browser installed. Install firefox-esr (Debian) or firefox.' >&2
+exit 127
