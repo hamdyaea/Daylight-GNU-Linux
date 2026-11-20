@@ -135,7 +135,7 @@ printf '%s\n' 'Package: daylight-*' 'Pin: origin ""' 'Pin-Priority: 700' > /etc/
 # This is the historical executable invoking its original APT path. There is no second
 # installer, pip call, individual package install or setup-session after update.
 printf 'Y\n' | /usr/bin/daylight update
-/usr/bin/daylight --version | grep -F '5.0.0-rc.4'
+/usr/bin/daylight --version | grep -F '5.0.0-rc.5'
 for package in daylight-core daylight-themes daylight-desktop daylight-apps daylight-games daylight-telemetry daylight-linux; do
     test "$(dpkg-query -W -f='${Version}' "$package")" = "$target_version"
 done
