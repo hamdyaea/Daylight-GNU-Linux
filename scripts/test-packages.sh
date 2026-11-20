@@ -66,13 +66,13 @@ runuser -u daylight-test -- env DISPLAY=:99 xwininfo -root -tree > /tmp/daylight
 runuser -u daylight-test -- env HOME=/home/daylight-test DISPLAY=:99 GTK_THEME=Adwaita:dark /usr/bin/daylight-terminal > /tmp/daylight-terminal.log 2>&1 &
 terminal=$!
 sleep 3
-pgrep -u daylight-test -x xterm
+pgrep -u daylight-test -f '(/usr/bin/terminator|/usr/bin/xterm)'
 if [ -d /out ]; then
   DISPLAY=:99 xwd -root -silent -out /out/daylight-terminal.xwd
   convert /out/daylight-terminal.xwd /out/daylight-terminal.png
   cp /tmp/daylight-terminal.log /out/
 fi
-pkill -u daylight-test -x xterm || :
+pkill -u daylight-test -f '(/usr/bin/terminator|/usr/bin/xterm)' || :
 wait "$terminal" || :
 runuser -u daylight-test -- env HOME=/home/daylight-test DISPLAY=:99 GTK_THEME=Adwaita:dark /usr/bin/daylight control-center > /tmp/daylight-center.log 2>&1 &
 center=$!
