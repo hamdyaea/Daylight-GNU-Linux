@@ -1,0 +1,23 @@
+[global_config]
+  enabled_plugins = 
+[keybindings]
+[profiles]
+  [[default]]
+    background_color = "#101721"
+    foreground_color = "#f0e9d9"
+    cursor_color = "#f0e9d9"
+    palette = "#101721:#dc6b6b:#9bcf9b:#e6c17b:#88b5e0:#c5a0d6:#7fc7c4:#f0e9d9:#667080:#f18b8b:#b1e0b1:#f3d49b:#a9caef:#d8b7e7:#9adbd8:#ffffff"
+    use_system_font = False
+    font = DejaVu Sans Mono 11
+    scrollback_lines = 10000
+    copy_on_selection = False
+    scrollbar_position = right
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]
