@@ -114,6 +114,29 @@ def build(out, evidence=None):
         if out.resolve() == snapshot.resolve():
             raise ValueError('Output directory must not be the source snapshot')
         shutil.copytree(snapshot, out, dirs_exist_ok=True)
+        # The reviewed site snapshot omits the large Web Live binaries.
+        # Publish the pinned, Cloudflare-safe chunked runtime alongside it.
+        runtime = ROOT / 'pages-runtime'
+        if not runtime.is_dir():
+            raise RuntimeError('Missing pinned Web Live runtime directory')
+        live = out / 'live'
+        shutil.copytree(runtime, live, dirs_exist_ok=True)
+        manifest = json.loads((live / 'manifest.json').read_text())
+        for name, record in manifest['files'].items():
+            digest = hashlib.sha256()
+            size = 0
+            for part in record.get('parts', [record]):
+                path = live / part['file']
+                if not path.is_file() or path.is_symlink() or path.stat().st_size > 25 * 1024 * 1024:
+                    raise RuntimeError('Missing or oversized Web Live asset: ' + str(path))
+                data = path.read_bytes()
+                if len(data) != part['bytes'] or hashlib.sha256(data).hexdigest() != part['sha256']:
+                    raise RuntimeError('Corrupt Web Live asset: ' + str(path))
+                digest.update(data)
+                size += len(data)
+            if size != record['bytes'] or digest.hexdigest() != record['sha256']:
+                raise RuntimeError('Corrupt reconstructed Web Live asset: ' + name)
+        print('Verified Web Live runtime:', len(manifest['files']), 'assets')
         return
     release = json.loads((ROOT / 'release/current.json').read_text())
     version = release['version']
