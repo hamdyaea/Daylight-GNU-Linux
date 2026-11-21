@@ -1,10 +1,10 @@
 {
-  "signed_at": "2026-11-21T00:29:38.961130+00:00",
+  "signed_at": "2026-11-21T11:14:26.376947+00:00",
   "validity_days": 30,
   "fingerprint": "B0575F821A31DD20753DE07C50D21240F4BCB02E",
   "architectures": [
     "amd64",
     "arm64"
   ],
-  "packages": 145
+  "packages": 153
 }
