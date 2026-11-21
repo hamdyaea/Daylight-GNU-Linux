@@ -222,6 +222,30 @@ def build(out, evidence=None):
     enhance(out, release, evidence)
     copy(ROOT / "website-src/mirrors.html", "mirrors.html")
     copy(ROOT / "website-src/fr/mirrors.html", "fr/mirrors.html")
+    # Cloudflare Pages deploys only dist/site. Keep the previously verified
+    # chunked Web Live runtime in the same output as the main website.
+    live_source = ROOT / 'website-src/live'
+    runtime_source = ROOT / 'pages-runtime'
+    if not live_source.is_dir() or not runtime_source.is_dir():
+        raise RuntimeError('Missing pinned Cloudflare Pages Web Live sources')
+    live_target = out / 'live'
+    shutil.copytree(live_source, live_target, dirs_exist_ok=True)
+    shutil.copytree(runtime_source, live_target, dirs_exist_ok=True)
+    live_manifest = json.loads((live_target / 'manifest.json').read_text())
+    for name, record in live_manifest['files'].items():
+        assembled = hashlib.sha256()
+        total = 0
+        for part in record.get('parts', [record]):
+            asset = live_target / part['file']
+            if not asset.is_file() or asset.is_symlink() or asset.stat().st_size > 25 * 1024 * 1024:
+                raise RuntimeError('Missing or oversized Web Live asset: ' + str(asset))
+            payload = asset.read_bytes()
+            if len(payload) != part['bytes'] or hashlib.sha256(payload).hexdigest() != part['sha256']:
+                raise RuntimeError('Invalid Web Live asset: ' + str(asset))
+            assembled.update(payload)
+            total += len(payload)
+        if total != record['bytes'] or assembled.hexdigest() != record['sha256']:
+            raise RuntimeError('Invalid reconstructed Web Live asset: ' + name)
     manifest = {str(p.relative_to(out)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.rglob('*')) if p.is_file() and p.name != 'site-manifest.json' and p.relative_to(out).parts[0] != 'live'}
     write('site-manifest.json',json.dumps({'release':release,'files':manifest},indent=2)+'\n')
     print('Bilingual static site built:',out,'files:',len(manifest))
