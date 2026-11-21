@@ -1,12 +1,12 @@
 {
   "release": {
-    "version": "5.0.0-rc.2",
-    "tag": "v5.0.0-rc.2",
-    "commit": "1e234ed4d13bb1961cb1c9fc29bdf2f3393d59d2",
-    "iso": "daylight-live_5.0.0-rc.2_amd64.iso",
-    "iso_sha256": "d41b373386f081e5d76926e356cb6ac8355c9b31935bacd628b9336e0e807e27",
-    "iso_bytes": 1267597312,
-    "validation_run": 41413451558,
+    "version": "5.0.0-rc.5",
+    "tag": "v5.0.0-rc.5",
+    "commit": "f18d1b54348be51cfb7a56ef9bc9b41d2681e6c2",
+    "iso": "daylight-live_5.0.0-rc.5_amd64.iso",
+    "iso_sha256": "7a73ad508046bc1660f9f3b436716403be3d4edccd31c04eaa1fa6b2cefed0d3",
+    "iso_bytes": 1293287424,
+    "validation_run": 44829127107,
     "prerelease": true
   },
   "files": {
@@ -80,5 +80,5 @@
     "apt/index.html": "e2cfbc9601187b51a85a2acf31ca4551647f9da2a3a09db84920be8aaf0dfc46",
     "daylight-install.sh": "d8e485679443a292b8215ed3db621d15f86fb565435715be31fc57b35938fc62"
   },
-  "apt_package_version": "5.0.0~rc4-8"
+  "apt_package_version": "5.0.0~rc5-1"
 }
