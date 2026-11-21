@@ -5,7 +5,7 @@ name: Verify deployed graphical browser preview
 on:
   push:
     branches: [master]
-    paths: [.github/workflows/daylight-public-preview.yml]
+    paths: [.github/workflows/daylight-public-preview.yml, web-live/check-public-assets.py]
   workflow_dispatch:
 permissions:
   contents: read
@@ -24,6 +24,8 @@ jobs:
         run: |
           python3 tests/test_web_live_startup.py
           python3 tests/test_web_live_interface.py
+      - name: Verify all six public runtime assets and SeaBIOS SHA256
+        run: python3 web-live/check-public-assets.py
       - name: Verify public HTTPS access, exact deployed interface and signed APT indexes
         run: python3 web-live/test-public-access.py
       - name: Prepare disposable browser tools
